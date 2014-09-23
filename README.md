@@ -1,7 +1,7 @@
 PersonalQR
 ==========
 
-This application ([demo]()) is going to be made to share personal information to others, by sending a QRCode.
+This application has the purpose of letting users share personal information to other users by sending a QRCode.
 
 It will be a secure way to share your personal information, accessible and user friendly.
 
