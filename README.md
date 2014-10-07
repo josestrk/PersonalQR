@@ -1,11 +1,11 @@
-PersonalQR
+﻿PersonalQR
 ==========
 
-This application has the purpose of letting users share personal information to other users by sending a QRCode.
+This application has the purpose of letting users share personal information to other users by sending a QR code.
 
 It will be a secure way to share your personal information, accessible and user friendly.
 
-####User [Demo]():
+####User demo:
 ```
 User: personalqr
 Pass: manager
@@ -13,14 +13,14 @@ Pass: manager
 
 USE
 --------------
-To use PersonalQR must be registered , but you can see through the profiles of other users QrCode
+To fully use PersonalQR you must be registered, but unregistered users can also view other users' profiles through their QR codes.
 
-> 1. Create user to Sign in.
-> 2. Enable account to user, in the mail have to the web sent, you open the link, this will activate your account.
-> 3. Use your acount to sing up and click the editor symbol (top left of the screen) and you can edit the personal information, you can change the profile photo and add your CV.
-> 4. Enable permissions.Three types of permits (all, users only, only my).
-> 5. You don´t need saving. They keep themselves to modify.
-> 6. Exit and check profile.
+> 1. Create a new user.
+> 2. The website will send an e-mail with a link which must be opened for user activation.
+> 3. Registered users can sign in by introducing their username and password.
+> 4. Registered users may modify their personal information, add a photo or add their CV.
+> 5. There are three levels of access to a user's information: all, registered users only, none (only that user).
+> 6. You don't need to save your changes. They will automatically come into effect.
 
 Contributors
 -------------
@@ -34,15 +34,15 @@ Version
 
 *1.0*
 
-Tech
+Dependencies
 ----
 
-Dillinger uses a number of open source projects to work properly:
+PersonalQR uses a number of open-source projects to work properly:
 
-* [node.js] - develop to this lenguaje
-* [jQuery] - use tu design and style use to transform
-* [php] - use Php 5.3 
-* [MySQL] - Data base type is SQL manage tu MySQL
+* [node.js] - a runtime environment for server-side use
+* [jQuery] - a JavaScript library designed to simplify the client-side scripting of HTML
+* [PHP] - a server-side scripting language. We will use Php 5.3.
+* [MySQL] - a relational database management system
 
 License
 -------
@@ -50,4 +50,3 @@ License
 MIT
 
 **Free Software**
-
