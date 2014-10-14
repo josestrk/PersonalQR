@@ -13,8 +13,8 @@ function validatePass(cadena) {
 }
 
 module.exports = {
-	validateUser : validateUser(),
-	validatePass : validatePass(),
-	validateEmail : validateEmail()
+	validateUser : validateUser,
+	validatePass : validatePass,
+	validateEmail : valisdateEmail
  };
  
