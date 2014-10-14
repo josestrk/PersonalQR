@@ -1,31 +1,31 @@
 //var scoreModel = require('../model/score');
 var assert = require('chai').assert;
 
-describe('User valid test', function () {
-  describe('Valid User', function () {
-
-    it(' should say if a username has invalid characters', function () {
-      assert.equal(validateUserChars('a/\\bc'), false);
-      assert.equal(validateUserChars('ábc'), true);
-      assert.equal(validateUserChars('añc'), true);
-      assert.equal(validateUserChars('a*b'), false);
-      assert.equal(validateUserChars('a\'b'), false);
-      assert.equal(validateUserChars('a<>b'), false);
-      assert.equal(validateUserChars('abc'), true);
+describe('Validation of login data', function () {
+  describe('Validation of User, Email and Pass', function () {
+  	it(' should say if a username is valid', function () {
+      assert.equal(validateUser('abc'), false);
+      assert.equal(validateUser('abcd'), true);
+      assert.equal(validateUser(''), false);
+      assert.equal(validateUser('abcdefghijklmn'), true);
+      assert.equal(validateUser('abcdefghijabcdefghijabcdefghij'), true);
+      assert.equal(validateUser('abcdefghijabcdefghijabcdefghija'), false);
     });
-    it(' should say if a username has an appropriate length', function () {
-      assert.equal(validateUserLength('abc'), false);
-      assert.equal(validateUserLength('abcd'), true);
-      assert.equal(validateUserLength(''), false);
-      assert.equal(validateUserLength('abcdefghijklmn'), true);
-      assert.equal(validateUserLength('abcdefghijabcdefghijabcdefghij'), true);
-      assert.equal(validateUserLength('abcdefghijabcdefghijabcdefghija'), false);
+    it(' should say if an email is valid', function () {
+	  assert.equal(validateEmail('foo@gmail.com'), true);
+      assert.equal(validateEmail('abcd'), false);
+      assert.equal(validateEmail('foo@foo.es'), true);
+      assert.equal(validateEmail('foo.foo@baz-foo.foo'), true);
+      assert.equal(validateEmail('abcd@abcd.casdce'), false);
     });
-    it(' should say if a password has invalid characters', function () {
-      assert.equal(validatePasswordChars('abc'), true);
-      assert.equal(validatePasswordChars('ab*c%'), true);
-      assert.equal(validatePasswordChars('abc'), true);
-      assert.equal(validatePasswordChars('abc'), true);
+    it(' should say if a pass is valid', function () {
+      assert.equal(validatePass('abc'), false);
+      assert.equal(validatePass('ab*c%'), false);
+      assert.equal(validatePass('ab*c%c'), false);
+      assert.equal(validatePass('?!^*$0a'), true);
+      assert.equal(validatePass('?!^a*$'), true);
+      assert.equal(validatePass('?!^*$abc09?!^*$a'), true);
+      assert.equal(validatePass('?!^*$abc09?!^*$ab'), false);
     });
   });
-});
+});﻿
