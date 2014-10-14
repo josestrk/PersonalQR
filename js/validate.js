@@ -1,6 +1,6 @@
-//esta función validara la cadena según el patron
+
 function validatePattern(cadena,patron){
-    return ((cadena.value.match(patron)));
+    return (cadena.match(patron));
 }
 
 function validateUser(cadena) {
@@ -11,4 +11,10 @@ function validateEmail(cadena) {
 }
 function validatePass(cadena) {
     return (validatePattern(cadena,'(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$'));
+}
+
+module.exports = {
+	validateUser : validateUser(),
+	validatePass : validatePass(),
+	validateEmail : validateEmail()
 }
