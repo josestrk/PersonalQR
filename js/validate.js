@@ -15,6 +15,6 @@ function validatePass(cadena) {
 module.exports = {
 	validateUser : validateUser,
 	validatePass : validatePass,
-	validateEmail : valisdateEmail
+	validateEmail : validateEmail
  };
  
