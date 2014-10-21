@@ -43,6 +43,7 @@ PersonalQR uses a number of open-source projects to work properly:
 * [jQuery] - a JavaScript library designed to simplify the client-side scripting of HTML
 * [PHP] - a server-side scripting language. We will use Php 5.3.
 * [MySQL] - a relational database management system
+* [Bower] - a client dependencies manager to run polymer complements, [Install](https://www.polymer-project.org/docs/start/getting-the-code.html)
 
 License
 -------
