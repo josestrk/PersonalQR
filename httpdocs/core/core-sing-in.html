@@ -19,11 +19,9 @@
   <template>
     <style>    
       :host {
-        position: absolute;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        margin: auto;
       }
       h1, h2, h3 {
         color: white;
@@ -185,19 +183,37 @@
       #core_field {
         left: 0px;
         top: 0px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        border-bottom-left-radius: 25px;
         width: auto;
         height: auto;
-        margin: auto;
+        margin: 3px 10px;
         display: block;
+        color: white;
+        background-color: rgb(203, 203, 203);
       }
       #core_menu {
-        margin: auto;
         top: auto;
         width: auto;
         height: auto;
+        color: white;
+        padding: 15px 20px;
+        display: block;
+      }
+      #core_item {
+        width: 200px;
+        height: 30px;
+      }
+      #core_item:hover {
+        width: 200px;
+        height: 30px;
+        background-color: rgb(102, 102, 102);
       }
       #core_input {
-        width: 80%;
+        width: 70%;
+        padding: 15px;
       }
       #topeka_profile {
         width: 300px;
@@ -211,19 +227,23 @@
         left: 1890px;
         top: 590px;
       }
+      #drawerPanel {
+        width: 100%;
+        height: 100%;
+      }
     </style>
-    <core-drawer-panel transition selected="main" id="drawerPanel" touch-action>
+    <core-drawer-panel selected="main" id="drawerPanel" on-tap="{{showPanel}}" >
       <core-header-panel id="core_header_panel" drawer vertical layout center-justified wrap start>
         <core-field id="core_field" icon="search" theme="core-light-theme" center horizontal layout active>
           <core-icon icon="search" id="core_icon2"></core-icon>
-          <core-input willvalidate placeholder="text input" id="core_input" flex></core-input>
+          <core-input willvalidate placeholder="text input" inputvalue="manolo el del bo" value="manolo el del bo" id="core_input" flex></core-input>
         </core-field>
-        <core-menu selected="1" selectedindex="1" id="core_menu" vertical layout start>
-          <core-item id="core_item1" label="One" vertical layout start center-justified horizontal center></core-item>
-          <core-item id="core_item" label="Two" vertical layout start center-justified active horizontal center></core-item>
+        <core-menu selected="1" selectedindex="1" id="core_menu" vertical layout center-justified start>
+          <core-item id="core_item" label="One" vertical start center-justified center layout></core-item>
+          <core-item id="core_item" label="Two" vertical start center active center-justified layout></core-item>
         </core-menu>
       </core-header-panel>
-      <core-header-panel main>
+      <core-header-panel id="core_header_panel1" main>
         <core-toolbar id="mainheader">
           <paper-icon-button icon="menu" id="navicon"></paper-icon-button>
           <h2 id="h2">PersonalQR</h2>
@@ -260,9 +280,10 @@
   </template>
 
   <script>
-
     Polymer({
-      
+        showPanel:function(event,detail,sender){
+            this.$.core_header_panel.togglePanel();
+        }
     });
 
   </script>
