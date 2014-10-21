@@ -45,6 +45,13 @@ PersonalQR uses a number of open-source projects to work properly:
 * [MySQL] - a relational database management system
 * [Bower] - a client dependencies manager to run polymer complements, [Install](https://www.polymer-project.org/docs/start/getting-the-code.html)
 
+How to run
+----------
+
+* npm install
+* npm install grunt-cli
+* bower install
+
 License
 -------
 
