@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+
+
+<polymer-element name="core-index-app">
+
+  <template>
+    <style>    
+      :host {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      #core_card {
+        position: absolute;
+        width: 300px;
+        z-index: 0;
+        height: 500px;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        left: 510px;
+        top: 190px;
+        background-image: url(http://planetthreesixty.com/sites/default/files/planet.jpg);
+        background-size: 100% 100%;
+      }
+      #paper_tabs {
+        width: 100%;
+        color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
+        background-color: rgb(137, 191, 79);
+      }
+      #core_card1 {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        opacity: 0.5;
+        background-color: rgb(128, 128, 128);
+      }
+      #core_card2 {
+        width: auto;
+        z-index: 2;
+        height: 100%;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        margin: 20px 15px;
+        background-color: rgb(255, 255, 255);
+      }
+    </style>
+    <core-card id="core_card" layout vertical end-justified center>
+      <core-card id="core_card1" layout vertical>
+        <core-card id="core_card2" layout vertical></core-card>
+      </core-card>
+      <paper-tabs selected="1" selectedindex="1" id="paper_tabs" end-justified vertical layout wrap end>
+        <paper-tab id="paper_tab" ontab>LOG IN</paper-tab>
+        <paper-tab id="paper_tab1" active>GET STATED</paper-tab>
+      </paper-tabs>
+    </core-card>
+  </template>
+
+  <script>
+
+    Polymer({
+      
+    });
+
+  </script>
+
+</polymer-element>
