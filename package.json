@@ -1,0 +1,46 @@
+{
+  "name": "PersonalQR",
+  "version": "0.0.0",
+  "description": "Quick way to share personal information",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^1.9.2"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.5"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josestrk/PersonalQR.git"
+  },
+  "keywords": [
+    "QR",
+    "QRCode",
+    "PersonalQR",
+    "Share",
+    "Social",
+    "Network",
+    "Red",
+    "social",
+    "Social",
+    "Profile",
+    "Perfil",
+    "Curricullum",
+    "Empleo",
+    "Ocio",
+    "Job",
+    "Work"
+  ],
+  "author": "josestrk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josestrk/PersonalQR/issues"
+  },
+  "homepage": "https://github.com/josestrk/PersonalQR"
+}
