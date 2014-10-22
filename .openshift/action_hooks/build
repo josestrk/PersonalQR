@@ -1,0 +1,4 @@
+echo "**************************** Installing bower dependencies  ****************************"
+cd $OPENSHIFT_REPO_DIR
+rm -rf server/public/bower_components
+HOME=$HOME/app-root/runtime ./node_modules/.bin/bower install
