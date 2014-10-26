@@ -1,0 +1,15 @@
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+
+<polymer-element name="nav">
+    <core-toolbar><span>Configuration</span></core-toolbar>
+    <core-menu valueattr="hash" selected="{{route}}">
+      <template repeat="{{page in pages}}">
+        <paper-item label="{{page.name}}" hash="{{page.hash}}">
+          <a href="#{{page.hash}}"></a>
+        </paper-item>
+      </template>
+    </core-menu>
+</polymer-element>

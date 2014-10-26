@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>twooMenusProfile</title>
+        
+        
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <script src="../bower_components/platform/platform.js"></script>
+        
+        
+        <style>template {display: none !important;} /* injected by platform.js */</style>
+        <link rel="stylesheet" href="style.css">
+        
+        <link rel="import" href="bower_components/polymer/polymer.html">
+        <link rel="import" href="../bower_components/core-scaffold/core-scaffold.html">
+        <link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+        <link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+        <link rel="import" href="../bower_components/core-menu/core-menu.html">
+        <link rel="import" href="../bower_components/paper-item/paper-item.html">
+        
+        <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+        <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
+    </head>
+    
+    <body unresolved fullbleed>
+        <template is="auto-binding">
+            <core-scaffold id="scaffold">
+                <nav>
+                    <core-toolbar><span>My profile</span></core-toolbar>
+                    <core-menu valueattr="hash" selected="{{route}}">
+                      <template repeat="{{page in pages}}">
+                        <paper-item label="{{page.name}}" hash="{{page.hash}}">
+                          <a href="#{{page.hash}}"></a>
+                        </paper-item>
+                      </template>
+                    </core-menu>
+                </nav>
+                <core-toolbar tool>
+                  <!-- flex spaces this element and jusifies the icons to the right-side -->
+                  <div flex>Profile</div>
+                  <core-icon-button icon="search"></core-icon-button>
+                  <core-icon-button icon="save"></core-icon-button>
+                </core-toolbar>
+                <!-- <nav>
+                    <core-toolbar><span>Activity</span></core-toolbar>
+                        <core-menu selected="0">
+                            <paper-item icon="label-outline" label="Single">
+                              <a href="#one"></a>
+                            </paper-item>
+                            <paper-item icon="label-outline" label="page">
+                              <a href="#two"></a>
+                            </paper-item>
+                        </core-menu>
+                </nav>-->
+                <div layout horizontal center-center fit>
+                    <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right">
+                        <template repeat="{{page in pages}}">
+                          <section hash="{{page.hash}}" layout vertical center-center>
+                            <div>{{page.name}}</div>
+                          </section>
+                        </template>
+                    </core-animated-pages>
+              </div>
+            </core-scaffold>
+        </template>  
+    <script>
+        var template = document.querySelector('template[is="auto-binding"]');
+        template.pages = [
+          {name: 'Single', hash: 'one'},
+          {name: 'page', hash: 'two'},
+          {name: 'app', hash: 'three'}
+        ];
+    </script> 
+    </body>
+</html>
