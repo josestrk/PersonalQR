@@ -6,10 +6,8 @@ module.exports = function(grunt) {
 		},
 		connect: {
 		    server: {
-		      options: {
 			port: 9001,
 			base: 'www-root'
-		      }
 		    }
 		}
 	});
