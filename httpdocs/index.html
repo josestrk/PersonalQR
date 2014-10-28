@@ -6,26 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
         <script src="../bower_components/platform/platform.js"></script>
-        
+
         <link rel="import" href="../bower_components/polymer/polymer.html">
-        
+
         <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
         <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
-        
+
         <link rel="import" href="../bower_components/core-pages/core-pages.html">
         <link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
         <link rel="import" href="../bower_components/core-icons/core-icons.html">
         <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
         <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
-        
+
         <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
         <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
-        
+
         <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
         <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-        
-        
-        <style>    
+
+
+        <style>
       :host {
         position: absolute;
         width: 100%;
@@ -100,7 +100,7 @@
         margin: 20px;
         width: 350px;
         height: 500px;
-        background-size: 100% 100%;  
+        background-size: 100% 100%;
         }
 
     @media all and (max-width: 420px) {
@@ -132,18 +132,18 @@
         <template is="auto-binding">
             <core-card id="core_card" layout vertical end-justified center>
                 <core-card id="core_card1" vertical layout start-justified >
-                    
+
                           <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right"vertical layout wrap center start-justified>
                               <template repeat="{{page in pages}}" >
-                                 
+
                                 <section hash="{{page.hash}}" id="card" style="background-image: url('img/{{page.image}}')" vertical layout wrap center end-justified>
                                         <core-card id="core_card2" layout vertical center-justified center>{{page.name}}</core-card>
                                 </section>
-                                 
+
                               </template>
                           </core-animated-pages>
 
-                
+
 
                           <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
                               <template repeat="{{page in pages}}">
@@ -158,7 +158,7 @@
                     <paper-tab id="paper_tab1" active>GET STARTED</paper-tab>
                 </paper-tabs>
             </core-card>
-        </template> 
+        </template>
     </body>
     <script>
             var template = document.querySelector('template[is="auto-binding"]');
@@ -167,9 +167,9 @@
               {name: ' Todos tus deportes, eventos en vivo, ... ',image:'2.jpg', hash: 'two'},
               {name: ' La forma mas sencilla de compartir tus datos y a la vez la más segura. Simple muestra tu codeQR y conecta con la comunidad ',image:'3.jpg', hash: 'three'}
             ];
-            template.sing[
+            template.sign[
               {
-                name: 'LOG IN' 
+                name: 'LOG IN'
               }
             ];
     </script>

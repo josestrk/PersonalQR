@@ -14,11 +14,11 @@
 <link rel="import" href="../../bower_components/topeka-elements/avatars.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="core-sing-in">
+<polymer-element name="core-sign-in">
 
   <template>
-    
-      <style>    
+
+      <style>
       :host {
         width: 100%;
         height: 100%;
@@ -234,7 +234,7 @@
         height: 100%;
       }
     </style>
-    
+
     <core-drawer-panel selected="main" id="drawerPanel" on-tap="{{showPanel}}" >
       <core-header-panel id="core_header_panel" drawer vertical layout center-justified wrap start>
         <core-field id="core_field" icon="search" theme="core-light-theme" center horizontal layout active>
@@ -265,15 +265,15 @@
             <core-card id="core_card3" center-justified vertical layout>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Email Addres" willvalidate validationmessage="Completa este campo" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input label="Email Address" willvalidate validationmessage="Fill in this field" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Choose a Password" willvalidate validationmessage="Completa este campo" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input label="Choose a Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="redeem" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Birth Date" willvalidate validationmessage="Completa este campo" required pattern="[0-9]*/[0-9](1-2)/[0-9]*" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input label="Birth Date" willvalidate validationmessage="Fill in this field" required pattern="[0-9]*/[0-9](1-2)/[0-9]*" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
             </core-card>
           </core-card>
