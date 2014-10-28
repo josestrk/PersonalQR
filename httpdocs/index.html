@@ -57,14 +57,11 @@
       }
       #core_card1 {
         margin: 20px;
-        width: 350px;
-        height: 600px;
+        width: 400px;
+        height: 650px;
       }
       #card {
-        margin: 20px;
-        width: 350px;
-        height: 500px;
-        border-top-left-radius: 6px;
+                border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
@@ -84,6 +81,8 @@
         top: 150px;
         position: absolute;
       }
+      #paper_radio_group{
+      }
       #core_card2 {
         width: 300px;
         height: 300px;
@@ -97,22 +96,33 @@
         padding: 10px;
       }
 
-        core-animated-pages > * {
-          border-radius: 5px;
-          background-color: white;
-          
+        core-animated-pages {
+        margin: 20px;
+        width: 350px;
+        height: 500px;
+        background-size: 100% 100%;  
         }
 
-    @media all and (max-width: 520px) {
+    @media all and (max-width: 420px) {
       #core_card1 {
         width: 100%;
-        height: 80%;
+      }
+    }
+
+    @media all and (min-width: 421px) {
+      #core_card1 {
+        width: 420px;
       }
     }
     @media all and (max-height: 520px) {
       #core_card1 {
-        width: 300px;
-        height: 80%;
+        height: 100%;
+      }
+    }
+
+    @media all and (min-height: 521px) {
+      #core_card1 {
+        height: 520px;
       }
     }
     template {display: none !important;}
@@ -123,8 +133,8 @@
             <core-card id="core_card" layout vertical end-justified center>
                 <core-card id="core_card1" vertical layout start-justified >
                     
-                          <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right">
-                              <template repeat="{{page in pages}}">
+                          <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right"vertical layout wrap center start-justified>
+                              <template repeat="{{page in pages}}" >
                                  
                                 <section hash="{{page.hash}}" id="card" style="background-image: url('img/{{page.image}}')" vertical layout wrap center end-justified>
                                         <core-card id="core_card2" layout vertical center-justified center>{{page.name}}</core-card>
@@ -132,18 +142,20 @@
                                  
                               </template>
                           </core-animated-pages>
-                  
+
+                
+
+                          <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
+                              <template repeat="{{page in pages}}">
+                                  <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
+                              </template>
+                          </paper-radio-group>
+
                 </core-card>
-                
-                <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
-                    <template repeat="{{page in pages}}">
-                        <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
-                    </template>
-                </paper-radio-group>
-                
+
                 <paper-tabs selected="1" selectedindex="1" id="paper_tabs" end-justified vertical layout wrap end>
                     <paper-tab id="paper_tab" ontab>LOG IN</paper-tab>
-                    <paper-tab id="paper_tab1" active>GET STATED</paper-tab>
+                    <paper-tab id="paper_tab1" active>GET STARTED</paper-tab>
                 </paper-tabs>
             </core-card>
         </template> 
@@ -154,6 +166,11 @@
               {name: ' Comparte con todos lo que estas haciendo',image:'1.jpg', hash: 'one'},
               {name: ' Todos tus deportes, eventos en vivo, ... ',image:'2.jpg', hash: 'two'},
               {name: ' La forma mas sencilla de compartir tus datos y a la vez la más segura. Simple muestra tu codeQR y conecta con la comunidad ',image:'3.jpg', hash: 'three'}
+            ];
+            template.sing[
+              {
+                name: 'LOG IN' 
+              }
             ];
     </script>
 </html>
