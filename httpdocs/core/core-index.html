@@ -63,15 +63,15 @@
         </style>
         <core-card id="core_card" layout vertical end-justified center>
             <core-card id="core_card1" vertical layout  center-justified >
-
-               <!-- <core-slider></core-slider> -->
-               <core-card-signin></core-card-signin>
-
+               
+                
+                
             </core-card>
-
+            
             <paper-tabs selected="1" selectedindex="1" id="paper_tabs" end-justified vertical layout wrap end>
-                <paper-tab id="paper_tab" ontab>LOG IN</paper-tab>
-                <paper-tab id="paper_tab1" active>GET STARTED</paper-tab>
+            <template repeat="{{page in pages}}" >
+                    <paper-tab id="{{page.id}}" hash="{{page.hash}}" ontab>{{page.name}}</paper-tab>
+            </template>
             </paper-tabs>
         </core-card>
 
@@ -79,7 +79,13 @@
 
     <script>
         Polymer({
-            
+            ready: function() {
+                this.pages = [ 
+                    {load: '<core-card-signin></core-card-signin>',name:'GET STARTED',id:'paper_tab', hash: 'two'},
+                    {load: '<core-slider></core-slider>',name:'Home', hash: 'one'},
+                    {load: '<core-card-login></core-card-login> ',name:'LOG IN',id:'paper_tab1', hash: 'three'}
+                ];
+            }
         });
     </script>
 
