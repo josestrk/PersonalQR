@@ -3,7 +3,7 @@
 <polymer-element name="core-index" >
 
     <template>
-        <style>
+       <style>
       :host {
         position: absolute;
         width: 100%;
@@ -32,7 +32,7 @@
         background-color: rgb(137, 191, 79);
       }
       #core_card1 {
-        margin: 20px;
+        margin: 8%;
         width: 400px;
         height: 650px;
       }
@@ -61,16 +61,26 @@
     }
     template {display: none !important;}
         </style>
-        <core-card id="core_card" layout vertical end-justified center>
-            <core-card id="core_card1" vertical layout  center-justified >
-               
-                
-                
-            </core-card>
-            
-            <paper-tabs selected="1" selectedindex="1" id="paper_tabs" end-justified vertical layout wrap end>
+        <core-card id="core_card" layout vertical end-justified center> 
+            <core-animated-pages id="core_card1" valueattr="hash" selected="{{route}}" vertical layout  center-justified transitions="slide-from-right">
+                          
+               <section hash="one" layout vertical center-center>
+                  <core-slider></core-slider>
+                </section>
+                <section hash="two" layout vertical center-center>
+                  <core-card-signin></core-card-signin>
+                </section>
+                <section hash="three" layout vertical center-center>
+                  <core-card-login></core-card-login>
+                </section>
+                        
+            </core-animated-pages> 
+
+            <paper-tabs selected="{{route}}" selectedindex="one" valueattr="hash" id="paper_tabs" end-justified vertical layout wrap end>
             <template repeat="{{page in pages}}" >
-                    <paper-tab id="{{page.id}}" hash="{{page.hash}}" ontab>{{page.name}}</paper-tab>
+                <paper-tab id="{{page.id}}" hash="{{page.hash}}" ontab>
+                  {{page.name}}
+                </paper-tab>
             </template>
             </paper-tabs>
         </core-card>
@@ -81,9 +91,8 @@
         Polymer({
             ready: function() {
                 this.pages = [ 
-                    {load: '<core-card-signin></core-card-signin>',name:'GET STARTED',id:'paper_tab', hash: 'two'},
-                    {load: '<core-slider></core-slider>',name:'Home', hash: 'one'},
-                    {load: '<core-card-login></core-card-login> ',name:'LOG IN',id:'paper_tab1', hash: 'three'}
+                    {name:'GET STARTED',id:'paper_tab', hash: 'two'},
+                    {name:'LOG IN',id:'paper_tab1', hash: 'three'}
                 ];
             }
         });
