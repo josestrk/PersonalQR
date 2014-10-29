@@ -3,174 +3,39 @@
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
         <script src="../bower_components/platform/platform.js"></script>
-
+        
         <link rel="import" href="../bower_components/polymer/polymer.html">
-
+        
         <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
         <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
-
+        
         <link rel="import" href="../bower_components/core-pages/core-pages.html">
         <link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
         <link rel="import" href="../bower_components/core-icons/core-icons.html">
         <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
         <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
-
+        
         <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
         <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
-
+        
         <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
         <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-
-
-        <style>
-      :host {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        min-height: 300px;
-        box-sizing: border-box;
-      }
-      #core_card {
-        position: absolute;
-        width: 100%;
-        z-index: 0;
-        height: 100%;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        left: 0px;
-        top: 0px;
-        background-image: url(http://planetthreesixty.com/sites/default/files/planet.jpg);
-        background-size: 100% 100%;
-        overflow: hidden;
-      }
-      #paper_tabs {
-        width: 100%;
-        color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
-        background-color: rgb(137, 191, 79);
-      }
-      #core_card1 {
-        margin: 20px;
-        width: 400px;
-        height: 650px;
-      }
-      #card {
-                border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
-        box-shadow: rgba(255, 255, 255, 50.9980392) 0px 5px 18px, rgba(255, 255, 255, 0.9980392) 0px 0px 3px;
-        background-size: 100% 100%;
-      }
-      #core_pages {
-        width: 100%;
-        height: 100%;
-      }
-      #paper_radio_button {
-        left: 1540px;
-        top: 580px;
-      }
-      #paper_fab1 {
-        left: 150px;
-        top: 150px;
-        position: absolute;
-      }
-      #paper_radio_group{
-      }
-      #core_card2 {
-        width: 300px;
-        height: 300px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
-        box-shadow: rgba(0, 0, 0, 30.0980392) 0px 12px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 6px;
-        background-color:whitesmoke;
-        opacity: 0.70;
-        padding: 10px;
-      }
-
-        core-animated-pages {
-        margin: 20px;
-        width: 350px;
-        height: 500px;
-        background-size: 100% 100%;
-        }
-
-    @media all and (max-width: 420px) {
-      #core_card1 {
-        width: 100%;
-      }
-    }
-
-    @media all and (min-width: 421px) {
-      #core_card1 {
-        width: 420px;
-      }
-    }
-    @media all and (max-height: 520px) {
-      #core_card1 {
-        height: 100%;
-      }
-    }
-
-    @media all and (min-height: 521px) {
-      #core_card1 {
-        height: 520px;
-      }
-    }
-    template {display: none !important;}
+        
+        <link rel="import" href="core/core-index.html">
+        
+        
+    <style>    
+  
     </style>
     </head>
     <body unresolved fullbleed>
-        <template is="auto-binding">
-            <core-card id="core_card" layout vertical end-justified center>
-                <core-card id="core_card1" vertical layout start-justified >
-
-                          <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right"vertical layout wrap center start-justified>
-                              <template repeat="{{page in pages}}" >
-
-                                <section hash="{{page.hash}}" id="card" style="background-image: url('img/{{page.image}}')" vertical layout wrap center end-justified>
-                                        <core-card id="core_card2" layout vertical center-justified center>{{page.name}}</core-card>
-                                </section>
-
-                              </template>
-                          </core-animated-pages>
-
-
-
-                          <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
-                              <template repeat="{{page in pages}}">
-                                  <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
-                              </template>
-                          </paper-radio-group>
-
-                </core-card>
-
-                <paper-tabs selected="1" selectedindex="1" id="paper_tabs" end-justified vertical layout wrap end>
-                    <paper-tab id="paper_tab" ontab>LOG IN</paper-tab>
-                    <paper-tab id="paper_tab1" active>GET STARTED</paper-tab>
-                </paper-tabs>
-            </core-card>
-        </template>
+            <core-index></core-index>
     </body>
     <script>
-            var template = document.querySelector('template[is="auto-binding"]');
-            template.pages = [
-              {name: ' Comparte con todos lo que estas haciendo',image:'1.jpg', hash: 'one'},
-              {name: ' Todos tus deportes, eventos en vivo, ... ',image:'2.jpg', hash: 'two'},
-              {name: ' La forma mas sencilla de compartir tus datos y a la vez la más segura. Simple muestra tu codeQR y conecta con la comunidad ',image:'3.jpg', hash: 'three'}
-            ];
-            template.sign = [
-              {
-                name: 'LOG IN'
-              }
-            ];
+            
+
     </script>
 </html>
