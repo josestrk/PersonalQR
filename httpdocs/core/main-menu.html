@@ -48,17 +48,17 @@
     <!-- Keyboard nav controller. -->
     <core-a11y-keys id="keys" target="{{parentElement}}"
                     keys="up down left right space space+shift"
-                    on-keys-pressed="{{keyHandler}}"></core-a11y-keys>                 
+                    on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
     <core-scaffold id="scaffold">
 
       <nav>
         <core-toolbar>
-          <span>Single Page Polymer</span>
+          <span>MyProfile</span>
         </core-toolbar>
         <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
                    on-core-select="{{menuItemSelected}}">
-          <template repeat="{{page, i in pages}}">
+          <template repeat="{{page in pages}}">
             <paper-item icon="label{{route != page.hash ? '-outline' : ''}}"
                         label="{{page.name}}" hash="{{page.hash}}">
               <a href="#{{page.hash}}"></a>
@@ -76,14 +76,14 @@
       <div layout horizontal center-center fit>
         <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
                              transitions="slide-from-right"
-                             on-tap="{{cyclePages}}">          
-          
+                             on-tap="{{cyclePages}}">
+
               <template repeat="{{page, i in pages}}">
                 <section hash="{{page.hash}}" layout vertical center-center>
                   <div>{{page.component}} {{route}}</div>
                 </section>
               </template>
-          
+
         </core-animated-pages>
       </div>
 
@@ -145,7 +145,7 @@
         keyHandler: function (e, detail, sender) {
           var pages = this.$.pages;
 
-          // Select page by num key. 
+          // Select page by num key.
           var num = parseInt(detail.key);
           if (!isNaN(num) && num <= this.pages.length) {
             pages.selectIndex(num - 1);
