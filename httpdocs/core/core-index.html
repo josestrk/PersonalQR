@@ -1,189 +1,79 @@
-<link rel="import" href="../pages/core-slider.html">
-<link rel="import" href="../pages/core-card-login.html">
-<link rel="import" href="../pages/core-card-signin.html">
+<link rel="import" href="../pages/login-page.html">
+<link rel="import" href="../pages/signin-page.html">
+<link rel="import" href="../pages/slider-page.html">
+
 <polymer-element name="core-index" >
 
     <template>
        <style>
       :host {
+        left: 0px;
+        top: 0px;
         position: absolute;
         width: 100%;
         height: 100%;
-
+        overflow: hidden;
         box-sizing: border-box;
       }
       #core_card {
         width: 100%;
-        height: 100%;
+        height: 95%;
         border-top-left-radius: 2px;
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
         border-bottom-left-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        left: 0px;
-        top: 0px;
-        background-image: url(http://planetthreesixty.com/sites/default/files/planet.jpg);
+        background-image: url(https://lh4.googleusercontent.com/BsITDd4224rxUsIHOEs7C1y_mqu1I4pydjGfXl6F0l_nByiYp3X93uabETTKlzKHhqlMwvrsbK0=w1656-h829);
         background-size: 100% 100%;
-        overflow: hidden;
       }
-      #paper_tabs {
+      #paper_tabs { 
+        height: 5%;
         width: 100%;
         color: rgb(255, 255, 255);
         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
         background-color: rgb(137, 191, 79);
       }
-      #core_card1 {
-        margin: 8%;
-        width: 400px;
-        height: 650px;
-      }
-
-    @media all and (max-width: 420px) {
-      #core_card1 {
-        width: 100%;
-      }
-    }
-
-    @media all and (min-width: 421px) {
-      #core_card1 {
-        width: 420px;
-      }
-    }
-    @media all and (max-height: 520px) {
-      #core_card1 {
-        height: 100%;
-      }
-    }
-
-    @media all and (min-height: 521px) {
-      #core_card1 {
-        height: 520px;
-      }
-    }
     template {display: none !important;}
         </style>
+             <!-- Route controller. -->
+            <flatiron-director route="{{route}}" autoHash></flatiron-director>
 
-        <!-- Route controller. -->
-        <flatiron-director route="{{route}}" autoHash></flatiron-director>
+            <core-animated-pages id="core_card" valueattr="hash" selected="{{route}}" layout vertical end-justified center transitions="slide-from-right">
+                          
+               <section hash="" layout vertical center-center>
+                   <core-card vertical layout  center-justified>
+                        <slider-page></slider-page> 
+                   </core-card>
+               </section>
+                <section hash="signin" layout vertical center-center>
+                  <signin-page></signin-page>
+                </section>
+                <section hash="login" layout vertical center-center>
+                  <login-page></login-page>
+                </section>
+                        
+            </core-animated-pages> 
 
-        <!-- Keyboard nav controller. -->
-        <core-a11y-keys id="keys" target="{{parentElement}}"
-                        keys="up down left right space space+shift"
-                        on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
-
-        <core-card id="core_card" layout vertical end-justified center>
-            <div layout horizontal center-center fit>
-              <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
-                                   transitions="slide-from-right"
-                                   on-tap="{{cyclePages}}">
-
-                    <template repeat="{{page, i in pages}}">
-                      <section hash="{{page.hash}}" layout vertical center-center>
-                        <div>{{page.component}} {{route}}</div>
-                      </section>
-                    </template>
-
-              </core-animated-pages>
-            </div>
-
-            <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
-                       on-core-select="{{menuItemSelected}}" id="paper_tabs" end-justified vertical layout wrap end>
-              <template repeat="{{page in pages}}">
-                <paper-tab id="paper_tab" hash="{{page.hash}}" ontab>
+            <paper-tabs selected="{{route}}" selectedindex="one" valueattr="hash" id="paper_tabs" end-justified vertical layout wrap end>
+            <template repeat="{{page in pages}}" >
+                <paper-tab id="{{page.id}}" hash="{{page.hash}}" ontab>
                   {{page.name}}
                 </paper-tab>
-              </template>
+            </template>
             </paper-tabs>
-        </core-card>
+        
 
     </template>
 
     <script>
-    (function () {
-      function createPage(page) {
-        var section = document.createElement('section');
-        section.setAttribute('layout', '');
-        section.setAttribute('vertical', '');
-        section.setAttribute('center-center', '');
-        section.setAttribute('hash', page.hash);
-
-        var div = document.createElement('div');
-        var component = document.createElement(page.component);
-        div.appendChild(component);
-        section.appendChild(div);
-        return section;
-      }
-
-
-      function loadPages() {
-        var DEFAULT_ROUTE = 'one';
-        this.pages = [
-          {name: 'main', hash: 'one', component: 'core-slider'},
-          {name: 'Sign In', hash: 'two', component: 'core-card-signin'},
-          {name: 'Log In', hash: 'two', component: 'core-card-login'}
-        ];
-
-        var animatedPages = this.$.pages;
-
-        this.pages.forEach(function (page) {
-          animatedPages.appendChild(createPage(page));
+        Polymer({
+            ready: function() {
+                this.pages = [ 
+                    {name:'GET STARTED',id:'paper_tab', hash: 'signin'},
+                    {name:'LOG IN',id:'paper_tab1', hash: 'login'}
+                ];
+            }
         });
-
-
-        this.route = this.route || DEFAULT_ROUTE; // Select initial route.
-      }
-
-      function addKeysToNumbers() {
-        var keys = this.$.keys;
-
-        // Allow selecting pages by num keypad. Dynamically add
-        // [1, template.pages.length] to key mappings.
-        var keysToAdd = Array.apply(null, this.pages).map(function (x, i) {
-          return i + 1;
-        }).reduce(function (x, y) {
-          return x + ' ' + y;
-        });
-        keys.keys += ' ' + keysToAdd;
-      }
-
-      Polymer({
-        domReady: function () {
-          loadPages.bind(this)();
-          addKeysToNumbers.bind(this)();
-        },
-        keyHandler: function (e, detail, sender) {
-          var pages = this.$.pages;
-
-          // Select page by num key.
-          var num = parseInt(detail.key);
-          if (!isNaN(num) && num <= this.pages.length) {
-            pages.selectIndex(num - 1);
-            return;
-          }
-
-          switch (detail.key) {
-            case 'left':
-            case 'up':
-              pages.selectPrevious();
-              break;
-            case 'right':
-            case 'down':
-              pages.selectNext();
-              break;
-            case 'space':
-              detail.shift ? pages.selectPrevious() : pages.selectNext();
-              break;
-          }
-        },
-        cyclePages: function (e, detail, sender) {
-          // Click clicks should navigate and not cycle pages.
-          if (e.path[0].localName === 'a') {
-            return;
-          }
-          e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
-        }
-      });
-    }());
     </script>
 
 </polymer-element>

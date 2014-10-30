@@ -1,26 +1,25 @@
+<link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../../bower_components/core-field/core-field.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
-<link rel="import" href="../../bower_components/topeka-elements/avatars.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="core-card-signin">
+<polymer-element name="signin-page">
+   
+  <template>
 
-    <template>
-        <style>
-        :host {
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-            font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
-        }
-        h1, h2, h3 {
-          color: white;
-        }
-      
-      #core_internal_card {
+      <style>
+      :host {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
+      }
+      #core_card {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -38,8 +37,15 @@
         width: 100%;
         background-color: rgb(169, 252, 78);
       }
-
-      #core_internal_card1 {
+      #paper_tabs {
+        width: 480px;
+        color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
+        left: 1410px;
+        top: 530px;
+        background-color: rgb(0, 188, 212);
+      }
+      #core_card1 {
         width: 100%;
         height: 350px;
         border-top-left-radius: 2px;
@@ -48,16 +54,20 @@
         border-bottom-left-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
         opacity: 1;
-        background-image: url(http://www.smitwallpaper.com/wallpaper/original/Wallpaper-3_1.jpg);
+        background-image: url(https://lh6.googleusercontent.com/rK9MVQOzZ_6I5edBeDNJMQ6N2ZD6ddAuytR-EqC4msryhMr8fk4xVPayvcG2M6mLL80osfj2kpU=w787-h801);
         background-size: 100% 100%;
         background-repeat: no-repeat;
+      }
+      #core_tooltip {
+        left: 1400px;
+        top: 560px;
       }
       #paper_toast {
         position: fixed;
         outline: none;
         display: none;
       }
-      #core_internal_card2 {
+      #core_card2 {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
@@ -89,7 +99,7 @@
         padding: 5px 15px 22px;
         margin: auto;
       }
-      #core_internal_card3 {
+      #core_card3 {
         width: 300px;
         height: 220px;
         border-top-left-radius: 8px;
@@ -101,7 +111,7 @@
         padding: 15px;
         background-color: rgb(255, 255, 255);
       }
-      #core_internal_card4 {
+      #core_card4 {
         width: 90%;
         height: 55px;
         padding: 10px;
@@ -118,46 +128,91 @@
         width: 80%;
         height: 45px;
       }
-
-
-        </style>
-       
-
-          <core-card id="core_internal_card" layout vertical>
+      #core_card5 {
+        width: 100%;
+        height: 40px;
+        padding: 0px;
+      }
+      #core_card6 {
+        width: 100%;
+        height: 40px;
+      }
+      #core_field {
+        left: 0px;
+        top: 0px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        width: auto;
+        height: auto;
+        margin: 3px 10px;
+        display: block;
+        color: white;
+        background-color: rgb(203, 203, 203);
+      }
+      #core_item {
+        width: 200px;
+        height: 30px;
+      }
+      #core_item:hover {
+        width: 200px;
+        height: 30px;
+        background-color: rgb(102, 102, 102);
+      }
+      #core_input {
+        width: 70%;
+        padding: 15px;
+      }
+      #topeka_profile {
+        width: 300px;
+        height: 300px;
+        left: 1810px;
+        top: 610px;
+      }
+      #topeka_leaderboard {
+        width: 300px;
+        height: 300px;
+        left: 1890px;
+        top: 590px;
+      }
+    </style>
+    
+          <core-card id="core_card" layout vertical>
             <paper-progress id="paper_progress"></paper-progress>
             <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
-            <core-card id="core_internal_card1" wrap center horizontal layout>
+            <core-card id="core_card1" wrap center horizontal layout>
               <core-icon icon="avatars:avatar-1" id="core_icon1" designmeta="topeka-avatar" center-justified horizontal layout></core-icon>
-              <core-card id="core_internal_card2" center center-justified wrap horizontal layout>
+              <core-card id="core_card2" center center-justified wrap horizontal layout>
                 <paper-input inputvalueformirror="asdadads&nbsp;" inputhasvalue="asdadads" label="Fist Name" willvalidate inputvalue="asdadads" value="asdadads" id="paper_input" layout vertical></paper-input>
                 <paper-input inputvalueformirror="mmasdas&nbsp;" inputhasvalue="mmasdas" label="Last Name" willvalidate inputvalue="mmasdas" value="mmasdas" id="paper_input1" layout vertical></paper-input>
               </core-card>
             </core-card>
-            <core-card id="core_internal_card3" center-justified vertical layout>
-              <core-card id="core_internal_card4" horizontal layout wrap center-justified>
+            <core-card id="core_card3" center-justified vertical layout>
+              <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input label="Email Address" willvalidate validationmessage="Fill in this field" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
-              <core-card id="core_internal_card4" horizontal layout wrap center-justified>
+              <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input label="Choose a Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
-              <core-card id="core_internal_card4" horizontal layout wrap center-justified>
+              <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="redeem" id="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input label="Birth Date" willvalidate validationmessage="Fill in this field" required pattern="[0-9]*/[0-9](1-2)/[0-9]*" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
             </core-card>
           </core-card>
-        
-    </template>
 
-    <script>
-        Polymer({
-            showPanel:function(event,detail,sender){
-                this.$.core_header_panel.togglePanel();
-            }
-        });
-    </script>
+  </template>
+
+  <script>
+    Polymer({
+        showPanel:function(event,detail,sender){
+            this.$.core_header_panel.togglePanel();
+        }
+    });
+
+  </script>
 
 </polymer-element>
-

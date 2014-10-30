@@ -1,3 +1,7 @@
+<link rel="import" href="../pages/login-page.html">
+<link rel="import" href="../pages/signin-page.html">
+<link rel="import" href="../pages/slider-page.html">
+
 <polymer-element name="main-menu">
   <template>
     <style>
@@ -80,7 +84,7 @@
 
               <template repeat="{{page, i in pages}}">
                 <section hash="{{page.hash}}" layout vertical center-center>
-                  <div>{{page.component}} {{route}}</div>
+                  <div>{{page.component}}</div>
                 </section>
               </template>
 
@@ -110,8 +114,8 @@
       function loadPages() {
         var DEFAULT_ROUTE = 'one';
         this.pages = [
-          {name: 'main', hash: 'one', component: 'main-page'},
-          {name: 'second', hash: 'two', component: 'second-page'}
+          {name: 'main', hash: 'one', component: '<slider-page></slider-page>'},
+          {name: 'second', hash: 'two', component: 'signin-page'}
         ];
 
         var animatedPages = this.$.pages;
