@@ -3,3 +3,5 @@
 /nbproject
 /httpdocs/img/
 
+*.jpg
+*.png

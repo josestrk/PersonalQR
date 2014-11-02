@@ -54,7 +54,7 @@
         border-bottom-left-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
         opacity: 1;
-        background-image: url(https://makeonweb.es/josestrk/img/big/bg-4.jpg);
+        background-image: url(http://makeonweb.es/josestrk/img/big/bg-4.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
       }
@@ -101,7 +101,7 @@
       }
       #core_card3 {
         width: 300px;
-        height: 220px;
+        height: 240px;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
@@ -123,6 +123,11 @@
         width: 25px;
         height: 25px;
         margin: auto;
+      }
+      #core_logo {
+        width: 70px;
+        height: 70px;
+        margin: auto 20px auto auto;
       }
       #paper_input2 {
         width: 80%;
@@ -182,10 +187,10 @@
             <paper-progress id="paper_progress"></paper-progress>
             <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
             <core-card id="core_card1" wrap center horizontal layout>
-              <core-icon icon="avatars:avatar-1" id="core_icon1" designmeta="topeka-avatar" center-justified horizontal layout></core-icon>
+              <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
               <core-card id="core_card2" center center-justified wrap horizontal layout>
-                <paper-input inputvalueformirror="asdadads&nbsp;" inputhasvalue="asdadads" label="Fist Name" willvalidate inputvalue="asdadads" value="asdadads" id="paper_input" layout vertical></paper-input>
-                <paper-input inputvalueformirror="mmasdas&nbsp;" inputhasvalue="mmasdas" label="Last Name" willvalidate inputvalue="mmasdas" value="mmasdas" id="paper_input1" layout vertical></paper-input>
+                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate value="User name" id="paper_input" layout vertical></paper-input>
+                <paper-input inputvalueformirror="Name" inputhasvalue="Name" label="Last Name" willvalidate value="Name" id="paper_input1" layout vertical></paper-input>
               </core-card>
             </core-card>
             <core-card id="core_card3" center-justified vertical layout>
@@ -196,6 +201,10 @@
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input label="Choose a Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+              </core-card>
+              <core-card id="core_card4" horizontal layout wrap center-justified>
+                <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <paper-input label="Check a Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="redeem" id="core_icon" center-justified horizontal layout wrap center></core-icon>
