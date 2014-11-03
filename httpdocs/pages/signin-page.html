@@ -189,14 +189,14 @@
             <core-card id="core_card1" wrap center horizontal layout>
               <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
               <core-card id="core_card2" center center-justified wrap horizontal layout>
-                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate value="User name" id="paper_input" layout vertical></paper-input>
-                <paper-input inputvalueformirror="Name" inputhasvalue="Name" label="Last Name" willvalidate value="Name" id="paper_input1" layout vertical></paper-input>
+                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" onblur="{{userverify}}" layout vertical></paper-input>
+                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate  id="paper_input1" layout vertical></paper-input>
               </core-card>
             </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Email Address" willvalidate validationmessage="Fill in this field" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input label="Name" willvalidate validationmessage="Fill in this field" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
@@ -219,6 +219,13 @@
     Polymer({
         showPanel:function(event,detail,sender){
             this.$.core_header_panel.togglePanel();
+        },
+        userverify: function (event,detail,sender){
+          if(document.getElementById('paper-input').value==="alevale"){
+            document.getElementById('core_card2').style.backgroundColor = "lightred";
+          }else{
+            document.getElementById('core_card2').style.backgroundColor = "lightgreen";
+          }
         }
     });
 
