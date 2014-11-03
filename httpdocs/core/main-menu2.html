@@ -2,6 +2,8 @@
 <link rel="import" href="../pages/signin-page.html">
 <link rel="import" href="../pages/slider-page.html">
 
+<link rel="import" href="my-core-scaffold.html">
+
 <polymer-element name="main-menu">
   <template>
     <style>
@@ -54,7 +56,7 @@
                     keys="up down left right space space+shift"
                     on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
-    <core-scaffold id="scaffold">
+    <my-core-scaffold id="scaffold">
 
       <nav>
         <core-toolbar>
@@ -70,11 +72,26 @@
           </template>
         </core-menu>
       </nav>
+        
+      <nav2>
+        <core-toolbar>
+          <span>Notifications</span>
+        </core-toolbar>
+        <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
+                   on-core-select="{{menuItemSelected}}">
+          <template repeat="{{page in pages}}">
+            <paper-item icon="label{{route != page.hash ? '-outline' : ''}}"
+                        label="{{page.name}}" hash="{{page.hash}}">
+              <a href="#{{page.hash}}"></a>
+            </paper-item>
+          </template>
+        </core-menu>  
+      </nav2>
 
       <core-toolbar tool flex>
         <div flex>{{selectedPage.page.label}}</div>
-        <core-icon-button icon="refresh"></core-icon-button>
-        <core-icon-button icon="add"></core-icon-button>
+        <core-icon-button icon="search"></core-icon-button>
+        <core-icon-button icon="cached"></core-icon-button>
       </core-toolbar>
 
       <div layout horizontal center-center fit>
@@ -91,7 +108,7 @@
         </core-animated-pages>
       </div>
 
-    </core-scaffold>
+    </my-core-scaffold>
 
   </template>
   <script>
@@ -181,7 +198,7 @@
         },
         menuItemSelected: function (e, detail, sender) {
           if (detail.isSelected) {
-            this.$.scaffold.closeDrawer();
+            this.my-core-scaffold.closeDrawer();
           }
         }
       });
