@@ -99,9 +99,8 @@
         background-color: rgb(255, 255, 255);
       }
       .signin_element {
-        width: 90%;
+        width: 100%;
         height: 55px;
-        padding: 10px;
         margin: auto;
         opacity: 1;
         background-color: rgb(255, 255, 255);
@@ -109,8 +108,10 @@
       .core_icon {
         width: 25px;
         height: 25px;
-        margin: auto;
+        margin: 10px;
+		color: #000000;
       }
+	  
       #core_logo {
         width: 70px;
         height: 70px;
@@ -119,6 +120,7 @@
       .signin_space {
         width: 80%;
         height: 45px;
+		padding: 0px;
       }
       #core_card5 {
         width: 100%;
@@ -181,19 +183,19 @@
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="account-circle" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <core-icon icon="account-circle" id="icon_name" class="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input class="signin_space" id="name" label="Name" willvalidate required error="Fill in your user name"></paper-input>
               </core-card>
               <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="lock" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="pass" label="Choose a Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" error="Fill in your password"></paper-input>
+                <core-icon icon="lock" id="icon_pass" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <paper-input class="signin_space" id="pass" label="Choose a Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" on-blur="{{validateSigninPassword}}" error="Fill in your password"></paper-input>
               </core-card>
               <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="lock" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <core-icon icon="lock" id="icon_pass2" class="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input class="signin_space" id="pass2" label="Check the Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" error="Repeat your password"></paper-input>
               </core-card>
               <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="redeem" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <core-icon icon="redeem" id="icon_date" class="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input class="signin_space" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" error="Fill in a valid date"></paper-input>
               </core-card>
             </core-card>
@@ -224,7 +226,12 @@
         validatePass: function() {
           console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
           return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
-        }
+        },
+		validateSigninPassword: function() {
+			var string = this.$.pass.value;
+			console.log(string);
+			return true;
+		}
     });
   </script>
 
