@@ -116,7 +116,7 @@
         height: 70px;
         margin: auto 20px auto auto;
       }
-      #paper_input2 {
+      .paper_input2 {
         width: 80%;
         height: 45px;
       }
@@ -182,19 +182,19 @@
             <core-card id="core_card3" center-justified vertical layout>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Name" willvalidate validationmessage="Fill in this field" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input class="paper_input2" id="name" label="Name" willvalidate required invalid layout vertical error="Fill in your user name"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Choose a Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input class="paper_input2" id="pass" label="Choose a Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" invalid layout vertical error="Fill in your password"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Check the Password" willvalidate validationmessage="Fill in this field" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input class="paper_input2" id="pass2" label="Check the Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" invalid layout vertical error="Repeat your password"></paper-input>
               </core-card>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="redeem" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input label="Birth Date" willvalidate validationmessage="Fill in this field" type="date" required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2|4}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+                <paper-input class="paper_input2" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" invalid layout vertical error="Fill in a valid date"></paper-input>
               </core-card>
             </core-card>
           </core-card>
