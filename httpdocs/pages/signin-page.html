@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <polymer-element name="signin-page">
-   
+
   <template>
 
       <style>
@@ -169,7 +169,7 @@
         top: 590px;
       }
     </style>
-    
+
         <core-card id="core_card" layout vertical>
             <paper-progress id="paper_progress"></paper-progress>
             <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
@@ -192,9 +192,9 @@
                 <core-icon icon="lock" class="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input class="signin_space" id="pass2" label="Check the Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" error="Repeat your password"></paper-input>
               </core-card>
-              <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="redeem" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" error="Fill in a valid date"></paper-input>
+              <core-card class="signin_element" id="date_element" horizontal layout wrap center-justified>
+                <core-icon icon="redeem" id="date_icon" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <paper-input class="signin_space" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" on-blur="{{checkDate}}" error="Fill in a valid date"></paper-input>
               </core-card>
             </core-card>
           </core-card>
@@ -204,7 +204,7 @@
 
   <script>
   Polymer({
-        showPanel:function(event,detail,sender){
+        showPanel: function(event,detail,sender){
             this.$.core_header_panel.togglePanel();
         },
         validatePattern: function(string, pattern){
@@ -235,6 +235,15 @@
         validatePass: function() {
           console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
           return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
+        },
+        checkDate: function() {
+          if (this.$.date_element.querySelector('#date').value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
+            this.$.date_icon.style.color = "#22aa00"; //correct
+            return true;
+          } else {
+            this.$.date_icon.style.color = "#cc0022"; //incorrect
+            return false;
+          }
         }
     });
   </script>
