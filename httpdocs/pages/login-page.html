@@ -106,7 +106,7 @@
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" willvalidate validationmessage="Completa este campo" required invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+          <paper-input label="Email Address" willvalidate validationmessage="Completa este campo" required pattern="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
