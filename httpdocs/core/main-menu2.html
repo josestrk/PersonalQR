@@ -2,7 +2,7 @@
 <link rel="import" href="../pages/signin-page.html">
 <link rel="import" href="../pages/slider-page.html">
 
-<link rel="import" href="my-core-scaffold.html">
+<link rel="import" href="core-scaffold/core-scaffold.html">
 
 <polymer-element name="main-menu">
   <template>
@@ -104,7 +104,6 @@
                   <div>{{page.component}}</div>
                 </section>
               </template>
-
         </core-animated-pages>
       </div>
 
@@ -198,7 +197,7 @@
         },
         menuItemSelected: function (e, detail, sender) {
           if (detail.isSelected) {
-            this.my-core-scaffold.closeDrawer();
+            this.$.scaffold.closeDrawer();
           }
         }
       });
