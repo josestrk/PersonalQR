@@ -59,7 +59,7 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 00px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
         width: 220px;
         height: 130px;
@@ -177,7 +177,7 @@
               <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
               <core-card id="core_card2" center center-justified wrap horizontal layout>
                 <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{validateUser}}" layout vertical></paper-input>
-                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{validateEmail}}" layout vertical></paper-input>
+                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card class="signin_element" horizontal layout wrap center-justified>
@@ -209,6 +209,17 @@
         },
         validatePattern: function(string, pattern){
           return string.match(pattern) !== null;
+        },
+        infochanged: function(){
+          if(this.validateUser()){
+              if(this.validateEmail()){
+                this.$.core_card2.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+              }else{
+                this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+                }
+          }else{
+              this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+          }
         },
         validateUser: function() {
           var string = this.$.paper_input.value;
