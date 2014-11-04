@@ -176,8 +176,8 @@
             <core-card id="core_card1" wrap center horizontal layout>
               <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
               <core-card id="core_card2" center center-justified wrap horizontal layout>
-                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{validationChange}}" layout vertical></paper-input>
-                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{validationChange}}" layout vertical></paper-input>
+                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{validateUser}}" layout vertical></paper-input>
+                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{validateEmail}}" layout vertical></paper-input>
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card class="signin_element" horizontal layout wrap center-justified>
@@ -203,53 +203,29 @@
   </template>
 
   <script>
-        /*var validateUsername= function(value) {
-          var a = this;
-          console.log(this);
-          if(this.$.paper_input.value==="alevale"){
-            console.log(this.$.core_card2.style);
-            return false;
-          }else{
-            console.log(this.$.core_card2.style);
-            return true;
-          }
-        };
-        var validateMail= function(value) {
-          /*if(this.$.paper_input1.value==="alevale"){
-            console.log(this.$.core_card2.style);
-            return false;
-          }else{
-            console.log(this.$.core_card2.style);
-            return true;
-          }
-        };*/
-    Polymer({
+  Polymer({
         showPanel:function(event,detail,sender){
             this.$.core_header_panel.togglePanel();
         },
-        userverify: function (event,detail,sender){
-          if(this.$.paper_input1.value==="alevale"){
-            console.log(this.$.core_card2.style);
-            this.$.core_card2.style.backgroundColor = "lightred";
-          }else{
-            this.$.core_card2.style.backgroundColor = "lightgreen";
-          }
+        validatePattern: function(string, pattern){
+          return string.match(pattern) !== null;
         },
-        mailerror: function(event,detail,sender){
-          //document.getElementById();
+        validateUser: function() {
+          var string = this.$.paper_input.value;
+          //this.$.core_card2.style.backgroundColor = "lightgreen";
+          return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
+          //con libreria no hay return, hay mensaje
         },
-        
-        validationChange: function(){
-          if(this.$.paper_input.value!=="" || this.$.paper_input1.value!==""){
-            if(this.$.paper_input.value!=="alevale" && this.$.paper_input1.value!=="alevale" ){
-              this.$.core_card2.style.backgroundColor = "lightgreen";
-            }else{
-              this.$.core_card2.style.backgroundColor = "red";
-            }
-          }
+        validateEmail: function() {
+          var string = this.$.paper_input1.value;
+          console.log(this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/));
+          return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
+        },
+        validatePass: function() {
+          console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
+          return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
         }
     });
-
   </script>
 
 </polymer-element>
