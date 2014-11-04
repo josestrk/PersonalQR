@@ -1,0 +1,36 @@
+<!--
+low rendiment but in the future will be serch all aplication
+contacts, articcles, ...
+-->
+
+<polymer-element name="search-banner">
+  <template>
+    <style>
+    :host {
+        height: 30px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        margin: 15px 15px 10px;
+        padding: 2px 5px;
+        background-color: rgb(255, 255, 255);
+    }
+    #core_icon1 {
+        height: 30px;
+        width: 10%;
+    }
+    #core_input {
+        width: 80%;
+        padding: 10px;
+    }
+    </style>
+
+    <core-icon icon="search" id="core_icon1"></core-icon>
+    <core-input willvalidate id="core_input" horizontal layout></core-input>
+    
+  </template>
+  <script>
+  Polymer({
+  });
+  </script>
+</polymer-element>
+

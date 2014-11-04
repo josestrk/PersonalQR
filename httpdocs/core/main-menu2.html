@@ -29,7 +29,7 @@
       }
 
       core-menu {
-        color: #01579b;
+        color: #FFF;
         margin: 10px 0 0 0;
       }
 
@@ -38,7 +38,7 @@
       }
 
       core-menu > paper-item.core-selected {
-        background: #e1f5fe;
+        background: #777;
       }
 
       @media all and (max-width: 480px) {
@@ -130,10 +130,10 @@
       function loadPages() {
         var DEFAULT_ROUTE = 'wall';
         this.pages = [
-          {name: 'main', hash: 'wall', component: 'wall-page'},
-          {name: 'myProfile', hash: 'myprofile', component: 'myp-component'},
-          {name: 'news', hash: 'news', component: 'news-component'},
-          {name: 'edit', hash: 'create', component: 'edit-component'}
+          {name: 'swap-driving-apps-wheel', hash: 'wall', component: 'wall-page'},
+          {name: 'person', hash: 'myprofile', component: 'myp-component'},
+          {name: 'notifications', hash: 'news', component: 'news-component'},
+          {name: 'settings',  hash: 'settings', component: 'edit-component'}
         ];
 
         var animatedPages = this.$.pages;

@@ -98,7 +98,7 @@ To position the drawer to the right, add `rightDrawer` attribute.
        * @type string
        * @default '256px'
        */
-      drawerWidth: '256px',
+      drawerWidth: '275px',
 
       /**
        * Max-width when the panel changes to narrow layout.
@@ -167,7 +167,7 @@ To position the drawer to the right, add `rightDrawer` attribute.
     },
 
     // Whether the transition is enabled.
-    transition: false,
+    transition: true,
 
     // How many pixels on the side of the screen are sensitive to edge swipes and peek.
     edgeSwipeSensitivity: 15,
@@ -331,7 +331,7 @@ To position the drawer to the right, add `rightDrawer` attribute.
       } else {
         s.webkitTransform = this.transformForTranslateX(translateX);
       }
-    },
+    }
 
   });
 
