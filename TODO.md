@@ -11,25 +11,6 @@ Implementamos esta libreria?? la verdad esq estan muy bien los ejemplo visuales 
 https://github.com/akquinet/jquery-toastmessage-plugin
 
 ###############
-
----------------
-a:josestrk
-
-f:core/core-menu core/core-menu2 core/my-core-... index2.html
-
-estoy añadiendo el menu 2 muchos fallos de javascript algo de la herencia dentro de polymer
-
-###############
-
----------------
-a:josestrk
-
-f:/login-page
-
-estoy validar datos
-
-###############
-
 ---------------
 a:alevale
 
@@ -38,4 +19,22 @@ f:/singin-page
 haciendo validaciones de datos y funciones visuales, casi conseguido
 
 ###############
+---------------
+a: josestrk
+f: core-slider
+he encontrado una libreria superchula que me ha dejado loquisimo la podeis ver aki:https://github.com/josestrk/Vide
 
+estaria bien implementarla en slider-page
+###############
+---------------
+a: josestrk
+f: /core/search-banner
+fallo con la captura de teclado de /core/dw-bar y main-menu
+¿que hago?
+###############
+---------------
+a: josestrk
+f: /core/main-menu
+limpiar js y menuItemSelected
+donde debo heredar?
+###############

@@ -12,7 +12,9 @@ contacts, articcles, ...
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: 15px 15px 10px;
         padding: 2px 5px;
-        background-color: rgb(255, 255, 255);
+        border: 2px solid #fff;
+        color: white;
+        font-weight: 300;
     }
     #core_icon1 {
         height: 30px;
@@ -24,12 +26,20 @@ contacts, articcles, ...
     }
     </style>
 
+    <!-- Keyboard nav controller. -->
+    <core-a11y-keys id="keys" target="{{parentElement}}"
+                    keys="up down left right space space+shift"
+                    on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
+    
     <core-icon icon="search" id="core_icon1"></core-icon>
     <core-input willvalidate id="core_input" horizontal layout></core-input>
     
   </template>
   <script>
   Polymer({
+       keyHandler: function (e, detail, sender) {
+           
+       }
   });
   </script>
 </polymer-element>
