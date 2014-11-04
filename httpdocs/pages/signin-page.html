@@ -19,20 +19,6 @@
         box-sizing: border-box;
         font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
       }
-      #core_card {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        left: 0px;
-        top: 0px;
-        opacity: 1;
-        background-color: rgb(63, 159, 221);
-      }
       #paper_progress {
         width: 100%;
         background-color: rgb(169, 252, 78);
@@ -46,8 +32,9 @@
         background-color: rgb(0, 188, 212);
       }
       #core_card1 {
+        position: absolute;
         width: 100%;
-        height: 350px;
+        height: 100%;
         border-top-left-radius: 2px;
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
@@ -183,7 +170,7 @@
       }
     </style>
     
-          <core-card id="core_card" layout vertical>
+        <core-card id="core_card" layout vertical>
             <paper-progress id="paper_progress"></paper-progress>
             <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
             <core-card id="core_card1" wrap center horizontal layout>
@@ -192,7 +179,6 @@
                 <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{validationChange}}" layout vertical></paper-input>
                 <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{validationChange}}" layout vertical></paper-input>
               </core-card>
-            </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card id="core_card4" horizontal layout wrap center-justified>
                 <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
@@ -212,6 +198,7 @@
               </core-card>
             </core-card>
           </core-card>
+        </core-card>
 
   </template>
 
