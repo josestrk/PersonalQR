@@ -1,5 +1,11 @@
 En este fichero vamos a ir apuntando las cosas que nos dejamos a demio hacer de vez en cuando para tener un pequeño seguimiento.
-
+FORMATO
+----------[??? duda al profesor] comienzo de tiket
+a: autor
+f: fichero
+!: resuelto (autor)
+comentario
+########## fin de tiket
 
 ---------------
 a:alevale
@@ -37,4 +43,24 @@ a: josestrk
 f: /core/main-menu
 limpiar js y menuItemSelected
 donde debo heredar?
+###############
+---------------
+a: alex
+f: /page/login
+Mediaqueris
+###############
+---------------
+a: david
+f: /page/signin
+create component  /core/form-field
+###############
+---------------
+a: jose
+f: /page/wall
+create component  /core/form-field
+###############
+---------------
+DO EXPRESS
+DO BACKGROUND MEDIAQUERIS
+DO OPENSIFT
 ###############

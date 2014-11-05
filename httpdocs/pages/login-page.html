@@ -1,3 +1,4 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
@@ -98,6 +99,14 @@
         height: 300px;
         left: 1890px;
         top: 590px;
+      }
+      @media(max-width:300px){
+          #core_card_main{
+              position: absolute;
+              top: 0px;
+              bottom: 50px;
+              margin: 0px 0px 0px 0px;
+          }
       }
     </style>
     <core-card id="core_card_main" vertical layout start-justified center>
