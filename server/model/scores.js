@@ -1,4 +1,4 @@
-//var Score = require('./score').Score;
+var Score = require('./score').Score;
 
 var scores = {};
 var numScores = 0;
