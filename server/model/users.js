@@ -1,24 +1,26 @@
-var Score = require('./score').Score;
+var User = require('./user').User;
+//importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
 
-var scores = {};
-var numScores = 0;
+var users = {};//te creas un array temporal en el que ir guardando los usuarios, (para cuando llames al metodogetall)
+var numUsers = 0;//para llamar al id de uno concreto
 
 module.exports = {
 	create: function() {
-		var score = new Score(String(numScores));
-		scores[numScores] = score;
-		numScores++;
-		return score;
+		var temporaluser = new User(String(numUsers));
+		//creas un user nuevo, por lo que solo pasas el id y se creaa sus valores por defecto
+		users[numUsers] = temporaluser;
+		numUsers++;
+		return temporaluser;
 	},
 	get: function(scoreId) {
-		return scores[scoreId];
+		return users[scoreId];
 	},
 	del: function delScore(scoreId) {
-		delete scores[scoreId];
+		delete users[scoreId];
 	},
 	getAll: function() {
-		return Object.keys(scores).map(function(idScore) {
-			return scores[idScore].toJSON();
+		return Object.keys(users).map(function(idScore) {
+			return users[idScore].toJSON();
 		});
 	}
 };

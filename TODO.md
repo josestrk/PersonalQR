@@ -6,12 +6,8 @@ f: fichero
 !: resuelto (autor)
 comentario
 ########## fin de tiket
----------------
-a:alevale
-DUDA GENERAL!
-Implementamos esta libreria?? la verdad esq estan muy bien los ejemplo visuales que tiene!
-https://github.com/akquinet/jquery-toastmessage-plugin
-###############
+
+
 ---------------
 a:alevale
 f:/singin-page
@@ -41,4 +37,10 @@ create component  /core/form-field
 ---------------
 DO EXPRESS
 DO OPENSIFT
+###############
+---------------
+a:alevale
+f:/server/personalqr.js
+realizada toda la funcionalidad de añadir usuario vacio y de recuperar todos, y solo un usuario
+falta solo los setters, y saber como pasar parametros
 ###############

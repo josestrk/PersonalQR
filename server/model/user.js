@@ -1,4 +1,4 @@
-function User(idScore) {
+function User(idUser) {
   var _user = {
 		_id: idUser,
     username:  "",
@@ -10,45 +10,45 @@ function User(idScore) {
     following: 0
   };
 
-  this.setfollowing = function(data){
+    this.setfollowing = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[following] = data;
-    return this
+    _user.following = data;
+    return this;
   };
 
   this.setfollowers = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[followers] = data;
-    return this
+    _user.followers = data;
+    return this;
   };
 
   this.setusername = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[username] = data;
+    _user.username = data;
     return this;
   };
 
   this.setname = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[name] = data;
+    _user.name = data;
     return this;
   };
 
   this.setmail = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[mail] = data;
+    _user.mail = data;
     return this;
   };
 
   this.setpassword = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[password] = data;
+    _user.password = data;
     return this;
   };
 
   this.setbdate = function(data){
     //antes de guardar un valor verificar que sea valido
-    _user[bdate] = data;
+    _user.bdate = data;
     return this;
   };
 
