@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var scoreModel = require('../model/scores');
+var scoreModel = require('../model/users');
 
 /* ROUTES */
-router.post('/', createScore);
+router.post('/', createUser);//metodo asociado a la ruta introducida
 router.put('/:scoreId/basket', scoreBasket);
 router.put('/:scoreId/set', setScore);
 router.get('/:scoreId', getScore);
@@ -16,7 +16,7 @@ router.get('/', getAll);
 router.param('scoreId', checkScoreExists);
 /* END PARAMS */
 
-function createScore(req, res) {
+function createUser(req, res) {
   var score = scoreModel.create();
 	res.json(score.toJSON());
 }

@@ -1,4 +1,4 @@
-var debug = require('debug')('PersonalQr');
+var debug = require('debug')('personalqr');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
