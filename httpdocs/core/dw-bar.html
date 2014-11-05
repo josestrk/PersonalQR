@@ -2,7 +2,7 @@
 <link rel="import" href="id-card.html">
 <link rel="import" href="search-banner.html">
 
-<polymer-element name="dw-bar">
+<polymer-element name="dw-bar" attributes="pages">
 
   <template>
     <style>    
@@ -73,19 +73,8 @@
 
   <script>
      (function () {
-            function loadPages() {
-              var DEFAULT_ROUTE = 'wall';
-              this.pages = [
-                {name:'Wall',logo: 'info', hash: 'wall', component: 'wall-page'},
-                {name:'My profile',logo: 'social:person', hash: 'myprofile', component: 'myp-page'},
-                {name:'Notificiacions',logo: 'bookmark', hash: 'news', component: 'news-page'},
-                {name:'Config',logo: 'check-circle',  hash: 'settings', component: 'edit-page'}
-              ];
-              this.route = this.route || DEFAULT_ROUTE; // Select initial route.
-            }
       Polymer({
         domReady: function () {
-          loadPages.bind(this)();
         }
       });
     }());

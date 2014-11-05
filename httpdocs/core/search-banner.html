@@ -25,11 +25,6 @@ contacts, articcles, ...
         padding: 10px;
     }
     </style>
-
-    <!-- Keyboard nav controller. -->
-    <core-a11y-keys id="keys" target="{{parentElement}}"
-                    keys="up down left right space space+shift"
-                    on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
     
     <core-icon icon="search" id="core_icon1"></core-icon>
     <core-input willvalidate id="core_input" horizontal layout></core-input>
@@ -37,9 +32,6 @@ contacts, articcles, ...
   </template>
   <script>
   Polymer({
-       keyHandler: function (e, detail, sender) {
-           
-       }
   });
   </script>
 </polymer-element>

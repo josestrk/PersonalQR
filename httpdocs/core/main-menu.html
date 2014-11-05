@@ -35,13 +35,13 @@
 
     <!-- Keyboard nav controller. -->
     <core-a11y-keys id="keys" target="{{parentElement}}"
-                    keys="up down left right space space+shift"
+                    keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space"
                     on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
     <my-core-scaffold id="scaffold">
     
       <nav>
-        <dw-bar></dw-bar>
+        <dw-bar pages="{{pages}}"></dw-bar>
       </nav>
 
       <core-toolbar tool flex>
@@ -140,7 +140,7 @@
               pages.selectNext();
               break;
             case 'space':
-              detail.shift ? pages.selectPrevious() : pages.selectNext();
+              detail.ctrl ? pages.selectPrevious() : pages.selectNext();
               break;
           }
         },
