@@ -1,0 +1,94 @@
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="id-card.html">
+<link rel="import" href="search-banner.html">
+
+<polymer-element name="dw-bar">
+
+  <template>
+    <style>    
+      #core_card {
+        width: 270px;
+        height: auto;
+      }
+      #core_icon {
+        height: 64px;
+        width: 64px;
+      }
+      #paper_icon_button {
+        margin: auto 0px 0px;
+      }
+      core-menu {
+        color: #FFF;
+        margin: 0px 0px auto 0px;
+        padding: 10px
+      }
+
+      core-menu > paper-item {
+        transition: all 300ms ease-in-out;
+      }
+
+      core-menu > paper-item.core-selected {
+        background: #777;
+      }
+      
+      body /deep/ core-toolbar {
+        background-color: #03a9f4;
+        color: #fff;
+      }
+
+    </style>
+    
+    <!-- Route controller. -->
+    <flatiron-director route="{{route}}" autoHash></flatiron-director>
+
+        <core-toolbar>
+              <span>MyProfile</span>
+        </core-toolbar>
+
+    <core-card id="core_card" layout vertical>
+        <search-banner horizontal layout center-justified center></search-banner>
+        <id-card layout vertical center center-justified>
+          <img width="70" height="70" src="../../img/avatar-01.svg">
+          <h2>User</h2>
+          <p>300 followers • 100 following</p>  
+          <!--<img src="{{post.avatar}}" width="70" height="70">
+          <h2>{{post.username}}</h2>
+          <p>{{post.text}}</p>-->
+        </id-card>
+    </core-card>
+        
+    <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
+           on-core-select="{{menuItemSelected}}">
+        <template repeat="{{page in pages}}">
+            <paper-item icon="{{page.logo}}{{route != page.hash ? '' : '-outline'}}"
+                        label="{{page.name}}" hash="{{page.hash}}">
+              <a href="#{{page.hash}}"></a>
+            </paper-item>
+        </template>
+    </core-menu>
+    <core-card id="core_card" vertical layout end-justified end>    
+        <paper-icon-button icon="exit-to-app" id="paper_icon_button" ></paper-icon-button>
+    </core-card>
+  </template>
+
+  <script>
+     (function () {
+            function loadPages() {
+              var DEFAULT_ROUTE = 'wall';
+              this.pages = [
+                {name:'Wall',logo: 'info', hash: 'wall', component: 'wall-page'},
+                {name:'My profile',logo: 'social:person', hash: 'myprofile', component: 'myp-page'},
+                {name:'Notificiacions',logo: 'bookmark', hash: 'news', component: 'news-page'},
+                {name:'Config',logo: 'check-circle',  hash: 'settings', component: 'edit-page'}
+              ];
+              this.route = this.route || DEFAULT_ROUTE; // Select initial route.
+            }
+      Polymer({
+        domReady: function () {
+          loadPages.bind(this)();
+        }
+      });
+    }());
+  </script>
+
+</polymer-element>

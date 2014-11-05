@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <polymer-element name="signin-page">
-   
+
   <template>
 
       <style>
@@ -59,7 +59,7 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 00px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
         width: 220px;
         height: 130px;
@@ -171,7 +171,7 @@
         top: 590px;
       }
     </style>
-    
+
         <core-card id="core_card" layout vertical>
             <paper-progress id="paper_progress"></paper-progress>
             <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
@@ -179,7 +179,7 @@
               <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
               <core-card id="core_card2" center center-justified wrap horizontal layout>
                 <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{validateUser}}" layout vertical></paper-input>
-                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{validateEmail}}" layout vertical></paper-input>
+                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <core-card class="signin_element" horizontal layout wrap center-justified>
@@ -194,9 +194,9 @@
                 <core-icon icon="lock" id="icon_pass2" class="core_icon" center-justified horizontal layout wrap center></core-icon>
                 <paper-input class="signin_space" id="pass2" label="Check the Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" error="Repeat your password"></paper-input>
               </core-card>
-              <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="redeem" id="icon_date" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" error="Fill in a valid date"></paper-input>
+              <core-card class="signin_element" id="date_element" horizontal layout wrap center-justified>
+                <core-icon icon="redeem" id="date_icon" class="core_icon" center-justified horizontal layout wrap center></core-icon>
+                <paper-input class="signin_space" id="date" label="Birth Date" willvalidate required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$" on-blur="{{checkDate}}" error="Fill in a valid date"></paper-input>
               </core-card>
             </core-card>
           </core-card>
@@ -206,11 +206,22 @@
 
   <script>
   Polymer({
-        showPanel:function(event,detail,sender){
+        showPanel: function(event,detail,sender){
             this.$.core_header_panel.togglePanel();
         },
         validatePattern: function(string, pattern){
           return string.match(pattern) !== null;
+        },
+        infochanged: function(){
+          if(this.validateUser()){
+              if(this.validateEmail()){
+                this.$.core_card2.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+              }else{
+                this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+                }
+          }else{
+              this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+          }
         },
         validateUser: function() {
           var string = this.$.paper_input.value;
@@ -227,11 +238,15 @@
           console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
           return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
         },
-		validateSigninPassword: function() {
-			var string = this.$.pass.value;
-			console.log(string);
-			return true;
-		}
+        checkDate: function() {
+          if (this.$.date_element.querySelector('#date').value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
+            this.$.date_icon.style.color = "#22aa00"; //correct
+            return true;
+          } else {
+            this.$.date_icon.style.color = "#cc0022"; //incorrect
+            return false;
+          }
+        }
     });
   </script>
 
