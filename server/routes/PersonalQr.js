@@ -12,7 +12,7 @@ router.delete('/:scoreId', delScore);
 router.get('/', getAll);
 /* END ROUTES */
 
-/* PARAMS */
+/* PARAMS  */
 router.param('scoreId', checkScoreExists);
 /* END PARAMS */
 
