@@ -1,13 +1,21 @@
-En este fichero vamos a ir apuntando las cosas que nos dejamos a demio hacer de vez en cuando para tener un pequeño seguimiento.
-FORMATO
+En este fichero vamos a ir apuntando las cosas que nos dejamos a medio hacer de vez en cuando para tener un pequeño seguimiento.
+FORMATO.
+Nunca se borran los TODO, y hay que organizarlos de arriba a abajo, lo mas antiguo sera lo que este mas abajo de la pagina
+
+
 ----------[??? duda al profesor] comienzo de tiket
 a: autor
 f: fichero
+l: numero de linea a revisar
 !: resuelto (autor)
 comentario
 ########## fin de tiket
 
-
+---------------
+a:alevale
+f:/lib/jquery-toast/
+montar la libreria de jquery-toast
+###############
 ---------------
 a:alevale
 f:/singin-page
@@ -15,9 +23,9 @@ haciendo validaciones de datos y funciones visuales, casi conseguido
 ###############
 ---------------
 a: josestrk
-f: core-slider
+f: /core-slider
 he encontrado una libreria superchula que me ha dejado loquisimo la podeis ver aki:https://github.com/josestrk/Vide
-estaria bien implementarla en slider-page
+implementacion de la libreria
 ###############
 ---------------
 a: alex
