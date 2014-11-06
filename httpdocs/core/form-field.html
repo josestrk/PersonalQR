@@ -14,7 +14,7 @@
       font-size: 1.2rem;
       font-weight: 300;
     }
-	
+
 	core-card {
 		width: auto;
 		height: 55px;
@@ -35,7 +35,7 @@
 		height: 45px;
 		padding: 0px;
 	}
-	
+
 	core-icon.valid {
 		color: #22aa00;
 	}
@@ -55,12 +55,12 @@
 			id="field"
 			label="{{label}}"
 			willvalidate required
-			on-blur="{{check}}"
+      on-keypress="{{enter}}"
 			error="{{errorMsg}}">
 		</paper-input>
 	</core-card>
 
-    <content></content>   
+    <content></content>
 	</template>
 	<script>
 	Polymer('form-field', {
@@ -73,6 +73,17 @@
 		errorMsg: (function() {
 			return 'Fill in a valid date';
 		})(),
+    /*enter: function(event, detail, sender) {
+      var code = event.keyCode;
+      if (code === 13) {
+          console.log(this.$.field);
+          this.$.field.check();
+      }
+    },*/
+    ready: function() {
+      this.addEventListener('blur', this.check);
+      this.addEventListener('keypress', this.check);
+    },
 		check: function(event, detail, sender) {
 			if (this.$.field.value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
 				this.$.icon.classList.add("valid");
