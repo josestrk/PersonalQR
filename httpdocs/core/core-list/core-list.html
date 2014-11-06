@@ -1,0 +1,154 @@
+<link rel="import" href="../core-icon-button/core-icon-button.html">
+<link rel="import" href="../core-toolbar/core-toolbar.html">
+<link rel="import" href="../core-scroll-header-panel/core-scroll-header-panel.html">
+<link rel="import" href="../core-field/core-field.html">
+<link rel="import" href="../core-icon/core-icon.html">
+<link rel="import" href="../core-input/core-input.html">
+<link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="../core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="../core-animated-pages/transitions/slide-down.html">
+<link rel="import" href="../core-animated-pages/transitions/slide-up.html">
+<link rel="import" href="../core-animated-pages/transitions/tile-cascade.html">
+<link rel="import" href="../core-header-panel/core-header-panel.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-tabs/paper-tab.html">
+<link rel="import" href="../core-tooltip/core-tooltip.html">
+
+<polymer-element name="my-element">
+
+  <template>
+    <style>    
+      :host {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      #core_card {
+        position: absolute;
+        width: 100%;
+        height: 150px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        background-color: rgb(60, 60, 60);
+      }
+      #core_scroll_header_panel {
+        width: 380px;
+        height: 720px;
+        left: 0px;
+        top: 0px;
+        position: absolute;
+      }
+      #core_toolbar {
+        color: rgb(241, 241, 241);
+        fill: rgb(241, 241, 241);
+        background-color: rgb(66, 133, 244);
+      }
+      #section {
+        height: 5000px;
+        background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
+      }
+      #core_field {
+        left: 0px;
+        position: absolute;
+        top: 150px;
+        width: 85%;
+      }
+      #core_input {
+        padding: 8px;
+        display: block;
+        background-color: rgb(255, 255, 255);
+      }
+      #core_header_panel {
+        width: 100%;
+        height: 100%;
+      }
+      #core_toolbar1 {
+        color: rgb(255, 255, 255);
+        background-color: rgb(79, 125, 201);
+      }
+      #core_animated_pages {
+        width: 420px;
+        height: 582px;
+        overflow: hidden;
+        left: 400px;
+        top: 20px;
+        position: absolute;
+        margin: 10px 15px;
+        background-color: rgb(238, 238, 238);
+      }
+      #core_tooltip {
+        left: 185px;
+        top: 400px;
+        position: absolute;
+      }
+      #paper_toast {
+        left: 1210px;
+        top: 680px;
+      }
+      #paper_tab {
+        width: 120px;
+        height: 40px;
+        left: 1240px;
+        top: 710px;
+      }
+      #paper_tabs {
+        width: 100%;
+        color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
+        left: 0px;
+        position: relative;
+        top: 0px;
+        background-color: rgb(0, 188, 212);
+      }
+      #core_card1 {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        left: 0px;
+        top: 0px;
+        background-color: rgb(255, 255, 255);
+      }
+    </style>
+
+    <core-animated-pages selectedindex="0" notap id="core_animated_pages">
+      <section id="section1" layout horizontal center center-justified active>
+        <core-header-panel mode="standard" id="core_header_panel">
+          <core-toolbar id="core_toolbar1" class="tall">
+            <core-icon-button icon="menu" id="core_icon_button4"></core-icon-button>
+            <div id="div1">Header</div>
+          </core-toolbar>
+          <paper-tabs selected="4" id="paper_tabs" vertical layout center-justified>
+            <paper-tab id="paper_tab">ITEM ONE</paper-tab>
+            <paper-tab id="paper_tab1">ITEM TWO</paper-tab>
+            <paper-tab id="paper_tab2">ITEM THREE</paper-tab>
+            <paper-tab id="paper_tab3">ITEM FOUR</paper-tab>
+          </paper-tabs>
+          <core-card id="core_card1" layout vertical>
+            <core-tooltip id="core_tooltip"></core-tooltip>
+          </core-card>
+        </core-header-panel>
+      </section>
+      <section id="section2">
+      </section>
+      <section id="section3">
+      </section>
+    </core-animated-pages>
+    
+  </template>
+
+  <script>
+
+    Polymer({
+      
+    });
+
+  </script>
+
+</polymer-element>
