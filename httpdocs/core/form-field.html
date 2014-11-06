@@ -65,6 +65,7 @@
 	<script>
   (function() {
     var values = {};
+    var regexp = '';
 
     Polymer('form-field', {
       ready: function() {
@@ -73,6 +74,9 @@
           var attr = this.attributes[i];
           values[attr.nodeName] = attr.value;
         }
+        regexp = (function() {
+          return new RegExp(values['regexp']);
+        })();
 
         this.addEventListener('blur', this.check);
         this.addEventListener('keypress', this.check);
@@ -85,7 +89,7 @@
         }
       },*/
       check: function(event, detail, sender) {
-        if (this.$.field.value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
+        if (this.$.field.value.match(regexp)) {
           this.$.icon.classList.add("valid");
           this.$.icon.classList.remove("invalid");
           return true;

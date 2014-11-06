@@ -36,6 +36,7 @@ Media-queris
 a: david
 f: /page/signin
 create component  /core/form-field
+Envío datos desde fuera como atributos HTML. Falta controlar mejor el onkeypress y comprobar las validaciones.
 ###############
 ---------------
 a: jose

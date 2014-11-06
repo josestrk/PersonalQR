@@ -190,23 +190,33 @@
                 <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
-              <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="account-circle" id="icon_name" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="name" label="Name" willvalidate required error="Fill in your user name"></paper-input>
-              </core-card>
-              <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="lock" id="icon_pass" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="pass" label="Choose a Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" on-blur="{{validateSigninPassword}}" error="Fill in your password"></paper-input>
-              </core-card>
-              <core-card class="signin_element" horizontal layout wrap center-justified>
-                <core-icon icon="lock" id="icon_pass2" class="core_icon" center-justified horizontal layout wrap center></core-icon>
-                <paper-input class="signin_space" id="pass2" label="Check the Password" willvalidate required type="password" pattern="^(?=.*\d).{4,8}$" error="Repeat your password"></paper-input>
-              </core-card>
-				      <form-field label="Birth date" icon="redeem" errorMsg="Fill in a valid date"></form-field>
+              <form-field
+                label="Name"
+                icon="account-circle"
+                errorMsg=""
+                regexp=""
+              ></form-field>
+              <form-field
+                label="Choose password"
+                icon="lock"
+                errorMsg="Must contain between 6 and 16 characters"
+                regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+              ></form-field>
+              <form-field
+                label="Re-enter password"
+                icon="lock"
+                errorMsg="Must be the same password"
+                regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+              ></form-field>
+              <form-field
+                label="Birth date"
+                icon="redeem"
+                errorMsg="Fill in a valid date"
+                regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
+              ></form-field>
             </core-card>
           </core-card>
         </core-card>
-
   </template>
 
   <script>
