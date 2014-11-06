@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+
+<polymer-element name="form-field">
+  <template>
+    <style>
+    :host {
+      display: block;
+      position: relative;
+      padding: 20px;
+      width: 100%;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+	core-icon.valid {
+		color: #22aa00;
+	}
+	core-icon.invalid {
+		color: #cc0022;
+	}
+    </style>
+
+	<core-card
+		horizontal layout wrap center-justified>
+		<core-icon
+			id="icon"
+			icon="redeem"
+			center-justified horizontal layout wrap center>
+		</core-icon>
+		<paper-input
+			id="date"
+			label="Birth Date"
+			willvalidate required
+			pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
+			on-blur="{{check}}"
+			error="Fill in a valid date">
+		</paper-input>
+	</core-card>
+	
+    <!--<div class="card-header" layout horizontal center>
+
+      <content select="img"></content>
+      <content select="h2"></content>
+
+    </div>
+
+    <core-icon-button
+      id="favicon"
+      icon="favorite"
+      on-tap="{{favoriteTapped}}">
+    </core-icon-button>-->
+
+    <content></content>   
+  </template>
+  <script>
+  Polymer({
+	check: function(event, detail, sender) {
+		if (this.$.date.value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
+			this.$.icon.classList.add("valid");
+			this.$.icon.classList.remove("invalid");
+			return true;
+        } else {
+			this.$.icon.classList.add("invalid");
+			this.$.icon.classList.remove("valid");
+			return false;
+        }
+	}
+  });
+  </script>
+</polymer-element>
