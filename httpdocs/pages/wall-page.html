@@ -18,14 +18,31 @@
         background-color: rgb(255, 255, 255);
       }
     </style>
-    <core-list></core-list>
+    <core-list lista="lista"></core-list>
   </template>
 
     <script>
-    Polymer({
-      
-    });
+    (function () {
+        function loadPages() {
+          var DEFAULT_ROUTE = 'wall';
+          this.lista = [
+            {titele:'Title Post', hash: 'idpost1', post: 'id1_idpost1', date: '1'},
+            {titele:'Title Post', hash: 'idpost2', post: 'id3_idpost2', date: '2'},
+            {titele:'Title Post', hash: 'idpost3', post: 'id1_idpost3', date: '3'},
+            {titele:'Title Post', hash: 'idpost4', post: 'id2_idpost4', date: '4'}
+          ];
 
+          var animatedPages = this.$.pages;
+
+          this.pages.forEach(function (page) {
+            animatedPages.appendChild(createPage(page));
+          });
+          this.route = this.route || DEFAULT_ROUTE; // Select initial route.
+        }
+        Polymer({
+
+        });
+    }());
   </script>
 
 </polymer-element>

@@ -17,7 +17,7 @@
 <link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../core-artc/core-artc.html">
 
-<polymer-element name="core-list">
+<polymer-element name="core-list" atribute="lista">
 
   <template>
     <style>    
@@ -118,16 +118,30 @@
       }
     </style>
     <section id="article" content>
-        <core-artc></core-artc>
+        <template repeat="{{item in lista}}"></template>
     </section>
 
   </template>
 
   <script>
+    (function () {
+        function createPage(page) {
+          var section = document.createElement('core-artc');
+          section.setAttribute('layout', '');
+          section.setAttribute('vertical', '');
+          section.setAttribute('center-center', '');
+          section.setAttribute('hash', page.hash);
 
-    Polymer({
-      
-    });
+          var div = document.createElement('div');
+          var component = document.createElement(page.component);
+          div.appendChild(component);
+          section.appendChild(div);
+          return section;
+        }
+        Polymer({
+
+        });
+    })();
 
   </script>
 
