@@ -54,10 +54,10 @@
 		<paper-input
 			id="field"
 			label="{{label}}"
+			bound="{{bound}}"
 			willvalidate required
-      on-keypress="{{enter}}"
-			error="{{errorMsg}}"
-      on-blur="{{verify}}">
+			on-keypress="{{enter}}"
+			error="{{errorMsg}}">
 		</paper-input>
 	</core-card>
 
@@ -78,6 +78,8 @@
         regexp = (function() {
           return new RegExp(values['regexp']);
         })();
+		
+		console.log("bound: " + values['bound']);
 
         this.addEventListener('blur', this.check);
         this.addEventListener('keypress', this.check);
