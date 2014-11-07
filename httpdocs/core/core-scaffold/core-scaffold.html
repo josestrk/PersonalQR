@@ -107,11 +107,11 @@ To have the content fit to the main area, use `fit` attribute.
 
       <core-toolbar>
         <template if="{{!rightDrawer}}">
-          <core-icon-button id="menuButton" icon="account-circle" on-tap="{{togglePanel}}"></core-icon-button>
+          <core-icon-button id="menuButton" icon="more-vert" on-tap="{{togglePanel}}"></core-icon-button>
         </template>
         <content select="[tool]"></content>
         <template if="{{rightDrawer}}">
-          <core-icon-button id="menuButton" icon="account-circle" on-tap="{{togglePanel2}}"></core-icon-button>
+          <core-icon-button id="menuButton" icon="more-vert" on-tap="{{togglePanel2}}"></core-icon-button>
         </template>
       </core-toolbar>
       
@@ -153,7 +153,7 @@ To have the content fit to the main area, use `fit` attribute.
 
       disableSwipe: false,
        
-      mode: {value: 'standard', reflect: true},
+      mode: {value: 'waterfall-tall', reflect: true},
     },
     
     ready: function() {
