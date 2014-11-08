@@ -16,16 +16,18 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
 
-<polymer-element name="core-artc">
+<!--
+un objeto atriccle tiene:
+1. tittle
+2. [bgimg]
+3. info
+4. tp(foto,texto,video)
+-->
+
+<polymer-element name="core-artc" attributes="idpost">
 
   <template>
     <style>    
-      :host {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-      }
       #core_card {
         position: absolute;
         width: 100%;
@@ -44,6 +46,7 @@
         color: rgb(241, 241, 241);
         fill: rgb(241, 241, 241);
         background-color: rgb(66, 133, 244);
+        background-image: {{idpost.bgimg}};
       }
       #section {
         height: 5000px;
@@ -117,12 +120,11 @@
       }
     </style>
 
-    <core-animated-pages selectedindex="0" notap id="core_animated_pages">
-      <section id="section1" layout horizontal center center-justified active>
+    <core-card id="core-card">
         <core-header-panel mode="standard" id="core_header_panel">
           <core-toolbar id="core_toolbar1" class="tall">
             <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-            <div id="div1">Title Post</div>
+            <div id="div1">{{idpost.tittle}}</div>
           </core-toolbar>
           <paper-tabs selected="4" id="paper_tabs" vertical layout center-justified>
             <paper-tab id="paper_tab"><core-icon-button icon="favorite-outline" id="core_icon_button1"></core-icon-button>Like</paper-tab>
@@ -134,20 +136,24 @@
           </core-card>
           
         </core-header-panel>
-      </section>
-      <section id="section2">
-      </section>
-      <section id="section3">
-      </section>
-    </core-animated-pages>
+        <!-- tipo de artc {{idpost.tp}} -->
+        <p>{{idpost.info}}</p>
+    </core-card>
     
   </template>
 
   <script>
-
-    Polymer({
-      
-    });
+    (function () {
+        function loadPost() {
+            this.idpost = { tittle:'post1',bgimg:'ej1.jpg',info:'ejemplo1',tp:'text' };
+            var post = this.$.idpost;
+        }
+        Polymer({
+            domReady: function () {
+                loadPages.bind(this)();
+            }
+        });
+    })();
 
   </script>
 
