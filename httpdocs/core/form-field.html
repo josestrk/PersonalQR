@@ -54,7 +54,6 @@
 		<paper-input
 			id="field"
 			label="{{label}}"
-			bound="{{bound}}"
 			willvalidate required
 			on-keypress="{{enter}}"
 			error="{{errorMsg}}">
@@ -82,15 +81,8 @@
 		console.log("bound: " + values['bound']);
 
         this.addEventListener('blur', this.check);
-        this.addEventListener('keypress', this.check);
+        this.addEventListener('keydown', this.keydown);
       },
-      /*enter: function(event, detail, sender) {
-        var code = event.keyCode;
-        if (code === 13) {
-            console.log(this.$.field);
-            this.$.field.check();
-        }
-      },*/
       check: function(event, detail, sender) {
         if(this.$.field.label==="Re-enter password" ){
         }else{
@@ -104,6 +96,13 @@
             return false;
           }
         }
+      },
+      keydown: function(event, detail, sender) {
+        //console.log(event.keyCode);
+		console.log(this.$.field);
+		if(event.keyCode === 13) {
+			this.check();
+		}
       }
     });
   })();
