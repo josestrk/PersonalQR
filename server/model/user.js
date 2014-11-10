@@ -1,6 +1,89 @@
+//articulos(idart, titulo, idusuario, fecha, contenido, tags, topics)
+//comentarios(idcom, idusuario, fecha, contenido, idart)
+//siguiendo(idart, usuario)
+
+//cuando se genere un nuveo comentario al articulo asociado,
+//habra que consultar la tabla de siguiendo y generar un evento para las paersonas que esten en la tabla
+
+
+/*
+db.articles.find( { id_auto: /^bc/ } )
+esto es similar a un Select * from articles where id_autor="bc%"
+http://docs.mongodb.org/manual/reference/sql-comparison/
+*/
+
+function Article(idArticle) {
+  var _article = {
+		_id: idArticle,
+    id_autor:  "",
+    tittle:  "",
+    content: "",
+    tags: "",
+    topics: "",
+    date : ""
+  };
+
+  this.setall= function(autor, titulo, contenido, t, topicos, fecha){
+    _article.id_autor = autor;
+    _article.tittle = titulo;
+    _article.content = contenido;
+    _article.tags = t;
+    _article.topics = topicos;
+    _article.date = fecha;
+    return this;
+  };
+
+  this.setdate = function(data){
+    //no se como hacer la fecha
+    _article.date = data;
+    return this;
+  };
+
+  this.setid_autor = function(data){
+    _article.id_autor = data;
+    return this;
+  };
+
+  this.settittle = function(data){
+    _article.tittle = data;
+    return this;
+  };
+
+  this.setcontent = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.content = data;
+    return this;
+  };
+
+  this.settags = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.tags = data;
+    return this;
+  };
+
+  this.settopics = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.topics = data;
+    return this;
+  };
+
+  this.getuser = function(idArticle) {
+    return _article[idArticle];
+  };
+
+	this.toJSON = function() {
+		return _article;
+	};
+
+}
+//fin funcion creadora de articulos
+
+
+
+//inicio funcion creadora de usuarios
 function User(idUser) {
   var _user = {
-		_id: idUser,
+    _id: idUser,
     username:  "",
     name:  "",
     mail: "",
@@ -52,34 +135,16 @@ function User(idUser) {
     return this;
   };
 
-  // this.scoreOneBasket = function(team, points) {
-  //
-  //   if (checkValidBasket(points) && checkTeamName(team)) {
-  //     _user[team] += points;
-  //   }
-  //
-	// 	return this;
-  // };
-  //
-  //
-  //
-  // this.setScoreTeam = function(team, points) {
-  //   if (checkValidScore(points) && checkTeamName(team)) {
-  //     _user[team] = points;
-  //   }
-  //
-	// 	return this;
-  // };
-
   this.getuser = function(idUser) {
     return _user[idUser];
   };
 
-	this.toJSON = function() {
-		return _user;
-	};
+  this.toJSON = function() {
+    return _user;
+  };
 
 }
+
 
 /*
 Aqui deberiamos validar la introduccion de datos, esto es el servidor,
@@ -106,5 +171,6 @@ function isInteger(x) {
 
 
 module.exports = {
-  User: User
+  User: User,
+  Article : Article
 };

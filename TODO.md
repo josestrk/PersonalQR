@@ -13,6 +13,12 @@ comentario
 
 ---------------
 a:alevale
+f:/server/*
+creando todos los servicios rest que podamos usar en la app, usuario, comentario y articulo
+###############
+
+---------------
+a:alevale
 f:/lib/jquery-toast/
 montar la libreria de jquery-toast
 ###############
