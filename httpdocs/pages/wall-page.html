@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../core/core-list/core-list.html">
+<link rel="import" href="../core/core-artc/core-artc.html">
 
 <polymer-element name="wall-page">
 
@@ -18,31 +18,43 @@
         background-color: rgb(255, 255, 255);
       }  
     </style>
-    <div layout horizontal center-center fit>
-        <core-card id="list">
-            <core-list lista="{{lista}}"></core-list>
+    <div layout vertical center-center fit>
+        <core-card id="list" layout vertical center-center fit>
+            <template repeat="{{item in lista}}"></template>
         </core-card>
     </div>
   </template>
 
   <script>
-      
+        (function () {
+        function createPage(item) {
+          var section = document.createElement('core-artc');
+          section.setAttribute('layout', '');
+          section.setAttribute('attribute', item);
+          section.setAttribute('vertical', '');
+          section.setAttribute('center-center', '');
+
+          var div = document.createElement('div');
+          var component = document.createElement(item.component);
+          div.appendChild(component);
+          section.appendChild(div);
+          return section;
+        }
         Polymer({
-            ready: function() {
+            domReady: function () {
                 this.lista = [
-                                 {titele:'Title Post', hash: 'idpost1', post: 'id1_idpost1', date: '1'},
-                                 {titele:'Title Post', hash: 'idpost2', post: 'id3_idpost2', date: '2'},
-                                 {titele:'Title Post', hash: 'idpost3', post: 'id1_idpost3', date: '3'},
-                                 {titele:'Title Post', hash: 'idpost4', post: 'id2_idpost4', date: '4'}
+                                 {tittle:'Title Post', bgimg: 'idpost1', post: 'id1_idpost1', date: '1', info: '123456789', tp: 'texto'},
+                                 {tittle:'Title Post', bgimg: 'idpost2', post: 'id3_idpost2', date: '2', info: 'asdasdasdasdasd', tp: 'texto'},
+                                 {tittle:'Title Post', bgimg: 'idpost3', post: 'id1_idpost3', date: '3', info: 'aslndetrwesad', tp: 'texto'},
+                                 {tittle:'Title Post', post: 'id2_idpost4', date: '4', info: '654321', tp: 'texto'}
                                ];
-
-                 //var wallList = this.$.lista;
-
-                 //this.lista.forEach(function (item) {
-                 //  wallList.appendChild(createList(item));
-                 //});
+                var listPost = this.$.list;
+                this.lista.forEach(function (item) {
+                   listPost.appendChild(createPage(item));
+                });
             }
         });
+    })();
   </script>
 
 </polymer-element>

@@ -24,7 +24,7 @@ un objeto atriccle tiene:
 4. topic
 -->
 
-<polymer-element name="core-artc" attributes="idpost">
+<polymer-element name="core-artc" attributes="post">
 
   <template>
     <style>    
@@ -46,7 +46,7 @@ un objeto atriccle tiene:
         color: rgb(241, 241, 241);
         fill: rgb(241, 241, 241);
         background-color: rgb(66, 133, 244);
-        background-image: {{idpost.bgimg}};
+        background-image: url({{post.bgimg}});
       }
       #section {
         height: 5000px;
@@ -124,7 +124,7 @@ un objeto atriccle tiene:
         <core-header-panel mode="standard" id="core_header_panel">
           <core-toolbar id="core_toolbar1" class="tall">
             <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-            <div id="div1">{{idpost.tittle}}</div>
+            <div id="div1">{{post.tittle}}</div>
           </core-toolbar>
           <paper-tabs selected="4" id="paper_tabs" vertical layout center-justified>
             <paper-tab id="paper_tab"><core-icon-button icon="favorite-outline" id="core_icon_button1"></core-icon-button>Like</paper-tab>
@@ -136,8 +136,8 @@ un objeto atriccle tiene:
           </core-card>
           
         </core-header-panel>
-        <!-- tipo de artc {{idpost.tp}} -->
-        <p>{{idpost.info}}</p>
+        <!-- tipo de artc {{post.tp}} -->
+        <p>{{post.info}}</p>
     </core-card>
     
   </template>
@@ -145,12 +145,11 @@ un objeto atriccle tiene:
   <script>
     (function () {
         function loadPost() {
-            this.idpost = { tittle:'post1',bgimg:'ej1.jpg',info:'ejemplo1',tp:'text' };
-            var post = this.$.idpost;
+            var post = this.$.core-card;
         }
         Polymer({
             domReady: function () {
-                loadPages.bind(this)();
+                loadPages.bind(this);
             }
         });
     })();
