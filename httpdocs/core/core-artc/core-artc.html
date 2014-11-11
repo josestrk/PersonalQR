@@ -16,7 +16,7 @@
 <link rel="import" href="../../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../../bower_components/core-tooltip/core-tooltip.html">
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!--
 un objeto atriccle tiene:
 1. tittle
@@ -25,80 +25,70 @@ un objeto atriccle tiene:
 4. topic
 -->
 
-<polymer-element name="core-artc" attributes="tittle,img,info">
+<polymer-element name="core-artc" attributes="tittle,time,bgimg,info">
 
   <template>
     
     <style>
+	#core-artc{
+            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.1980392) 5px 10px 9px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+	}
         #core_header_panel {
             width: 100%;
             height: 352px;
             position: relative;
-            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
         }
-        #core_card1 {
-            position: relative;
-            width: 100%;
-            height: 159px;
-            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-            left: 0px;
-            top: 0px;
-        }
-        #core_tooltip {
-            height: 300px;
-            position: relative;
-            overflow-y: scroll;
-        }
+       
         #core_toolbar {
             color: rgb(255, 255, 255);
             background-color: rgb(79, 125, 201);
             fill: rgb(241, 241, 241);
-            //background-color: rgb(66, 133, 244);
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        } 
+        #section {
+                padding-top: 45px;
+                padding-left: 10px;
+                padding-right: 10px;
+                height: 400px;
+                background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
         }
         #paper_tabs {
             color: rgb(255, 255, 255);
-            //box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
             position: relative;
-            background-color: rgb(0, 188, 212);
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
+            background-color: rgb(79, 125, 201);
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
         }
         #paper_tab {
           width: 120px;
           height: 40px;
-          left: 1240px;
-          top: 710px;
-        }
-        
-        #core_scroll_header_panel {
-          width: 380px;
-          height: 720px;
-          left: 0px;
-          top: 0px;
-          position: relative;
         }
     </style>
 
-    <core-card>
-        <core-header-panel mode="standard" id="core_header_panel">
-          <core-toolbar id="core_toolbar" class="tall">
+    <core-card id="core-artc">
+        <core-header-panel mode="waterfall-tall" id="core_header_panel">
+          <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% auto;">
             <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
             <div id="div1">{{tittle}}</div>
+            <div id="time">{{time}}</div>
           </core-toolbar>
-          <core-card id="core_card1" layout vertical>
-            <core-tooltip id="core_tooltip">{{info}}</core-tooltip>
-          </core-card>
+          <section id="section">
+          {{info}}
+          </section>
         </core-header-panel>
-        <paper-tabs selected="4" id="paper_tabs" vertical layout center-justified>
-            <paper-tab id="paper_tab1"><core-icon-button icon="favorite-outline" id="core_icon_button2"></core-icon-button>Like</paper-tab>
-            <paper-tab id="paper_tab2"><core-icon-button icon="announcement" id="core_icon_button2"></core-icon-button>Comment</paper-tab>
-            <paper-tab id="paper_tab3"><core-icon-button icon="loyalty" id="core_icon_button2"></core-icon-button>R</paper-tab>
+        <paper-tabs id="paper_tabs" vertical layout center-justified>
+            <paper-tab id="paper_tab1"><core-icon-button icon="favorite-outline" id="core_icon_button2"></core-icon-button><span id='txt'>Like</span></paper-tab>
+            <paper-tab id="paper_tab2"><core-icon-button icon="announcement" id="core_icon_button2"></core-icon-button><span id='txt'>Comment</span></paper-tab>
+            <paper-tab id="paper_tab3"><core-icon-button icon="loyalty" id="core_icon_button2"></core-icon-button><span id='txt'>R</span></paper-tab>
         </paper-tabs>
     </core-card>
     
@@ -109,13 +99,15 @@ un objeto atriccle tiene:
         function loadPost() {
             var post = this.$.core-artc;
         }
+        
+        
+        
         Polymer({
             domReady: function () {
                 loadPost.bind(this);
             }
         });
     })();
-
   </script>
 
 </polymer-element>
