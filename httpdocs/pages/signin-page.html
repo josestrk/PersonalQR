@@ -191,7 +191,7 @@
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <form-field
-                id="name"
+                name="name"
                 label="Name"
 				bound=""
                 icon="account-circle"
@@ -199,7 +199,7 @@
                 regexp=""
               ></form-field>
               <form-field
-                id="password"
+                name="password"
                 label="Choose password"
 				bound="password2"
                 icon="lock"
@@ -208,7 +208,7 @@
                 on-blur="{{verify}}"
               ></form-field>
               <form-field
-                id="password2"
+                name="password2"
                 label="Re-enter password"
 				bound="password"
                 icon="lock"
@@ -217,7 +217,7 @@
                 on-blur="{{verify}}"
               ></form-field>
               <form-field
-                id="bdate"
+                name="bdate"
                 label="Birth date"
 				bound=""
                 icon="redeem"
@@ -275,17 +275,6 @@
           } else {
             this.$.date_icon.style.color = "#cc0022"; //incorrect
             return false;
-          }
-        },
-        verify: function(event, detail, sender){
-          if(sender.label==="Re-enter password" || sender.label==="Choose password"){
-            if(this.$.password.$.field.value===this.$.password2.$.field.value){
-              this.$.password2.$.icon.classList.add("valid");
-              this.$.password2.$.icon.classList.remove("invalid");
-            }else{
-              this.$.password2.$.icon.classList.add("invalid");
-              this.$.password2.$.icon.classList.remove("valid");
-            }
           }
         }
     });

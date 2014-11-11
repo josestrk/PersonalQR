@@ -3,7 +3,7 @@
 
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 
-<polymer-element name="form-field" attributes="label icon errorMsg check">
+<polymer-element name="form-field" attributes="name,label,bound,regexp,icon,errorMsg,check">
   <template>
     <style>
     :host {
@@ -53,9 +53,11 @@
 		</core-icon>
 		<paper-input
 			id="field"
+			name="{{name}}"
 			label="{{label}}"
+			bound="{{bound}}"
 			willvalidate required
-			on-keypress="{{enter}}"
+			regexp="{{regexp}}"
 			error="{{errorMsg}}">
 		</paper-input>
 	</core-card>
@@ -65,7 +67,6 @@
 	<script>
   (function() {
     var values = {};
-    var regexp = '';
 
     Polymer('form-field', {
       ready: function() {
@@ -74,36 +75,34 @@
           var attr = this.attributes[i];
           values[attr.nodeName] = attr.value;
         }
-        regexp = (function() {
-          return new RegExp(values['regexp']);
-        })();
 		
-		console.log("bound: " + values['bound']);
+		/*console.log(this.name);
+		console.log(this.$.field.getAttribute('regexp'));*/
 
         this.addEventListener('blur', this.check);
         this.addEventListener('keydown', this.keydown);
       },
       check: function(event, detail, sender) {
-        if(this.$.field.label==="Re-enter password" ){
-        }else{
-          if (this.$.field.value.match(regexp)) {
-            this.$.icon.classList.add("valid");
-            this.$.icon.classList.remove("invalid");
-            return true;
-          } else {
-            this.$.icon.classList.add("invalid");
-            this.$.icon.classList.remove("valid");
-            return false;
-          }
-        }
+		/*console.log(this.bound);
+		console.log(this.name);*/
+		if (this.$.field.value.match(this.regexp)) {
+		  this.$.icon.classList.add("valid");
+		  this.$.icon.classList.remove("invalid");
+		  return true;
+		} else {
+		  this.$.icon.classList.add("invalid");
+		  this.$.icon.classList.remove("valid");
+		  return false;
+		}
       },
       keydown: function(event, detail, sender) {
+		//TODO
         //console.log(event.keyCode);
-		console.log(this.$.field);
+		//console.log(this.$.field);
 		if(event.keyCode === 13) {
 			this.check();
 		}
-      }
+      },
     });
   })();
 	</script>
