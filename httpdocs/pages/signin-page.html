@@ -125,54 +125,6 @@
           height: 45px;
   		      padding: 0px;
         }
-        #core_card5 {
-          width: 100%;
-          height: 40px;
-          padding: 0px;
-        }
-        #core_card6 {
-          width: 100%;
-          height: 40px;
-        }
-        #core_field {
-          left: 0px;
-          top: 0px;
-          border-top-left-radius: 25px;
-          border-top-right-radius: 25px;
-          border-bottom-right-radius: 25px;
-          border-bottom-left-radius: 25px;
-          width: auto;
-          height: auto;
-          margin: 3px 10px;
-          display: block;
-          color: white;
-          background-color: rgb(203, 203, 203);
-        }
-        #core_item {
-          width: 200px;
-          height: 30px;
-        }
-        #core_item:hover {
-          width: 200px;
-          height: 30px;
-          background-color: rgb(102, 102, 102);
-        }
-        #core_input {
-          width: 70%;
-          padding: 15px;
-        }
-        #topeka_profile {
-          width: 300px;
-          height: 300px;
-          left: 1810px;
-          top: 610px;
-        }
-        #topeka_leaderboard {
-          width: 300px;
-          height: 300px;
-          left: 1890px;
-          top: 590px;
-        }
         @media(max-width:320px){
             #core_card2{
                 width: 190px;
@@ -209,7 +161,6 @@
               background-image: none;
             }
         }
-
       </style>
 
         <core-card id="core_card" layout vertical>
@@ -299,15 +250,6 @@
         validatePass: function() {
           console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
           return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
-        },
-        checkDate: function() {
-          if (this.$.date_element.querySelector('#date').value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$/)) {
-            this.$.date_icon.style.color = "#22aa00"; //correct
-            return true;
-          } else {
-            this.$.date_icon.style.color = "#cc0022"; //incorrect
-            return false;
-          }
         },
         verify: function(event, detail, sender){
           if(sender.label==="Re-enter password" || sender.label==="Choose password"){

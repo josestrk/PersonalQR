@@ -2,6 +2,8 @@
 <link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
 
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <polymer-element name="form-field" attributes="name,type,label,bound,regexp,icon,errorMsg,check">
   <template>
@@ -30,7 +32,7 @@
 		color: black;
 	}
 
-	paper-input {
+	paper-input-decorator {
 		width: 80%;
 		height: 45px;
 		padding: 0px;
@@ -51,16 +53,19 @@
 			icon="{{icon}}"
 			center-justified horizontal layout wrap center>
 		</core-icon>
-		<paper-input
+		<paper-input-decorator
 			id="field"
 			name="{{name}}"
-			type="{{type}}"
 			label="{{label}}"
 			bound="{{bound}}"
-			willvalidate required
-			regexp="{{regexp}}"
+			floatingLabel layout wrap
 			error="{{errorMsg}}">
-		</paper-input>
+                    <input is="core-input"
+                        id="content"
+			type="{{type}}"
+			regexp="{{regexp}}"
+                        required>
+		</paper-input-decorator>
 	</core-card>
 
     <content></content>
@@ -88,7 +93,7 @@
     		//console.log(this.bound);
     		// console.log(this.bound);
         if(this.bound!=="password"){//realizado para evitar el error al verificar la contraseña
-          if (this.$.field.value.match(this.regexp)) {
+          if (this.$.content.value.match(this.regexp)) {
             this.$.icon.classList.add("valid");
             this.$.icon.classList.remove("invalid");
             return true;
