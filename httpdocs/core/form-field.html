@@ -3,7 +3,7 @@
 
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 
-<polymer-element name="form-field" attributes="name,label,bound,regexp,icon,errorMsg,check">
+<polymer-element name="form-field" attributes="name,type,label,bound,regexp,icon,errorMsg,check">
   <template>
     <style>
     :host {
@@ -11,7 +11,7 @@
       position: relative;
       padding: 0px;
       width: 100%;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 300;
     }
 
@@ -44,7 +44,7 @@
 	}
     </style>
 
-	<core-card
+	<core-card id="form-field-container"
 		horizontal layout wrap center-justified>
 		<core-icon
 			id="icon"
@@ -54,6 +54,7 @@
 		<paper-input
 			id="field"
 			name="{{name}}"
+			type="{{type}}"
 			label="{{label}}"
 			bound="{{bound}}"
 			willvalidate required
@@ -76,8 +77,9 @@
           values[attr.nodeName] = attr.value;
         }
 		
+		console.log(this);
 		/*console.log(this.name);
-		console.log(this.$.field.getAttribute('regexp'));*/
+		console.log(this.$.field.getAttribute('type'));*/
 
         this.addEventListener('blur', this.check);
         this.addEventListener('keydown', this.keydown);

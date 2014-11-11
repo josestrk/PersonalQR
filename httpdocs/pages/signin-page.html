@@ -200,21 +200,21 @@
               ></form-field>
               <form-field
                 name="password"
+				type="password"
                 label="Choose password"
 				bound="password2"
                 icon="lock"
                 errorMsg="Must contain between 6 and 16 characters"
                 regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
-                on-blur="{{verify}}"
               ></form-field>
               <form-field
                 name="password2"
+				type="password"
                 label="Re-enter password"
 				bound="password"
                 icon="lock"
                 errorMsg="Must be the same password"
                 regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
-                on-blur="{{verify}}"
               ></form-field>
               <form-field
                 name="bdate"
