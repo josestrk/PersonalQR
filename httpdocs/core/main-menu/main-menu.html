@@ -15,14 +15,16 @@
 <link rel="import" href="../../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../../bower_components/core-a11y-keys/core-a11y-keys.html">
 
+<link rel="stylesheet" href="style.css">
 <link rel="import" href="../serch-banner/search-banner.html">
 <link rel="import" href="../id-card.html">
 <link rel="import" href="../core-scaffold/core-scaffold.html">
-<link rel="stylesheet" href="style.css">
+
 
 
 <polymer-element name="main-menu">
   <template>
+      
     <style>
     core-menu {
         color: #FFF;
@@ -36,6 +38,12 @@
 
     core-menu > paper-item.core-selected {
         background: #777;
+    }
+    #pages{
+        display: block;
+        width: 100%;
+        position: relative;
+        height: 100%;
     }
     </style>
     <!-- Route controller. -->
@@ -80,10 +88,9 @@
         <core-icon-button icon="image:blur-on"></core-icon-button>
       </core-toolbar>
 
-      <div layout horizontal center-center fit>
+      <div layout vertical fit>
         <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
                              transitions="slide-from-right" >
-
             <template repeat="{{page in pages}}"></template>
         </core-animated-pages>
       </div>
@@ -97,13 +104,10 @@
         var section = document.createElement('section');
         section.setAttribute('layout', '');
         section.setAttribute('vertical', '');
-        section.setAttribute('center-center', '');
         section.setAttribute('hash', page.hash);
 
-        var div = document.createElement('div');
         var component = document.createElement(page.component);
-        div.appendChild(component);
-        section.appendChild(div);
+        section.appendChild(component);
         return section;
       }
 

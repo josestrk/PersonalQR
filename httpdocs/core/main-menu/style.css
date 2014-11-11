@@ -31,8 +31,8 @@
     #core_card_f {
         color:white;
     }
-
-@media all and (max-width: 480px){
+    
+@media all and (max-width: 1024px){
     core-animated-pages {
       width: 100%;
       height: 100%;
