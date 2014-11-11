@@ -7,8 +7,8 @@
 
 
 /*
-db.articles.find( { id_auto: /^bc/ } )
-esto es similar a un Select * from articles where id_autor="bc%"
+db.articles.find( { id_auto: /54/ } ).sort( {date : 1})
+esto es similar a un Select * from articles where id_autor="54" order by "date"
 http://docs.mongodb.org/manual/reference/sql-comparison/
 */
 

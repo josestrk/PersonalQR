@@ -6,7 +6,7 @@
 <link rel="import" href="../../bower_components/core-pages/core-pages.html">
 
 <polymer-element name="slider-page">
-    
+
     <template>
         <style>
       #card {
@@ -50,7 +50,7 @@
             height: 500px;
             background-size: 100% 100%;
         }
-        
+
         @media all and (max-width: 420px) {
           #core_card1 {
             width: 100%;
@@ -75,7 +75,7 @@
         }
 
         </style>
-            
+
                 <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
                     <template repeat="{{page in pages}}" >
 
@@ -91,15 +91,15 @@
                         <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
                     </template>
                 </paper-radio-group>
-            
+
     </template>
-    
+
     <script>
      (function () {
 
       function loadPages() {
         var DEFAULT_ROUTE = '1';
-               
+
         this.pages = [
             {name: ' Comparte con todos lo que estas haciendo',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '1'},
             {name: ' Todos tus deportes, eventos en vivo, ... ',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '2'},
