@@ -8,6 +8,7 @@
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
 
 <link rel="import" href="../core/form-field.html">
 
@@ -125,6 +126,9 @@
           height: 45px;
   		      padding: 0px;
         }
+        paper-fab.green {
+            background: rgb(137, 191, 79);
+        }
         @media(max-width:320px){
             #core_card2{
                 width: 190px;
@@ -150,11 +154,12 @@
               width: 70px;
             }
             #core_card3{
-              position: absolute;
-              left: 2px;
-              top: 130px;
-              height: 70%;
-              width: 92%;
+                position: absolute;
+                left: 0px;
+                top: 182px;
+                height: 55%;
+                box-shadow: none;
+                width: 90%;
             }
             #core_card1{
               background-color: rgb(255, 255, 255);
@@ -171,6 +176,7 @@
               <core-card id="core_card2" center center-justified wrap horizontal layout>
                 <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{infochanged}}" layout vertical></paper-input>
                 <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
+                <paper-fab icon="arrow-forward" class="green" title="submit"></paper-fab>
               </core-card>
             <core-card id="core_card3" center-justified vertical layout>
               <form-field

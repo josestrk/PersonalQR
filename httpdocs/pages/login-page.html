@@ -30,10 +30,8 @@
         background-color: rgb(255, 255, 255);
       }
       #core_card_main {
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
         width: 300px;
-        height: 330px;
+        height: 305px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto;
         background-color: rgb(255, 255, 255);
@@ -127,7 +125,9 @@
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
           <paper-input label="Choose a Password" willvalidate validationmessage="Completa este campo" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit"></paper-fab>
         </core-card>
+        
       </core-card>
     </core-card>
   </template>

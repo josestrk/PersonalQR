@@ -19,6 +19,8 @@
 <link rel="import" href="../serch-banner/search-banner.html">
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-scaffold/core-scaffold.html">
+<link rel="import" href="../core-notifi/core-notifi.html">
+<link href="../../../bower_components/core-dropdown/core-dropdown.html" rel="import">
 
 
 
@@ -31,11 +33,9 @@
         margin: 0px 0px auto 0px;
         padding: 10px
     }
-
     core-menu > paper-item {
         transition: all 300ms ease-in-out;
     }
-
     core-menu > paper-item.core-selected {
         background: #777;
     }
@@ -44,6 +44,9 @@
         width: 100%;
         position: relative;
         height: 100%;
+    }
+    .dropdown {
+      padding: 12px;
     }
     </style>
     <!-- Route controller. -->
@@ -84,7 +87,7 @@
 
       <core-toolbar tool flex>
         <div flex>{{selectedPage.page.name}}</div>
-        <core-icon-button icon="social:notifications"></core-icon-button>
+        <core-notifi></core-notifi>
         <core-icon-button icon="image:blur-on"></core-icon-button>
       </core-toolbar>
 
