@@ -55,28 +55,28 @@ un objeto atriccle tiene:
             border-top-right-radius: 3px;
         } 
         #section {
-                padding-top: 45px;
-                padding-left: 10px;
-                padding-right: 10px;
+                padding-top: 105px;
+                padding-left: 15px;
+                padding-right: 15px;
                 height: 400px;
                 background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
         }
-        #paper_tabs {
-            color: rgb(255, 255, 255);
-            position: relative;
-            background-color: rgb(79, 125, 201);
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
+        paper-tabs.transparent-teal {
+            background-color: transparent;
+            color: #03a9f4;
+            box-shadow: none;
         }
-        #paper_tab {
-          width: 120px;
-          height: 40px;
+        paper-tabs.transparent-teal::shadow #selectionBar {
+            background-color: #03a9f4;
+        }
+        paper-tabs.transparent-teal paper-tab::shadow #ink {
+            color: #03a9f4;
         }
     </style>
 
     <core-card id="core-artc">
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
-          <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% auto;">
+          <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
             <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
             <div id="div1">{{tittle}}</div>
             <div id="time">{{time}}</div>
@@ -85,7 +85,7 @@ un objeto atriccle tiene:
           {{info}}
           </section>
         </core-header-panel>
-        <paper-tabs id="paper_tabs" vertical layout center-justified>
+        <paper-tabs id="paper_tabs" class="transparent-teal" vertical layout center-justified>
             <paper-tab id="paper_tab1"><core-icon-button icon="favorite-outline" id="core_icon_button2"></core-icon-button><span id='txt'>Like</span></paper-tab>
             <paper-tab id="paper_tab2"><core-icon-button icon="announcement" id="core_icon_button2"></core-icon-button><span id='txt'>Comment</span></paper-tab>
             <paper-tab id="paper_tab3"><core-icon-button icon="loyalty" id="core_icon_button2"></core-icon-button><span id='txt'>R</span></paper-tab>
@@ -99,9 +99,7 @@ un objeto atriccle tiene:
         function loadPost() {
             var post = this.$.core-artc;
         }
-        
-        
-        
+
         Polymer({
             domReady: function () {
                 loadPost.bind(this);
