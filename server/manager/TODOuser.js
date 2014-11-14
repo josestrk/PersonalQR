@@ -12,74 +12,6 @@ esto es similar a un Select * from articles where id_autor="54" order by "date"
 http://docs.mongodb.org/manual/reference/sql-comparison/
 */
 
-function Article(idArticle) {
-  var _article = {
-		_id: idArticle,
-    id_autor:  "",
-    tittle:  "",
-    content: "",
-    tags: "",
-    topics: "",
-    date : ""
-  };
-
-  this.setall= function(autor, titulo, contenido, t, topicos, fecha){
-    _article.id_autor = autor;
-    _article.tittle = titulo;
-    _article.content = contenido;
-    _article.tags = t;
-    _article.topics = topicos;
-    _article.date = fecha;
-    return this;
-  };
-
-  this.setdate = function(data){
-    //no se como hacer la fecha
-    _article.date = data;
-    return this;
-  };
-
-  this.setid_autor = function(data){
-    _article.id_autor = data;
-    return this;
-  };
-
-  this.settittle = function(data){
-    _article.tittle = data;
-    return this;
-  };
-
-  this.setcontent = function(data){
-    //antes de guardar un valor verificar que sea valido
-    _article.content = data;
-    return this;
-  };
-
-  this.settags = function(data){
-    //antes de guardar un valor verificar que sea valido
-    _article.tags = data;
-    return this;
-  };
-
-  this.settopics = function(data){
-    //antes de guardar un valor verificar que sea valido
-    _article.topics = data;
-    return this;
-  };
-
-  this.getuser = function(idArticle) {
-    return _article[idArticle];
-  };
-
-	this.toJSON = function() {
-		return _article;
-	};
-
-}
-//fin funcion creadora de articulos
-
-
-
 //inicio funcion creadora de usuarios
 function User(idUser) {
   var _user = {
@@ -171,22 +103,16 @@ function isInteger(x) {
 
 
 module.exports = {
-  User: User,
-  Article : Article
+  User: User
 };
 
-//---------------------------------------------
+//--------------------------------------------------
 
 var User = require('./user').User;
-var Article = require('./user').Article;
 //importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
 
 var users = {};//te creas un array temporal en el que ir guardando los usuarios, (para cuando llames al metodogetall)
 var numUsers = 0;//para llamar al id de uno concreto
-
-var articles = {};//te creas un array temporal en el que ir guardando los usuarios, (para cuando llames al metodogetall)
-var numarticles = 0;//para llamar al id de uno concreto
-
 
 module.exports = {
   createuser: function() {
@@ -195,40 +121,20 @@ module.exports = {
     numUsers++;
     return temporaluser;
   },
-  createarticle: function() {
-    var articleaux = new Article(String(numarticles));
-    articles[numarticles] = articleaux;
-    numarticles++;
-    return articleaux;
-  },
   getuser: function(Iduser) {
     return users[Iduser];
   },
-  getarticle: function(Idarticle) {
-    return articles[Idarticle];
-  },
   deluser: function delScore(Iduser) {
     delete users[Iduser];
-  },
-  delarticle: function delScore(Idarticle) {
-    delete articles[Idarticle];
   },
   getAlluser: function() {
     return Object.keys(users).map(function(Iduser) {
       return users[Iduser].toJSON();
     });
   },
-  getAllarticle: function() {
-    return Object.keys(articles).map(function(Idarticle) {
-      return articles[Idarticle].toJSON();
-    });
-  },
   setUser: function(scoreId, data){
     users[scoreId].setusername(data);
     return users[scoreId];
   },
-  setAllarticle: function(Idarticle, autor, titulo, contenido, t, topicos, fecha){
-    articles[Idarticle].setall(autor, titulo, contenido, t, topicos, fecha);
-    return users[Idarticle];
-  }
 };
+
