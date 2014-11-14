@@ -10,6 +10,14 @@ var fs = require('fs');
 
 var app = express();
 
+//######################BD conecttion
+//conecction db mongo
+var mongodb = require('mongoskin');
+// obtenemos el server MongoDB que dejamos corriendo
+// IP*** el puerto 27017 es el default de MongoDB
+var db = new mongodb.db("mongodb://0.0.0.0:27017/personalqr",{native_parser:true});
+//########################
+
 app.use(favicon(__dirname + '/../httpdocs/favicon.ico')); //Sirve el favicon de la pagina
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -63,4 +71,8 @@ app.listen(port, ip, function() {
 	debug('Application listening on http://' + ip + ':' + port);
 });
 
-module.exports = app;
+//######################BD conecttion change
+module.exports = {
+	db:db,
+	toObjectID: mongodb.helper.toObjectID
+};
