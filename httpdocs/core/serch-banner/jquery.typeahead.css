@@ -154,7 +154,6 @@ input {
 
 .typeahead-result {
     position: absolute;
-    top: 72px;
     left: 0;
     background-color: #fff;
     width: 100%;
@@ -184,13 +183,26 @@ input {
 
 .typeahead-result > ul > li > a {
     display: block;
-    padding: 5px 8px;
+    padding: 8px 8px;
     white-space: nowrap;
     text-decoration: none;
     color: #333;
     clear: both;
     background-color: #fff;
     position: relative;
+}
+
+@media(max-width:450px){
+    .typeahead-result > ul > li > a {
+        display: block;
+        padding: 18px 8px;
+        white-space: nowrap;
+        text-decoration: none;
+        color: #333;
+        clear: both;
+        background-color: #fff;
+        position: relative;
+    }
 }
 
 .typeahead-result > ul > li.active > a {
