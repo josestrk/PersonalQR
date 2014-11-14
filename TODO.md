@@ -10,6 +10,16 @@ comentario
 ########## fin de tiket
 ################################################################################################################################
 ---------------
+a: varios
+f: /varios
+implementar libreria mongo
+###############
+---------------
+a: josestrk
+f: /search-banner
+implementar libreria
+###############
+---------------
 a:alevale
 f:/server/*
 creando todos los servicios rest que podamos usar en la app, usuario, comentario y articulo
