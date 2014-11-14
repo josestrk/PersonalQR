@@ -83,26 +83,40 @@
 
 				this.addEventListener('blur', this.check);
 				this.addEventListener('keydown', this.keydown);
+				this.addEventListener('change', this.get);
 			  },
 			check: function(event, detail, sender) {
-				//console.log(this.bound);
-				/*console.log(this.$.field.validity.valid);*/
-				if(this.bound!=="password"){//realizado para evitar el error al verificar la contraseña
-					if (this.$.field.value.match(this.regexp)) {
-						console.log(this.$.field);
-						this.$.field.label.visibility = "hidden";
-						this.$.icon.classList.add("valid");
-						this.$.icon.classList.remove("invalid");
-						return true;
+				console.log('Checking');
+				
+				if(this.bound && this.parentNode.children[this.bound]) {
+					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
+						this.makeValid();
 					} else {
-						if(this.$.field.value) {
-							this.$.field.label = this.$.field.error;
-						}
-						this.$.icon.classList.add("invalid");
-						this.$.icon.classList.remove("valid");
-						return false;
+						this.makeInvalid();
 					}
 				}
+				
+				/*console.log(this.$.field.validity.valid);*/
+				if (this.$.field.$.input.value.match(this.regexp)) {
+					console.log(this.$.field);
+					this.$.field.label.visibility = "hidden";
+					this.makeValid();
+					return true;
+				} else {
+					if(this.$.field.value) {
+						this.$.field.label = this.$.field.error;
+					}
+					this.makeInvalid();
+					return false;
+				}
+			},
+			makeValid: function() {
+				this.$.icon.classList.add("valid");
+				this.$.icon.classList.remove("invalid");
+			},
+			makeInvalid: function() {
+				this.$.icon.classList.add("invalid");
+				this.$.icon.classList.remove("valid");
 			},
 			keydown: function(event, detail, sender) {
 				//TODO

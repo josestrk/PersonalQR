@@ -221,65 +221,65 @@
 
   <script>
   Polymer({
-        showPanel: function(event,detail,sender){
-            this.$.core_header_panel.togglePanel();
-        },
-        validatePattern: function(string, pattern){
-          return string.match(pattern) !== null;
-        },
-        infochanged: function(){
-          if(this.validateUser()){
-            if(this.$.paper_input1.value===""){
-              this.$.core_card2.style.boxShadow = "#FFC107 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-            }else{
-              if(this.validateEmail()){
-                this.$.core_card2.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-              }else{
-                //rojo
-                this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-                }
-            }
-          }else{
-              this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-          }
-        },
-        validateUser: function() {
-          var string = this.$.paper_input.value;
-          //this.$.core_card2.style.backgroundColor = "lightgreen";
-          return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
-          //con libreria no hay return, hay mensaje
-        },
-        validateEmail: function() {
-          var string = this.$.paper_input1.value;
-          console.log(this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/));
-          return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
-        },
-        validatePass: function() {
-          console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
-          return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
-        },
-        verify: function(event, detail, sender){
-          if(sender.label==="Re-enter password" || sender.label==="Choose password"){
-            if(this.$.password.$.field.value===this.$.password2.$.field.value){
-              this.$.password2.$.icon.classList.add("valid");
-              this.$.password2.$.icon.classList.remove("invalid");
-            }else{
-              this.$.password2.$.icon.classList.add("invalid");
-              this.$.password2.$.icon.classList.remove("valid");
-            }
-          }
-        },
+		showPanel: function(event,detail,sender){
+				this.$.core_header_panel.togglePanel();
+		},
+		validatePattern: function(string, pattern){
+			return string.match(pattern) !== null;
+		},
+		infochanged: function(){
+			if(this.validateUser()){
+				if(this.$.paper_input1.value===""){
+					this.$.core_card2.style.boxShadow = "#FFC107 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+				}else{
+					if(this.validateEmail()){
+						this.$.core_card2.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+					}else{
+						//rojo
+						this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+						}
+				}
+			}else{
+					this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+			}
+		},
+		validateUser: function() {
+			var string = this.$.paper_input.value;
+			//this.$.core_card2.style.backgroundColor = "lightgreen";
+			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
+			//con libreria no hay return, hay mensaje
+		},
+		validateEmail: function() {
+			var string = this.$.paper_input1.value;
+			console.log(this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/));
+			return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
+		},
+		validatePass: function() {
+			console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
+			return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
+		},
+		verify: function(event, detail, sender){
+			if(sender.label==="Re-enter password" || sender.label==="Choose password"){
+				if(this.$.password.$.field.value===this.$.password2.$.field.value){
+					this.$.password2.$.icon.classList.add("valid");
+					this.$.password2.$.icon.classList.remove("invalid");
+				}else{
+					this.$.password2.$.icon.classList.add("invalid");
+					this.$.password2.$.icon.classList.remove("valid");
+				}
+			}
+		},
 		validateAll: function() {
 			var $d = this.$.form.querySelectorAll('form-field');
 			console.log($d);
 			Array.prototype.forEach.call($d, function(d) {
-			  //d.isInvalid = !d.querySelector('paper-input').validity.valid;
-			  //console.log(d.$.field);
-			  console.log(d.$.icon);
-			  //console.log(d.$.querySelectorAll('paper-input'));
+				//d.isInvalid = !d.querySelector('paper-input').validity.valid;
+				//console.log(d.$.field);
+				console.log(d.$.icon);
+				//console.log(d.$.querySelectorAll('paper-input'));
 			});
 		}
-    });
+	});
   </script>
 
 </polymer-element>
