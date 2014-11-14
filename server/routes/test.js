@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var scoreManager = require('../manager/score');
+//var scoreManager = require('../manager/score');
 
 /* ROUTES */
 router.post('/', createScore);
@@ -56,7 +56,7 @@ function scoreBasket(req, res, next) {
 		} else {
 			res.json(newScore);
 		}
-		
+
 	});
 }
 
@@ -71,7 +71,7 @@ function setScore(req, res, next) {
 		} else {
 			res.json(newScore);
 		}
-		
+
 	});
 }
 

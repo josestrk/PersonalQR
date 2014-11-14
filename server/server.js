@@ -11,6 +11,7 @@ var fs = require('fs');
 var app = express();
 
 //######################BD conecttion
+//a:alevale, diria que esto no va aqui, sino en util
 //conecction db mongo
 var mongodb = require('mongoskin');
 // obtenemos el server MongoDB que dejamos corriendo

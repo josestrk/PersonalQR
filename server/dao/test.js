@@ -32,11 +32,11 @@ function updateScore(scoreId, update, callback) {
 	var query = {
 		_id: toObjectID(scoreId)
 	};
-	
+
 	var sort = [
 		['_id', 1]
 	];
-	
+
 	col.findAndModify(query, sort, update, {new: true}, callback);
 }
 
