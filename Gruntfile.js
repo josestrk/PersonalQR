@@ -2,7 +2,10 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		jshint: {
-			src: ['Gruntfile.js', 'features/**/*.js', 'model/**.js']
+			src: ['Gruntfile.js',
+				'features/**/*.js',
+				'model/**.js'
+			]
 		},
 		connect: {
 		    server: {
