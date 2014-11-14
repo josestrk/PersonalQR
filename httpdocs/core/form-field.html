@@ -83,11 +83,11 @@
 
 				this.addEventListener('blur', this.check);
 				this.addEventListener('keydown', this.keydown);
-				this.addEventListener('change', this.get);
 			  },
 			check: function(event, detail, sender) {
-				console.log('Checking');
-				
+				/* Checking whether this field needs to have the same
+				 * value as another one (for example, password checks).
+				 */
 				if(this.bound && this.parentNode.children[this.bound]) {
 					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
 						this.makeValid();
@@ -98,7 +98,6 @@
 				
 				/*console.log(this.$.field.validity.valid);*/
 				if (this.$.field.$.input.value.match(this.regexp)) {
-					console.log(this.$.field);
 					this.$.field.label.visibility = "hidden";
 					this.makeValid();
 					return true;
@@ -119,9 +118,6 @@
 				this.$.icon.classList.remove("valid");
 			},
 			keydown: function(event, detail, sender) {
-				//TODO
-				//console.log(event.keyCode);
-				//console.log(this.$.field);
 				if(event.keyCode === 13) {
 					this.check();
 				}

@@ -258,17 +258,6 @@
 			console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
 			return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
 		},
-		verify: function(event, detail, sender){
-			if(sender.label==="Re-enter password" || sender.label==="Choose password"){
-				if(this.$.password.$.field.value===this.$.password2.$.field.value){
-					this.$.password2.$.icon.classList.add("valid");
-					this.$.password2.$.icon.classList.remove("invalid");
-				}else{
-					this.$.password2.$.icon.classList.add("invalid");
-					this.$.password2.$.icon.classList.remove("valid");
-				}
-			}
-		},
 		validateAll: function() {
 			var $d = this.$.form.querySelectorAll('form-field');
 			console.log($d);
