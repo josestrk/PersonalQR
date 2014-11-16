@@ -260,13 +260,14 @@
 		},
 		validateAll: function() {
 			var $d = this.$.form.querySelectorAll('form-field');
+			var isValid = true;
 			console.log($d);
 			Array.prototype.forEach.call($d, function(d) {
-				//d.isInvalid = !d.querySelector('paper-input').validity.valid;
-				//console.log(d.$.field);
-				console.log(d.$.icon);
-				//console.log(d.$.querySelectorAll('paper-input'));
+				if (!d.classList.contains('valid')) {
+					isValid = false;
+				}
 			});
+			console.log(isValid);
 		}
 	});
   </script>

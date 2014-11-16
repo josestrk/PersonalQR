@@ -36,13 +36,6 @@
 		height: 45px;
 		padding: 0px;
 	}
-
-	core-icon.valid {
-		color: #22aa00;
-	}
-	core-icon.invalid {
-		color: #cc0022;
-	}
     </style>
 
 	<core-card id="form-field-container"
@@ -110,12 +103,21 @@
 				}
 			},
 			makeValid: function() {
-				this.$.icon.classList.add("valid");
-				this.$.icon.classList.remove("invalid");
+				this.classList.add("valid");
+				this.classList.remove("invalid");
+				this.paintIcon();
 			},
 			makeInvalid: function() {
-				this.$.icon.classList.add("invalid");
-				this.$.icon.classList.remove("valid");
+				this.classList.add("invalid");
+				this.classList.remove("valid");
+				this.paintIcon();
+			},
+			paintIcon: function() {
+				if(this.classList.contains('valid')) {
+					this.$.icon.style.color = '#22aa00';
+				} else if(this.classList.contains('invalid')) {
+					this.$.icon.style.color = '#cc0022';
+				}
 			},
 			keydown: function(event, detail, sender) {
 				if(event.keyCode === 13) {
