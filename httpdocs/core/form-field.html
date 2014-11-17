@@ -5,7 +5,7 @@
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="form-field" attributes="name,type,label,bound,regexp,icon,errorMsg,check">
+<polymer-element name="form-field" attributes="label,type,bound,regexp,icon,errorMsg">
   <template>
     <style>
     :host {
@@ -36,13 +36,6 @@
 		height: 45px;
 		padding: 0px;
 	}
-
-	core-icon.valid {
-		color: #22aa00;
-	}
-	core-icon.invalid {
-		color: #cc0022;
-	}
     </style>
 
 	<core-card id="form-field-container"
@@ -54,61 +47,84 @@
 		</core-icon>
 		<paper-input
 			id="field"
-			name="{{name}}"
 			type="{{type}}"
 			label="{{label}}" floatingLabel
-                        error="{{errorMsg}}"
+			error="{{errorMsg}}"
 			bound="{{bound}}"
 			regexp="{{regexp}}"
-                        required>
+			willValidate>
 		</paper-input>
 	</core-card>
 
     <content></content>
 	</template>
 	<script>
-  (function() {
-    var values = {};
+	(function() {
+		var values = {};
 
-    Polymer('form-field', {
-      ready: function() {
-        this.values = values;
-        for (var i = 0; i < this.attributes.length; i++) {
-          var attr = this.attributes[i];
-          values[attr.nodeName] = attr.value;
-        }
+		Polymer('form-field', {
+			ready: function() {
+				this.values = values;
+				for (var i = 0; i < this.attributes.length; i++) {
+				  var attr = this.attributes[i];
+				  values[attr.nodeName] = attr.value;
+				}
 
-		console.log(this);
-		/*console.log(this.name);
-		console.log(this.$.field.getAttribute('type'));*/
+				//console.log(this);
+				/*console.log(this.name);
+				console.log(this.$.field.getAttribute('type'));*/
 
-        this.addEventListener('blur', this.check);
-        this.addEventListener('keydown', this.keydown);
-      },
-      check: function(event, detail, sender) {
-    		//console.log(this.bound);
-    		// console.log(this.bound);
-        if(this.bound!=="password"){//realizado para evitar el error al verificar la contraseña
-          if (this.$.field.value.match(this.regexp)) {
-            this.$.icon.classList.add("valid");
-            this.$.icon.classList.remove("invalid");
-            return true;
-          } else {
-            this.$.icon.classList.add("invalid");
-            this.$.icon.classList.remove("valid");
-            return false;
-          }
-        }
-      },
-      keydown: function(event, detail, sender) {
-    		//TODO
-        //console.log(event.keyCode);
-    		//console.log(this.$.field);
-    		if(event.keyCode === 13) {
-    			this.check();
-    		}
-      },
-    });
-  })();
+				this.addEventListener('blur', this.check);
+				this.addEventListener('keydown', this.keydown);
+			  },
+			check: function(event, detail, sender) {
+				/* Checking whether this field needs to have the same
+				 * value as another one (for example, password checks).
+				 */
+				if(this.bound && this.parentNode.children[this.bound]) {
+					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
+						this.makeValid();
+					} else {
+						this.makeInvalid();
+					}
+				}
+				
+				/*console.log(this.$.field.validity.valid);*/
+				if (this.$.field.$.input.value.match(this.regexp)) {
+					this.$.field.label.visibility = "hidden";
+					this.makeValid();
+					return true;
+				} else {
+					if(this.$.field.value) {
+						this.$.field.label = this.$.field.error;
+					}
+					this.makeInvalid();
+					return false;
+				}
+			},
+			makeValid: function() {
+				this.classList.add("valid");
+				this.classList.remove("invalid");
+				this.paintIcon();
+			},
+			makeInvalid: function() {
+				this.classList.add("invalid");
+				this.classList.remove("valid");
+				this.paintIcon();
+			},
+			paintIcon: function() {
+				if(this.classList.contains('valid')) {
+					this.$.icon.style.color = '#22aa00';
+				} else if(this.classList.contains('invalid')) {
+					this.$.icon.style.color = '#cc0022';
+				}
+			},
+			keydown: function(event, detail, sender) {
+				if(event.keyCode === 13) {
+					this.check();
+				}
+			}
+		});
+	})();
 	</script>
 </polymer-element>

@@ -8,7 +8,10 @@ var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 
+var config = require('./util/config');
+
 var app = express();
+
 
 app.use(favicon(__dirname + '/../httpdocs/favicon.ico')); //Sirve el favicon de la pagina
 app.use(bodyParser.json());
@@ -54,9 +57,11 @@ fs.readdirSync(basePath).forEach(function(filename) {
 	app.use(basePathService, require(serviceDefinition));
 });
 
+
+
 //configuras la ip y el puerto
-var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 9005;
-var ip = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '0.0.0.0';
+var ip = config.server.ip;
+var port = config.server.port;
 
 //esto despliega express
 app.listen(port, ip, function() {

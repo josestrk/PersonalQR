@@ -1,40 +1,40 @@
 var express = require('express');
 var router = express.Router();
 
-var userModel = require('../model/users');
-//usermodel contendra el export de users, que es el creat, get, del, delall
+var globalManager = require('../model/allmethods');
 
+/* VALID ROUTES TO API */
 
-/* ROUTES */
-//post
 router.post('/user', createUser);
 router.post('/article', createArticle);
-//put
+
 router.put('/article/:articleId', setAllarticleparams);
 router.put('/:userId', setUsern);
-//delete
+
 router.delete('/user/:userId', delUSer);
 router.delete('/article/:articleId', delArticle);
-//get
+
 router.get('/user/:userId', getUser);
 router.get('/article/:articleId', getArticle);
 router.get('/user', getAllusers);
 router.get('/article', getAllarticles);
+
 /* END ROUTES */
 
-/* PARAMS  */
-//router.param('userId', checkScoreExists);
-/* END PARAMS */
 
-//todas las funciones que ejecuta expres tienen un parametro request y un response
+
+//pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
+//se dan dentro de una funcion con "posibilidad" de error
 function createUser(req, res) {
-  var user = userModel.createuser();
-	res.json(user.toJSON());
+  globalManager.createuser(function(err, result){
+    res.json(result);
+  });
 }
 
 function createArticle(req, res) {
-  var user = userModel.createarticle();
-  res.json(user.toJSON());
+  globalManager.createarticle(function(err, result){
+    res.json(result);
+  });
 }
 
 
@@ -58,9 +58,9 @@ function setUsern(req, res) {
 
 
 function delUSer(req, res) {
-	userModel.deluser(req.params.userId);
+  userModel.deluser(req.params.userId);
   //req.params.userId parametro introducido en la URL
-	res.send('User ' + req.params.userId + ' removed.');
+  res.send('User ' + req.params.userId + ' removed.');
 }
 
 function delArticle(req, res) {
@@ -70,8 +70,14 @@ function delArticle(req, res) {
 }
 
 function getUser(req, res) {
-	res.json(userModel.getuser(req.param('userId')));
-  //req.param('userId') contiene el dato que le hemos puesto en la URL
+  var userId = req.param('userId');
+  globalManager.getUserById(userId, function(err, result){
+    if(result){
+      res.json(result);
+    }else{
+      next(new Error(new Error(userId + 'as user id does not exist')));
+    }
+  });
 }
 
 function getArticle(req, res) {
@@ -79,7 +85,7 @@ function getArticle(req, res) {
 }
 
 function getAllusers(req, res) {
-	res.json(userModel.getAlluser());
+  res.json(userModel.getAlluser());
 }
 
 function getAllarticles(req, res) {
@@ -87,13 +93,13 @@ function getAllarticles(req, res) {
 }
 
 /*function checkScoreExists (req, res, next, scoreId) {
-	var score = scoreModel.get(scoreId);
-	if (score) {
-		req.score = score;
-		next();
-	} else {
-		next(new Error(userId + ' not exists'));
-	}
+  var score = scoreModel.get(scoreId);
+  if (score) {
+    req.score = score;
+    next();
+  } else {
+    next(new Error(userId + ' not exists'));
+  }
 }*/
 
 module.exports = router;

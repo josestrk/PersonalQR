@@ -5,7 +5,9 @@ contacts, articcles, ...
 
 <polymer-element name="search-banner">
   <template>
+   
     <style>
+    @import 'jquery.typeahead.css';
     :host {
         height: 30px;
         border-radius: 20px;
@@ -26,13 +28,64 @@ contacts, articcles, ...
     }
     </style>
     
-    <core-icon icon="search" id="core_icon1"></core-icon>
-    <core-input willvalidate id="core_input" horizontal layout></core-input>
-    
+
+        <div class="typeahead-container">
+            <div class="typeahead-field">
+
+                <span class="typeahead-query">
+                    
+                      <input id="q"
+                           name="q"
+                           type="search"
+                           placeholder="Search"
+                           autocomplete="off">
+                </span> 
+            </div>
+        </div>
+        <core-icon icon="search" id="core_icon1"></core-icon>
   </template>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="jquery.typeahead.js"></script>
   <script>
-  Polymer({
-  });
+    (function () {
+          
+        function search(){
+            var data = {
+                countries: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                    "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
+                    "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+                    "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+                    "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
+                capitals: ["Abu Dhabi", "Abuja", "Accra", "Adamstown", "Addis Ababa", "Algiers", "Alofi", "Amman", "Amsterdam",
+                    "Andorra la Vella", "Ankara", "Antananarivo", "Apia", "Ashgabat", "Asmara", "Astana", "Asunción", "Athens",
+                     "Thimphu", "Tirana", "Tiraspol", "Tokyo", "Tórshavn", "Tripoli", "Tskhinvali", "Tunis", "Ulan Bator", "Vaduz",
+                    "Valletta", "The Valley", "Vatican City", "Victoria", "Vienna", "Vientiane", "Vilnius", "Warsaw",
+                    "Washington, D.C.", "Wellington", "West Island", "Willemstad", "Windhoek", "Yamoussoukro", "Yaoundé", "Yaren",
+                    "Yerevan", "Zagreb"]
+            };
+            $(this.$.q).typeahead({
+                minLength: 1,
+                order: "asc",
+                group: true,
+                hint: true,
+                list: false,
+                backdrop: false,
+                source: {
+                    country: {
+                        data: data.countries
+                    },
+                    capital: {
+                        data: data.capitals
+                    }
+                }
+            });
+        }
+        Polymer({
+            ready: function () {
+                search.bind(this)();
+            }
+        });
+    }());
   </script>
 </polymer-element>
 
