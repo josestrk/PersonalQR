@@ -53,15 +53,9 @@
         left: auto;
         margin: auto 5px auto auto;
       }
-      #paper_input {
-        width: 95%;
-        padding: 20px 15px 5px;
-        margin: auto;
-      }
       #paper_input1 {
-        width: 95%;
-        padding: 5px 15px 22px;
-        margin: auto;
+        width: 80%;
+        height: 45px;
       }
 
       #paper_input2 {
@@ -143,6 +137,12 @@
             box-shadow: none;
           }
       }
+      @media(max-height:530px){
+          #core_card_block{
+            margin-top: 5%;
+            box-shadow: none;
+          }
+      }
     </style>
     <core-card id="core_card_main" vertical layout start-justified center>
       <paper-progress id="paper_progress"></paper-progress>
@@ -150,7 +150,7 @@
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" willvalidate validationmessage="Completa este campo" required pattern="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+          <paper-input label="Email Address" willvalidate validationmessage="Completa este campo" required pattern="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}" invalid id="paper_input1" layout vertical class="invalid"></paper-input>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
@@ -164,8 +164,29 @@
 
   <script>
 
-    Polymer({
-
+    Polymer('login-page', {
+      ready: function(){
+        console.log(this);
+        this.$.paper_input1.addEventListener('blur', this.intervals);
+        this.$.paper_input2.addEventListener('blur', this.intervals);
+      },
+      mailcheck: function(){
+        return true;
+      },
+      passcheck: function(){
+        return true;
+      },
+      intervals: function(){
+        console.log(this);
+        setInterval(function(){
+          console.log(self);
+          if(self.passcheck() && self.mailcheck()){
+            console.log("trues");
+          }else{
+            console.log("falses");
+          }
+        },50);
+      }
     });
 
   </script>

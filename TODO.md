@@ -8,6 +8,16 @@ l: numero de linea a revisar
 !: resuelto (autor)
 comentario
 ########## fin de tiket
+<<<<<<< HEAD
+
+
+----------[??? duda al profesor] comienzo de tiket
+a: alevale
+Esta libreria podria estar muy guapa, podriamos quizas implementar de esta forma la vision de los perfiles de git dentro de una card
+https://github.com/pazguille/github-card
+##########
+
+=======
 ################################################################################################################################
 ---------------
 a: varios
@@ -19,17 +29,13 @@ a: josestrk
 f: /search-banner
 implementar libreria
 ###############
+>>>>>>> 6e29100adc3203a3e3916fd57430b6428292af48
 ---------------
 a:alevale
 f:/server/*
 creando todos los servicios rest que podamos usar en la app, usuario, comentario y articulo
 ###############
 
----------------
-a:alevale
-f:/lib/jquery-toast/
-montar la libreria de jquery-toast
-###############
 ---------------
 a:alevale
 f:/singin-page
