@@ -2,7 +2,7 @@ var daoUser = require('../dao/user');
 
 //importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
 function create(callback) {
-    var temporaluser = {
+    var temporalUser = {
         username:  "",
         name:  "",
         mail: "",
@@ -11,29 +11,29 @@ function create(callback) {
         followers: 0,
         following: 0
     };
-    daoUser.create(temporaluser, callback);
+    daoUser.create(temporalUser, callback);
 }
 
-function get(Iduser, callback) {
-    daoUser.getById(Iduser, callback);
+function get(userId, callback) {
+    daoUser.getById(userId, callback);
 }
 
 function getAll(callback) {
     daoUser.getAll(callback);
 }
 
-function setUser(Iduser, data, callback){
-    daoUser.setUser(Iduser, data, callback);
+function setUser(userId, data, callback){
+    daoUser.setUser(userId, data, callback);
 }
 
-function del(Iduser, callback) {
-    daoUser.delUser(Iduser, callback);
+function del(userId, callback) {
+    daoUser.delUser(userId, callback);
 }
 
 module.exports = {
 	createUser: create,
 	getUser: get,
-	getAllUser: getAll,
+	getAllUsers: getAll,
 	setUser: setUser,
-        delUser: del
+    delUser: del
 };

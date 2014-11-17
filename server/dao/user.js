@@ -3,20 +3,20 @@ var toObjectID = require('../util/mongodb').toObjectID;
 var col = db.bind('users');
 
 function create(user, callback) {
-    this.insert(user, callback);
+	this.insert(user, callback);
 }
 
 function getById(userId, callback) {
-    this.findById(userId, callback);
+	this.findById(userId, callback);
 }
 
 function getAll(callback) {
-    this.find({}, function(err, cursor) {
-        if (err) {
-            return callback(err);
-        }
-        cursor.toArray(callback);
-    });
+	this.find({}, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.toArray(callback);
+	});
 }
 
 function delAll(callback) {
@@ -24,7 +24,7 @@ function delAll(callback) {
 }
 
 function del(userId, callback) {
-    this.removeById(userId, callback);
+	this.removeById(userId, callback);
 }
 
 function setUser(userId, update, callback) {
