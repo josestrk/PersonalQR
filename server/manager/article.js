@@ -1,73 +1,67 @@
-var daoArticle = require('../dao/article');
-
-function create(callback) {
-  var article = {
-    id: "",
-    author:  "",
-    title:  "",
+function Article(idArticle) {
+  var _article = {
+		_id: idArticle,
+    id_autor:  "",
+    tittle:  "",
     content: "",
     tags: "",
     topics: "",
     date : ""
   };
 
-  daoArticle.create(article, callback);
-}
-
-function getArticleById(id, callback) {
-  daoArticle.getById(id, callback);
-}
-
-function getAllArticles(callback) {
-  daoArticle.getAll(callback);
-}
-
-function delArticle(id, callback) {
-  daoArticle.delArticle(id, callback);
-}
-
-function setArticle(id, autor, titulo, contenido, t, topicos, fecha){
-  var update = {
-    $set: {}
+  this.setall= function(autor, titulo, contenido, t, topicos, fecha){
+    _article.id_autor = autor;
+    _article.tittle = titulo;
+    _article.content = contenido;
+    _article.tags = t;
+    _article.topics = topicos;
+    _article.date = fecha;
+    return this;
   };
 
-  update.$set[author] = autor;
-  update.$set[title] = titulo;
-  update.$set[content] = contenido;
-  update.$set[tags] = t;
-  update.$set[topics] = topicos;
-  update.$set[date] = fecha;
-
-  if (checkArticleId(id)) {
-    daoArticle.updateArticle(id, autor, titulo, contenido, t, topicos, fecha);
-  } else {
-    callback('Invalid article id ' + id + '.');
-  }
-}
-
-function setArticleDate(date) {
-  //no se como hacer la fecha
-
-  var update = {
-    $set: {}
+  this.setdate = function(data){
+    //no se como hacer la fecha
+    _article.date = data;
+    return this;
   };
 
-  update.$set[date] = fecha;
+  this.setid_autor = function(data){
+    _article.id_autor = data;
+    return this;
+  };
 
-  daoArticle.updateArticle(autor, titulo, contenido, t, topicos, fecha);
-}
+  this.settittle = function(data){
+    _article.tittle = data;
+    return this;
+  };
 
+  this.setcontent = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.content = data;
+    return this;
+  };
 
-function getUser(id, callback) {
-  daoArticle.getUser(id, callback);
+  this.settags = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.tags = data;
+    return this;
+  };
+
+  this.settopics = function(data){
+    //antes de guardar un valor verificar que sea valido
+    _article.topics = data;
+    return this;
+  };
+
+  this.getuser = function(idArticle) {
+    return _article[idArticle];
+  };
+
+	this.toJSON = function() {
+		return _article;
+	};
 }
 
 module.exports = {
-  create: create,
-  getArticleById: getArticleById,
-  getAllArticles: getAllArticles,
-  delArticle: delArticle,
-  setArticle: setArticle,
-  setArticleDate: setArticleDate,
-  getUser: getUser
+  Article : Article
 };

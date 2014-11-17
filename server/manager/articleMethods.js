@@ -1,8 +1,7 @@
-var Article = require('./user').Article;
-//importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
+var daoArticle = require('../dao/article');
 
-var articles = {};//te creas un array temporal en el que ir guardando los usuarios, (para cuando llames al metodogetall)
-var numarticles = 0;//para llamar al id de uno concreto
+var Article = require('./article').Article;
+//importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
 
 module.exports = {
 	createarticle: function() {

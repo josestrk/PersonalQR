@@ -1,23 +1,25 @@
 var express = require('express');
 var router = express.Router();
 
-var globalManager = require('../model/allmethods');
+var userManager = require('../model/userMethods');
 
 /* VALID ROUTES TO API */
 
 router.post('/user', createUser);
-router.post('/article', createArticle);
+router.get('/user/:userId', getUser);//necho
+router.get('/user', getAllusers);//necho
+router.put('/user/:userId', setUser);//nech
+router.delete('/user/:userId', delUser);//necho
 
-router.put('/article/:articleId', setAllarticleparams);
-router.put('/:userId', setUsern);
 
-router.delete('/user/:userId', delUSer);
-router.delete('/article/:articleId', delArticle);
 
-router.get('/user/:userId', getUser);
-router.get('/article/:articleId', getArticle);
-router.get('/user', getAllusers);
-router.get('/article', getAllarticles);
+/*
+router.post('/article', createArticle);//necho
+router.get('/article/:articleId', getArticle);//necho
+router.get('/article', getAllarticles);//necho
+router.put('/article/:articleId', setAllarticleparams);//necho
+router.delete('/article/:articleId', delArticle);//necho
+*/
 
 /* END ROUTES */
 
@@ -26,18 +28,36 @@ router.get('/article', getAllarticles);
 //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
 //se dan dentro de una funcion con "posibilidad" de error
 function createUser(req, res) {
-  globalManager.createuser(function(err, result){
+  userManager.createuser(function(err, result){
     res.json(result);
   });
 }
 
+function getUser(req, res) {
+  userManager.createuser(function(err, result){
+    res.json(result);
+  });
+}
+
+function setUser(req, res) {
+    var general={
+    var username = req.body.username;
+    var name= req.body.name;
+    var mail = req.body.mail;
+    var password = req.body.password;
+    var bdate = req.body.bdate;
+}
+    res.json(userModel.setUser(req.param('userId'), username));
+}
+
+/*
 function createArticle(req, res) {
   globalManager.createarticle(function(err, result){
     res.json(result);
   });
-}
+}*/
 
-
+/*
 function setAllarticleparams(req, res) {
   var id_autor = req.body.autor;
   var tittle = req.body.titulo;
@@ -48,16 +68,12 @@ function setAllarticleparams(req, res) {
 
   var article = userModel.setAllarticle(req.param('articleId'), id_autor, tittle, content, tags, topics, date);
   res.json(article.toJSON());
-}
+}*/
 
 //hay que tocar los nombres
-function setUsern(req, res) {
-  var username = req.body.username;
-  res.json(userModel.setUser(req.param('userId'), username));
-}
 
 
-function delUSer(req, res) {
+function delUser(req, res) {
   userModel.deluser(req.params.userId);
   //req.params.userId parametro introducido en la URL
   res.send('User ' + req.params.userId + ' removed.');
@@ -71,7 +87,7 @@ function delArticle(req, res) {
 
 function getUser(req, res) {
   var userId = req.param('userId');
-  globalManager.getUserById(userId, function(err, result){
+  userManager.getUserById(userId, function(err, result){
     if(result){
       res.json(result);
     }else{
