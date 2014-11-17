@@ -15,8 +15,8 @@ router.delete('/user/:userId', delUser);
 //articles
 router.post('/article', createArticle);
 router.get('/article/:articleId', getArticle);
-router.get('/article', getAllarticles);
-router.put('/article/:articleId', setAllarticleparams);
+router.get('/article', getAllArticles);
+router.put('/article/:articleId', setArticle);
 router.delete('/article/:articleId', delArticle);
 
 /* END ROUTES */
@@ -78,14 +78,14 @@ function delUser(req, res) {
 }
 
 function createArticle(req, res) {
-  artcleManager.createUser(function(err, result){
+  artcleManager.createArticle(function(err, result){
     res.json(result);
   });
 }
 
 function getArticle(req, res) {
   var articleId = req.param('articleId');
-  artcleManager.getUser(userId, function(err, result){
+  artcleManager.getArticle(userId, function(err, result){
     if(result){
       res.json(result);
     }else{
@@ -95,7 +95,7 @@ function getArticle(req, res) {
 }
 
 function getAllArticles(req, res) {
-  artcleManager.getAllUser(function(err, result){
+  artcleManager.getAllArticles(function(err, result){
     res.json(result);
   });
 }
@@ -109,7 +109,7 @@ function setArticle(req, res) {
         topics : req.body.topicos,
         date : req.body.fecha
         };
-   artcleManager.setUser(articleId, Article, function(err, result){
+   artcleManager.setArticle(articleId, Article, function(err, result){
         if(result === null){
             next(new Error(new Error(articleId+'specified id does not exist')));
         }else{
@@ -121,7 +121,7 @@ function setArticle(req, res) {
 function delArticle(req, res) {
     var articleId = req.param('articleId');
     
-    artcleManager.delUser(userId, function(err, result){
+    artcleManager.delArticle(userId, function(err, result){
         if(result === null){
             next(new Error(new Error(articleId+'specified id does not exist')));
         }else{

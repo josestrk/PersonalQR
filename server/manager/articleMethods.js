@@ -1,6 +1,5 @@
 var daoArticle = require('../dao/article');
 
-//var Article = require('./article').Article;
 //importas del objeto export{} de article.js el metodo de creacion de usuarios, y sus metodos asociados
 function create(callback) {
     var temporalarticle = {
@@ -16,11 +15,11 @@ function create(callback) {
 }
 
 function get(Idarticle, callback) {
-    daoArticle.getById(Idarticle, callback);
+    daoArticle.get(Idarticle, callback);
 }
 
 function del(Idarticle, callback) {
-    daoArticle.delArticle(Idarticle, callback);
+    daoArticle.del(Idarticle, callback);
 }
 
 function getAll(callback) {
@@ -32,9 +31,9 @@ function setArticle(Idarticle, data, callback){
 }
 
 module.exports = {
-	createarticle: create,
-	getarticle: get,
-	delarticle: del,
-	getAllarticle: getAll,
+	createArticle: create,
+	getArticle: get,
+	delArticle: del,
+	getAllArticle: getAll,
 	setArticle: setArticle
 };
