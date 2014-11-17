@@ -11,17 +11,19 @@ l: numero de linea a revisar
 comentario
 ########## fin de tiket
 
+
+----------[??? duda al profesor] comienzo de tiket
+a: alevale
+Esta libreria podria estar muy guapa, podriamos quizas implementar de esta forma la vision de los perfiles de git dentro de una card
+https://github.com/pazguille/github-card
+##########
+
 ---------------
 a:alevale
 f:/server/*
 creando todos los servicios rest que podamos usar en la app, usuario, comentario y articulo
 ###############
 
----------------
-a:alevale
-f:/lib/jquery-toast/
-montar la libreria de jquery-toast
-###############
 ---------------
 a:alevale
 f:/singin-page
