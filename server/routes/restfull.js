@@ -9,11 +9,9 @@ router.post('/user', createUser);
 router.get('/user/:userId', getUser);
 router.get('/user', getAllUsers);
 router.put('/user/:userId', setUser);
-router.delete('/user/:userId', delUser);//necho
+router.delete('/user/:userId', delUser);
 
-
-
-/*
+/*TODO
 router.post('/article', createArticle);//necho
 router.get('/article/:articleId', getArticle);//necho
 router.get('/article', getAllarticles);//necho
@@ -22,7 +20,6 @@ router.delete('/article/:articleId', delArticle);//necho
 */
 
 /* END ROUTES */
-
 
 
 //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
@@ -82,8 +79,6 @@ function delUser(req, res) {
    
 }
 
-
-
 /*
 function createArticle(req, res) {
   globalManager.createarticle(function(err, result){
@@ -103,17 +98,12 @@ function setAllarticleparams(req, res) {
   var article = userModel.setAllarticle(req.param('articleId'), id_autor, title, content, tags, topics, date);
   res.json(article.toJSON());
 }*/
-
-//hay que tocar los nombres
-
-
+/*
 function delArticle(req, res) {
   userModel.delarticle(req.params.articleId);
   //req.params.userId parametro introducido en la URL
   res.send('Article ' + req.params.articleId + ' removed.');
 }
-
-
 
 function getArticle(req, res) {
   res.json(userModel.getarticle(req.param('articleId')));
@@ -125,16 +115,6 @@ function getAllusers(req, res) {
 
 function getAllarticles(req, res) {
   res.json(userModel.getAllarticle());
-}
-
-/*function checkScoreExists (req, res, next, scoreId) {
-  var score = scoreModel.get(scoreId);
-  if (score) {
-    req.score = score;
-    next();
-  } else {
-    next(new Error(userId + ' not exists'));
-  }
 }*/
 
 module.exports = router;

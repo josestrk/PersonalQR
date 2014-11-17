@@ -1,9 +1,16 @@
 var daoUser = require('../dao/user');
 
-var User = require('./user').User;
 //importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
 function create(callback) {
-    var temporaluser = new User(String(numUsers));
+    var temporaluser = {
+        username:  "",
+        name:  "",
+        mail: "",
+        password: "",
+        bdate: "",
+        followers: 0,
+        following: 0
+    }
     daoUser.create(temporaluser, callback);
 }
 
