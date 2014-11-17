@@ -10,7 +10,7 @@ function create(callback) {
         bdate: "",
         followers: 0,
         following: 0
-    }
+    };
     daoUser.create(temporaluser, callback);
 }
 

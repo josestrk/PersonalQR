@@ -1,9 +1,17 @@
 var daoArticle = require('../dao/article');
 
-var Article = require('./article').Article;
+//var Article = require('./article').Article;
 //importas del objeto export{} de article.js el metodo de creacion de usuarios, y sus metodos asociados
 function create(callback) {
-    var temporalarticle = new Article(String(numArticles));
+    var temporalarticle = {
+        title : "",
+        content : "",
+        tags : "",
+        topics : "",
+        likes: "",
+        comments: new Array(),
+        date : ""
+    };
     daoArticle.create(temporalarticle, callback);
 }
 

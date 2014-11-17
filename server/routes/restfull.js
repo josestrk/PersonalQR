@@ -2,22 +2,23 @@ var express = require('express');
 var router = express.Router();
 
 var userManager = require('../model/userMethods');
+var articleManager = require('../model/articleMethods');
 
 /* VALID ROUTES TO API */
 
+//users
 router.post('/user', createUser);
 router.get('/user/:userId', getUser);
 router.get('/user', getAllUsers);
 router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);
 
-/*TODO
-router.post('/article', createArticle);//necho
-router.get('/article/:articleId', getArticle);//necho
-router.get('/article', getAllarticles);//necho
-router.put('/article/:articleId', setAllarticleparams);//necho
-router.delete('/article/:articleId', delArticle);//necho
-*/
+//articles
+router.post('/article', createArticle);
+router.get('/article/:articleId', getArticle);
+router.get('/article', getAllarticles);
+router.put('/article/:articleId', setAllarticleparams);
+router.delete('/article/:articleId', delArticle);
 
 /* END ROUTES */
 
@@ -49,14 +50,14 @@ function getAllUsers(req, res) {
 
 function setUser(req, res) {
     var userId = req.param('userId');
-    var general={
+    var User={
         username:  req.body.username,
         name:  req.body.name,
         mail: req.body.mail,
         password:  req.body.password,
         bdate: req.body.bdate
-        }
-   userManager.setUser(req.param('userId'), general, function(err, result){
+        };
+   userManager.setUser(userId, User, function(err, result){
         if(result === null){
             next(new Error(new Error(userId+'specified id does not exist')));
         }else{
@@ -75,17 +76,63 @@ function delUser(req, res) {
             res.send('User ' + userId + ' removed.');
         }
     });
-    //req.params.userId parametro introducido en la URL
-   
 }
 
-/*
 function createArticle(req, res) {
-  globalManager.createarticle(function(err, result){
+  artcleManager.createUser(function(err, result){
     res.json(result);
   });
-}*/
+}
 
+function getArticle(req, res) {
+  var articleId = req.param('articleId');
+  artcleManager.getUser(userId, function(err, result){
+    if(result){
+      res.json(result);
+    }else{
+      next(new Error(new Error(articleId + 'as user id does not exist')));
+    }
+  });
+}
+
+function getAllArticles(req, res) {
+  artcleManager.getAllUser(function(err, result){
+    res.json(result);
+  });
+}
+
+function setArticle(req, res) {
+    var articleId = req.param('articleId');
+    var Article={
+        title : req.body.titulo,
+        content : req.body.contenido,
+        tags : req.body.t,
+        topics : req.body.topicos,
+        date : req.body.fecha
+        };
+   artcleManager.setUser(articleId, Article, function(err, result){
+        if(result === null){
+            next(new Error(new Error(articleId+'specified id does not exist')));
+        }else{
+            res.json(result);
+        }
+    });
+}
+
+function delArticle(req, res) {
+    var articleId = req.param('articleId');
+    
+    artcleManager.delUser(userId, function(err, result){
+        if(result === null){
+            next(new Error(new Error(articleId+'specified id does not exist')));
+        }else{
+            res.send('User ' + articleId + ' removed.');
+        }
+    });
+}
+
+module.exports = router;
+//OLD_________________________________________*/**/
 /*
 function setAllarticleparams(req, res) {
   var id_autor = req.body.autor;
@@ -97,8 +144,7 @@ function setAllarticleparams(req, res) {
 
   var article = userModel.setAllarticle(req.param('articleId'), id_autor, title, content, tags, topics, date);
   res.json(article.toJSON());
-}*/
-/*
+}
 function delArticle(req, res) {
   userModel.delarticle(req.params.articleId);
   //req.params.userId parametro introducido en la URL
@@ -115,6 +161,10 @@ function getAllusers(req, res) {
 
 function getAllarticles(req, res) {
   res.json(userModel.getAllarticle());
-}*/
+}
+ 
+ module.exports = router;
+ 
+ */
 
-module.exports = router;
+
