@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
-var userManager = require('../model/userMethods');
-var articleManager = require('../model/articleMethods');
+var userManager = require('../manager/userMethods');
+var articleManager = require('../manager/articleMethods');
 
 /* VALID ROUTES TO API */
 
@@ -132,39 +131,3 @@ function delArticle(req, res) {
 }
 
 module.exports = router;
-//OLD_________________________________________*/**/
-/*
-function setAllarticleparams(req, res) {
-  var id_autor = req.body.autor;
-  var title = req.body.titulo;
-  var content = req.body.contenido;
-  var tags = req.body.t;
-  var topics = req.body.topicos;
-  var date = req.body.fecha;
-
-  var article = userModel.setAllarticle(req.param('articleId'), id_autor, title, content, tags, topics, date);
-  res.json(article.toJSON());
-}
-function delArticle(req, res) {
-  userModel.delarticle(req.params.articleId);
-  //req.params.userId parametro introducido en la URL
-  res.send('Article ' + req.params.articleId + ' removed.');
-}
-
-function getArticle(req, res) {
-  res.json(userModel.getarticle(req.param('articleId')));
-}
-
-function getAllusers(req, res) {
-  res.json(userModel.getAlluser());
-}
-
-function getAllarticles(req, res) {
-  res.json(userModel.getAllarticle());
-}
- 
- module.exports = router;
- 
- */
-
-
