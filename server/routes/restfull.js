@@ -41,13 +41,13 @@ function getUser(req, res) {
 
 function setUser(req, res) {
     var general={
-    var username = req.body.username;
-    var name= req.body.name;
-    var mail = req.body.mail;
-    var password = req.body.password;
-    var bdate = req.body.bdate;
+    username:  req.body.username,
+    name:  req.body.name,
+    mail: req.body.mail,
+    password:  req.body.password,
+    bdate: req.body.bdate
 }
-    res.json(userModel.setUser(req.param('userId'), username));
+    res.json(userModel.setUser(req.param('userId'), general));
 }
 
 /*
