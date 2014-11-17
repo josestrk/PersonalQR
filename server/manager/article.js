@@ -2,7 +2,7 @@ function Article(idArticle) {
   var _article = {
 		_id: idArticle,
     id_autor:  "",
-    tittle:  "",
+    title:  "",
     content: "",
     tags: "",
     topics: "",
@@ -11,7 +11,7 @@ function Article(idArticle) {
 
   this.setall= function(autor, titulo, contenido, t, topicos, fecha){
     _article.id_autor = autor;
-    _article.tittle = titulo;
+    _article.title = titulo;
     _article.content = contenido;
     _article.tags = t;
     _article.topics = topicos;
@@ -30,8 +30,8 @@ function Article(idArticle) {
     return this;
   };
 
-  this.settittle = function(data){
-    _article.tittle = data;
+  this.settitle = function(data){
+    _article.title = data;
     return this;
   };
 

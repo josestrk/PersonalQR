@@ -40,13 +40,13 @@ function createArticle(req, res) {
 
 function setAllarticleparams(req, res) {
   var id_autor = req.body.autor;
-  var tittle = req.body.titulo;
+  var title = req.body.titulo;
   var content = req.body.contenido;
   var tags = req.body.t;
   var topics = req.body.topicos;
   var date = req.body.fecha;
 
-  var article = userModel.setAllarticle(req.param('articleId'), id_autor, tittle, content, tags, topics, date);
+  var article = userModel.setAllarticle(req.param('articleId'), id_autor, title, content, tags, topics, date);
   res.json(article.toJSON());
 }
 

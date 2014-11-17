@@ -1,28 +1,32 @@
 var daoArticle = require('../dao/article');
 
 var Article = require('./article').Article;
-//importas del objeto export{} de user.js el metodo de creacion de usuarios, y sus metodos asociados
+//importas del objeto export{} de article.js el metodo de creacion de usuarios, y sus metodos asociados
+function create(callback) {
+    var temporalarticle = new Article(String(numArticles));
+    daoArticle.create(temporalarticle, callback);
+}
+
+function get(Idarticle, callback) {
+    daoArticle.getById(Idarticle, callback);
+}
+
+function del(Idarticle, callback) {
+    daoArticle.delArticle(Idarticle, callback);
+}
+
+function getAll(callback) {
+    daoArticle.getAll(callback);
+}
+
+function setArticle(Idarticle, data, callback){
+    daoArticle.setArticle(Idarticle, data, callback);
+}
 
 module.exports = {
-	createarticle: function() {
-		var articleaux = new Article(String(numarticles));
-		articles[numarticles] = articleaux;
-		numarticles++;
-		return articleaux;
-	},
-	getarticle: function(Idarticle) {
-		return articles[Idarticle];
-	},
-	delarticle: function delScore(Idarticle) {
-		delete articles[Idarticle];
-	},
-	getAllarticle: function() {
-		return Object.keys(articles).map(function(Idarticle) {
-			return articles[Idarticle].toJSON();
-		});
-	},
-	setAllarticle: function(Idarticle, autor, titulo, contenido, t, topicos, fecha){
-		articles[Idarticle].setall(autor, titulo, contenido, t, topicos, fecha);
-		return users[Idarticle];
-	}
+	createarticle: create,
+	getarticle: get,
+	delarticle: del,
+	getAllarticle: getAll,
+	setArticle: setArticle
 };
