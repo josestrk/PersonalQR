@@ -6,9 +6,9 @@ var userManager = require('../model/userMethods');
 /* VALID ROUTES TO API */
 
 router.post('/user', createUser);
-router.get('/user/:userId', getUser);//necho
-router.get('/user', getAllusers);//necho
-router.put('/user/:userId', setUser);//nech
+router.get('/user/:userId', getUser);
+router.get('/user', getAllUsers);
+router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);//necho
 
 
@@ -28,27 +28,61 @@ router.delete('/article/:articleId', delArticle);//necho
 //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
 //se dan dentro de una funcion con "posibilidad" de error
 function createUser(req, res) {
-  userManager.createuser(function(err, result){
+  userManager.createUser(function(err, result){
     res.json(result);
   });
 }
 
 function getUser(req, res) {
-  userManager.createuser(function(err, result){
+  var userId = req.param('userId');
+  userManager.getUser(userId, function(err, result){
+    if(result){
+      res.json(result);
+    }else{
+      next(new Error(new Error(userId + 'as user id does not exist')));
+    }
+  });
+}
+
+function getAllUsers(req, res) {
+  userManager.getAllUser(function(err, result){
     res.json(result);
   });
 }
 
 function setUser(req, res) {
+    var userId = req.param('userId');
     var general={
-    username:  req.body.username,
-    name:  req.body.name,
-    mail: req.body.mail,
-    password:  req.body.password,
-    bdate: req.body.bdate
+        username:  req.body.username,
+        name:  req.body.name,
+        mail: req.body.mail,
+        password:  req.body.password,
+        bdate: req.body.bdate
+        }
+   userManager.setUser(req.param('userId'), general, function(err, result){
+        if(result === null){
+            next(new Error(new Error(userId+'specified id does not exist')));
+        }else{
+            res.json(result);
+        }
+    });
 }
-    res.json(userModel.setUser(req.param('userId'), general));
+
+function delUser(req, res) {
+    var userId = req.param('userId');
+    
+    userManager.delUser(userId, function(err, result){
+        if(result === null){
+            next(new Error(new Error(userId+'specified id does not exist')));
+        }else{
+            res.send('User ' + userId + ' removed.');
+        }
+    });
+    //req.params.userId parametro introducido en la URL
+   
 }
+
+
 
 /*
 function createArticle(req, res) {
@@ -73,28 +107,13 @@ function setAllarticleparams(req, res) {
 //hay que tocar los nombres
 
 
-function delUser(req, res) {
-  userModel.deluser(req.params.userId);
-  //req.params.userId parametro introducido en la URL
-  res.send('User ' + req.params.userId + ' removed.');
-}
-
 function delArticle(req, res) {
   userModel.delarticle(req.params.articleId);
   //req.params.userId parametro introducido en la URL
   res.send('Article ' + req.params.articleId + ' removed.');
 }
 
-function getUser(req, res) {
-  var userId = req.param('userId');
-  userManager.getUserById(userId, function(err, result){
-    if(result){
-      res.json(result);
-    }else{
-      next(new Error(new Error(userId + 'as user id does not exist')));
-    }
-  });
-}
+
 
 function getArticle(req, res) {
   res.json(userModel.getarticle(req.param('articleId')));
