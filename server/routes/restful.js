@@ -50,12 +50,14 @@ function getAllUsers(req, res) {
 function setUser(req, res) {
     var userId = req.param('userId');
     var User={
-        username:  req.body.username,
-        name:  req.body.name,
-        mail: req.body.mail,
-        password:  req.body.password,
-        bdate: req.body.bdate
+            $set:{}
         };
+    User.$set[username]=  req.body.username;
+    User.$set[name]=  req.body.name;
+    User.$set[mail]= req.body.mail;
+    User.$set[password]=  req.body.password;
+    User.$set[bdate]= req.body.bdate;
+    
    userManager.setUser(userId, User, function(err, result){
         if(result === null){
             next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
@@ -103,7 +105,7 @@ function getAllArticles(req, res) {
 function setArticle(req, res) {
     var articleId = req.param('articleId');
     var Article={
-      $set={}
+      $set:{}
     };
     
     Article.$set[title]= req.body.titulo;
