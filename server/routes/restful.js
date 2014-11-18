@@ -67,7 +67,7 @@ function setUser(req, res) {
 
 function delUser(req, res) {
     var userId = req.param('userId');
-    
+
     userManager.delUser(userId, function(err, result){
         if(result === null){
             next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
@@ -103,12 +103,15 @@ function getAllArticles(req, res) {
 function setArticle(req, res) {
     var articleId = req.param('articleId');
     var Article={
-        title : req.body.titulo,
-        content : req.body.contenido,
-        tags : req.body.t,
-        topics : req.body.topicos,
-        date : req.body.fecha
-        };
+      $set={}
+    };
+    
+    Article.$set[title]= req.body.titulo;
+    Article.$set[content]=  req.body.contenido;
+    Article.$set[tags]=  req.body.t;
+    Article.$set[topics] = req.body.topicos;
+    Article.$set[date] = req.body.fecha;
+
    articleManager.setArticle(articleId, Article, function(err, result){
         if(result === null){
             next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
@@ -120,7 +123,7 @@ function setArticle(req, res) {
 
 function delArticle(req, res) {
     var articleId = req.param('articleId');
-    
+
     articleManager.delArticle(userId, function(err, result){
         if(result === null){
             next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
