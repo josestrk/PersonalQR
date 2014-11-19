@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>App Router</title>
+  <link rel="import" href="../../../bower_components/app-router/app-router.html">
+</head>
+<body>
+  <app-router>
+    <app-route path="/home" import="../../pages/wall-page.html"></app-route>
+
+    <app-route path="/profile" import="../../pages/myp-page.html"></app-route>
+
+    <app-route path="/edit" import="../../pages/editor-page.html"></app-route>
+
+    <app-route path="/settings" regex import="../../pages/config-page.html"></app-route>
+
+    <app-route path="*" import="../../pages/codeqr.html"></app-route>
+  </app-router>
+</body>
+
+</html>
