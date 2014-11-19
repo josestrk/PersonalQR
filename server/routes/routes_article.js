@@ -17,7 +17,7 @@ function createArticle(req, res) {
 
 function getArticle(req, res) {
   var articleId = req.param('articleId');
-  articleManager.getArticle(userId, function(err, result){
+  articleManager.getArticle(articleId, function(err, result){
     if(result){
       res.json(result);
     } else {
@@ -46,7 +46,7 @@ function setArticle(req, res) {
 
   articleManager.setArticle(articleId, Article, function(err, result){
     if(result === null){
-      next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
+      next(new Error(new Error('Specified ID ' + articleId + ' does not exist')));
     } else {
       res.json(result);
     }
@@ -58,7 +58,7 @@ function delArticle(req, res) {
 
   articleManager.delArticle(userId, function(err, result){
     if(result === null){
-      next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
+      next(new Error(new Error('Specified ID ' + articleId + ' does not exist')));
     }else{
       res.send('User ' + articleId + ' removed.');
     }
