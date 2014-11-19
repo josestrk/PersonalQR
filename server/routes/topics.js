@@ -33,32 +33,32 @@ function getAllTopics(req, res) {
 }
 
 function setTopic(req, res) {
-    var topicId = req.param('topicId');
-    var Topic={
-      $set:{}
-    };
-    
-    Topic.$set[name]= req.body.titulo;
+  var topicId = req.param('topicId');
+  var Topic={
+    $set:{}
+  };
 
-   topicManager.setTopic(topicId, Topic, function(err, result){
-        if(result === null){
-            next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
-        }else{
-            res.json(result);
-        }
-    });
+  Topic.$set[name]= req.body.titulo;
+
+  topicManager.setTopic(topicId, Topic, function(err, result){
+    if(result === null){
+        next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
+    }else{
+        res.json(result);
+    }
+  });
 }
 
 function delTopic(req, res) {
-    var topicId = req.param('topicId');
+  var topicId = req.param('topicId');
 
-    topicManager.delTopic(topicId, function(err, result){
-        if(result === null){
-            next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
-        }else{
-            res.send('Topic ' + topicId + ' removed.');
-        }
-    });
+  topicManager.delTopic(topicId, function(err, result){
+    if(result === null){
+        next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
+    }else{
+        res.send('Topic ' + topicId + ' removed.');
+    }
+  });
 }
 
 module.exports = router;

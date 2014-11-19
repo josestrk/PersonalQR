@@ -5,7 +5,6 @@ contacts, articcles, ...
 
 <polymer-element name="search-banner">
   <template>
-   
     <style>
     @import 'jquery.typeahead.css';
     :host {
@@ -28,76 +27,82 @@ contacts, articcles, ...
     }
     </style>
     
+	<div class="typeahead-container">
+		<div class="typeahead-field">
+			<span class="typeahead-query">
+        <input id="q"
+          name="q"
+          type="search"
+          placeholder="Search"
+          autocomplete="off">
+			</span> 
+		</div>
+	</div>
+	<core-icon icon="search" id="core_icon1"></core-icon>
 
-        <div class="typeahead-container">
-            <div class="typeahead-field">
-
-                <span class="typeahead-query">
-                    
-                      <input id="q"
-                           name="q"
-                           type="search"
-                           placeholder="Search"
-                           autocomplete="off">
-                </span> 
-            </div>
-        </div>
-        <core-icon icon="search" id="core_icon1"></core-icon>
   </template>
   <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="jquery.typeahead.js"></script>
   <script>
     (function () { 
-        var base='/topics';
-        
-        function defaultAjaxErrorHandler(xhr, err, desc) {
-            console.log(xhr, err, desc);
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
-            errorToast.show();
-        }
-        function doAjax(options, success, error) {
-            options.type = options.type || 'GET';
-            options.url = base + (options.url || '');
-            options.dataType = options.dataType || 'json';
-            options.contentType = options.contentType || 'application/json; charset=UTF-8';
-            options.success = success;
-            options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-            debugger
-            $.ajax(options);
-        }
-        function search(){
-            
-            $(this.$.q).typeahead({
-                minLength: 1,
-                order: "asc",
-                group: true,
-                hint: true,
-                list: false,
-                backdrop: false,
-                source: {
-                    topics: {
-                        data: tp.countries
-                    }
-                }
-            });
-        }
-        
-        var tp = {
-            topics: []
-        };
-        
-        Polymer('search-banner', {
-            showTopic: function() {
-                    doAjax({type: 'GET'}, function(data) {
-                        debugger
-                        this.tp.topics.push(data);
-                    }.bind(this));
-            },
-            ready: function () {
-                search.bind(this)();
+      var base = '/restful/topic';
+
+      function defaultAjaxErrorHandler(xhr, err, desc) {
+        console.log(xhr, err, desc);
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
+        errorToast.show();
+      }
+      
+      function doAjax(options, success, error) {
+        options.type = options.type || 'GET';
+        options.url = base + (options.url || '');
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+        $.ajax(options);
+      }
+      
+      function search(){
+        $(this.$.q).typeahead({
+          minLength: 1,
+          order: "asc",
+          group: true,
+          hint: true,
+          list: false,
+          backdrop: false,
+          source: {
+            topics: {
+              data: topics
             }
+          }
         });
+      }
+
+      var topics;
+
+      Polymer('search-banner', {
+        created: function() {
+          if (!topics) {
+            doAjax({}, function(data) {
+              topics = data;
+              this.topics = topics;
+            }.bind(this));
+          }
+        },
+        showTopics: function() {
+          doAjax({type: 'GET', url: '/topics'}, function(data) {
+            debugger
+            $.each(this.topics, function(key, value) {
+              this.topics.push(value);
+             });
+          }.bind(this));
+        },
+        ready: function () {
+          search.bind(this)();
+        }
+      });
     }());
   </script>
 </polymer-element>
