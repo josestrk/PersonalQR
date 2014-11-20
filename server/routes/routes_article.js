@@ -3,11 +3,11 @@ var router = express.Router();
 var articleManager = require('../manager/manager_article');
 
 //articles
-router.post('/particle', createArticle);
-router.get('/garticle/:articleId', getArticle);
-router.get('/garticle', getAllArticles);
-router.put('/putarticle/:articleId', setArticle);
-router.delete('/delarticle/:articleId', delArticle);
+router.post('/article', createArticle);
+router.get('/article/:articleId', getArticle);
+router.get('/article', getArticles);
+router.put('/article/:articleId', setArticle);
+router.delete('/article/:articleId', delArticle);
 
 function createArticle(req, res) {
   articleManager.createArticle(function(err, result){
@@ -21,28 +21,27 @@ function getArticle(req, res) {
     if(result){
       res.json(result);
     } else {
-      next(new Error(new Error(articleId + 'as user id does not exist')));
+      next(new Error(new Error(articleId + 'as article id does not exist')));
     }
   });
 }
 
-function getAllArticles(req, res) {
-  articleManager.getAllArticles(function(err, result){
+function getArticles(req, res) {
+  articleManager.getArticles(function(err, result){
     res.json(result);
   });
 }
 
 function setArticle(req, res) {
   var articleId = req.param('articleId');
-  var Article={
-    $set:{}
-  };
 
-  Article.$set[title]= req.body.titulo;
-  Article.$set[content]=  req.body.contenido;
-  Article.$set[tags]=  req.body.t;
-  Article.$set[topics] = req.body.topicos;
-  Article.$set[date] = req.body.fecha;
+  var Article={
+    "title": req.body.title,
+	"content": req.body.content,
+	"tags": req.body.tags,
+	"topics": req.body.topics,
+	"date": req.body.date
+  };
 
   articleManager.setArticle(articleId, Article, function(err, result){
     if(result === null){
@@ -56,11 +55,11 @@ function setArticle(req, res) {
 function delArticle(req, res) {
   var articleId = req.param('articleId');
 
-  articleManager.delArticle(userId, function(err, result){
+  articleManager.delArticle(articleId, function(err, result){
     if(result === null){
       next(new Error(new Error('Specified ID ' + articleId + ' does not exist')));
     }else{
-      res.send('User ' + articleId + ' removed.');
+      res.send('Article ' + articleId + ' removed.');
     }
   });
 }

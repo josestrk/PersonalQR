@@ -3,11 +3,11 @@ var router = express.Router();
 var topicManager = require('../manager/manager_topic');
 
 //topics
-router.post('/routes_topic', createTopic);
-router.get('/routes_topic/:topicId', getTopic);
-router.get('/routes_topic', getAllTopics);
-router.put('/routes_topic/:topicId', setTopic);
-router.delete('/routes_topic/:topicId', delTopic);
+router.post('/topic', createTopic);
+router.get('/topic/:topicId', getTopic);
+router.get('/topic', getTopics);
+router.put('/topic/:topicId', setTopic);
+router.delete('/topic/:topicId', delTopic);
 
 function createTopic(req, res) {
   topicManager.createTopic(function(err, result){
@@ -26,8 +26,8 @@ function getTopic(req, res) {
   });
 }
 
-function getAllTopics(req, res) {
-  topicManager.getAllTopics(function(err, result){
+function getTopics(req, res) {
+  topicManager.getTopics(function(err, result){
     res.json(result);
   });
 }
@@ -35,10 +35,14 @@ function getAllTopics(req, res) {
 function setTopic(req, res) {
   var topicId = req.param('topicId');
   var Topic={
-    $set:{}
+	"title" : req.body.title,
+    "content" : req.body.content,
+    "tags" : req.body.tags,
+    "topics" : req.body.topics,
+    "likes": req.body.likes,
+    "comments": req.body.comments,
+    "date" : req.body.date
   };
-
-  Topic.$set[name]= req.body.titulo;
 
   topicManager.setTopic(topicId, Topic, function(err, result){
     if(result === null){

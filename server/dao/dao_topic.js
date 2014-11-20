@@ -2,15 +2,15 @@ var db = require('../util/mongodb').db;
 var toObjectID = require('../util/mongodb').toObjectID;
 var col = db.bind('topics');
 
-function create(topic, callback) {
+function createTopic(topic, callback) {
 	this.insert(topic, callback);
 }
 
-function getById(topicId, callback) {
+function getTopic(topicId, callback) {
 	this.findById(topicId, callback);
 }
 
-function getAll(callback) {
+function getTopics(callback) {
 	this.find({}, function(err, cursor) {
 		if (err) {
 			return callback(err);
@@ -19,11 +19,11 @@ function getAll(callback) {
 	});
 }
 
-function delAll(callback) {
+function delTopics(callback) {
 	this.remove({}, callback);
 }
 
-function del(topicId, callback) {
+function delTopic(topicId, callback) {
 	this.removeById(topicId, callback);
 }
 
@@ -40,11 +40,11 @@ function setTopic(topicId, update, callback) {
 }
 
 col.bind({
-	create: create,
-	getById: getById,
-	getAll: getAll,
-	delAll: delAll,
-	del: del,
+	createTopic: createTopic,
+	getTopic: getTopic,
+	getTopics: getTopics,
+	delTopics: delTopics,
+	delTopic: delTopic,
 	setTopic: setTopic
 });
 

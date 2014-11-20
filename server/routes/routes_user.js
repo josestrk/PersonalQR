@@ -4,11 +4,11 @@ var router = express.Router();
 var userManager = require('../manager/manager_user');
 
 //users
-router.post('/puser', createUser);
-router.get('/guser/:userId', getUser);
-router.get('/guser', getAllUsers);
-router.put('/putuser/:userId', setUser);
-router.delete('/deluser/:userId', delUser);
+router.post('/user', createUser);
+router.get('/user/:userId', getUser);
+router.get('/user', getUsers);
+router.put('/user/:userId', setUser);
+router.delete('/user/:userId', delUser);
 
 //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
 //se dan dentro de una funcion con "posibilidad" de error
@@ -31,9 +31,9 @@ function getUser(req, res) {
   });
 }
 
-function getAllUsers(req, res) {
+function getUsers(req, res) {
   debug('Showing all users');
-  userManager.getAllUsers(function(err, result){
+  userManager.getUsers(function(err, result){
     debug('Time of response ->');
     res.json(result);
   });
@@ -42,14 +42,12 @@ function getAllUsers(req, res) {
 function setUser(req, res) {
   var userId = req.param('userId');
   var User={
-    $set:{}
+    "username": req.body.username,
+    "name": req.body.name,
+    "mail": req.body.mail,
+    "password": req.body.password,
+    "bdate": req.body.bdate
   };
-
-  User.$set[username]=  req.body.username;
-  User.$set[name]=  req.body.name;
-  User.$set[mail]= req.body.mail;
-  User.$set[password]=  req.body.password;
-  User.$set[bdate]= req.body.bdate;
 
   userManager.setUser(userId, User, function(err, result){
     if(result === null){

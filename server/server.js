@@ -12,8 +12,7 @@ var config = require('./util/config');
 
 var app = express();
 
-
-app.use(favicon(__dirname + '/../httpdocs/favicon.ico')); //Sirve el favicon de la pagina
+app.use(favicon('./httpdocs/favicon.ico')); //Sirve el favicon de la pagina
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -47,7 +46,7 @@ app.use(function(err, req, res, next) {
 var basePath = path.join(__dirname, '/routes/');
 
 fs.readdirSync(basePath).forEach(function(filename) {
-	var basePathService = '/' + filename.replace(/\.js$/, '');
+	var basePathService = '/';
 	var serviceDefinition = basePath + filename;
 	app.use(basePathService, require(serviceDefinition));
 });

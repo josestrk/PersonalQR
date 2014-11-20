@@ -1,34 +1,38 @@
 var daoTopic = require('../dao/dao_topic');
 
-//importas del objeto export{} de topic.js el metodo de creacion de usuarios, y sus metodos asociados
-function create(callback) {
-    var temporalTopic = {
-        name:  ""
-    };
-    daoTopic.create(temporalTopic, callback);
+function createTopic(callback) {
+  var temporalTopic = {
+    title : "",
+    content : "",
+    tags : "",
+    topics : "",
+    likes: "",
+    comments: new Array(),
+    date : ""
+  };
+  daoTopic.createTopic(temporalTopic, callback);
 }
 
-function get(topicId, callback) {
-    daoTopic.getById(topicId, callback);
+function getTopic(topicId, callback) {
+  daoTopic.getTopic(topicId, callback);
 }
 
-function getAll(callback) {
-    daoTopic.getAll(callback);
+function delTopic(topicId, callback) {
+  daoTopic.delTopic(topicId, callback);
+}
+
+function getTopics(callback) {
+  daoTopic.getTopics(callback);
 }
 
 function setTopic(topicId, data, callback){
-    daoTopic.setTopic(topicId, data, callback);
-}
-
-function del(topicId, callback) {
-    daoTopic.delTopic(topicId, callback);
+  daoTopic.setTopic(topicId, data, callback);
 }
 
 module.exports = {
-	createTopic: create,
-	getTopic: get,
-	getAllTopics: getAll,
-	setTopic: setTopic,
-  delTopic: del
+	createTopic: createTopic,
+	getTopic: getTopic,
+	getTopics: getTopics,
+	delTopic: delTopic,
+	setTopic: setTopic
 };
-
