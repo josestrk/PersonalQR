@@ -3,11 +3,11 @@ var router = express.Router();
 var articleManager = require('../manager/manager_article');
 
 //articles
-router.post('/routes_article', createArticle);
-router.get('/routes_article/:articleId', getArticle);
-router.get('/routes_article', getAllArticles);
-router.put('/routes_article/:articleId', setArticle);
-router.delete('/routes_article/:articleId', delArticle);
+router.post('/particle', createArticle);
+router.get('/garticle/:articleId', getArticle);
+router.get('/garticle', getAllArticles);
+router.put('/putarticle/:articleId', setArticle);
+router.delete('/delarticle/:articleId', delArticle);
 
 function createArticle(req, res) {
   articleManager.createArticle(function(err, result){
