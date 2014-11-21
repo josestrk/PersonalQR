@@ -1,6 +1,9 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
+<link rel="import" href="/bower_components/core-icons/core-icons.html">
 <!--
-low rendiment but in the future will be serch all aplication
-contacts, articcles, ...
+This will be used in the future as well for searching for contacts,
+articles and so on
 -->
 
 <polymer-element name="search-banner">
@@ -27,30 +30,36 @@ contacts, articcles, ...
     }
     </style>
     
-	<div class="typeahead-container">
-		<div class="typeahead-field">
-			<span class="typeahead-query">
+  <div class="typeahead-container">
+    <div class="typeahead-field">
+      <span class="typeahead-query">
         <input id="q"
           name="q"
           type="search"
           placeholder="Search"
           autocomplete="off">
-			</span> 
-		</div>
-	</div>
-	<core-icon icon="search" id="core_icon1"></core-icon>
+      </span> 
+    </div>
+  </div>
+  <core-icon icon="search" id="core_icon1"></core-icon>
 
   </template>
   <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="jquery.typeahead.js"></script>
   <script>
     (function () { 
-      var base = '/restful/topic';
+      var base = '/routes_topic/topic';
 
-      function defaultAjaxErrorHandler(xhr, err, desc) {
-        console.log(xhr, err, desc);
+      function defaultAjaxErrorHandler(xhr, err, desc) { // xhr = XMLHttpRequest
+        console.log('xhr:');
+        console.log(xhr);
+        console.log('err: ');
+        console.log(err);
+        console.log('desc: ');
+        console.log(desc);
         var errorToast = document.querySelector('#errorToast');
-        errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
+        // example: '[404] Not Found: Cannot GET <url>'
+        errorToast.text = '[' + xhr.status + '] ' + desc + ': ' + xhr.response;
         errorToast.show();
       }
       
@@ -65,6 +74,7 @@ contacts, articcles, ...
       }
       
       function search(){
+        console.log(this);
         $(this.$.q).typeahead({
           minLength: 1,
           order: "asc",
@@ -86,21 +96,29 @@ contacts, articcles, ...
         created: function() {
           if (!topics) {
             doAjax({}, function(data) {
+              console.log(data);
               topics = data;
               this.topics = topics;
             }.bind(this));
           }
-        },
-        showTopics: function() {
-          doAjax({type: 'GET', url: '/topics'}, function(data) {
-            debugger
-            $.each(this.topics, function(key, value) {
-              this.topics.push(value);
-             });
-          }.bind(this));
+          console.log(topics);
+          console.log('created');
         },
         ready: function () {
           search.bind(this)();
+          console.log('ready');
+        },
+        showTopics: function() {
+          doAjax({
+            type: 'GET',
+            url: '/routes_topic/topic'
+          }, function(data) {
+            debugger
+            $.each(this.topics, function(key, value) {
+              this.topics.push(value);
+            });
+          }.bind(this));
+          console.log('showTopics');
         }
       });
     }());
