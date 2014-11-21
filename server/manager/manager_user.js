@@ -21,8 +21,8 @@ function delUser(userId, callback) {
   daoUser.delUser(userId, callback);
 }
 
-function getUsers(callback) {
-  daoUser.getUsers(callback);
+function getUsersAll(callback) {
+  daoUser.getUsersAll(callback);
 }
 
 function setUser(userId, data, callback){
@@ -32,7 +32,7 @@ function setUser(userId, data, callback){
 module.exports = {
 	createUser: createUser,
 	getUser: getUser,
-	getUsers: getUsers,
+	getUsersAll: getUsersAll,
 	delUser: delUser,
 	setUser: setUser
 };

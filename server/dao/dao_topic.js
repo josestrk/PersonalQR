@@ -10,7 +10,7 @@ function getTopic(topicId, callback) {
 	this.findById(topicId, callback);
 }
 
-function getTopics(callback) {
+function getTopicsAll(callback) {
 	this.find({}, function(err, cursor) {
 		if (err) {
 			return callback(err);
@@ -42,7 +42,7 @@ function setTopic(topicId, update, callback) {
 col.bind({
 	createTopic: createTopic,
 	getTopic: getTopic,
-	getTopics: getTopics,
+	getTopicsAll: getTopicsAll,
 	delTopics: delTopics,
 	delTopic: delTopic,
 	setTopic: setTopic

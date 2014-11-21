@@ -5,7 +5,7 @@ var articleManager = require('../manager/manager_article');
 //articles
 router.post('/article', createArticle);
 router.get('/article/:articleId', getArticle);
-router.get('/article', getArticles);
+router.get('/article', getArticlesAll);
 router.put('/article/:articleId', setArticle);
 router.delete('/article/:articleId', delArticle);
 
@@ -26,8 +26,8 @@ function getArticle(req, res) {
   });
 }
 
-function getArticles(req, res) {
-  articleManager.getArticles(function(err, result){
+function getArticlesAll(req, res) {
+  articleManager.getArticlesAll(function(err, result){
     res.json(result);
   });
 }

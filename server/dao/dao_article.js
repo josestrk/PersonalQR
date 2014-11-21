@@ -10,7 +10,7 @@ function getArticle(articleId, callback) {
 	this.findById(articleId, callback);
 }
 
-function getArticles(callback) {
+function getArticlesAll(callback) {
 	this.find({}, function(err, cursor) {
 		if (err) {
 			return callback(err);
@@ -42,7 +42,7 @@ function setArticle(articleId, update, callback) {
 col.bind({
 	createArticle: createArticle,
 	getArticle: getArticle,
-	getArticles: getArticles,
+	getArticlesAll: getArticlesAll,
 	delArticles: delArticles,
 	delArticle: delArticle,
 	setArticle: setArticle

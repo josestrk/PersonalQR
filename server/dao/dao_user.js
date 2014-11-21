@@ -10,7 +10,7 @@ function getUser(userId, callback) {
 	this.findById(userId, callback);
 }
 
-function getUsers(callback) {
+function getUsersAll(callback) {
 	this.find({}, function(err, cursor) {
 		if (err) {
 			return callback(err);
@@ -42,7 +42,7 @@ function setUser(userId, update, callback) {
 col.bind({
 	createUser: createUser,
 	getUser: getUser,
-	getUsers: getUsers,
+	getUsersAll: getUsersAll,
 	delUsers: delUsers,
 	delUser: delUser,
 	setUser: setUser

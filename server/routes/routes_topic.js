@@ -5,7 +5,7 @@ var topicManager = require('../manager/manager_topic');
 //topics
 router.post('/topic', createTopic);
 router.get('/topic/:topicId', getTopic);
-router.get('/topic', getTopics);
+router.get('/topic', getTopicsAll);
 router.put('/topic/:topicId', setTopic);
 router.delete('/topic/:topicId', delTopic);
 
@@ -26,8 +26,8 @@ function getTopic(req, res) {
   });
 }
 
-function getTopics(req, res) {
-  topicManager.getTopics(function(err, result){
+function getTopicsAll(req, res) {
+  topicManager.getTopicsAll(function(err, result){
     res.json(result);
   });
 }

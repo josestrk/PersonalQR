@@ -21,8 +21,8 @@ function delArticle(articleId, callback) {
   daoArticle.delArticle(articleId, callback);
 }
 
-function getArticleAll(callback) {
-  daoArticle.getArticles(callback);
+function getArticlesAll(callback) {
+  daoArticle.getArticlesAll(callback);
 }
 
 function setArticle(articleId, data, callback){
@@ -32,7 +32,7 @@ function setArticle(articleId, data, callback){
 module.exports = {
 	createArticle: createArticle,
 	getArticle: getArticle,
-	getArticles: getArticles,
+	getArticlesAll: getArticlesAll,
 	delArticle: delArticle,
 	setArticle: setArticle
 };

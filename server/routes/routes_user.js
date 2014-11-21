@@ -6,7 +6,7 @@ var userManager = require('../manager/manager_user');
 //users
 router.post('/user', createUser);
 router.get('/user/:userId', getUser);
-router.get('/user', getUsers);
+router.get('/user', getUsersAll);
 router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);
 
@@ -31,9 +31,9 @@ function getUser(req, res) {
   });
 }
 
-function getUsers(req, res) {
+function getUsersAll(req, res) {
   debug('Showing all users');
-  userManager.getUsers(function(err, result){
+  userManager.getUsersAll(function(err, result){
     debug('Time of response ->');
     res.json(result);
   });

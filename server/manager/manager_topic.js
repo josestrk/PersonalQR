@@ -21,8 +21,8 @@ function delTopic(topicId, callback) {
   daoTopic.delTopic(topicId, callback);
 }
 
-function getTopics(callback) {
-  daoTopic.getTopics(callback);
+function getTopicsAll(callback) {
+  daoTopic.getTopicsAll(callback);
 }
 
 function setTopic(topicId, data, callback){
@@ -32,7 +32,7 @@ function setTopic(topicId, data, callback){
 module.exports = {
 	createTopic: createTopic,
 	getTopic: getTopic,
-	getTopics: getTopics,
+	getTopicsAll: getTopicsAll,
 	delTopic: delTopic,
 	setTopic: setTopic
 };
