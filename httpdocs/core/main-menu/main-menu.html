@@ -48,9 +48,14 @@
             .dropdown {
                 padding: 12px;
             }
+            #paper_icon_button{
+                top: 40px;
+                color:#FFF;
+                padding: 10px
+            }
         </style>
         <!-- Route controller. -->
-        <flatiron-director route="{{route}}" autoHash></flatiron-director>
+        <flatiron-director route="{{route}}"></flatiron-director>
 
         <!-- Keyboard nav controller. -->
         <core-a11y-keys id="keys" target="{{parentElement}}"
@@ -68,20 +73,21 @@
                         <!--<img src="{{post.avatar}}" width="70" height="70">
                         <h2>{{post.username}}</h2>
                         <p>{{post.text}}</p>-->
+                        
                     </id-card>
                 </core-card>
 
-                <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
+                <core-menu valueattr="path" selected="{{route}}" selectedModel="{{selectedPage}}"
                            on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{route != page.hash ? '' : '-outline'}}"
-                                    label="{{page.name}}" hash="{{page.hash}}">
-                            <a href="#{{page.hash}}"></a>
+                        <paper-item icon="{{page.logo}}{{route != page.path ? '' : '-outline'}}"
+                                    label="{{page.name}}" path="{{page.path}}">
+                            <a href="#{{page.path}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
                 <core-card id="core_card_f" vertical layout end-justified end>    
-                    <paper-icon-button icon="settings-power" id="paper_icon_button" ></paper-icon-button>
+                    <a is="pushstate-anchor" href="../../../index.html"><core-icon-button icon="settings-power" id="paper_icon_button" ></core-icon-button></a>
                 </core-card>  
             </nav>
 
@@ -92,7 +98,7 @@
             </core-toolbar>
 
             <div layout vertical fit>
-                <app-router id="pages" mode="hash">
+                <app-router id="pages" mode="path">
                     <template repeat="{{page in pages}}"></template>
                 </app-router>
             </div>
@@ -106,7 +112,7 @@
                 var section = document.createElement('app-route');
                 section.setAttribute('layout', '');
                 section.setAttribute('vertical', '');
-                section.setAttribute('hash', page.hash);
+                section.setAttribute('path', page.path);
                 section.setAttribute('import', page.import);
 
                 return section;
@@ -116,11 +122,11 @@
             function loadPages() {
                 var DEFAULT_ROUTE = 'wall';
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: 'wall', import: '../../pages/wall-page.html'},
-                    {name: 'My profile', logo: 'social:person', hash: 'myprofile', import: '../../pages/myp-page.html'},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: 'editor', import: '../../pages/editor-page.html'},
-                    {name: 'Config', logo: 'check-circle', hash: 'settings', import: '../../pages/config-page.html'},
-                    {name: 'Contacts', logo: 'social:person', hash: 'contacts', import: '../../pages/contacts-page.html'}
+                    {name: 'Wall', logo: 'info', path: 'wall', import: '../../pages/wall-page.html'},
+                    {name: 'My profile', logo: 'social:person', path: 'myprofile', import: '../../pages/myp-page.html'},
+                    {name: 'Edition Mode', logo: 'bookmark', path: 'editor', import: '../../pages/editor-page.html'},
+                    {name: 'Config', logo: 'check-circle', path: 'settings', import: '../../pages/config-page.html'},
+                    {name: 'Contacts', logo: 'social:person', path: 'contacts', import: '../../pages/contacts-page.html'}
                 ];
 
                 var animatedPages = this.$.pages;
