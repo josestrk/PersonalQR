@@ -1,8 +1,3 @@
-<link rel="import" href="../../pages/wall-page.html">
-<link rel="import" href="../../pages/myp-page.html">
-<link rel="import" href="../../pages/config-page.html">
-<link rel="import" href="../../pages/editor-page.html">
-
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/core-scaffold/core-scaffold.html">
 <link rel="import" href="../../../bower_components/core-toolbar/core-toolbar.html">
@@ -72,17 +67,16 @@
                         <p>300 followers • 100 following</p>  
                         <!--<img src="{{post.avatar}}" width="70" height="70">
                         <h2>{{post.username}}</h2>
-                        <p>{{post.text}}</p>-->
-                        
+                        <p>{{post.followers}} followers • {{post.follow}} following</p>-->
                     </id-card>
                 </core-card>
 
-                <core-menu valueattr="path" selected="{{route}}" selectedModel="{{selectedPage}}"
+                <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
                            on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{route != page.path ? '' : '-outline'}}"
-                                    label="{{page.name}}" path="{{page.path}}">
-                            <a href="#{{page.path}}"></a>
+                        <paper-item icon="{{page.logo}}{{route != page.hash ? '' : '-outline'}}"
+                                    label="{{page.name}}" hash="{{page.hash}}">
+                            <a href="#{{page.hash}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
@@ -98,8 +92,8 @@
             </core-toolbar>
 
             <div layout vertical fit>
-                <app-router id="pages" mode="path">
-                    <template repeat="{{page in pages}}"></template>
+                <app-router mode="hash" id="pages" core-animated-pages transitions="hero-transition cross-fade">
+                    <template  repeat="{{page in pages}}"></template>
                 </app-router>
             </div>
 
@@ -112,9 +106,11 @@
                 var section = document.createElement('app-route');
                 section.setAttribute('layout', '');
                 section.setAttribute('vertical', '');
-                section.setAttribute('path', page.path);
+                section.setAttribute('hash', page.hash);
                 section.setAttribute('import', page.import);
 
+                //var component = document.createElement(page.component);
+                //section.appendChild(component);
                 return section;
             }
 
@@ -122,11 +118,11 @@
             function loadPages() {
                 var DEFAULT_ROUTE = 'wall';
                 this.pages = [
-                    {name: 'Wall', logo: 'info', path: 'wall', import: '../../pages/wall-page.html'},
-                    {name: 'My profile', logo: 'social:person', path: 'myprofile', import: '../../pages/myp-page.html'},
-                    {name: 'Edition Mode', logo: 'bookmark', path: 'editor', import: '../../pages/editor-page.html'},
-                    {name: 'Config', logo: 'check-circle', path: 'settings', import: '../../pages/config-page.html'},
-                    {name: 'Contacts', logo: 'social:person', path: 'contacts', import: '../../pages/contacts-page.html'}
+                    {name: 'Wall', logo: 'info', hash: 'wall', import: '../../pages/wall-page.html',component: 'wall-page'},
+                    {name: 'My profile', logo: 'social:person', hash: 'myprofile', import: '../../pages/myp-page.html',component:'myp-page'},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: 'editor', import: '../../pages/editor-page.html',component:'editor-page'},
+                    {name: 'Config', logo: 'check-circle', hash: 'settings', import: '../../pages/config-page.html',component:'config-page'},
+                    {name: 'Contacts', logo: 'social:person', hash: 'contacts', import: '../../../index.html',component:'editor-page'}
                 ];
 
                 var animatedPages = this.$.pages;
