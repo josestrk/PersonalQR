@@ -42,21 +42,15 @@ articles and so on
     </div>
   </div>
   <core-icon icon="search" id="core_icon1"></core-icon>
-
+  
   </template>
   <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="jquery.typeahead.js"></script>
   <script>
     (function () { 
-      var base = '/routes_topic/topic';
+      var base = '/topic';
 
       function defaultAjaxErrorHandler(xhr, err, desc) { // xhr = XMLHttpRequest
-        console.log('xhr:');
-        console.log(xhr);
-        console.log('err: ');
-        console.log(err);
-        console.log('desc: ');
-        console.log(desc);
         var errorToast = document.querySelector('#errorToast');
         // example: '[404] Not Found: Cannot GET <url>'
         errorToast.text = '[' + xhr.status + '] ' + desc + ': ' + xhr.response;
@@ -111,7 +105,7 @@ articles and so on
         showTopics: function() {
           doAjax({
             type: 'GET',
-            url: '/routes_topic/topic'
+            url: '/topic'
           }, function(data) {
             debugger
             $.each(this.topics, function(key, value) {
