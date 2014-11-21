@@ -21,7 +21,7 @@ function delArticle(articleId, callback) {
   daoArticle.delArticle(articleId, callback);
 }
 
-function getArticles(callback) {
+function getArticleAll(callback) {
   daoArticle.getArticles(callback);
 }
 
