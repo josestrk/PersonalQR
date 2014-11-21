@@ -12,7 +12,7 @@ var config = require('./util/config');
 
 var app = express();
 
-app.use(favicon('./httpdocs/favicon.ico')); //Sirve el favicon de la pagina
+app.use(favicon('./img/favicon.ico')); //Sirve el favicon de la pagina
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
