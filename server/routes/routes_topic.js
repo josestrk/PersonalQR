@@ -34,14 +34,9 @@ function getTopicsAll(req, res) {
 
 function setTopic(req, res) {
   var topicId = req.param('topicId');
+
   var Topic={
-    "title" : req.body.title,
-    "content" : req.body.content,
-    "tags" : req.body.tags,
-    "topics" : req.body.topics,
-    "likes": req.body.likes,
-    "comments": req.body.comments,
-    "date" : req.body.date
+    "name" : req.body.name
   };
 
   topicManager.setTopic(topicId, Topic, function(err, result){

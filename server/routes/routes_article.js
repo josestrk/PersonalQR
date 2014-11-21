@@ -36,12 +36,29 @@ function setArticle(req, res) {
   var articleId = req.param('articleId');
 
   var Article={
-    "title": req.body.title,
-	"content": req.body.content,
-	"tags": req.body.tags,
-	"topics": req.body.topics,
-	"date": req.body.date
+    $set:{
+    }
   };
+
+  if(req.body.authorId!==undefined){
+     Article.$set["authorId"]=req.body.authorId;
+  }
+  if(req.body.title!==undefined){
+     Article.$set["title"]=req.body.title;
+  }
+  if(req.body.content!==undefined){
+     Article.$set["content"]=req.body.content;
+  }
+  if(req.body.tags!==undefined){
+     Article.$set["tags"]=req.body.tags;
+  }
+  if(req.body.topics!==undefined){
+     Article.$set["topics"]=req.body.topics;
+  }
+  if(req.body.date!==undefined){
+     Article.$set["date"]=req.body.date;
+  }
+
 
   articleManager.setArticle(articleId, Article, function(err, result){
     if(result === null){

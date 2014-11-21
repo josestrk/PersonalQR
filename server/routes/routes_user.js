@@ -41,13 +41,27 @@ function getUsersAll(req, res) {
 
 function setUser(req, res) {
   var userId = req.param('userId');
+
   var User={
-    "username": req.body.username,
-    "name": req.body.name,
-    "mail": req.body.mail,
-    "password": req.body.password,
-    "bdate": req.body.bdate
+    $set:{
+    }
   };
+
+  if(req.body.username!==undefined){
+     User.$set["username"]=req.body.username;
+   }
+  if(req.body.name!==undefined){
+     User.$set["name"]=req.body.name;
+   }
+  if(req.body.mail!==undefined){
+     User.$set["mail"]=req.body.mail;
+   }
+  if(req.body.password!==undefined){
+     User.$set["password"]=req.body.password;
+   }
+  if(req.body.bdate!==undefined){
+     User.$set["bdate"]=req.body.bdate;
+   }
 
   userManager.setUser(userId, User, function(err, result){
     if(result === null){
