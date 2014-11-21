@@ -67,6 +67,11 @@
         height: 25px;
         margin: auto;
       }
+      #core_icon2 {
+        width: 25px;
+        height: 25px;
+        margin: auto;
+      }
       #core_item {
         width: 200px;
         height: 30px;
@@ -150,11 +155,11 @@
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" willvalidate validationmessage="Completa este campo" required pattern="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}" invalid id="paper_input1" layout vertical class="invalid"></paper-input>
+          <paper-input label="Email Address" validationmessage="Completa este campo" id="paper_input1" layout vertical></paper-input>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
-          <core-icon icon="lock" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Choose a Password" willvalidate validationmessage="Completa este campo" type="password" required pattern="^(?=.*\d).{4,8}$" invalid id="paper_input2" layout vertical class="invalid"></paper-input>
+          <core-icon icon="lock" id="core_icon2" center-justified horizontal layout wrap center></core-icon>
+          <paper-input label="Choose a Password" validationmessage="Completa este campo" type="password" id="paper_input2" layout vertical></paper-input>
           <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit"></paper-fab>
         </core-card>
 
@@ -166,26 +171,37 @@
 
     Polymer('login-page', {
       ready: function(){
-        console.log(this);
-        this.$.paper_input1.addEventListener('blur', this.intervals);
-        this.$.paper_input2.addEventListener('blur', this.intervals);
+        this.addEventListener('blur', this.intervals);
+        this.addEventListener('blur', this.intervals);
+        this.$.paper_input1.addEventListener('blur', this.mailcheck);
+        this.$.paper_input2.addEventListener('blur', this.passcheck);
       },
       mailcheck: function(){
-        return true;
+        var string = this.value || arguments[0];
+        if(string.match(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/) !== null){
+          return true;
+        }else{
+          return false;
+        }
       },
       passcheck: function(){
-        return true;
+        var string = this.value || arguments[0];
+        if(string.match(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/) !== null){
+          return true;
+        }else{
+          return false;
+        }
       },
       intervals: function(){
-        console.log(this);
-        setInterval(function(){
-          console.log(self);
-          if(self.passcheck() && self.mailcheck()){
-            console.log("trues");
+        if(this.$.paper_input1.value === "" || this.$.paper_input2.value === ""){
+          this.$.core_card_main.style.boxShadow = "#FFC107 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
+        }else{
+          if(this.mailcheck(this.$.paper_input1.value) && this.passcheck(this.$.paper_input2.value)){
+            this.$.core_card_main.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
           }else{
-            console.log("falses");
+            this.$.core_card_main.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
           }
-        },50);
+        }
       }
     });
 

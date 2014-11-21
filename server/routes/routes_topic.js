@@ -35,7 +35,7 @@ function getTopics(req, res) {
 function setTopic(req, res) {
   var topicId = req.param('topicId');
   var Topic={
-	"title" : req.body.title,
+    "title" : req.body.title,
     "content" : req.body.content,
     "tags" : req.body.tags,
     "topics" : req.body.topics,
