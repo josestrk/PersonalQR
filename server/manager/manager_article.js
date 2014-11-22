@@ -26,6 +26,36 @@ function getArticlesAll(callback) {
 }
 
 function setArticle(articleId, data, callback){
+
+  /*if(req.body.authorId!==undefined){
+    Article.$set["authorId"]=req.body.authorId;
+  }
+  if(req.body.title!==undefined){
+    Article.$set["title"]=req.body.title;
+  }
+  if(req.body.content!==undefined){
+    Article.$set["content"]=req.body.content;
+  }
+  if(req.body.tags!==undefined){
+    Article.$set["tags"]=req.body.tags;
+  }
+  if(req.body.topics!==undefined){
+    Article.$set["topics"]=req.body.topics;
+  }
+  if(req.body.date!==undefined){
+    Article.$set["date"]=req.body.date;
+  }
+
+
+
+
+  var res = data.name.match(/[\w*\s+])[0];
+  if(data.name!==res){
+    return callback("Error", null);//asi se crea un error para el ajax
+  }//gracias al return se interrumpe la ejecucion del codigo
+  data.name = res;*/
+  console.log(data);
+
   daoArticle.setArticle(articleId, data, callback);
 }
 
