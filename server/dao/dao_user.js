@@ -27,6 +27,10 @@ function delUser(userId, callback) {
 	this.removeById(userId, callback);
 }
 
+function validateUser(mail, password, callback) {
+	this.find({ mail: mail, password: password }, callback);
+}
+
 function setUser(userId, update, callback) {
 	var query = {
 		_id: toObjectID(userId)
@@ -45,7 +49,8 @@ col.bind({
 	getUsersAll: getUsersAll,
 	delUsers: delUsers,
 	delUser: delUser,
-	setUser: setUser
+	setUser: setUser,
+	validateUser: validateUser
 });
 
 module.exports = col;

@@ -7,6 +7,7 @@ var userManager = require('../manager/manager_user');
 router.post('/user', createUser);
 router.get('/user/:userId', getUser);
 router.get('/user', getUsersAll);
+router.get('/validateuser', validateUser);
 router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);
 
@@ -37,6 +38,23 @@ function getUsersAll(req, res) {
     debug('Time of response ->');
     res.json(result);
   });
+}
+
+function validateUser(req, res){
+  if(req.query.mail!==undefined && req.query.password!==undefined){
+    userManager.validateUser(req.query.mail, req.query.password, function(err, result){
+      console.log(result);
+      if(result){
+        res.json(result);
+      }else{
+        next(new Error(new Error(req.query.mail + ' not exists')));
+      }
+    });
+  }else{
+    next(new Error(new Error('Invalid User, or pass')));
+  }
+
+
 }
 
 function setUser(req, res) {

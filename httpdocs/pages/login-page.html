@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../core/core-ajax-handler.html">
 
 <polymer-element name="login-page">
 
@@ -149,6 +150,7 @@
           }
       }
     </style>
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-card id="core_card_main" vertical layout start-justified center>
       <paper-progress id="paper_progress"></paper-progress>
       <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
@@ -160,7 +162,7 @@
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="core_icon2" center-justified horizontal layout wrap center></core-icon>
           <paper-input label="Choose a Password" validationmessage="Completa este campo" type="password" id="paper_input2" layout vertical></paper-input>
-          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit"></paper-fab>
+          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{loged}}" ></paper-fab>
         </core-card>
 
       </core-card>
@@ -202,6 +204,10 @@
             this.$.core_card_main.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
           }
         }
+      },
+      loged: function(){
+        var ajaxhandler = this.$.ajaxhandler;
+        ajaxhandler.get(this.$.paper_input1.value, this.$.paper_input2.value);
       }
     });
 

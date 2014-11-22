@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!--<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">-->
+
+<polymer-element name="core-ajax-handler">
+  <template>
+
+  </template>
+  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    (function() {
+      var base = '/';
+
+      function defaultAjaxErrorHandler(xhr, err, desc) {
+        console.log("Error");
+        //console.log(xhr, err, desc);
+        //var errorToast = document.querySelector('#errorToast');
+        //errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
+        //errorToast.show();
+      }
+      function doAjax(options, success, error) {
+        options.type = options.type || 'GET';
+        options.url = base + (options.url || '');
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+        $.ajax(options);
+      }
+
+      var scores;
+
+      Polymer('core-ajax-handler', {
+        get : function(mail, password){
+          var data={
+            mail:mail,
+            password: password
+          };
+          doAjax({
+            type: 'GET',
+            url: 'validateuser',
+            data: data
+          },function(result) {
+            console.log("Succes function");
+          }.bind(this));
+        },
+        created: function() {
+          if (!scores) {
+            doAjax({}, function(data) {
+              scores = data;
+              this.scores = scores;
+            }.bind(this));
+          }
+        },
+        newScore: function() {
+          doAjax({type: 'POST'}, function(data) {
+            this.scores.push(data);
+          }.bind(this));
+        },
+        destroyScore: function(score) {
+          doAjax({type: 'DELETE', url: '/' + score._id, dataType: 'text'}, function(data) {
+            var i = this.scores.indexOf(score);
+            if (i >= 0) {
+              this.scores.splice(i, 1);
+            }
+          }.bind(this));
+        },
+        setScore: function(score, team, points) {
+          var url = '/' + score._id + '/set';
+          var data = {
+            team: team,
+            points: points
+          };
+          doAjax({type: 'PUT', url: url, data: JSON.stringify(data)}, function(result) {
+            score[team] = points;
+          }.bind(this));
+        }
+      });
+    }());
+  </script>
+</polymer-element>

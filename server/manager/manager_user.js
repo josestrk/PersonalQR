@@ -67,10 +67,17 @@ function setUser(userId, data, callback){//in case any error with data, then not
   daoUser.setUser(userId, data, callback);
 }
 
+function validateUser(mail, password, callback){
+  mail= '"'+mail+'"';
+  password= '"'+password+'"';
+  daoUser.validateUser(mail, password, callback);
+}
+
 module.exports = {
 	createUser: createUser,
 	getUser: getUser,
 	getUsersAll: getUsersAll,
 	delUser: delUser,
-	setUser: setUser
+	setUser: setUser,
+  validateUser: validateUser
 };
