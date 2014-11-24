@@ -40,7 +40,7 @@ function getUsersAll(req, res) {
   });
 }
 
-function validateUser(req, res){
+function validateUser(req, res, next){
   if(req.query.mail!==undefined && req.query.password!==undefined){
     userManager.validateUser(req.query.mail, req.query.password, function(err, result){
       console.log(result);
