@@ -1,3 +1,4 @@
+var debug = require('debug')('pqr_db');
 var express = require('express');
 var router = express.Router();
 var articleManager = require('../manager/manager_article');
