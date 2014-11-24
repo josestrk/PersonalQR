@@ -14,6 +14,7 @@
         var errorToast = document.querySelector('#errorToast');
         errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
         errorToast.show();
+        console.log(desc);
       }
       function doAjax(options, success, error) {
         options.type = options.type || 'GET';
@@ -25,8 +26,6 @@
 
         $.ajax(options);
       }
-
-      var scores;
 
       Polymer('core-ajax-handler', {
         get : function(mail, password){
@@ -40,37 +39,6 @@
             data: data
           },function(result) {
             console.log("Success function");
-          }.bind(this));
-        },
-        created: function() {
-          if (!scores) {
-            doAjax({}, function(data) {
-              scores = data;
-              this.scores = scores;
-            }.bind(this));
-          }
-        },
-        newScore: function() {
-          doAjax({type: 'POST'}, function(data) {
-            this.scores.push(data);
-          }.bind(this));
-        },
-        destroyScore: function(score) {
-          doAjax({type: 'DELETE', url: '/' + score._id, dataType: 'text'}, function(data) {
-            var i = this.scores.indexOf(score);
-            if (i >= 0) {
-              this.scores.splice(i, 1);
-            }
-          }.bind(this));
-        },
-        setScore: function(score, team, points) {
-          var url = '/' + score._id + '/set';
-          var data = {
-            team: team,
-            points: points
-          };
-          doAjax({type: 'PUT', url: url, data: JSON.stringify(data)}, function(result) {
-            score[team] = points;
           }.bind(this));
         }
       });
