@@ -97,8 +97,15 @@
         background-color: rgb(255, 255, 255);
       }
     </style>
-    <core-card id="core_card_main" vertical layout start-justified center>
-    </core-card>
+    <main-menu selected="myprofile">
+        <div class="tittle">My profile</div>
+        <div id="list">  
+        <!--<template repeat="{{item in lista}}"></template>-->
+        <core-card id="core_card_main" vertical layout start-justified center></core-card>
+        </div>
+        <core-card><core-icon icon="load"></core-icon></core-card>
+    </main-menu>
+    
   </template>
   <script>
 

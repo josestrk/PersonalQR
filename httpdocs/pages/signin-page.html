@@ -15,233 +15,241 @@
 <polymer-element name="signin-page">
 
   <template>
+    <style>
+      :host {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
+      }
+      #paper_progress {
+        width: 100%;
+        background-color: rgb(169, 252, 78);
+      }
+      #paper_tabs {
+        width: 480px;
+        color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
+        left: 1410px;
+        top: 530px;
+        background-color: rgb(0, 188, 212);
+      }
+      #core_card1 {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
+        opacity: 1;
+        background-image: url(http://makeonweb.es/josestrk/img/big/bg-4.jpg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+      }
+      #core_tooltip {
+        left: 1400px;
+        top: 560px;
+      }
+      #paper_toast {
+        position: fixed;
+        outline: none;
+        display: none;
+      }
+      #core_card2 {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 00px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        margin: auto auto auto 10px;
+        width: 220px;
+        height: 130px;
+        opacity: 0.9;
+        background-color: rgb(255, 255, 255);
+      }
+      
+      #core_card2.green {
+        box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+      #core_card2.yellow {
+        box-shadow: rgb(255, 193, 7) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+      #core_card2.red {
+        box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+      
+      #core_icon1 {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        height: 64px;
+        width: 64px;
+        left: auto;
+        margin: auto 5px auto auto;
+      }
+      #paper_input {
+        width: 95%;
+        padding: 20px 15px 5px;
+        margin: auto;
+      }
+      #paper_input1 {
+        width: 95%;
+        padding: 5px 15px 22px;
+        margin: auto;
+      }
+      #form {
+        width: 300px;
+        height: 240px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        margin: auto;
+        padding: 15px;
+        background-color: rgb(255, 255, 255);
+      }
+      .signin_element {
+        width: 100%;
+        height: 55px;
+        margin: auto;
+        opacity: 1;
+        background-color: rgb(255, 255, 255);
+      }
+      .core_icon {
+        width: 25px;
+        height: 25px;
+        margin: 10px;
+        color: #000000;
+      }
 
-      <style>
-        :host {
-          width: 100%;
-          height: 100%;
-          box-sizing: border-box;
-          font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
-        }
-        #paper_progress {
-          width: 100%;
-          background-color: rgb(169, 252, 78);
-        }
-        #paper_tabs {
-          width: 480px;
-          color: rgb(255, 255, 255);
-          box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
-          left: 1410px;
-          top: 530px;
-          background-color: rgb(0, 188, 212);
-        }
-        #core_card1 {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          border-top-left-radius: 2px;
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
-          border-bottom-left-radius: 2px;
-          box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
-          opacity: 1;
-          background-image: url(http://makeonweb.es/josestrk/img/big/bg-4.jpg);
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-        }
-        #core_tooltip {
-          left: 1400px;
-          top: 560px;
-        }
-        #paper_toast {
-          position: fixed;
-          outline: none;
-          display: none;
-        }
+      #core_logo {
+        width: 70px;
+        height: 70px;
+        margin: auto 20px auto auto;
+      }
+      .signin_space {
+        width: 80%;
+        height: 45px;
+        padding: 0px;
+      }
+      paper-fab.green {
+        background: rgb(137, 191, 79);
+      }
+      
+      @media(max-width:320px){
         #core_card2 {
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-bottom-left-radius: 10px;
-          box-shadow: rgba(0, 0, 0, 0.0980392) 0px 00px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-          margin: auto auto auto 10px;
-          width: 220px;
-          height: 130px;
-          opacity: 0.9;
-          background-color: rgb(255, 255, 255);
+          width: 190px;
         }
-        #core_icon1 {
-          border-top-left-radius: 20px;
-          border-top-right-radius: 20px;
-          border-bottom-right-radius: 20px;
-          border-bottom-left-radius: 20px;
-          height: 64px;
-          width: 64px;
-          left: auto;
-          margin: auto 5px auto auto;
-        }
-        #paper_input {
-          width: 95%;
-          padding: 20px 15px 5px;
-          margin: auto;
-        }
-        #paper_input1 {
-          width: 95%;
-          padding: 5px 15px 22px;
-          margin: auto;
-        }
-        #form {
-          width: 300px;
-          height: 240px;
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
-          border-bottom-right-radius: 8px;
-          border-bottom-left-radius: 8px;
-          box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-          margin: auto;
-          padding: 15px;
-          background-color: rgb(255, 255, 255);
-        }
-        .signin_element {
-          width: 100%;
-          height: 55px;
-          margin: auto;
-          opacity: 1;
-          background-color: rgb(255, 255, 255);
-        }
-        .core_icon {
-          width: 25px;
-          height: 25px;
-          margin: 10px;
-  		      color: #000000;
+      }
+
+      @media(max-width:450px){
+        #core_card2 {
+          position: absolute;
+          top: 10px;
+          bottom: 0px;
+          left: 100px;
+          margin: 0px 0px 0px 0px;
+          width: 60%;
+          height: 110px;
         }
 
         #core_logo {
-          width: 70px;
+          position: absolute;
+          top: 20px;
           height: 70px;
-          margin: auto 20px auto auto;
+          left: 15px;
+          width: 70px;
         }
-        .signin_space {
-          width: 80%;
-          height: 45px;
-  		      padding: 0px;
+        #form {
+          position: absolute;
+          left: 0px;
+          top: 182px;
+          height: 55%;
+          box-shadow: none;
+          width: 90%;
         }
-        paper-fab.green {
-            background: rgb(137, 191, 79);
+        #core_card1 {
+          background-color: rgb(255, 255, 255);
+          background-image: none;
         }
-        @media(max-width:320px){
-            #core_card2{
-                width: 190px;
-            }
-        }
+      }
+    </style>
 
-        @media(max-width:450px){
-            #core_card2{
-                position: absolute;
-                top: 10px;
-                bottom: 0px;
-                left: 100px;
-                margin: 0px 0px 0px 0px;
-                width: 60%;
-                height: 110px;
-            }
-
-            #core_logo{
-              position: absolute;
-              top: 20px;
-              height: 70px;
-              left: 15px;
-              width: 70px;
-            }
-            #form{
-                position: absolute;
-                left: 0px;
-                top: 182px;
-                height: 55%;
-                box-shadow: none;
-                width: 90%;
-            }
-            #core_card1{
-              background-color: rgb(255, 255, 255);
-              background-image: none;
-            }
-        }
-      </style>
-
-        <core-card id="core_card" layout vertical>
-            <paper-progress id="paper_progress"></paper-progress>
-            <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
-            <core-card id="core_card1" wrap center horizontal layout>
-              <core-card id="core_logo" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
-              <core-card id="core_card2" center center-justified wrap horizontal layout>
-                <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{infochanged}}" layout vertical></paper-input>
-                <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
-                <paper-fab icon="arrow-forward" class="green" title="submit"></paper-fab>
-              </core-card>
-            <core-card id="form" center-justified vertical layout>
-              <form-field
-                id="name"
-                label="Name"
-                icon="account-circle"
-                errorMsg=""
-                regexp=""
-              ></form-field>
-              <form-field
-                id="password"
-                type="password"
-                label="Choose password"
-                icon="lock"
-                errorMsg="Password must contain 6 to 16 characters"
-                regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
-                on-blur="{{verify}}"
-              ></form-field>
-              <form-field
-                id="password2"
-                type="password"
-                label="Re-enter password"
-				        bound="password"
-                icon="lock"
-                errorMsg="Must be the same password"
-                regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
-                on-blur="{{verify}}"
-              ></form-field>
-              <form-field
-                id="bdate"
-                label="Birth date"
-                icon="redeem"
-                errorMsg="Fill in a valid date.(dd-mm-yy)"
-                regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
-              ></form-field>
-
-				<button on-click="{{validateAll}}">Validate all</button>
-            </core-card>
-          </core-card>
+    <core-card id="core_card" layout vertical>
+      <paper-progress id="paper_progress"></paper-progress>
+      <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
+      <core-card id="core_card1" wrap center horizontal layout>
+        <core-card id="core_logo" vertical layout wrap center-justified center>
+          <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
         </core-card>
+        <core-card id="core_card2" center center-justified wrap horizontal layout>
+          <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{infochanged}}" layout vertical></paper-input>
+          <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
+          <paper-fab icon="arrow-forward" class="green" title="submit"></paper-fab>
+        </core-card>
+        <core-card id="form" center-justified vertical layout>
+          <form-field
+            id="name"
+            label="Name"
+            icon="account-circle"
+            errorMsg=""
+            regexp=""
+          ></form-field>
+          <form-field
+            id="password"
+            type="password"
+            label="Choose password"
+            icon="lock"
+            errorMsg="Password must contain 6 to 16 characters"
+            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+            on-blur="{{verify}}"
+          ></form-field>
+          <form-field
+            id="password2"
+            type="password"
+            label="Re-enter password"
+            bound="password"
+            icon="lock"
+            errorMsg="Must be the same password"
+            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+            on-blur="{{verify}}"
+          ></form-field>
+          <form-field
+            id="bdate"
+            label="Birth date"
+            icon="redeem"
+            errorMsg="Fill in a valid date.(dd-mm-yy)"
+            regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
+          ></form-field>
+
+          <button on-click="{{validateAll}}">Validate all</button>
+        </core-card>
+      </core-card>
+    </core-card>
   </template>
 
   <script>
   Polymer({
 		showPanel: function(event,detail,sender){
-				this.$.core_header_panel.togglePanel();
+      this.$.core_header_panel.togglePanel();
 		},
 		validatePattern: function(string, pattern){
 			return string.match(pattern) !== null;
 		},
 		infochanged: function(){
-			if(this.validateUser()){
-				if(this.$.paper_input1.value===""){
-					this.$.core_card2.style.boxShadow = "#FFC107 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-				}else{
-					if(this.validateEmail()){
-						this.$.core_card2.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-					}else{
-						//rojo
-						this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-						}
-				}
-			}else{
-					this.$.core_card2.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-			}
+			if(!this.validateUser()){
+        this.$.core_card2.className="red";
+      } else if(this.$.paper_input1.value==="") {
+        this.$.core_card2.className="yellow";
+      } else if(this.validateEmail()) {
+        this.$.core_card2.className="green";
+      } else {
+        this.$.core_card2.className="red";
+      }
 		},
 		validateUser: function() {
 			var string = this.$.paper_input.value;

@@ -15,6 +15,7 @@
         var errorToast = document.querySelector('#errorToast');
         errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.responseText.split(':')[1];
         errorToast.show();
+        console.log(desc);
       }
       function doAjax(options, success, error) {
         options.type = options.type || 'GET';
@@ -26,8 +27,6 @@
 
         $.ajax(options);
       }
-
-      var scores;
 
       Polymer('core-ajax-handler', {
         get : function(mail, password){
