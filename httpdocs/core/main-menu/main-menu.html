@@ -9,7 +9,6 @@
 <link rel="import" href="../../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../../bower_components/core-a11y-keys/core-a11y-keys.html">
 <link href="../../../bower_components/core-dropdown/core-dropdown.html" rel="import">
-<link href="../../../bower_components/app-router/app-router.html" rel="import">
 
 <link rel="stylesheet" href="style.css">
 <link rel="import" href="../../../lib/flatiron-director/flatiron-director.html">
@@ -19,9 +18,8 @@
 <link rel="import" href="../core-notifi/core-notifi.html">
 
 
-<polymer-element name="main-menu">
+<polymer-element name="main-menu" attributes="selected">
     <template>
-
         <style>
             core-menu {
                 color: #FFF;
@@ -49,34 +47,28 @@
                 padding: 10px
             }
         </style>
-        <!-- Route controller. -->
+        
         <flatiron-director route="{{route}}"></flatiron-director>
-
-        <!-- Keyboard nav controller. -->
-        <core-a11y-keys id="keys" target="{{parentElement}}"
-                        keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space"
-                        on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
+        <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
         <my-core-scaffold id="scaffold">
             <nav>
                 <core-card id="core_card" layout vertical>
                     <search-banner horizontal layout center-justified center></search-banner>
                     <id-card layout vertical center center-justified>
-                        <img width="70" height="70" src="../../../img/avatar-01.svg">
+                        <img width="70" height="70" src="../../../img/avatar-01.svg" />
                         <h2>User</h2>
                         <p>300 followers • 100 following</p>  
                         <!--<img src="{{post.avatar}}" width="70" height="70">
                         <h2>{{post.username}}</h2>
-                        <p>{{post.followers}} followers • {{post.follow}} following</p>-->
+                        <p>{{post.followres}} followers • {{post.follow}} following</p>-->
                     </id-card>
                 </core-card>
-
-                <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}"
-                           on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
                         <paper-item icon="{{page.logo}}{{route != page.hash ? '' : '-outline'}}"
-                                    label="{{page.name}}" hash="{{page.hash}}">
-                            <a href="#{{page.hash}}"></a>
+                                    label="{{page.name}}" active?="{{selected == page.path}}">
+                            <a is="pushstate-anchor" href="{{page.path}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
@@ -86,19 +78,14 @@
             </nav>
 
             <core-toolbar tool flex>
-                <div flex>{{selectedPage.page.name}}</div>
+                <div flex><content select=".title"></content></div>
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
-
-            <div layout vertical fit>
-                <app-router mode="hash" id="pages" core-animated-pages transitions="hero-transition cross-fade">
-                    <template  repeat="{{page in pages}}"></template>
-                </app-router>
+            <div class="content" layout vertical fit>
+                <content></content>
             </div>
-
         </my-core-scaffold>
-
     </template>
     <script>
         (function () {
@@ -108,21 +95,18 @@
                 section.setAttribute('vertical', '');
                 section.setAttribute('hash', page.hash);
                 section.setAttribute('import', page.import);
-
-                //var component = document.createElement(page.component);
-                //section.appendChild(component);
                 return section;
             }
 
 
             function loadPages() {
-                var DEFAULT_ROUTE = 'wall';
+                var DEFAULT_ROUTE = '/wall';
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: 'wall', import: '../../pages/wall-page.html',component: 'wall-page'},
-                    {name: 'My profile', logo: 'social:person', hash: 'myprofile', import: '../../pages/myp-page.html',component:'myp-page'},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: 'editor', import: '../../pages/editor-page.html',component:'editor-page'},
-                    {name: 'Config', logo: 'check-circle', hash: 'settings', import: '../../pages/config-page.html',component:'config-page'},
-                    {name: 'Contacts', logo: 'social:person', hash: 'contacts', import: '../../../index.html',component:'editor-page'}
+                    {name: 'Wall', logo: 'info', path: '/wall'},
+                    {name: 'My profile', logo: 'social:person', path: '/myprofile'},
+                    {name: 'Edition Mode', logo: 'bookmark', path: '/editor'},
+                    {name: 'Config', logo: 'check-circle', path: '/settings'},
+                    {name: 'Contacts', logo: 'social:person', path: '/contacts'}
                 ];
 
                 var animatedPages = this.$.pages;

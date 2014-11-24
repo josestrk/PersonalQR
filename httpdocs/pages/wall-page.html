@@ -1,12 +1,13 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../core/main-menu/main-menu.html">
 <link rel="import" href="../core/core-artc/core-artc.html">
 
-<polymer-element name="wall-page">
-
-  <template>
+<polymer-element name="wall-page" attributes="pathArg1 queryParam1">
+  <template>    
     <style>
       #list {
         width:70%;
@@ -19,10 +20,13 @@
         margin-top:20px;
       }  
     </style>
-    <div id="l">  
-    <template repeat="{{item in lista}}"></template>
-    </div>
-    <core-card><core-icon icon="load"></core-icon></core-card>
+    <main-menu selected="wall">
+        <div class="tittle">Wall</div>
+        <div id="list">  
+        <template repeat="{{item in lista}}"></template>
+        </div>
+        <core-card><core-icon icon="load"></core-icon></core-card>
+    </main-menu>
   </template>
 
   <script>
