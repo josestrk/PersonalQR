@@ -68,7 +68,6 @@ articles and so on
       }
       
       function search(){
-        console.log(this);
         $(this.$.q).typeahead({
           minLength: 1,
           order: "asc",
@@ -90,19 +89,28 @@ articles and so on
         created: function() {
           if (!topics) {
             doAjax({}, function(data) {
-              console.log(data);
-              topics = data;
+              
+              (function () {
+                var p = new Promise (
+                  function(resolve, reject) {
+                    topics = data;
+                  }
+                );
+              })();
+              
               this.topics = topics;
+              //console.log(this.topics);
             }.bind(this));
           }
-          console.log(topics);
-          console.log('created');
         },
         ready: function () {
           search.bind(this)();
-          console.log('ready');
+          //console.log('ready');
+          //console.log(this.topics);
         },
         showTopics: function() {
+          //console.log('showTopics');
+          //console.log(this.topics);
           doAjax({
             type: 'GET',
             url: '/topic'
