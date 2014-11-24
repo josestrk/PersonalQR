@@ -28,7 +28,17 @@ function delUser(userId, callback) {
 }
 
 function validateUser(mail, password, callback) {
-	this.find({ mail: mail, password: password }, callback);
+	var where={};
+	where["mail"]=mail;
+	where["password"]=password;
+	console.log(where);
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.toArray(callback);
+	});
 }
 
 function setUser(userId, update, callback) {

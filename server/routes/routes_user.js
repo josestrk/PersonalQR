@@ -43,18 +43,16 @@ function getUsersAll(req, res) {
 function validateUser(req, res, next){
   if(req.query.mail!==undefined && req.query.password!==undefined){
     userManager.validateUser(req.query.mail, req.query.password, function(err, result){
-      console.log(result);
-      if(result){
+      console.log(result[0]);
+      if(result[0] !== undefined){
         res.json(result);
       }else{
-        next(new Error(new Error(req.query.mail + ' not exists')));
+        next(new Error('The mail ' +req.query.mail + ' does not exist'));
       }
     });
   }else{
-    next(new Error(new Error('Invalid User, or pass')));
+    next(new Error('You haven\'t provided Mail or Password'));
   }
-
-
 }
 
 function setUser(req, res) {
