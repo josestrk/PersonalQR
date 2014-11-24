@@ -37,6 +37,19 @@
         margin: auto;
         background-color: rgb(255, 255, 255);
       }
+      
+      #core_card_main.red {
+        box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+
+      #core_card_main.yellow {
+        box-shadow: rgb(255, 193, 7) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+
+      #core_card_main.green {
+        box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
+      }
+      
       #core_card_input {
         width: 90%;
         height: 55px;
@@ -86,74 +99,62 @@
         width: 70%;
         padding: 15px;
       }
-      #topeka_profile {
-        width: 300px;
-        height: 300px;
-        left: 1810px;
-        top: 610px;
-      }
-      #topeka_leaderboard {
-        width: 300px;
-        height: 300px;
-        left: 1890px;
-        top: 590px;
-      }
       @media(max-width:450px){
-          #core_card_main{
-              position: absolute;
-              top: 0px;
-              bottom: 0px;
-              left: 0px;
-              margin: 0px 0px 0px 0px;
-              width: 100%;
-              height: 100%;
-          }
-          #core_card_block{
-            margin-top: 40%;
-            box-shadow: none;
-          }
+        #core_card_main{
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          margin: 0px 0px 0px 0px;
+          width: 100%;
+          height: 100%;
+        }
+        #core_card_block{
+          margin-top: 40%;
+          box-shadow: none;
+        }
       }
       @media(max-height:660px) and (max-width:450px){
         #core_card_main{
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            margin: 0px 0px 0px 0px;
-            width: 100%;
-            height: 100%;
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          margin: 0px 0px 0px 0px;
+          width: 100%;
+          height: 100%;
         }
-          #core_card_block{
-            margin-top: 25%;
-            box-shadow: none;
-          }
+        #core_card_block{
+          margin-top: 25%;
+          box-shadow: none;
+        }
       }
       @media(max-height:520px) and (max-width:450px){
         #core_card_main{
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            margin: 0px 0px 0px 0px;
-            width: 100%;
-            height: 100%;
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          left: 0px;
+          margin: 0px 0px 0px 0px;
+          width: 100%;
+          height: 100%;
         }
-          #core_card_block{
-            margin-top: 10%;
-            box-shadow: none;
-          }
+        #core_card_block{
+          margin-top: 10%;
+          box-shadow: none;
+        }
       }
       @media(max-height:530px){
-          #core_card_block{
-            margin-top: 5%;
-            box-shadow: none;
-          }
+        #core_card_block{
+          margin-top: 5%;
+          box-shadow: none;
+        }
       }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-card id="core_card_main" vertical layout start-justified center>
       <paper-progress id="paper_progress"></paper-progress>
-      <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; heigth:70px;"></core-card>
+      <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;"></core-card>
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
@@ -175,11 +176,9 @@
       ready: function(){
         this.addEventListener('blur', this.intervals);
         this.addEventListener('blur', this.intervals);
-        this.$.paper_input1.addEventListener('blur', this.mailcheck);
-        this.$.paper_input2.addEventListener('blur', this.passcheck);
       },
       mailcheck: function(){
-        var string = this.value || arguments[0];
+        var string = arguments[0];
         if(string.match(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/) !== null){
           return true;
         }else{
@@ -187,7 +186,7 @@
         }
       },
       passcheck: function(){
-        var string = this.value || arguments[0];
+        var string = arguments[0];
         if(string.match(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/) !== null){
           return true;
         }else{
@@ -195,14 +194,12 @@
         }
       },
       intervals: function(){
-        if(this.$.paper_input1.value === "" || this.$.paper_input2.value === ""){
-          this.$.core_card_main.style.boxShadow = "#FFC107 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-        }else{
-          if(this.mailcheck(this.$.paper_input1.value) && this.passcheck(this.$.paper_input2.value)){
-            this.$.core_card_main.style.boxShadow = "rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-          }else{
-            this.$.core_card_main.style.boxShadow = "rgba(255, 0, 0, 1.0980392) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px";
-          }
+        if(this.$.paper_input1.value === "" || this.$.paper_input2.value === "") {
+          this.$.core_card_main.className="yellow";
+        } else if (this.mailcheck(this.$.paper_input1.value) && this.passcheck(this.$.paper_input2.value)){
+          this.$.core_card_main.className="green";
+        } else {
+          this.$.core_card_main.className="red";
         }
       },
       loged: function(){
