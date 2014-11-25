@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>PersonalQr</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=0.6 ,user-scalable=yes">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
-    <script src="../bower_components/platform/platform.js"></script>
-    <link rel="import" href="httpdocs/core/core-index.html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <style>template {display: none !important;} /* injected by platform.js */</style>
+  <script src="bower_components/platform/platform.js"></script>
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/app-router/app-router.html">
+  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" import="httpdocs/pages/login-page.html">
+  <link rel="import" import="httpdocs/pages/signin-page.html">
+  <title>PersonalQr</title>
+</head>
 
-    <style>template {display: none !important;} /* injected by platform.js */</style>
-  </head>
-  <body unresolved fullbleed>
+<body unresolved fullbleed>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
-    <core-index></core-index>
-  </body>
+    <app-router mode="pushstate" core-animated-pages transitions="slide-from-right">
+        <app-route path="/" import="httpdocs/core/core-index.html"></app-route>
+        <app-route path="/wall" import="httpdocs/pages/wall-page.html"></app-route>
+        <app-route path="/myprofile" import="httpdocs/pages/myp-page.html"></app-route>
+        <app-route path="/editor" import="httpdocs/pages/editor-page.html"></app-route>
+        <app-route path="/settings" import="httpdocs/pages/config-page.html"></app-route>
+        <app-route path="/contacts" import="httpdocs/pages/contacts-page.html"></app-route>
+        <app-route path="/signin" element="signin-page"></app-route>
+        <app-route path="/login" element="login-page"></app-route>
+    </app-router>
+</body>
 </html>

@@ -5,114 +5,65 @@
 
 <polymer-element name="myp-page">
 
-  <template>
+  <template>    
     <style>
-      #core_card {
-        position: absolute;
-        width: 100%;
-        height: 150px;
+      #list {
+        width:70%;
+        height:400px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        background-color: rgb(60, 60, 60);
-      }
-      #core_scroll_header_panel {
-        width: 380px;
-        height: 720px;
-        left: 0px;
-        top: 0px;
-        position: absolute;
-      }
-      #core_toolbar {
-        color: rgb(241, 241, 241);
-        fill: rgb(241, 241, 241);
-        background-color: rgb(66, 133, 244);
-      }
-      #section {
-        height: 5000px;
-        background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
-      }
-      #core_field {
-        left: 0px;
-        position: absolute;
-        top: 150px;
-        width: 85%;
-      }
-      #core_input {
-        padding: 8px;
-        display: block;
+        margin: auto;
         background-color: rgb(255, 255, 255);
-      }
-      #core_header_panel {
-        width: 100%;
-        height: 100%;
-      }
-      #core_toolbar1 {
-        color: rgb(255, 255, 255);
-        background-color: rgb(79, 125, 201);
-      }
-      #core_animated_pages {
-        width: 420px;
-        height: 582px;
-        overflow: hidden;
-        left: 400px;
-        top: 20px;
-        position: absolute;
-        margin: 10px 15px;
-        background-color: rgb(238, 238, 238);
-      }
-      #core_tooltip {
-        left: 185px;
-        top: 400px;
-        position: absolute;
-      }
-      #paper_toast {
-        left: 1210px;
-        top: 680px;
-      }
-      #paper_tab {
-        width: 120px;
-        height: 40px;
-        left: 1240px;
-        top: 710px;
-      }
-      #paper_tabs {
-        width: 100%;
-        color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
-        left: 0px;
-        position: relative;
-        top: 0px;
-        background-color: rgb(0, 188, 212);
-      }
-      #core_card1 {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        left: 0px;
-        top: 0px;
-        background-color: rgb(255, 255, 255);
-      }
+        margin-top:20px;
+      }  
     </style>
-    <main-menu selected="myprofile">
-        <div class="tittle">My profile</div>
+    <main-menu selected="/myprofile">
+        <div class="tittle">My Profile</div>
         <div id="list">  
-        <!--<template repeat="{{item in lista}}"></template>-->
-        <core-card id="core_card_main" vertical layout start-justified center></core-card>
+        <template repeat="{{item in lista}}"></template>
         </div>
         <core-card><core-icon icon="load"></core-icon></core-card>
     </main-menu>
-    
   </template>
+
   <script>
+    (function () {
+        function createPage(item) {
+          var section = document.createElement('core-artc');
+          section.setAttribute('layout', ''); 
+          section.setAttribute('vertical', '');
+          section.setAttribute('title', item.title);
+          section.setAttribute('time', item.time);
+          section.setAttribute('bgimg', item.bgimg);
+          section.setAttribute('info', item.info);
+         
 
-    Polymer({
-      
-    });
+        var div = document.createElement('core-card');
+        div.setAttribute('id','list');
+        div.setAttribute('layout', ''); 
+        div.setAttribute('vertical', '');
 
+        div.appendChild(section);
+        
+        return div;
+        }
+        
+        Polymer({
+            domReady: function () {
+                this.lista = [
+                                 {title:'Title Post', bgimg: 'http://makeonweb.es/josestrk/img/small/bg-2.jpg', post: 'id1_idpost1', time: '1', info: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', tp: 'texto'},
+                                 {title:'Title Post', bgimg: 'http://makeonweb.es/josestrk/img/small/bg-3.jpg', post: 'id3_idpost2', time: '2', info: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', tp: 'texto'},
+                                 {title:'Title Post', bgimg: 'http://makeonweb.es/josestrk/img/small/bg-4.jpg', post: 'id1_idpost3', time: '3', info: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', tp: 'texto'},
+                                 {title:'Title Post', bgimg: 'http://makeonweb.es/josestrk/img/small/bg-6.jpg', post: 'id1_idpost3', time: '4', info: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', tp: 'texto'}
+                               ];
+                var listPost = this.$.list;
+                this.lista.forEach(function (item) {
+                   listPost.appendChild(createPage(item));
+                });
+            }
+        });
+    })();
   </script>
 
 </polymer-element>

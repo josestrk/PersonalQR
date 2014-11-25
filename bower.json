@@ -20,7 +20,8 @@
     "paper-elements": "Polymer/paper-elements#0.4.2",
     "app-router": "2.0.2",
     "jquery": "2.1.1",
-    "webcomponentsjs": "~0.5.1"
+    "webcomponentsjs": "~0.5.1",
+    "pushstate-anchor": "~0.3.0"
   },
   "devDependencies": {
     "app-router": "2.0.2"

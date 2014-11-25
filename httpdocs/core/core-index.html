@@ -3,11 +3,11 @@
 <link rel="import" href="../pages/slider-page.html">
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../lib/flatiron-director/flatiron-director.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../../bower_components/pushstate-anchor/src/pushstate-anchor.html">
 
 
 <polymer-element name="core-index" >
@@ -43,20 +43,18 @@
       }
     template {display: none !important;}
         </style>
-             <!-- Route controller. -->
-            <flatiron-director route="{{route}}" autoHash></flatiron-director>
 
-            <core-animated-pages id="core_card" valueattr="hash" selected="{{route}}" layout vertical end-justified center transitions="slide-from-right">
+            <core-animated-pages id="core_card" valueattr="path" selected="{{selected}}" layout vertical end-justified center transitions="slide-from-right">
                           
-               <section hash="" layout vertical center-center>
+               <section parth="" layout vertical center-center>
                    <core-card vertical layout  center-justified>
                         <slider-page></slider-page> 
                    </core-card>
                </section>
-                <section hash="signin" layout vertical center-center>
-                  <signin-page></signin-page>
+                <section path="signin" layout vertical center-center>
+                    <signin-page></signin-page>
                 </section>
-                <section hash="login" layout vertical center-center>
+                <section path="login" layout vertical center-center>
                   <core-card vertical layout  center-justified>
                     <login-page></login-page>
                   </core-card>
@@ -64,9 +62,9 @@
                     
             </core-animated-pages> 
 
-            <paper-tabs selected="{{route}}" selectedindex="one" valueattr="hash" id="paper_tabs" end-justified vertical layout wrap end>
+            <paper-tabs selected="{{selected}}" selectedindex="one" valueattr="path" id="paper_tabs" end-justified vertical layout wrap end>
             <template repeat="{{page in pages}}" >
-                <paper-tab id="{{page.id}}" hash="{{page.hash}}">
+                <paper-tab id="{{page.id}}" is="pushstate-anchor" path="{{page.path}}">
                   {{page.name}}
                 </paper-tab>
             </template>
@@ -79,8 +77,8 @@
         Polymer({
             ready: function() {
                 this.pages = [ 
-                    {name:'GET STARTED',id:'paper_tab', hash: 'signin'},
-                    {name:'LOG IN',id:'paper_tab1', hash: 'login'}
+                    {name:'GET STARTED',id:'paper_tab', path: 'signin'},
+                    {name:'LOG IN',id:'paper_tab1', path: 'login'}
                 ];
             }
         });
