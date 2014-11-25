@@ -69,7 +69,7 @@
         opacity: 0.9;
         background-color: rgb(255, 255, 255);
       }
-      
+
       #core_card2.green {
         box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
@@ -79,7 +79,7 @@
       #core_card2.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      
+
       #core_icon1 {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
@@ -138,8 +138,13 @@
       }
       paper-fab.green {
         background: rgb(137, 191, 79);
+        visibility: hidden;
       }
-      
+      paper-progress::shadow #activeProgress {
+        background-color: #e9f613;
+        height:20px;
+      }
+
       @media(max-width:320px){
         #core_card2 {
           width: 190px;
@@ -180,7 +185,7 @@
     </style>
 
     <core-card id="core_card" layout vertical>
-      <paper-progress id="paper_progress"></paper-progress>
+      <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
       <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
       <core-card id="core_card1" wrap center horizontal layout>
         <core-card id="core_logo" vertical layout wrap center-justified center>
@@ -189,7 +194,7 @@
         <core-card id="core_card2" center center-justified wrap horizontal layout>
           <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{infochanged}}" layout vertical></paper-input>
           <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
-          <paper-fab icon="arrow-forward" class="green" title="submit"></paper-fab>
+          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" class="green" title="submit"></paper-fab>
         </core-card>
         <core-card id="form" center-justified vertical layout>
           <form-field
@@ -234,6 +239,9 @@
 
   <script>
   Polymer({
+    ready:function(){
+      this.addEventListener("blur",this.validforms);
+    },
 		showPanel: function(event,detail,sender){
       this.$.core_header_panel.togglePanel();
 		},
@@ -252,18 +260,14 @@
       }
 		},
 		validateUser: function() {
-			var string = this.$.paper_input.value;
-			//this.$.core_card2.style.backgroundColor = "lightgreen";
+			var string = this.$.paper_input.value || arguments[0];
 			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
-			//con libreria no hay return, hay mensaje
 		},
 		validateEmail: function() {
-			var string = this.$.paper_input1.value;
-			console.log(this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/));
+			var string = this.$.paper_input1.value || arguments[0];
 			return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
 		},
 		validatePass: function() {
-			console.log(this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/));
 			return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
 		},
 		validateAll: function() {
@@ -276,7 +280,26 @@
 				}
 			});
 			console.log(isValid);
-		}
+		},
+    validforms:function(){
+      var forms= this.$.form.querySelectorAll('form-field');
+      var username = this.$.paper_input;
+      var mail = this.$.paper_input1;
+      if(this.validateEmail(mail.value) && this.validateUser(username.value)){
+        this.$.send.style.visibility="visible";
+      }else{
+        this.$.send.style.visibility="hidden";
+      }
+    },
+    startProgress:function(){
+      while(this.$.paper_progress.value < 100){
+        var i=0;
+        while(i<1000000){
+          i++;
+        }
+        this.$.paper_progress.value += 1;
+      }
+    }
 	});
   </script>
 

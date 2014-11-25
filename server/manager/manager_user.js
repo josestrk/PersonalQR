@@ -69,7 +69,7 @@ function setUser(userId, data, callback) {//in case any error with data, then no
 
 function validateUser(mail, password, callback) {
 	if(mail==='' || password ===''){
-		return callback(err);
+		return callback("There was no data provided:", []);
 	}
 	daoUser.validateUser(mail, password, callback);
 }

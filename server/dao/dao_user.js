@@ -31,11 +31,10 @@ function validateUser(mail, password, callback) {
 	var where={};
 	where["mail"]=mail;
 	where["password"]=password;
-	console.log(where);
 
 	this.find(where, function(err, cursor) {
 		if (err) {
-			return callback(err);
+			return callback(err+':', []);
 		}
 		cursor.toArray(callback);
 	});
