@@ -11,7 +11,6 @@
 <link href="../../../bower_components/core-dropdown/core-dropdown.html" rel="import">
 
 <link rel="stylesheet" href="style.css">
-<link rel="import" href="../../../lib/flatiron-director/flatiron-director.html">
 <link rel="import" href="../search-banner/search-banner.html">
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-scaffold/core-scaffold.html">
@@ -48,13 +47,12 @@
             }
         </style>
         
-        <flatiron-director route="{{route}}"></flatiron-director>
         <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
         <my-core-scaffold id="scaffold">
             <nav>
                 <core-card id="core_card" layout vertical>
-                    <search-banner horizontal layout center-justified center></search-banner>
+                    <!--<search-banner horizontal layout center-justified center></search-banner>-->
                     <id-card layout vertical center center-justified>
                         <img width="70" height="70" src="../../../img/avatar-01.svg" />
                         <h2>User</h2>
@@ -64,21 +62,21 @@
                         <p>{{post.followres}} followers • {{post.follow}} following</p>-->
                     </id-card>
                 </core-card>
-                <core-menu valueattr="hash" selected="{{route}}" selectedModel="{{selectedPage}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="hash" selected="{{selected}}" selectedModel="{{selected}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{route != page.hash ? '' : '-outline'}}"
-                                    label="{{page.name}}" active?="{{selected == page.path}}">
-                            <a is="pushstate-anchor" href="{{page.path}}"></a>
+                        <paper-item icon="{{page.logo}}{{selected != page.hash ? '' : '-outline'}}" 
+                                    label="{{page.name}}" active ?= "{{selected == page.hash}}">
+                            <a  href="{{page.hash}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
                 <core-card id="core_card_f" vertical layout end-justified end>    
-                    <a is="pushstate-anchor" href="../../../index.html"><core-icon-button icon="settings-power" id="paper_icon_button" ></core-icon-button></a>
+                    <a  href="/"><core-icon-button icon="settings-power" id="paper_icon_button" ></core-icon-button></a>
                 </core-card>  
             </nav>
 
             <core-toolbar tool flex>
-                <div flex><content select=".title"></content></div>
+                <content select=".title"></content>
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
@@ -89,41 +87,18 @@
     </template>
     <script>
         (function () {
-            function createPage(page) {
-                var section = document.createElement('app-route');
-                section.setAttribute('layout', '');
-                section.setAttribute('vertical', '');
-                section.setAttribute('hash', page.hash);
-                section.setAttribute('import', page.import);
-                return section;
-            }
-
-
-            function loadPages() {
-                var DEFAULT_ROUTE = '/wall';
+            function loadMenu() {
                 this.pages = [
-                    {name: 'Wall', logo: 'info', path: '/wall'},
-                    {name: 'My profile', logo: 'social:person', path: '/myprofile'},
-                    {name: 'Edition Mode', logo: 'bookmark', path: '/editor'},
-                    {name: 'Config', logo: 'check-circle', path: '/settings'},
-                    {name: 'Contacts', logo: 'social:person', path: '/contacts'}
+                    {name: 'Wall', logo: 'info', hash: '/#/wall'},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/myprofile'},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
+                    {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
+                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
                 ];
-
-                var animatedPages = this.$.pages;
-
-                this.pages.forEach(function (page) {
-                    animatedPages.appendChild(createPage(page));
-                });
-
-
-                this.route = this.route || DEFAULT_ROUTE; // Select initial route.
             }
 
             function addKeysToNumbers() {
                 var keys = this.$.keys;
-
-                // Allow selecting pages by num keypad. Dynamically add
-                // [1, template.pages.length] to key mappings.
                 var keysToAdd = Array.apply(null, this.pages).map(function (x, i) {
                     return i + 1;
                 }).reduce(function (x, y) {
@@ -134,7 +109,7 @@
 
             Polymer({
                 domReady: function () {
-                    loadPages.bind(this)();
+                    loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
                 },
                 keyHandler: function (e, detail, sender) {
