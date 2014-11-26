@@ -4,13 +4,11 @@
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../../bower_components/pushstate-anchor/pushstate-anchor.html">
 
 
-<polymer-element name="core-index" >
+<polymer-element name="core-index" attributes="pathArg1">
 
     <template>
        <style>
@@ -41,47 +39,43 @@
         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
         background-color: rgb(137, 191, 79);
       }
-    template {display: none !important;}
-        </style>
+      template {display: none !important;}
+        </style> 
+        <core-animated-pages id="core_card" selected="{{pathArg1}}" layout vertical end-justified center transitions="slide-from-right">
 
-            <core-animated-pages id="core_card" valueattr="path" selected="{{selected}}" layout vertical end-justified center transitions="slide-from-right">
-                          
-               <section parth="" layout vertical center-center>
-                   <core-card vertical layout  center-justified>
-                        <slider-page></slider-page> 
-                   </core-card>
-               </section>
-                <section path="signin" layout vertical center-center>
-                    <signin-page></signin-page>
-                </section>
-                <section path="login" layout vertical center-center>
-                  <core-card vertical layout  center-justified>
-                    <login-page></login-page>
-                  </core-card>
-                </section>
-                    
-            </core-animated-pages> 
+           <section hash="" layout vertical center-center>
+               <core-card vertical layout  center-justified>
+                    <slider-page></slider-page> 
+               </core-card>
+           </section>
+            <section hash="/#/:signin" layout vertical center-center>
+                <signin-page></signin-page>
+            </section>
+            <section hash="/#/:login" layout vertical center-center>
+              <core-card vertical layout  center-justified>
+                <login-page></login-page>
+              </core-card>
+            </section>
 
-            <paper-tabs selected="{{selected}}" selectedindex="one" valueattr="path" id="paper_tabs" end-justified vertical layout wrap end>
-            <template repeat="{{page in pages}}" >
-                <paper-tab id="{{page.id}}" is="pushstate-anchor" path="{{page.path}}">
-                  {{page.name}}
-                </paper-tab>
-            </template>
-            </paper-tabs>
-        
+        </core-animated-pages> 
 
+        <paper-tabs selected="{{pathArg1}}" id="paper_tabs" end-justified vertical layout wrap end>
+        <template repeat="{{page in pages}}" >
+            <paper-tab id="{{page.id}}" hash="{{page.hash}}">
+              {{page.name}}
+            </paper-tab>
+        </template>
+        </paper-tabs>
     </template>
 
     <script>
         Polymer({
             ready: function() {
                 this.pages = [ 
-                    {name:'GET STARTED',id:'paper_tab', path: 'signin'},
-                    {name:'LOG IN',id:'paper_tab1', path: 'login'}
+                    {name:'GET STARTED',id:'paper_tab', hash:'/#/:signin'},
+                    {name:'LOG IN',id:'paper_tab1', hash:'/#/:login'}
                 ];
             }
         });
     </script>
-
 </polymer-element>

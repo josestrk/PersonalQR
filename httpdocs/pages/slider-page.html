@@ -4,7 +4,6 @@
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../bower_components/core-pages/core-pages.html">
-<link rel="import" href="../../../bower_components/pushstate-anchor/src/pushstate-anchor.html">
 
 <polymer-element name="slider-page">
 
@@ -85,7 +84,7 @@
                     <template repeat="{{page in pages}}" >
 
                         <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
-                            <core-card id="core_card2" layout vertical center-justified center><a is="pushstate-anchor" href="/wall">{{page.content}}</a></core-card>
+                            <core-card id="core_card2" layout vertical center-justified center><a href="/#/wall">{{page.content}}</a></core-card>
                         </section>
 
                     </template>
