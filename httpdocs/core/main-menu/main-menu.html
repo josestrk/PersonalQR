@@ -17,7 +17,7 @@
 <link rel="import" href="../core-notifi/core-notifi.html">
 
 
-<polymer-element name="main-menu" attributes="selected">
+<polymer-element name="main-menu" attributes="selected tittle">
     <template>
         <style>
             core-menu {
@@ -76,7 +76,7 @@
             </nav>
 
             <core-toolbar tool flex>
-                <content select=".title"></content>
+                <content select="{{tittle}}"></content>
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>

@@ -14,6 +14,7 @@
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   <link rel="import" href="bower_components/app-router/app-router.html">
   <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-transition/core-transition.html">
   <link rel="import" href="httpdocs/core/core-index.html">
   <link rel="import" href="httpdocs/pages/wall-page.html">
   <link rel="import" href="httpdocs/pages/myp-page.html">
@@ -34,13 +35,13 @@
         <app-route path="/settings" import="httpdocs/pages/config-page.html"></app-route>
         <app-route path="/contacts" import="httpdocs/pages/contacts-page.html"></app-route>-->
         <app-route path="/" element="core-index"></app-route>
-        <app-route path="/signin" element="core-index"></app-route>
-        <app-route path="/login" element="core-index"></app-route>
+        <app-route path="/:pathArg1" element="core-index"></app-route>
         <app-route path="/wall" element="wall-page"></app-route>
         <app-route path="/myprofile" element="myp-page"></app-route>
         <app-route path="/editor" element="editor-page"></app-route>
         <app-route path="/settings" element="config-page"></app-route> 
         <app-route path="/contacts" element="contacts-page"></app-route>
+        <app-route path="*" import="httpdocs/pages/not-found.html"></app-route>
     </app-router>
 </body>
 </html>
