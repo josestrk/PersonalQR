@@ -12,9 +12,36 @@ router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);
 
 //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
-//se dan dentro de una funcion con "posibilidad" de error
 function createUser(req, res) {
-  userManager.createUser(function(err, result){
+  var User={
+  };
+  if(req.body.username!==undefined){
+     User["username"]=req.body.username;
+   }else{
+     User["username"]="";
+   }
+  if(req.body.name!==undefined){
+     User["name"]=req.body.name;
+   }else{
+     User["name"]="";
+   }
+  if(req.body.mail!==undefined){
+     User["mail"]=req.body.mail;
+   }else{
+     User["mail"]="";
+   }
+  if(req.body.password!==undefined){
+     User["password"]=req.body.password;
+   }else{
+     User["password"]="";
+   }
+  if(req.body.bdate!==undefined){
+     User["bdate"]=req.body.bdate;
+   }else{
+     User["bdate"]="";
+   }
+
+  userManager.createUser(User,function(err, result){
     res.json(result);
   });
 }
@@ -59,6 +86,7 @@ function validateUser(req, res, next){
 }
 
 function setUser(req, res) {
+  console.log(req.body);
   var userId = req.param('userId');
 
   var User={

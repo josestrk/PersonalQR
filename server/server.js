@@ -31,7 +31,7 @@ app.use(function(err, req, res, next) {
                     err: err.err || err.code || 'server_error',
                     des: err.des || err.message || err.name || 'unknown'
             };
-            res.json(err.statusCode || 500, errorJson);
+						res.status(err.statusCode || 500).json(errorJson);
 	} else {
             next();
 	}

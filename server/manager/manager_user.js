@@ -1,16 +1,7 @@
 var daoUser = require('../dao/dao_user');
 
-function createUser(callback) {
-	var temporalUser = {
-		username: "",
-		name: "",
-		mail: "",
-		password: "",
-		bdate: "",
-		followers: 0,
-		following: 0
-	};
-	daoUser.createUser(temporalUser, callback);
+function createUser(data, callback) {
+	daoUser.createUser(data, callback);
 }
 
 function getUser(userId, callback) {

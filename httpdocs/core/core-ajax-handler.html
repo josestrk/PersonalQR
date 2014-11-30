@@ -46,8 +46,47 @@
             errorToast.text = xhr.responseText.split(':')[1];
             errorToast.show();
           });
+        },
+        create : function(datos){
+          doAjax({
+            type: 'POST',
+            url: 'user',
+            data: datos
+          },function(result) {
+            document.getElementById('user').data(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        setUser : function(id, datos){
+          doAjax({
+            type: 'PUT',
+            url: 'user/'+id,
+            data: datos
+          },function(result) {
+            document.getElementById('user').data(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
         }
       });
     }());
+
+    // Para la PAgina de configuracion, cuando meta el usuario lo que sea sobre sus datos
+    // var usuarioexistente = document.getElementById('user');
+    // var id= usuariocreado.datos._id;
+    // var datos={
+    //   username: this.$.paper_input.value,
+    //   name:"Alex",
+    //   mail: this.$.paper_input1.value
+    // }
+    // ajaxhandler.setUser(id, JSON.stringify(datos));
+
   </script>
 </polymer-element>
