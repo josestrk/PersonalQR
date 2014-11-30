@@ -6,7 +6,6 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 
 <polymer-element name="login-page">
-
   <template>
     <style>
       #paper_progress {
@@ -37,19 +36,15 @@
         margin: auto;
         background-color: rgb(255, 255, 255);
       }
-      
       #core_card_main.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-
       #core_card_main.yellow {
         box-shadow: rgb(255, 193, 7) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-
       #core_card_main.green {
         box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      
       #core_card_input {
         width: 90%;
         height: 55px;
@@ -57,47 +52,23 @@
         opacity: 1;
         margin: 5px;
       }
-      #core_icon1 {
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-        height: 64px;
-        width: 64px;
-        left: auto;
-        margin: auto 5px auto auto;
-      }
-      #paper_input1 {
+      #email_field {
         width: 80%;
-        height: 45px;
+        height: 30px;
       }
-
-      #paper_input2 {
+      #password_field {
         width: 80%;
-        height: 45px;
+        height: 30px;
       }
-      #core_icon {
+      #email_icon {
         width: 25px;
         height: 25px;
         margin: auto;
       }
-      #core_icon2 {
+      #password_icon {
         width: 25px;
         height: 25px;
         margin: auto;
-      }
-      #core_item {
-        width: 200px;
-        height: 30px;
-      }
-      #core_item:hover {
-        width: 200px;
-        height: 30px;
-        background-color: rgb(102, 102, 102);
-      }
-      #core_input {
-        width: 70%;
-        padding: 15px;
       }
       @media(max-width:450px){
         #core_card_main{
@@ -157,12 +128,12 @@
       <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;"></core-card>
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
-          <core-icon icon="account-circle" id="core_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" validationmessage="Completa este campo" id="paper_input1" layout vertical></paper-input>
+          <core-icon icon="account-circle" id="email_icon" center-justified horizontal layout wrap center></core-icon>
+          <paper-input label="Email Address" validationmessage="Completa este campo" id="email_field" layout vertical></paper-input>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
-          <core-icon icon="lock" id="core_icon2" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Choose a Password" validationmessage="Completa este campo" type="password" id="paper_input2" layout vertical></paper-input>
+          <core-icon icon="lock" id="password_icon" center-justified horizontal layout wrap center></core-icon>
+          <paper-input label="Choose a Password" validationmessage="Completa este campo" type="password" id="password_field" layout vertical></paper-input>
           <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{loged}}" ></paper-fab>
         </core-card>
 
@@ -171,10 +142,8 @@
   </template>
 
   <script>
-
     Polymer('login-page', {
       ready: function(){
-        this.addEventListener('blur', this.intervals);
         this.addEventListener('blur', this.intervals);
       },
       mailcheck: function(){
@@ -194,9 +163,9 @@
         }
       },
       intervals: function(){
-        if(this.$.paper_input1.value === "" || this.$.paper_input2.value === "") {
+        if(this.$.email_field.value === "" || this.$.password_field.value === "") {
           this.$.core_card_main.className="yellow";
-        } else if (this.mailcheck(this.$.paper_input1.value) && this.passcheck(this.$.paper_input2.value)){
+        } else if (this.mailcheck(this.$.email_field.value) && this.passcheck(this.$.password_field.value)){
           this.$.core_card_main.className="green";
         } else {
           this.$.core_card_main.className="red";
@@ -204,7 +173,7 @@
       },
       loged: function(){
         var ajaxhandler = this.$.ajaxhandler;
-        ajaxhandler.get(this.$.paper_input1.value, this.$.paper_input2.value);
+        ajaxhandler.get(this.$.email_field.value, this.$.password_field.value);
       }
     });
 

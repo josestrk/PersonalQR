@@ -9,14 +9,11 @@
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html" >
+
 <link rel="import" href="../core/core-ajax-handler.html">
-
-
-
 <link rel="import" href="../core/form-field.html">
 
 <polymer-element name="signin-page">
-
   <template>
     <style>
       :host {
@@ -29,31 +26,16 @@
         width: 100%;
         background-color: rgb(169, 252, 78);
       }
-      #paper_tabs {
-        width: 480px;
-        color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
-        left: 1410px;
-        top: 530px;
-        background-color: rgb(0, 188, 212);
-      }
       #core_card1 {
         position: absolute;
         width: 100%;
         height: 100%;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
+        border-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
         opacity: 1;
         background-image: url(http://makeonweb.es/josestrk/img/big/bg-4.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
-      }
-      #core_tooltip {
-        left: 1400px;
-        top: 560px;
       }
       #paper_toast {
         position: fixed;
@@ -61,18 +43,14 @@
         display: none;
       }
       #core_card2 {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 00px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
         width: 220px;
         height: 130px;
         opacity: 0.9;
         background-color: rgb(255, 255, 255);
       }
-
       #core_card2.green {
         box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
@@ -82,23 +60,19 @@
       #core_card2.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-
       #core_icon1 {
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 20px;
+        border-radius: 20px;
         height: 64px;
         width: 64px;
         left: auto;
         margin: auto 5px auto auto;
       }
-      #paper_input {
+      #username_field {
         width: 95%;
         padding: 20px 15px 5px;
         margin: auto;
       }
-      #paper_input1 {
+      #email_field {
         width: 95%;
         padding: 5px 15px 22px;
         margin: auto;
@@ -106,38 +80,22 @@
       #form {
         width: 300px;
         height: 240px;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-bottom-left-radius: 8px;
+        border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto;
         padding: 15px;
-        background-color: rgb(255, 255, 255);
-      }
-      .signin_element {
-        width: 100%;
-        height: 55px;
-        margin: auto;
-        opacity: 1;
         background-color: rgb(255, 255, 255);
       }
       .core_icon {
         width: 25px;
         height: 25px;
         margin: 10px;
-        color: #000000;
+        color: rgb(0, 0, 0);
       }
-
       #core_logo {
         width: 70px;
         height: 70px;
         margin: auto 20px auto auto;
-      }
-      .signin_space {
-        width: 80%;
-        height: 45px;
-        padding: 0px;
       }
       paper-fab.green {
         background: rgb(137, 191, 79);
@@ -196,8 +154,25 @@
           <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
         </core-card>
         <core-card id="core_card2" center center-justified wrap horizontal layout>
-          <paper-input inputvalueformirror="User name" inputhasvalue="User name" label="UserName" willvalidate id="paper_input" on-blur="{{infochanged}}" layout vertical></paper-input>
-          <paper-input inputvalueformirror="" inputhasvalue="" label="Email Address" willvalidate error="Email not allowed" id="paper_input1" on-blur="{{infochanged}}" layout vertical></paper-input>
+          <paper-input
+            inputvalueformirror="User name"
+            inputhasvalue="User name"
+            label="UserName"
+            willvalidate
+            id="username_field"
+            on-blur="{{infochanged}}"
+            layout vertical
+          ></paper-input>
+          <paper-input
+            inputvalueformirror=""
+            inputhasvalue=""
+            label="Email Address"
+            willvalidate
+            error="Email not allowed"
+            id="email_field"
+            on-blur="{{infochanged}}"
+            layout vertical
+          ></paper-input>
           <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" class="green" title="submit"></paper-fab>
         </core-card>
         <core-card id="form" center-justified vertical layout>
@@ -244,18 +219,15 @@
   <script>
   Polymer({
     ready:function(){
-      this.addEventListener("blur",this.validforms);
+      this.addEventListener("blur", this.validforms);
     },
-		showPanel: function(event,detail,sender){
-      this.$.core_header_panel.togglePanel();
-		},
 		validatePattern: function(string, pattern){
 			return string.match(pattern) !== null;
 		},
 		infochanged: function(){
 			if(!this.validateUser()){
         this.$.core_card2.className="red";
-      } else if(this.$.paper_input1.value==="") {
+      } else if(this.$.email_field.value==="") {
         this.$.core_card2.className="yellow";
       } else if(this.validateEmail()) {
         this.$.core_card2.className="green";
@@ -264,22 +236,22 @@
       }
 		},
 		validateUser: function() {
-			var string = this.$.paper_input.value || arguments[0];
+			var string = this.$.username_field.value;
 			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
 		},
 		validateEmail: function() {
-			var string = this.$.paper_input1.value || arguments[0];
+			var string = this.$.email_field.value;
 			return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
 		},
 		validatePass: function() {
 			return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
 		},
 		validateAll: function() {
-			var $d = this.$.form.querySelectorAll('form-field');
+			var fields = this.$.form.querySelectorAll('form-field');
 			var isValid = true;
-			console.log($d);
-			Array.prototype.forEach.call($d, function(d) {
-				if (!d.classList.contains('valid')) {
+			console.log(fields);
+			Array.prototype.forEach.call(fields, function(field) {
+				if (!field.classList.contains('valid')) {
 					isValid = false;
 				}
 			});
@@ -287,8 +259,8 @@
 		},
     validforms:function(){
       var forms= this.$.form.querySelectorAll('form-field');
-      var username = this.$.paper_input;
-      var mail = this.$.paper_input1;
+      var username = this.$.username_field;
+      var mail = this.$.email_field;
       if(this.validateEmail(mail.value) && this.validateUser(username.value)){
         this.$.send.style.visibility="visible";
       }else{
@@ -298,9 +270,9 @@
     startProgress:function(){
       debugger;
       var datos={
-        username: this.$.paper_input.value,
+        username: this.$.username_field.value,
         name:this.$.name.$.field.value,
-        mail: this.$.paper_input1.value,
+        mail: this.$.email_field.value,
         bdate:this.$.bdate.$.field.value,
         password:this.$.password.$.field.value,
       }
