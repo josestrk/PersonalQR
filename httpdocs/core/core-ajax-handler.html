@@ -39,7 +39,7 @@
             url: 'validateuser',
             data: data
           },function(result) {
-            console.log("Success function");
+            document.getElementById('user').data(result);
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');

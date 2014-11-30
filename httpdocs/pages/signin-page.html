@@ -8,7 +8,9 @@
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link href="../../bower_components/paper-fab/paper-fab.html" rel="import">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html" >
+<link rel="import" href="../core/core-progress/progress-element.html">
+
 
 <link rel="import" href="../core/form-field.html">
 
@@ -142,7 +144,6 @@
       }
       paper-progress::shadow #activeProgress {
         background-color: #e9f613;
-        height:20px;
       }
 
       @media(max-width:320px){
@@ -186,6 +187,7 @@
 
     <core-card id="core_card" layout vertical>
       <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
+      <!--<progress-element id="progress_element"></progress-element>-->
       <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
       <core-card id="core_card1" wrap center horizontal layout>
         <core-card id="core_logo" vertical layout wrap center-justified center>
@@ -292,13 +294,13 @@
       }
     },
     startProgress:function(){
-      while(this.$.paper_progress.value < 100){
-        var i=0;
-        while(i<1000000){
-          i++;
-        }
-        this.$.paper_progress.value += 1;
-      }
+      //debugger;
+      //this.$.progress_element.move(20);
+      document.getElementById('user').data({
+        _id: "48483992h394",
+        username:"alevale",
+        password:"asdads"
+      });
     }
 	});
   </script>
