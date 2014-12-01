@@ -30,6 +30,12 @@
 		margin: 10px;
 		color: black;
 	}
+  core-icon.valid {
+		color: #22aa00;
+	}
+	core-icon.invalid {
+		color: #cc0022;
+	}
 
 	paper-input {
 		width: 80%;
@@ -52,6 +58,7 @@
 			error="{{errorMsg}}"
 			bound="{{bound}}"
 			regexp="{{regexp}}"
+      on-blur="{{verify}}"
 			willValidate>
 		</paper-input>
 	</core-card>
@@ -81,26 +88,29 @@
 				/* Checking whether this field needs to have the same
 				 * value as another one (for example, password checks).
 				 */
-				if(this.bound && this.parentNode.children[this.bound]) {
-					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
-						this.makeValid();
-					} else {
-						this.makeInvalid();
-					}
-				}
-				
-				/*console.log(this.$.field.validity.valid);*/
-				if (this.$.field.$.input.value.match(this.regexp)) {
-					this.$.field.label.visibility = "hidden";
-					this.makeValid();
-					return true;
-				} else {
-					if(this.$.field.value) {
-						this.$.field.label = this.$.field.error;
-					}
-					this.makeInvalid();
-					return false;
-				}
+        if(this.$.field.label==="Re-enter password" ){
+        }else{
+  				if(this.bound && this.parentNode.children[this.bound]) {
+  					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
+  						this.makeValid();
+  					} else {
+  						this.makeInvalid();
+  					}
+  				}
+
+  				/*console.log(this.$.field.validity.valid);*/
+  				if (this.$.field.$.input.value.match(this.regexp)) {
+  					this.$.field.label.visibility = "hidden";
+  					this.makeValid();
+  					return true;
+  				} else {
+  					if(this.$.field.value) {
+  						this.$.field.label = this.$.field.error;
+  					}
+  					this.makeInvalid();
+  					return false;
+  				}
+        }
 			},
 			makeValid: function() {
 				this.classList.add("valid");

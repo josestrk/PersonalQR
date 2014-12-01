@@ -199,7 +199,7 @@
             bound="password"
             icon="lock"
             errorMsg="Must be the same password"
-            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+            regexp=""
             on-blur="{{verify}}"
           ></form-field>
           <form-field
@@ -209,7 +209,6 @@
             errorMsg="Fill in a valid date.(dd-mm-yy)"
             regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
           ></form-field>
-
           <button on-click="{{validateAll}}">Validate all</button>
         </core-card>
       </core-card>
@@ -257,6 +256,18 @@
 			});
 			console.log(isValid);
 		},
+    verify: function(event, detail, sender){
+      debugger;
+          if(sender.label==="Re-enter password" || sender.label==="Choose password" || sender.label==="Password must contain 6 to 16 characters"){
+            if(this.$.password.$.field.value===this.$.password2.$.field.value){
+              this.$.password2.$.icon.classList.add("valid");
+              this.$.password2.$.icon.classList.remove("invalid");
+            }else{
+              this.$.password2.$.icon.classList.add("invalid");
+              this.$.password2.$.icon.classList.remove("valid");
+            }
+          }
+    },
     validforms:function(){
       var forms= this.$.form.querySelectorAll('form-field');
       var username = this.$.username_field;
