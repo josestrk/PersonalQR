@@ -5,7 +5,7 @@ var articleManager = require('../manager/manager_article');
 
 //articles
 router.post('/article', createArticle);
-router.get('/article/:articleId', getArticle);
+// router.get('/article/:articleId', getArticle);
 router.get('/article/:userId', getUserArticles);
 router.get('/article', getArticlesAll);
 router.put('/article/:articleId', setArticle);
@@ -15,8 +15,8 @@ function createArticle(req, res) {
   var Article={
   };
 
-  if(req.body.id!==undefined){
-      Article["iduser"]=req.body.id;
+  if(req.body.iduser!==undefined){
+      Article["iduser"]=req.body.iduser;
     }else{
     //esto no se deberia permitir pero... de momento lo dejamos..
       Article["iduser"]="";
@@ -74,7 +74,7 @@ function getTopics(content){
 
   for(i in a){
     a[i] = a[i].split(' ');
-    if(a[i][0] !== ""){
+    if(a[i][0] !== "" && i!=0){
       res.push(a[i][0]);
     }
   }
