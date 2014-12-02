@@ -70,10 +70,6 @@
 				  values[attr.nodeName] = attr.value;
 				}
 
-				//console.log(this);
-				/*console.log(this.name);
-				console.log(this.$.field.getAttribute('type'));*/
-
 				this.addEventListener('blur', this.check);
 				this.addEventListener('keydown', this.keydown);
 			  },
@@ -85,10 +81,7 @@
         
 				if(this.bound && this.parentNode.children[this.bound]) {
 					isValid = (this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value);
-				}
-				
-				/*console.log(this.$.field.validity.valid);*/
-				if (this.$.field.$.input.value.match(this.regexp)) {
+				} else if (this.$.field.$.input.value.match(this.regexp)) {
 					this.$.field.label.visibility = "hidden";
           isValid = true;
 				} else {

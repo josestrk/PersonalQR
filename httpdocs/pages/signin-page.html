@@ -30,7 +30,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        border-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 6px, rgba(0, 0, 0, 0.0980392) 0px 2px 6px;
         opacity: 1;
         background-image: url(http://makeonweb.es/josestrk/img/big/bg-4.jpg);
@@ -60,13 +59,6 @@
       #core_card2.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #core_icon1 {
-        border-radius: 20px;
-        height: 64px;
-        width: 64px;
-        left: auto;
-        margin: auto 5px auto auto;
-      }
       #username_field {
         width: 95%;
         padding: 20px 15px 5px;
@@ -86,20 +78,17 @@
         padding: 15px;
         background-color: rgb(255, 255, 255);
       }
-      .core_icon {
-        width: 25px;
-        height: 25px;
-        margin: 10px;
-        color: rgb(0, 0, 0);
-      }
       #core_logo {
         width: 70px;
         height: 70px;
         margin: auto 20px auto auto;
       }
-      paper-fab {
+      #send {
         background: rgb(137, 191, 79);
         visibility: hidden;
+        position: relative;
+        left: 122px;
+        top: 39px;
       }
       paper-progress::shadow #activeProgress {
         background-color: #e9f613;
@@ -141,6 +130,22 @@
           background-color: rgb(255, 255, 255);
           background-image: none;
         }
+        #send {
+          left: 170px;
+          top: 10px;
+        }
+      }
+      
+      @media(max-height:450px){
+        #core_card1 {
+          background-size: 100% 450px;
+        }
+        #core_card2 {
+          margin-top: 150px;
+        }
+        #form {
+          margin: 10px auto;
+        }
       }
     </style>
 
@@ -173,7 +178,6 @@
             on-blur="{{infochanged}}"
             layout vertical
           ></paper-input>
-          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
         </core-card>
         <core-card id="form" center-justified vertical layout>
           <form-field
@@ -198,7 +202,7 @@
             bound="password"
             icon="lock"
             errorMsg="Must be the same password"
-            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+            regexp=""
           ></form-field>
           <form-field
             id="bdate"
@@ -207,7 +211,7 @@
             errorMsg="Fill in a valid date.(dd-mm-yy)"
             regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
           ></form-field>
-          <paper-fab on-click="{{startProgress}}" id="send2" icon="arrow-forward" title="submit"></paper-fab>
+          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
         </core-card>
       </core-card>
     </core-card>
@@ -253,19 +257,15 @@
 				}
 			});
       if (isValid) {
-        this.$.send2.style.visibility="visible";
+        this.$.send.style.visibility="visible";
       } else {
-        this.$.send2.style.visibility="hidden";
+        this.$.send.style.visibility="hidden";
       }
 		},
     validforms:function(){
       var username = this.$.username_field;
       var mail = this.$.email_field;
-      if(this.validateEmail(mail.value) && this.validateUser(username.value)){
-        this.$.send.style.visibility="visible";
-      }else{
-        this.$.send.style.visibility="hidden";
-      }
+      return (this.validateEmail(mail.value) && this.validateUser(username.value));
     },
     startProgress:function(){
       debugger;
