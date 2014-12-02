@@ -17,7 +17,7 @@
 <link rel="import" href="../core-notifi/core-notifi.html">
 
 
-<polymer-element name="main-menu" attributes="selected tittle">
+<polymer-element name="main-menu" attributes="tittle">
     <template>
         <style>
             core-menu {
@@ -62,10 +62,10 @@
                         <p>{{post.followres}} followers • {{post.follow}} following</p>-->
                     </id-card>
                 </core-card>
-                <core-menu valueattr="hash" selected="{{selected}}" selectedModel="{{selected}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{tittle}}" selectedModel="{{tittle}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{selected != page.hash ? '' : '-outline'}}" 
-                                    label="{{page.name}}" active ?= "{{selected == page.hash}}">
+                        <paper-item icon="{{page.logo}}{{ tittle != page.name ? '' : '-outline'}}" 
+                                    label="{{page.name}}" active ?= "{{tittle == page.name}}">
                             <a  href="{{page.hash}}"></a>
                         </paper-item>
                     </template>
@@ -89,11 +89,11 @@
         (function () {
             function loadMenu() {
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: '/#/wall'},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/myprofile'},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
-                    {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
-                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
+                    {name: 'pWall', logo: 'info', hash: '/#/wall/'},
+                    {name: 'pMy profile', logo: 'social:person', hash: '/#/profile'},
+                    {name: 'pEdition Mode', logo: 'bookmark', hash: '/#/editor'},
+                    {name: 'pConfig', logo: 'check-circle', hash: '/#/settings'},
+                    {name: 'pContacts', logo: 'social:person', hash: '/#/contacts'}
                 ];
             }
 

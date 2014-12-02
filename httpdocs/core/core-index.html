@@ -8,7 +8,7 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 
 
-<polymer-element name="core-index" attributes="pathArg1 queryParam1">
+<polymer-element name="core-index" attributes="t">
 
     <template>
        <style>
@@ -41,7 +41,7 @@
       }
       template {display: none !important;}
         </style> 
-        <core-animated-pages id="core_card" valueattr="hash" selected="{{queryParam1}}" layout vertical end-justified center transitions="slide-from-right">
+        <core-animated-pages id="core_card" valueattr="hash" selected="{{t}}" layout vertical end-justified center transitions="slide-from-right">
 
            <section hash="" layout vertical center-center>
                <core-card vertical layout  center-justified>
@@ -59,7 +59,7 @@
 
         </core-animated-pages> 
 
-        <paper-tabs selected="{{queryParam1}}" selectedindex="0" valueattr="select" id="paper_tabs" end-justified vertical layout wrap end>
+        <paper-tabs selected="{{t}}" selectedindex="0" valueattr="select" id="paper_tabs" end-justified vertical layout wrap end>
         <template repeat="{{page in pages}}">
             <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}">
               {{page.name}}
@@ -72,8 +72,8 @@
         Polymer({
             ready: function() {
                 this.pages = [ 
-                    {name:'GET STARTED',id:'paper_tab', hash:'/#/?queryParam1=signin', select:'signin'},
-                    {name:'LOG IN',id:'paper_tab1', hash:'/#/?queryParam1=login', select:'login'}
+                    {name:'GET STARTED',id:'paper_tab', hash:'/#/?t=signin', select:'signin'},
+                    {name:'LOG IN',id:'paper_tab1', hash:'/#/?t=login', select:'login'}
                 ];
             }
         });
