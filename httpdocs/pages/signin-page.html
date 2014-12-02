@@ -97,7 +97,7 @@
         height: 70px;
         margin: auto 20px auto auto;
       }
-      paper-fab.green {
+      paper-fab {
         background: rgb(137, 191, 79);
         visibility: hidden;
       }
@@ -173,7 +173,7 @@
             on-blur="{{infochanged}}"
             layout vertical
           ></paper-input>
-          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" class="green" title="submit"></paper-fab>
+          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
         </core-card>
         <core-card id="form" center-justified vertical layout>
           <form-field
@@ -190,7 +190,6 @@
             icon="lock"
             errorMsg="Password must contain 6 to 16 characters"
             regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
-            on-blur="{{verify}}"
           ></form-field>
           <form-field
             id="password2"
@@ -199,8 +198,7 @@
             bound="password"
             icon="lock"
             errorMsg="Must be the same password"
-            regexp=""
-            on-blur="{{verify}}"
+            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
           ></form-field>
           <form-field
             id="bdate"
@@ -209,7 +207,7 @@
             errorMsg="Fill in a valid date.(dd-mm-yy)"
             regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
           ></form-field>
-          <button on-click="{{validateAll}}">Validate all</button>
+          <paper-fab on-click="{{startProgress}}" id="send2" icon="arrow-forward" title="submit"></paper-fab>
         </core-card>
       </core-card>
     </core-card>
@@ -219,6 +217,7 @@
   Polymer({
     ready:function(){
       this.addEventListener("blur", this.validforms);
+      this.addEventListener("blur", this.validateAll);
     },
 		validatePattern: function(string, pattern){
 			return string.match(pattern) !== null;
@@ -248,28 +247,18 @@
 		validateAll: function() {
 			var fields = this.$.form.querySelectorAll('form-field');
 			var isValid = true;
-			console.log(fields);
 			Array.prototype.forEach.call(fields, function(field) {
 				if (!field.classList.contains('valid')) {
 					isValid = false;
 				}
 			});
-			console.log(isValid);
+      if (isValid) {
+        this.$.send2.style.visibility="visible";
+      } else {
+        this.$.send2.style.visibility="hidden";
+      }
 		},
-    verify: function(event, detail, sender){
-      debugger;
-          if(sender.label==="Re-enter password" || sender.label==="Choose password" || sender.label==="Password must contain 6 to 16 characters"){
-            if(this.$.password.$.field.value===this.$.password2.$.field.value){
-              this.$.password2.$.icon.classList.add("valid");
-              this.$.password2.$.icon.classList.remove("invalid");
-            }else{
-              this.$.password2.$.icon.classList.add("invalid");
-              this.$.password2.$.icon.classList.remove("valid");
-            }
-          }
-    },
     validforms:function(){
-      var forms= this.$.form.querySelectorAll('form-field');
       var username = this.$.username_field;
       var mail = this.$.email_field;
       if(this.validateEmail(mail.value) && this.validateUser(username.value)){

@@ -16,52 +16,45 @@
       font-weight: 300;
     }
 
-	core-card {
-		width: auto;
-		height: 55px;
-		margin: auto;
-		opacity: 1;
-		background-color: white;
-	}
+    core-card {
+      width: auto;
+      height: 55px;
+      margin: auto;
+      opacity: 1;
+      background-color: white;
+    }
 
-	core-icon {
-		width: 25px;
-		height: 25px;
-		margin: 10px;
-		color: black;
-	}
-  core-icon.valid {
-		color: #22aa00;
-	}
-	core-icon.invalid {
-		color: #cc0022;
-	}
+    core-icon {
+      width: 25px;
+      height: 25px;
+      margin: 10px;
+      color: black;
+    }
 
-	paper-input {
-		width: 80%;
-		height: 45px;
-		padding: 0px;
-	}
+    paper-input {
+      width: 80%;
+      height: 45px;
+      padding: 0px;
+    }
     </style>
 
-	<core-card id="form-field-container"
-		horizontal layout wrap center-justified>
-		<core-icon
-			id="icon"
-			icon="{{icon}}"
-			center-justified horizontal layout wrap center>
-		</core-icon>
-		<paper-input
-			id="field"
-			type="{{type}}"
-			label="{{label}}" floatingLabel
-			error="{{errorMsg}}"
-			bound="{{bound}}"
-			regexp="{{regexp}}"
-      on-blur="{{verify}}"
-			willValidate>
-		</paper-input>
-	</core-card>
+    <core-card id="form-field-container"
+      horizontal layout wrap center-justified>
+      <core-icon
+        id="icon"
+        icon="{{icon}}"
+        center-justified horizontal layout wrap center>
+      </core-icon>
+      <paper-input
+        id="field"
+        type="{{type}}"
+        label="{{label}}" floatingLabel
+        error="{{errorMsg}}"
+        bound="{{bound}}"
+        regexp="{{regexp}}"
+        willValidate>
+      </paper-input>
+    </core-card>
 
     <content></content>
 	</template>
@@ -88,46 +81,34 @@
 				/* Checking whether this field needs to have the same
 				 * value as another one (for example, password checks).
 				 */
-        if(this.$.field.label==="Re-enter password" ){
-        }else{
-  				if(this.bound && this.parentNode.children[this.bound]) {
-  					if(this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value) {
-  						this.makeValid();
-  					} else {
-  						this.makeInvalid();
-  					}
-  				}
-
-  				/*console.log(this.$.field.validity.valid);*/
-  				if (this.$.field.$.input.value.match(this.regexp)) {
-  					this.$.field.label.visibility = "hidden";
-  					this.makeValid();
-  					return true;
-  				} else {
-  					if(this.$.field.value) {
-  						this.$.field.label = this.$.field.error;
-  					}
-  					this.makeInvalid();
-  					return false;
-  				}
-        }
-			},
-			makeValid: function() {
-				this.classList.add("valid");
-				this.classList.remove("invalid");
-				this.paintIcon();
-			},
-			makeInvalid: function() {
-				this.classList.add("invalid");
-				this.classList.remove("valid");
-				this.paintIcon();
-			},
-			paintIcon: function() {
-				if(this.classList.contains('valid')) {
-					this.$.icon.style.color = '#22aa00';
-				} else if(this.classList.contains('invalid')) {
-					this.$.icon.style.color = '#cc0022';
+        var isValid;
+        
+				if(this.bound && this.parentNode.children[this.bound]) {
+					isValid = (this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value);
 				}
+				
+				/*console.log(this.$.field.validity.valid);*/
+				if (this.$.field.$.input.value.match(this.regexp)) {
+					this.$.field.label.visibility = "hidden";
+          isValid = true;
+				} else {
+					if(this.$.field.value) {
+						this.$.field.label = this.$.field.error;
+					}
+          isValid = false;
+				}
+        
+        if(isValid) {
+          this.classList.add('valid');
+          this.classList.remove('invalid');
+          this.$.icon.style.color = '#22aa00';
+        } else {
+          this.classList.add('invalid');
+          this.classList.remove('valid');
+          this.$.icon.style.color = '#cc0022';
+        }
+        
+        return isValid;
 			},
 			keydown: function(event, detail, sender) {
 				if(event.keyCode === 13) {
