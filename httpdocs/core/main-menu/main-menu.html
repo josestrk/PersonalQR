@@ -17,7 +17,7 @@
 <link rel="import" href="../core-notifi/core-notifi.html">
 
 
-<polymer-element name="main-menu" attributes="itemMenu">
+<polymer-element name="main-menu" attributes="imenu">
     <template>
         <style>
             core-menu {
@@ -28,7 +28,7 @@
             core-menu > paper-item {
                 transition: all 300ms ease-in-out;
             }
-            core-menu > paper-item.core-selected {
+            core-menu > paper-item .core-selected {
                 background: #777;
             }
             #pages{
@@ -57,13 +57,12 @@
                         <img width="70" height="70" id='{{name}}' src="../../../img/avatar-01.svg" />
                         <h2>{{username != undefined ? username : 'Administrador'}}</h2>
                         <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p>
-                        {{itemMenu}}
                     </id-card>
                 </core-card>
-                <core-menu valueattr="label" selected="{{itemMenu}}" selectedModel="{{itemMenu}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{imenu}}" selectedModel="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{ itemMenu != page.name ? '' : '-outline'}}"
-                                    label="{{page.name}}" active="{{ itemMenu === page.name}}">
+                        <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
+                                    label="{{page.name}}" active="{{ imenu === page.name}}">
                             <a  href="{{page.hash}}"></a>
                         </paper-item>
                     </template>
@@ -78,10 +77,9 @@
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
-
-
-                <content></content>
-
+            
+            <content></content>
+            
         </my-core-scaffold>
     </template>
     <script>
@@ -90,7 +88,7 @@
 
                 this.pages = [
                     {name: 'Wall', logo: 'info', hash: '/#/wall/'},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/profile'},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/'},
                     {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
                     {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
                     {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
