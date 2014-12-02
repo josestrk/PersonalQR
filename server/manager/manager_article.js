@@ -1,20 +1,17 @@
 var daoArticle = require('../dao/dao_article');
 
-function createArticle(callback) {
-  var temporalArticle = {
-    title : "",
-    content : "",
-    tags : "",
-    topics : "",
-    likes: "",
-    comments: new Array(),
-    date : ""
-  };
-  daoArticle.createArticle(temporalArticle, callback);
+function createArticle(article, callback) {
+    article["likes"]= "";
+    article["coments"]=[];
+  daoArticle.createArticle(article, callback);
 }
 
 function getArticle(articleId, callback) {
   daoArticle.getArticle(articleId, callback);
+}
+
+function getUserArticles(userId, callback) {
+  daoArticle.getUserArticles(userId, callback);
 }
 
 function delArticle(articleId, callback) {
@@ -62,7 +59,8 @@ function setArticle(articleId, data, callback){
 module.exports = {
 	createArticle: createArticle,
 	getArticle: getArticle,
+  getUserArticles: getUserArticles,
 	getArticlesAll: getArticlesAll,
 	delArticle: delArticle,
-	setArticle: setArticle
+	setArticle: setArticle,
 };

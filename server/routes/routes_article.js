@@ -6,15 +6,81 @@ var articleManager = require('../manager/manager_article');
 //articles
 router.post('/article', createArticle);
 router.get('/article/:articleId', getArticle);
+router.get('/article/:userId', getUserArticles);
 router.get('/article', getArticlesAll);
 router.put('/article/:articleId', setArticle);
 router.delete('/article/:articleId', delArticle);
 
 function createArticle(req, res) {
-  articleManager.createArticle(function(err, result){
+  var Article={
+  };
+
+  if(req.body.id!==undefined){
+      Article["iduser"]=req.body.id;
+    }else{
+    //esto no se deberia permitir pero... de momento lo dejamos..
+      Article["iduser"]="";
+  }
+  if(req.body.title!==undefined){
+      Article["title"]=req.body.title;
+    }else{
+      Article["title"]="";
+  }
+  if(req.body.content!==undefined){
+      Article["content"]=req.body.content;
+    }else{
+      Article["content"]="";
+  }
+
+  Article["topic"]=getTopics(req.body.content);
+  Article["date"]=getDateTime();
+
+  articleManager.createArticle(Article, function(err, result){
     res.json(result);
   });
 }
+
+function getDateTime() {
+    var now     = new Date();
+    var year    = now.getFullYear();
+    var month   = now.getMonth()+1;
+    var day     = now.getDate();
+    var hour    = now.getHours();
+    var minute  = now.getMinutes();
+    var second  = now.getSeconds();
+    if(month.toString().length == 1) {
+        var month = '0'+month;
+    }
+    if(day.toString().length == 1) {
+        var day = '0'+day;
+    }
+    if(hour.toString().length == 1) {
+        var hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+        var minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+        var second = '0'+second;
+    }
+    var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+     return dateTime;
+}
+
+function getTopics(content){
+  var a=content;
+  var res=[];
+  a = a.split('#');
+
+  for(i in a){
+    a[i] = a[i].split(' ');
+    if(a[i][0] !== ""){
+      res.push(a[i][0]);
+    }
+  }
+  return res;
+}
+
 
 function getArticle(req, res) {
   var articleId = req.param('articleId');
@@ -24,6 +90,12 @@ function getArticle(req, res) {
     } else {
       next(new Error(new Error(articleId + 'as article id does not exist')));
     }
+  });
+}
+
+function getUserArticles(req, res) {
+  articleManager.getUserArticles(req.param('userId'), function(err, result){
+    res.json(result);
   });
 }
 

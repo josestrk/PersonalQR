@@ -19,6 +19,18 @@ function getArticlesAll(callback) {
 	});
 }
 
+function getUserArticles(userId, callback) {
+	var where={};
+	where["iduser"]=userId;
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.toArray(callback);
+	});
+}
+
 function delArticles(callback) {
 	this.remove({}, callback);
 }
@@ -42,6 +54,7 @@ function setArticle(articleId, update, callback) {
 col.bind({
 	createArticle: createArticle,
 	getArticle: getArticle,
+	getUserArticles: getUserArticles,
 	getArticlesAll: getArticlesAll,
 	delArticles: delArticles,
 	delArticle: delArticle,
