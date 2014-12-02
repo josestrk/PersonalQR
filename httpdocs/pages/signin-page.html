@@ -193,6 +193,7 @@
             label="Choose password"
             icon="lock"
             errorMsg="Password must contain 6 to 16 characters"
+            on-blur="{{verify}}"
             regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
           ></form-field>
           <form-field
@@ -202,6 +203,7 @@
             bound="password"
             icon="lock"
             errorMsg="Must be the same password"
+            on-blur="{{verify}}"
             regexp=""
           ></form-field>
           <form-field
@@ -248,6 +250,19 @@
 		validatePass: function() {
 			return this.validatePattern(string,/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/);
 		},
+    verify: function(event, detail, sender){
+      if(sender.id==="password" || sender.id==="password2") {
+        if(this.$.password.$.field.value===this.$.password2.$.field.value){
+          this.$.password2.classList.add("valid");
+          this.$.password2.classList.remove("invalid");
+          this.$.password2.$.icon.style.color = '#22aa00';
+        }else{
+          this.$.password2.classList.add("invalid");
+          this.$.password2.classList.remove("valid");
+          this.$.password2.$.icon.style.color = '#cc0022';
+        }
+      }
+    },
 		validateAll: function() {
 			var fields = this.$.form.querySelectorAll('form-field');
 			var isValid = true;
