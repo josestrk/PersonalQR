@@ -17,7 +17,7 @@
 <link rel="import" href="../core-notifi/core-notifi.html">
 
 
-<polymer-element name="main-menu" attributes="tittle">
+<polymer-element name="main-menu" attributes="itemMenu">
     <template>
         <style>
             core-menu {
@@ -54,18 +54,16 @@
                 <core-card id="core_card" layout vertical>
                     <!--<search-banner horizontal layout center-justified center></search-banner>-->
                     <id-card layout vertical center center-justified>
-                        <img width="70" height="70" src="../../../img/avatar-01.svg" />
-                        <h2>User</h2>
-                        <p>300 followers • 100 following</p>  
-                        <!--<img src="{{post.avatar}}" width="70" height="70">
-                        <h2>{{post.username}}</h2>
-                        <p>{{post.followres}} followers • {{post.follow}} following</p>-->
+                        <img width="70" height="70" id='{{name}}' src="../../../img/avatar-01.svg" />
+                        <h2>{{username != null ? username : 'NameUser'}}</h2>
+                        <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p> 
+                        {{itemMenu}}
                     </id-card>
                 </core-card>
-                <core-menu valueattr="label" selected="{{tittle}}" selectedModel="{{tittle}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{itemMenu}}" selectedModel="{{itemMenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{ tittle != page.name ? '' : '-outline'}}" 
-                                    label="{{page.name}}" active ?= "{{tittle == page.name}}">
+                        <paper-item icon="{{page.logo}}{{ itemMenu != page.name ? '' : '-outline'}}" 
+                                    label="{{page.name}}" active="{{ itemMenu === page.name}}">
                             <a  href="{{page.hash}}"></a>
                         </paper-item>
                     </template>
@@ -76,24 +74,26 @@
             </nav>
 
             <core-toolbar tool flex>
-                <content select="{{tittle}}"></content>
+                <content select=".title"></content>
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
-            <div class="content" layout vertical fit>
+            
+            
                 <content></content>
-            </div>
+           
         </my-core-scaffold>
     </template>
     <script>
         (function () {
             function loadMenu() {
+                
                 this.pages = [
-                    {name: 'pWall', logo: 'info', hash: '/#/wall/'},
-                    {name: 'pMy profile', logo: 'social:person', hash: '/#/profile'},
-                    {name: 'pEdition Mode', logo: 'bookmark', hash: '/#/editor'},
-                    {name: 'pConfig', logo: 'check-circle', hash: '/#/settings'},
-                    {name: 'pContacts', logo: 'social:person', hash: '/#/contacts'}
+                    {name: 'Wall', logo: 'info', hash: '/#/wall/'},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/profile'},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
+                    {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
+                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
                 ];
             }
 
@@ -108,9 +108,14 @@
             }
 
             Polymer({
+                //username: document.getElementById('user').datos.username;
+                //name: document.getElementById('user').datos.name;
+                //follower: document.getElementById('user').datos.follower;
+                //following: document.getElementById('user').datos.following;
                 domReady: function () {
                     loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
+                    debugger
                 },
                 keyHandler: function (e, detail, sender) {
                     var pages = this.$.pages;
