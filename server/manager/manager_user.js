@@ -1,6 +1,8 @@
 var daoUser = require('../dao/dao_user');
 
 function createUser(data, callback) {
+	data["followers"]=0;
+	data["following"]=0;
 	daoUser.createUser(data, callback);
 }
 
