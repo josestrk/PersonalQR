@@ -2,10 +2,11 @@
   <link href="../../../bower_components/core-icons/core-icons.html" rel="import">
   <link href="../../../bower_components/core-icons/social-icons.html" rel="import">
   <link href="../../../bower_components/core-icon-button/core-icon-button.html" rel="import">
+  <link href="../../../bower_components/paper-dialog/paper-dialog.html" rel="import">
 
   <link href="drop-down.html" rel="import">
 
- <polymer-element name="core-notifi"> 
+ <polymer-element name="core-notifi">
   <template>
     <style>
     html /deep/ core-dropdown {
@@ -77,28 +78,33 @@
     .middle > * {
       padding: 12px;
     }
+
+    html /deep/ .size-position::shadow #scroller {
+      width: 300px;
+      height: 300px;
+    }
+
     </style>
 
     <div flex class="middle">
       <div>
-        <drop-down class="open-below constrained" halign="right" valign="bottom">
-          <core-icon-button class="core-dropdown-trigger" icon="social:notifications"></core-icon-button>
-          <div class="dropdown">
-            <h2>NEWS</h2>
-           
-                <ul> 
-                    <template repeat="{{news}}">
-                    </template>
-                </ul>
-            
-          </div>
-        </drop-down>
+          <core-icon-button class="core-dropdown-trigger" icon="social:notifications" on-click="{{deploy}}" ></core-icon-button>
+          <paper-dialog id="dialog" heading="Custom Size &amp; Position" hidden?="{{showAlert}}" style="position: fixed; outline: none; font-size: 13px; height: 250px; width: 250px; overflow-x: auto; z-index: 2;">
+            <p>asdf Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </paper-dialog>
       </div>
     </div>
   </template>
 
   <script>
       Polymer({
+        showAlert: true,
+        deploy:function(){
+          this.showAlert = !this.showAlert;
+          if(!this.showAlert){//es decir que se tiene que mostrar
+            this.$.dialog.style.display = "";
+          }
+       }
       });
   </script>
 </polymer-element>
