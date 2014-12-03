@@ -192,7 +192,7 @@
             type="password"
             label="Choose password"
             icon="lock"
-            errorMsg="Password must contain 6 to 16 characters"
+            errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
             on-blur="{{verify}}"
             regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
           ></form-field>
@@ -252,7 +252,7 @@
 		},
     verify: function(event, detail, sender){
       if(sender.id==="password" || sender.id==="password2") {
-        if(this.$.password.$.field.value===this.$.password2.$.field.value){
+        if(this.$.password.$.input.value===this.$.password2.$.input.value){
           this.$.password2.classList.add("valid");
           this.$.password2.classList.remove("invalid");
           this.$.password2.$.icon.style.color = '#22aa00';
@@ -296,5 +296,4 @@
     }
 	});
   </script>
-
 </polymer-element>
