@@ -25,14 +25,20 @@
       background-color: white;
     }
 
-    core-icon {
+    #icon {
       width: 25px;
       height: 25px;
       margin: 10px;
       color: black;
     }
+    #icon.green {
+      color: #22aa00;
+    }
+    #icon.red {
+      color: #cc0022;
+    }
 
-    paper-input-decorator {
+    #field {
       width: 80%;
       height: 45px;
       padding: 0px;
@@ -78,15 +84,17 @@
 				this.addEventListener('keydown', this.keydown);
 			},
 			check: function(event, detail, sender) {
-        console.log(this.$.input);
+        /*console.log(this.$.input);
         console.log(this.$.input.validity);
         console.log(this.$.input.value);
-        console.log(this.$.input.pattern);
+        console.log(this.$.input.pattern);*/
         
-        if (this.$.input.pattern && !this.$.input.validity.valid) {
-          this.$.icon.style.color = '#cc0022';
-        } else {
-          this.$.icon.style.color = '#22aa00';
+        if (this.$.input.pattern) {
+          if (!this.$.input.validity.valid) {
+            this.$.icon.className = 'red';
+          } else {
+            this.$.icon.className = 'green';
+          }
         }
 			},
 			keydown: function(event, detail, sender) {
