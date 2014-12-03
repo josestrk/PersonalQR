@@ -194,13 +194,12 @@
             icon="lock"
             errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
             on-blur="{{verify}}"
-            regexp="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$"
+            regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
           ></form-field>
           <form-field
             id="password2"
             type="password"
             label="Re-enter password"
-            bound="password"
             icon="lock"
             errorMsg="Must be the same password"
             on-blur="{{verify}}"
