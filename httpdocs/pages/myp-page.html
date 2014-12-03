@@ -15,7 +15,7 @@
       }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu iMenu="My profile">
+    <main-menu imenu="My profile" iduser="{{id}}">
         <div class="title">My profile</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
@@ -49,9 +49,7 @@
         Polymer({
             ready: function(){
               var that=this;
-
               var ajaxhandler = this.$.ajaxhandler;
-              debugger;
               ajaxhandler.getArticles(this.id,function (result){
                 if(result){
                   that.lista=result.reverse();

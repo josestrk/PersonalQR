@@ -15,9 +15,10 @@
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-scaffold/core-scaffold.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
+<link rel="import" href="../core-qr/core-qr.html">
 
 
-<polymer-element name="main-menu" attributes="imenu">
+<polymer-element name="main-menu" attributes="imenu, iduser">
     <template>
         <style>
             core-menu {
@@ -55,7 +56,7 @@
                     <!--<search-banner horizontal layout center-justified center></search-banner>-->
                     <id-card layout vertical center center-justified>
                         <img width="70" height="70" id='{{name}}' src="../../../img/avatar-01.svg" />
-                        <h2>{{username != undefined ? username : 'Administrador'}}</h2>
+                        <h2>{{ username == undefined ? 'User' : username }}</h2>
                         <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p>
                     </id-card>
                 </core-card>
@@ -63,7 +64,8 @@
                     <template repeat="{{page in pages}}">
                         <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
                                     label="{{page.name}}" active="{{ imenu === page.name}}">
-                            <a  href="{{page.hash}}"></a>
+
+                            <a  href="{{page.hash}} {{iduser}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
@@ -75,7 +77,7 @@
             <core-toolbar tool flex>
                 <content select=".title"></content>
                 <core-notifi></core-notifi>
-                <core-icon-button icon="image:blur-on"></core-icon-button>
+                <core-qr></core-qr>
             </core-toolbar>
 
             <content></content>
@@ -85,13 +87,12 @@
     <script>
         (function () {
             function loadMenu() {
-
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+this.id},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+this.id},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+this.id},
-                    {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+this.id},
-                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+this.id}
+                    {name: 'Wall', logo: 'info', hash: '/#/wall/?id='},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='},
+                    {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='},
+                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='}
                 ];
             }
 
@@ -107,18 +108,16 @@
 
             Polymer({
                 domReady: function () {
-                    //debugger;
-                    // this.username= document.getElementById('user').datos.username === undefined ? '' : document.getElementById('user').datos.username ;
-                    // this.name=document.getElementById('user').datos.name === undefined ? '' : document.getElementById('user').datos.name ;
-                    // this.follower= document.getElementById('user').datos.followers === undefined ? '' : document.getElementById('user').datos.followers ;
-                    // this.following= document.getElementById('user').datos.following === undefined ? '' : document.getElementById('user').datos.following ;
+                    //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
+                    //this.name=document.getElementById('user').datos.name === undefined ? '' : document.getElementById('user').datos.name ;
+                    //this.follower= document.getElementById('user').datos.followers === undefined ? 0 : document.getElementById('user').datos.followers ;
+                    //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
                     loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
                 },
                 keyHandler: function (e, detail, sender) {
                     var pages = this.$.pages;
 
-                    // Select page by num key.
                     var num = parseInt(detail.key);
                     if (!isNaN(num) && num <= this.pages.length) {
                         pages.selectIndex(num - 1);

@@ -3,14 +3,14 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="editor-page">
+<polymer-element name="editor-page" attributes="id">
 
   <template>
     <style>
     </style>
-    <main-menu iMenu="Edition Mode">
+    <main-menu iMenu="Edition Mode"  iduser="{{id}}">
         <div class="title">Editor</div>
-        <div>  
+        <div>
         </div>
         <core-card><core-icon icon="load"></core-icon></core-card>
     </main-menu>
@@ -19,7 +19,7 @@
   <script>
 
     Polymer({
-      
+
     });
 
   </script>
