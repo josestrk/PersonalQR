@@ -32,7 +32,7 @@
       color: black;
     }
 
-    paper-input {
+    paper-input-decorator {
       width: 80%;
       height: 45px;
       padding: 0px;
@@ -75,8 +75,6 @@
 
 				this.addEventListener('blur', this.check);
 				this.addEventListener('keydown', this.keydown);
-        
-        console.log(this.$.field);
 			},
 			check: function(event, detail, sender) {
         var isValid;
