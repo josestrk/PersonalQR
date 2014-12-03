@@ -28,7 +28,7 @@
             core-menu > paper-item {
                 transition: all 300ms ease-in-out;
             }
-            core-menu > paper-item .core-selected {
+            .core-selected {
                 background: #777;
             }
             #pages{
@@ -59,7 +59,7 @@
                         <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p>
                     </id-card>
                 </core-card>
-                <core-menu valueattr="label" selected="{{imenu}}" selectedModel="{{imenu}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
                         <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
                                     label="{{page.name}}" active="{{ imenu === page.name}}">
