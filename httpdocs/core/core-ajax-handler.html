@@ -76,6 +76,20 @@
             errorToast.text = xhr.responseText.split(':')[1];
             errorToast.show();
           });
+        },
+        getArticles : function(id,callback){
+          doAjax({
+            type: 'GET',
+            url: 'article/'+id,
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error could not load';
+            errorToast.show();
+            calback(false);
+          });
         }
       });
     }());

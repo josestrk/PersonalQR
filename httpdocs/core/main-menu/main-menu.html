@@ -28,7 +28,7 @@
             core-menu > paper-item {
                 transition: all 300ms ease-in-out;
             }
-            core-menu > paper-item .core-selected {
+            .core-selected {
                 background: #777;
             }
             #pages{
@@ -59,7 +59,7 @@
                         <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p>
                     </id-card>
                 </core-card>
-                <core-menu valueattr="label" selected="{{imenu}}" selectedModel="{{imenu}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
                         <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
                                     label="{{page.name}}" active="{{ imenu === page.name}}">
@@ -77,9 +77,9 @@
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
-            
+
             <content></content>
-            
+
         </my-core-scaffold>
     </template>
     <script>
@@ -87,11 +87,11 @@
             function loadMenu() {
 
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: '/#/wall/'},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/'},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
-                    {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
-                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
+                    {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+this.id},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+this.id},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+this.id},
+                    {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+this.id},
+                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+this.id}
                 ];
             }
 

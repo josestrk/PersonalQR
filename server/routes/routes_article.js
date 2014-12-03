@@ -34,6 +34,7 @@ function createArticle(req, res) {
 
   Article["topic"]=getTopics(req.body.content);
   Article["date"]=getDateTime();
+  Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-2.jpg";
 
   articleManager.createArticle(Article, function(err, result){
     res.json(result);
@@ -94,6 +95,7 @@ function getArticle(req, res) {
 }
 
 function getUserArticles(req, res) {
+  console.log(req.param('userId'));
   articleManager.getUserArticles(req.param('userId'), function(err, result){
     res.json(result);
   });
