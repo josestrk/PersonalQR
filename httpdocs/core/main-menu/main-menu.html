@@ -77,9 +77,9 @@
                 <core-notifi></core-notifi>
                 <core-icon-button icon="image:blur-on"></core-icon-button>
             </core-toolbar>
-            
+
             <content></content>
-            
+
         </my-core-scaffold>
     </template>
     <script>
@@ -87,11 +87,11 @@
             function loadMenu() {
 
                 this.pages = [
-                    {name: 'Wall', logo: 'info', hash: '/#/wall/'},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/'},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
-                    {name: 'Config', logo: 'check-circle', hash: '/#/settings'},
-                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts'}
+                    {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+this.id},
+                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+this.id},
+                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+this.id},
+                    {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+this.id},
+                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+this.id}
                 ];
             }
 
