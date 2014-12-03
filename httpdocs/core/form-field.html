@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../lib/paper-input-decorator/paper-input-decorator.html">
 
 <polymer-element name="form-field" attributes="label,type,bound,regexp,icon,errorMsg">
   <template>
@@ -31,7 +32,7 @@
       color: black;
     }
 
-    paper-input {
+    paper-input-decorator {
       width: 80%;
       height: 45px;
       padding: 0px;
@@ -45,15 +46,17 @@
         icon="{{icon}}"
         center-justified horizontal layout wrap center>
       </core-icon>
-      <paper-input
+      <paper-input-decorator
         id="field"
-        type="{{type}}"
         label="{{label}}" floatingLabel
         error="{{errorMsg}}"
-        bound="{{bound}}"
-        regexp="{{regexp}}"
-        willValidate>
-      </paper-input>
+        willvalidate>
+          <input
+            id="input"
+            is="core-input"
+            type="{{type}}"
+            pattern="{{regexp}}">
+      </paper-input-decorator>
     </core-card>
 
     <content></content>
@@ -72,16 +75,11 @@
 
 				this.addEventListener('blur', this.check);
 				this.addEventListener('keydown', this.keydown);
-			  },
+			},
 			check: function(event, detail, sender) {
-				/* Checking whether this field needs to have the same
-				 * value as another one (for example, password checks).
-				 */
         var isValid;
         
-				if(this.bound && this.parentNode.children[this.bound]) {
-					isValid = (this.$.field.$.input.value === this.parentNode.children[this.bound].$.field.$.input.value);
-				} else if (this.$.field.$.input.value.match(this.regexp)) {
+				if (this.$.input.value.match(this.regexp)) {
 					this.$.field.label.visibility = "hidden";
           isValid = true;
 				} else {
