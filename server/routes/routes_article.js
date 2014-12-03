@@ -95,7 +95,8 @@ function getArticle(req, res) {
 }
 
 function getUserArticles(req, res) {
-  articleManager.getUserArticles(req.param('id'), function(err, result){
+  console.log(req.param('userId'));
+  articleManager.getUserArticles(req.param('userId'), function(err, result){
     res.json(result);
   });
 }

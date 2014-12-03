@@ -31,9 +31,9 @@
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
           section.setAttribute('title', item.title);
+          section.setAttribute('content', item.content);
           section.setAttribute('date', item.date);
           section.setAttribute('bgimg', item.bgimg);
-          section.setAttribute('content', item.content);
 
 
         var div = document.createElement('core-card');
@@ -47,19 +47,21 @@
         }
 
         Polymer({
-            domReady: function () {
-                var listPost = this.$.list;
-                this.lista.forEach(function (item) {
-                   listPost.appendChild(createPage(item));
-                });
-            },
             ready: function(){
+              var that=this;
+
               var ajaxhandler = this.$.ajaxhandler;
+              debugger;
               ajaxhandler.getArticles(this.id,function (result){
                 if(result){
-                  this.lista=result;
+                  that.lista=result.reverse();
+                  var listPost = that.$.list;
+                  that.lista.forEach(function (item) {
+                     listPost.appendChild(createPage(item));
+                  });
                 }
               });
+
             }
         });
     })();

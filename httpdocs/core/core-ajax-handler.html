@@ -78,9 +78,6 @@
           });
         },
         getArticles : function(id,callback){
-          var data={
-            userId:id,
-          };
           doAjax({
             type: 'GET',
             url: 'article/'+id,
