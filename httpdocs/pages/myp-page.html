@@ -16,7 +16,7 @@
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="My profile" iduser="{{id}}">
-        <div class="title">My profile</div>
+        <div class="title">My profile {{id}}</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
         </div>

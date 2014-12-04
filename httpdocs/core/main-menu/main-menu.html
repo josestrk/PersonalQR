@@ -65,7 +65,7 @@
                         <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
                                     label="{{page.name}}" active="{{ imenu === page.name}}">
 
-                            <a  href="{{page.hash}} {{iduser}}"></a>
+                            <a  href="{{page.hash}}"></a>
                         </paper-item>
                     </template>
                 </core-menu>
@@ -87,13 +87,14 @@
     <script>
         (function () {
             function loadMenu() {
-                this.pages = [
-                    {name: 'Wall', logo: 'info', hash: '/#/wall/?id='},
-                    {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='},
-                    {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='},
-                    {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='},
-                    {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='}
-                ];
+              var _id=this.iduser;
+              this.pages = [
+                  {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
+                  {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
+                  {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='},
+                  {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='},
+                  {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='}
+              ];
             }
 
             function addKeysToNumbers() {
