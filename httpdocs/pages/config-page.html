@@ -3,12 +3,12 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="config-page">
+<polymer-element name="config-page" attributes="id">
 
   <template>
     <style>
     </style>
-    <main-menu iMenu="Config">
+    <main-menu iMenu="Config" iduser="{{id}}">
         <div class="title">Settings</div>
         <div id="list"> 
         </div>

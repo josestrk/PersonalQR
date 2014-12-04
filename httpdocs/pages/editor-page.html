@@ -33,13 +33,21 @@
   }
   #input {
     padding: 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     margin: 60px auto 0px;
-    width: 80%;
+    width: 60%;
   }
   #input2 {
     padding: 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius:10px;
     margin: 30px auto 30px;
-    width: 80%;
+    width: 60%;
   }
   #core_icon_button {
     left: 1430px;
@@ -59,7 +67,7 @@
                 <core-editor-img id="editor" vertical layout  center-justified></core-editor-img>
                 <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea>
                 <!--<core-text-editor></core-text-editor>-->
-                <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%;"></paper-fab>
+                <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
           </core-card>
         </div>
     </main-menu>

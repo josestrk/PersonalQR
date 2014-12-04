@@ -25,16 +25,14 @@
       top: 580px;
     }
     #core_card1 {
-      margin: 8%;
-      width: 300px;
-      height: 300px;
+      margin: 8% auto;
     }
 
     core-animated-pages {
-      margin: 20px;
-      width: 350px;
-      height: 500px;
-      background-size: 100% 100%;
+        margin: 20px auto;
+        width: 60%;
+        height: 192px;
+        background-size: 100% 100%;
     }
 
     @media all and (max-width: 420px) {
@@ -94,7 +92,7 @@
 
 
       this.route = this.route || DEFAULT_ROUTE; // Select initial route.
-      this.selectval=this.selectval ||  '2';
+      this.selectval=this.route ||  '2';
     }
 
     Polymer({

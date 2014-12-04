@@ -3,7 +3,7 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="contacts-page">
+<polymer-element name="contacts-page" attributes="id">
 
   <template>    
     <style>
@@ -18,7 +18,7 @@
         margin-top:20px;
       }  
     </style>
-    <main-menu iMenu="Contacts">
+    <main-menu iMenu="Contacts" iduser="{{id}}">
         <div class="title">Contacts</div>
         <div id="list">  
         <template repeat="{{item in lista}}"></template>
