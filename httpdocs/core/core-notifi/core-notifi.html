@@ -30,54 +30,10 @@
     drop-down.constrained::shadow core-dropdown {
       max-height: 500px;
     }
-
-    .dropdown {
-      padding: 12px;
-    }
-
-    .toolbar {
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .toolbar-1 {
-      background-color: #3b78e7;
-    }
-
-    .toolbar-2 {
-      background-color: #4285f4;
-    }
-
-    .toolbar-3 {
-      background-color: #5e97f6;
-    }
-
-    .bottom-toolbar-1 {
-      background-color: #0d904f;
-    }
-
-    .bottom-toolbar-2 {
-      background-color: #0f9d58;
-    }
-
-    .bottom-toolbar-3 {
-      background-color: #33ac71;
-    }
-
-    .toolbar > * {
-      padding: 12px;
-    }
-
-    .toolbar-label {
-      width: 100px;
-    }
-
-    .middle {
-      overflow: auto;
-    }
-
-    .middle > * {
-      padding: 12px;
+    html /deep/ .size-position {
+      position: fixed;
+      top: 16px;
+      right: 16px;
     }
 
     html /deep/ .size-position::shadow #scroller {
@@ -89,8 +45,8 @@
 
     <div flex class="middle">
       <div>
-          <core-icon-button class="core-dropdown-trigger" icon="social:notifications" on-click="{{deploy}}" ></core-icon-button>
-          <paper-dialog id="dialog" heading="Custom Size &amp; Position" hidden?="{{showAlert}}" style="position: fixed; outline: none; font-size: 13px; height: 250px; width: 250px; overflow-x: auto; z-index: 2;">
+          <core-icon-button icon="social:notifications" on-click="{{toggleDialog}}" ></core-icon-button>
+          <paper-dialog id="dia" heading="Custom Size &amp; Position" class="size-position" style="position: fixed; outline: none; font-size: 13px; height: 250px; width: 250px; overflow-x: auto; z-index: 2; top: 55px; left: 50px;">
             <p>asdf Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </paper-dialog>
       </div>
@@ -99,12 +55,8 @@
 
   <script>
       Polymer({
-        showAlert: true,
-        deploy:function(){
-          this.showAlert = !this.showAlert;
-          if(!this.showAlert){//es decir que se tiene que mostrar
-            this.$.dialog.style.display = "";
-          }
+       toggleDialog: function() {
+         this.$.dia.toggle();
        }
       });
   </script>

@@ -7,6 +7,8 @@
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <!--<link rel="import" href="../core/core-editor/core-editor-text.html">-->
 <link rel="import" href="../core/core-editor/core-editor-img.html">
+<link rel="import" href="../core/core-ajax-handler.html">
+
 
 <polymer-element name="editor-page" attributes="id">
 
@@ -48,15 +50,16 @@
     top: 440px;
   }
   </style>
+  <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu iMenu="Edition Mode"  iduser="{{id}}">
         <div class="title">Editor</div>
         <div>
           <core-card id="core_card" layout vertical>
                 <input id="input" placeholder="Title articcle" is="core-input">
-                <core-editor-img></core-editor-img>
+                <core-editor-img id="editor" vertical layout  center-justified></core-editor-img>
                 <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea>
                 <!--<core-text-editor></core-text-editor>-->
-                <paper-fab icon="create" class="blue" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
+                <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%;"></paper-fab>
           </core-card>
         </div>
     </main-menu>
@@ -65,6 +68,16 @@
 
   <script>
     Polymer({
+      sendArticle: function(){
+        var datos={
+          iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
+          title: this.$.input.value,
+          content:this.$.input2.value,
+          bgimg: 0
+        }
+        var ajaxhandler = this.$.ajaxhandler;
+        ajaxhandler.sendArticle(JSON.stringify(datos));
+      }
     });
   </script>
 

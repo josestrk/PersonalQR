@@ -55,11 +55,25 @@
             data: datos
           },function(result) {
             document.getElementById('user').data(result);
-            window.location.hash="/wall/?id="+result[0]._id;
+            window.location.hash="/profile/?id="+result[0]._id;
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        sendArticle : function(datos){
+          doAjax({
+            type: 'POST',
+            url: 'article',
+            data: datos
+          },function(result) {
+            window.location.hash="/profile/?id="+result[0].iduser;
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = "Could not connect to server";
             errorToast.show();
           });
         },
