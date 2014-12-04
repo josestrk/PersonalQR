@@ -8,8 +8,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <!--
-`core-scaffold` provides general application layout, introducing a 
-responsive scaffold containing a header, toolbar, menu, title and 
+`core-scaffold` provides general application layout, introducing a
+responsive scaffold containing a header, toolbar, menu, title and
 areas for application content.
 Example:
     <core-scaffold>
@@ -33,9 +33,9 @@ button to the far right:
     <core-scaffold rightDrawer>
       <div tool flex >Title</div>
     </core-scaffold>
-    
+
 You may also add `middle` or `bottom` classes to your `tool` content when using tall
-modes to adjust vertical content positioning in the core-toolbar (e.g. when using 
+modes to adjust vertical content positioning in the core-toolbar (e.g. when using
 mode="waterfall-tall"):
     <core-scaffold rightDrawer mode="waterfall-tall">
       <div tool flex >Title</div>
@@ -66,34 +66,34 @@ To have the content fit to the main area, use `fit` attribute.
 <template>
 
   <style>
-    
+
     :host {
       display: block;
     }
-    
+
     [drawer] {
       background-color: #666;
       box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);
     }
-    
+
     [main] {
       height: 100%;
       background-color: #eee;
     }
-    
+
     core-toolbar {
       background-color: #526E9C;
       color: #fff;
     }
-    
+
     #drawerPanel:not([narrow]) #menuButton {
       display: none;
     }
-    
+
   </style>
 
-  <my-core-drawer-panel id="drawerPanel" 
-                     narrow="{{narrow}}" drawerWidth="{{drawerWidth}}" rightDrawer="{{rightDrawer}}" 
+  <my-core-drawer-panel id="drawerPanel"
+                     narrow="{{narrow}}" drawerWidth="{{drawerWidth}}" rightDrawer="{{rightDrawer}}"
                      responsiveWidth="{{responsiveWidth}}" disableSwipe="{{disableSwipe}}">
 
     <div vertical layout drawer>
@@ -101,7 +101,7 @@ To have the content fit to the main area, use `fit` attribute.
       <content select="[navigation], nav"></content>
 
     </div>
-    
+
     <core-header-panel id="headerPanel" main mode="{{mode}}">
 
       <core-toolbar>
@@ -113,17 +113,17 @@ To have the content fit to the main area, use `fit` attribute.
           <core-icon-button id="menuButton" icon="more-vert" on-tap="{{togglePanel2}}"></core-icon-button>
         </template>
       </core-toolbar>
-      
+
       <content select="*"></content>
-      
-    </core-header-panel>  
+
+    </core-header-panel>
 
   </my-core-drawer-panel>
 
 </template>
 <script>
   Polymer('my-core-scaffold', {
-    
+
     /**
      * Fired when the main content has been scrolled.  `event.detail.target` returns
      * the scrollable element which you can use to access scroll info such as
@@ -141,32 +141,32 @@ To have the content fit to the main area, use `fit` attribute.
      *
      * @event scroll
      */
-    
+
     publish: {
-      
-      drawerWidth: '270px', 
-    
+
+      drawerWidth: '270px',
+
       responsiveWidth: '1024px',
-      
+
       rightDrawer: true,
 
       disableSwipe: false,
-       
+
       mode: {value: 'waterfall-tall', reflect: true},
     },
-    
+
     ready: function() {
       this._scrollHandler = this.scroll.bind(this);
       this.$.headerPanel.addEventListener('scroll', this._scrollHandler);
     },
-    
+
     detached: function() {
       this.$.headerPanel.removeEventListener('scroll', this._scrollHandler);
     },
     /**
       * Toggle the drawer panel
       * @method togglePanel
-      */    
+      */
     togglePanel: function() {
       this.$.drawerPanel.togglePanel();
     },
@@ -176,22 +176,22 @@ To have the content fit to the main area, use `fit` attribute.
     /**
       * Open the drawer panel
       * @method openDrawer
-      */      
+      */
     openDrawer: function() {
       this.$.drawerPanel.openDrawer();
     },
     /**
       * Close the drawer panel
       * @method closeDrawer
-      */     
+      */
     closeDrawer: function() {
       this.$.drawerPanel.closeDrawer();
     },
-    
+
     scroll: function(e) {
       this.fire('scroll', {target: e.detail.target}, this, false);
     }
-    
+
   });
 </script>
 </polymer-element>

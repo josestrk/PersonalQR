@@ -4,101 +4,101 @@
 <link href="../../../bower_components/core-icon-button/core-icon-button.html" rel="import">
 <link href="../../../bower_components/paper-dialog/paper-dialog.html" rel="import">
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog-transition.html">
+<link rel="import" href="../../../lib/src/qr-code.html">
+
 <polymer-element name="core-qr">
 <template>
   <style>
 
-  core-dropdown {
-    background-color: #eee;
-    color: #000;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    core-dropdown {
+      background-color: #eee;
+      color: #000;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    drop-down.margin::shadow core-dropdown {
+      margin: 12px;
+    }
+
+    drop-down.open-below::shadow core-dropdown {
+      position: absolute;
+      top: 100px;
+      left: 10000px;
+    }
+
+    drop-down.constrained::shadow core-dropdown {
+      max-height: 500px;
+    }
+
+    .dropdown {
+      padding: 12px;
+    }
+
+    .toolbar {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .toolbar-1 {
+      background-color: #3b78e7;
+    }
+
+    .toolbar-2 {
+      background-color: #4285f4;
+    }
+
+    .toolbar-3 {
+      background-color: #5e97f6;
+    }
+
+    .bottom-toolbar-1 {
+      background-color: #0d904f;
+    }
+
+    .bottom-toolbar-2 {
+      background-color: #0f9d58;
+    }
+
+    .bottom-toolbar-3 {
+      background-color: #33ac71;
+    }
+
+    .toolbar > * {
+      padding: 12px;
+    }
+
+    .toolbar-label {
+      width: 100px;
+    }
+
+    .middle {
+      overflow: auto;
+    }
+
+    .middle > * {
+      padding: 12px;
+    }
+
+    html /deep/ .size-position::shadow #scroller {
+      width: 300px;
+      height: 300px;
+    }
+    html /deep/ paper-dialog {
+      color: green;
   }
 
-  drop-down.margin::shadow core-dropdown {
-    margin: 12px;
-  }
-
-  drop-down.open-below::shadow core-dropdown {
-    position: absolute;
-    top: 100px;
-    left: 10000px;
-  }
-
-  drop-down.constrained::shadow core-dropdown {
-    max-height: 500px;
-  }
-
-  .dropdown {
-    padding: 12px;
-  }
-
-  .toolbar {
-    color: #fff;
-    font-size: 16px;
-  }
-
-  .toolbar-1 {
-    background-color: #3b78e7;
-  }
-
-  .toolbar-2 {
-    background-color: #4285f4;
-  }
-
-  .toolbar-3 {
-    background-color: #5e97f6;
-  }
-
-  .bottom-toolbar-1 {
-    background-color: #0d904f;
-  }
-
-  .bottom-toolbar-2 {
-    background-color: #0f9d58;
-  }
-
-  .bottom-toolbar-3 {
-    background-color: #33ac71;
-  }
-
-  .toolbar > * {
-    padding: 12px;
-  }
-
-  .toolbar-label {
-    width: 100px;
-  }
-
-  .middle {
-    overflow: auto;
-  }
-
-  .middle > * {
-    padding: 12px;
-  }
-
-  html /deep/ .size-position::shadow #scroller {
-    width: 300px;
-    height: 300px;
-  }
 
   </style>
 
   <div flex class="middle">
-    <button>
         <core-icon-button class="core-dropdown-trigger" icon="image:blur-on" on-click="{{deploy}}" ></core-icon-button>
-        <paper-action-dialog backdrop>
-
-          <paper-button affirmative autofocus>Tap me to close</paper-button>
-        </paper-action-dialog>
-        <paper-dialog id="dialog" heading="Custom Size &amp; Position" hidden?="{{showAlert}}" style="position: fixed; outline: none; font-size: 13px; height: 250px; width: 250px; overflow-x: auto; z-index: 2;">
-          <p>asdf Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <paper-dialog id="dialog" hidden?="{{showAlert}}" style="position: fixed; outline: none; font-size: 13px; height: 250px; width: 250px; border-radius: 5px; z-index: 2;">
+          <qr-code data="172.16.100.123:9005/#/profile/?id=546b15d4cc0c66300bf5c72e"></qr-code>
         </paper-dialog>
-    </button>
   </div>
 </template>
-
+<script src="../../../lib/src/qr.js"></script>
 <script>
     Polymer({
       showAlert: true,

@@ -16,7 +16,7 @@
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="My profile" iduser="{{id}}">
-        <div class="title">My profile {{id}}</div>
+        <div class="title">My profile</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
         </div>
@@ -50,7 +50,7 @@
             ready: function(){
               var that=this;
               var ajaxhandler = this.$.ajaxhandler;
-              ajaxhandler.getArticles(this.id,function (result){
+              ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
                 if(result){
                   that.lista=result.reverse();
                   var listPost = that.$.list;
