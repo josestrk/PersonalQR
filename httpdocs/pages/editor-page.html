@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<!--<link rel="import" href="../core/core-text-editor.html">-->
 
 <polymer-element name="editor-page" attributes="id">
 
@@ -18,7 +19,6 @@
   }
   #core_card {
     width: 100%;
-    height: 100%;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
@@ -34,8 +34,8 @@
     width: 80%;
   }
   #input2 {
-    padding: 25px;
-    margin: 30px auto 0px;
+    padding: 30px;
+    margin: 30px auto 30px;
     width: 80%;
   }
   #core_icon_button {
@@ -47,15 +47,13 @@
     top: 440px;
   }
   </style>
-
-  <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="../../lib/editor-text/jquery-te-1.4.0.min.js" charset="utf-8"></script>
     <main-menu iMenu="Edition Mode"  iduser="{{id}}">
         <div class="title">Editor</div>
         <div>
           <core-card id="core_card" layout vertical>
                 <input id="input" placeholder="Title articcle" is="core-input">
-                <textarea id="input2" rows="fit" placeholder="" maxlength="" aria-label="You said..." aria-invalid="false"></textarea>
+                <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea>
+
                 <!--<core-text-editor></core-text-editor>-->
           </core-card>
         </div>
