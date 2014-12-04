@@ -95,21 +95,15 @@
         <core-icon-button class="core-dropdown-trigger" icon="image:blur-on" on-click="{{toggleDialog}}"></core-icon-button>
 
         <paper-dialog id="dia" backdrop transition="paper-dialog-transition-bottom">
-          <qr-code data="172.16.100.123:9005/#/profile/?id=546b15d4cc0c66300bf5c72e"></qr-code>
+          <qr-code id="qrq"></qr-code>
         </paper-dialog>
   </div>
 </template>
 <script src="../../../lib/src/qr.js"></script>
 <script>
     Polymer({
-      showAlert: true,
-      deploy:function(){
-        this.showAlert = !this.showAlert;
-        if(!this.showAlert){//es decir que se tiene que mostrar
-          this.$.dialog.style.display = "";
-        }
-     },
      toggleDialog: function() {
+       this.$.qrq.data="192.168.1.52:9005/#/profile/?id="+document.URL.split('/').reverse()[0].split('=').reverse()[0];
        this.$.dia.toggle();
      }
     });

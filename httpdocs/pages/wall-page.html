@@ -8,15 +8,10 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
+
 <polymer-element name="wall-page" attributes="id">
   <template>
-    <style>
-      #list {
-        width:70%;
-        height:400px;
-        margin: 20px auto;
-      }
-    </style>
+    <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="Wall" iduser="{{id}}">
         <div class="title">Wall</div>
@@ -34,9 +29,9 @@
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
           section.setAttribute('title', item.title);
-          section.setAttribute('time', item.time);
+          section.setAttribute('content', item.content);
+          section.setAttribute('date', item.date);
           section.setAttribute('bgimg', item.bgimg);
-          section.setAttribute('info', item.info);
 
 
         var div = document.createElement('core-card');

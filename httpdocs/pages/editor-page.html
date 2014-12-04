@@ -81,7 +81,7 @@
           iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
           title: this.$.input.value,
           content:this.$.input2.value,
-          bgimg: 0
+          bgimg: this.$.editor.$.imgselect.selected
         }
         var ajaxhandler = this.$.ajaxhandler;
         ajaxhandler.sendArticle(JSON.stringify(datos));

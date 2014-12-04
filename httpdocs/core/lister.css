@@ -1,5 +1,10 @@
 #list {
-  width:80%;
+  width: 80%;
   height:400px;
   margin: 20px auto;
+}
+@media(max-width:721px){
+  #list {
+    width: 95%;
+  }
 }
