@@ -17,7 +17,6 @@
     box-sizing: border-box;
   }
   #core_card {
-    position: absolute;
     width: 100%;
     height: 100%;
     border-top-left-radius: 2px;
@@ -29,30 +28,15 @@
     top: 0px;
     background-color: rgb(255, 255, 255);
   }
-  #core_card1 {
-    width: 100%;
-    height: 30%;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-    background-color: rgb(255, 255, 255);
-  }
   #input {
-    padding: 40px;
-    margin: auto;
+    padding: 30px;
+    margin: 60px auto 0px;
     width: 80%;
   }
-  #core_card2 {
-    width: 100%;
-    height: 60%;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-    background-color: rgb(255, 255, 255);
+  #input2 {
+    padding: 25px;
+    margin: 30px auto 0px;
+    width: 80%;
   }
   #core_icon_button {
     left: 1430px;
@@ -62,23 +46,52 @@
     left: 1520px;
     top: 440px;
   }
+  button {
+    display:block;
+    margin:20px auto;
+    padding:6px 0 4px;
+    width:154px;
+    background:#658700;
+    border:#526E00 1px solid;
+    color:#F3FFCF !important;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;
+    box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00; -webkit-box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00; -moz-box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00;
+    cursor:pointer;
+  }
+  button:hover {
+    background:#78A000;
+    border-color:#658700;
+    text-decoration:none !important;
+    cursor:pointer
+  }
+
+  button:active {
+    background:#3F5500;
+    border-color:#2C3C00;
+    color:#9CCD00 !important;
+    box-shadow:0 0 3px #000,inset 0 -2px 2px #333;
+    -webkit-box-shadow:0 0 3px #000, inset 0 -2px 2px #333;
+    -moz-box-shadow:0 0 3px #000, inset 0 -2px 2px #333;
+  }
   </style>
   <link type="text/css" rel="stylesheet" href="../../lib/jquery-te-1.4.0.css">
   <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../../lib/jquery-te-1.4.0.min.js" charset="utf-8"></script>
     <main-menu iMenu="Edition Mode"  iduser="{{id}}">
-        <div class="title">Editor {{id}}</div>
+        <div class="title">Editor</div>
         <div>
           <core-card>
 
             <core-card id="core_card" layout vertical>
-              <core-card id="core_card1" layout vertical start center-justified wrap>
-                <input id="input" placeholder="type something..." is="core-input">
-              </core-card>
-              <core-card id="core_card2" layout vertical>
-                <button class="status">Toggle jQTE</button>
-                <span name="span" class="jqte-test"><b>My contents are from <u><span style="color:rgb(0, 148, 133);">SPAN</span></u></b></span>
-              </core-card>
+
+                <input id="input" placeholder="Title articcle" is="core-input">
+
+
+                <textarea name="textarea" class="jqte-test" id="input2"><b>Your articcle <u><span style="color:rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
+                <button class="status">Send</button>
               <div id="div" layout horizontal>
                 <paper-fab icon="check" active focused id="paper_fab"></paper-fab>
               </div>
