@@ -9,6 +9,14 @@
 
     <template>
         <style>
+        #content{
+            text-align: center;
+            margin: auto;
+            font-family: "League-Gothic", Courier;
+            font-size: 20px;
+            text-transform: uppercase;
+            color: #808080;
+        }
       #card {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
@@ -84,7 +92,7 @@
                     <template repeat="{{page in pages}}" >
 
                         <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
-                            <core-card id="core_card2" layout vertical center-justified center><a href="/#/wall/?id=1231451515">{{page.content}}</a></core-card>
+                            <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
                         </section>
 
                     </template>
@@ -107,7 +115,7 @@
         this.pages = [
             {content: ' Comparte con todos lo que estas haciendo',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '1'},
             {content: ' Todos tus deportes, eventos en vivo,... ',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '2'},
-            {content: ' La forma mas sencilla de compartir tus datos y a la vez la más segura. Simple muestra tu codeQR y conecta con la comunidad ',image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '3'}
+            {content: "La forma mas sencilla de compartir tus datos. La vez la más segura. Simple muestra tu codeQR y conecta con la comunidad ",image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '3'}
         ];
 
         var animatedPages = this.$.pages;
