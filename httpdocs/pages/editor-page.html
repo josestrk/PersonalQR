@@ -46,55 +46,17 @@
     left: 1520px;
     top: 440px;
   }
-  button {
-    display:block;
-    margin:20px auto;
-    padding:6px 0 4px;
-    width:154px;
-    background:#658700;
-    border:#526E00 1px solid;
-    color:#F3FFCF !important;
-    text-align:center;
-    font-size:13px;
-    font-weight:bold;
-    border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;
-    box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00; -webkit-box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00; -moz-box-shadow:0 0 2px #000, inset 0 1px 1px #99CC00;
-    cursor:pointer;
-  }
-  button:hover {
-    background:#78A000;
-    border-color:#658700;
-    text-decoration:none !important;
-    cursor:pointer
-  }
-
-  button:active {
-    background:#3F5500;
-    border-color:#2C3C00;
-    color:#9CCD00 !important;
-    box-shadow:0 0 3px #000,inset 0 -2px 2px #333;
-    -webkit-box-shadow:0 0 3px #000, inset 0 -2px 2px #333;
-    -moz-box-shadow:0 0 3px #000, inset 0 -2px 2px #333;
-  }
   </style>
-  <link type="text/css" rel="stylesheet" href="../../lib/jquery-te-1.4.0.css">
+
   <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="../../lib/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../../lib/editor-text/jquery-te-1.4.0.min.js" charset="utf-8"></script>
     <main-menu iMenu="Edition Mode"  iduser="{{id}}">
         <div class="title">Editor</div>
         <div>
-          <core-card>
-
-            <core-card id="core_card" layout vertical>
-
+          <core-card id="core_card" layout vertical>
                 <input id="input" placeholder="Title articcle" is="core-input">
-
-
-                <textarea name="textarea" class="jqte-test" id="input2"><b>Your articcle <u><span style="color:rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
-                <button class="status">Send</button>
-              <div id="div" layout horizontal>
-                <paper-fab icon="check" active focused id="paper_fab"></paper-fab>
-              </div>
+                <textarea id="input2" rows="fit" placeholder="" maxlength="" aria-label="You said..." aria-invalid="false"></textarea>
+                <!--<core-text-editor></core-text-editor>-->
           </core-card>
         </div>
     </main-menu>
@@ -102,22 +64,8 @@
   </template>
 
   <script>
-    function editorLoad(){
-      $('.jqte-test').jqte();
-
-      // settings of status
-      var jqteStatus = true;
-      $(".status").click(function(){
-        jqteStatus = jqteStatus ? false : true;
-        $('.jqte-test').jqte({"status" : jqteStatus})
-      });
-    }
     Polymer({
-      ready:function(){
-        editorLoad().bind(this);
-      }
     });
-
   </script>
 
 </polymer-element>
