@@ -135,7 +135,7 @@
           top: 10px;
         }
       }
-      
+
       @media(max-height:450px){
         #core_card1 {
           background-size: 100% 450px;
@@ -278,10 +278,10 @@
       debugger;
       var datos={
         username: this.$.username_field.value,
-        name:this.$.name.$.field.value,
+        name:this.$.name.$.field.input.value,
         mail: this.$.email_field.value,
-        bdate:this.$.bdate.$.field.value,
-        password:this.$.password.$.field.value,
+        bdate:this.$.bdate.$.field.input.value,
+        password:this.$.password.$.field.input.value,
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
