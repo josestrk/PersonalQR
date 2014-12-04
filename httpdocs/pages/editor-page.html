@@ -5,7 +5,8 @@
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<!--<link rel="import" href="../core/core-text-editor.html">-->
+<!--<link rel="import" href="../core/core-editor/core-editor-text.html">-->
+<link rel="import" href="../core/core-editor/core-editor-img.html">
 
 <polymer-element name="editor-page" attributes="id">
 
@@ -52,9 +53,10 @@
         <div>
           <core-card id="core_card" layout vertical>
                 <input id="input" placeholder="Title articcle" is="core-input">
+                <core-editor-img></core-editor-img>
                 <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea>
-
                 <!--<core-text-editor></core-text-editor>-->
+                <paper-fab icon="create" class="blue" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
           </core-card>
         </div>
     </main-menu>
