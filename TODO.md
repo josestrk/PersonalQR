@@ -63,3 +63,12 @@ a: josestrk
 f: /lib/vide
 desarrollando
 ###############
+---------------
+a: david
+f: /httpdocs/core/search-banner
+Se trata de poder hacer búsquedas con autocompletado. the-basics.* es un ejemplo
+---------------
+a: david
+f: /lib/darktooltip
+Importar esta librería para poner mensajes (en este caso, mensajes de error en form-field
+en caso de que el dato introducido no sea válido).
