@@ -8,6 +8,8 @@
 
   <script src="bower_components/platform/platform.js"></script>
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/editor-text/jquery-te-1.4.0.min.js" charset="utf-8"></script>
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
 
@@ -28,17 +30,10 @@
 </head>
 
 <body unresolved fullbleed>
+
     <core-user id="user"></core-user>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
     <app-router core-animated-pages transitions="slide-from-right">
-        <!--
-        <app-route path="/" import="httpdocs/core/core-index.html"></app-route>
-        <app-route path="/wall" import="httpdocs/pages/wall-page.html"></app-route>
-        <app-route path="/profile" import="httpdocs/pages/myp-page.html"></app-route>
-        <app-route path="/editor" import="httpdocs/pages/editor-page.html"></app-route>
-        <app-route path="/settings" import="httpdocs/pages/config-page.html"></app-route>
-        <app-route path="/contacts" import="httpdocs/pages/contacts-page.html"></app-route>
-        -->
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall/" element="wall-page"></app-route>
         <app-route path="/profile/" element="myp-page"></app-route>
