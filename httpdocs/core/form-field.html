@@ -4,7 +4,7 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../lib/paper-input-decorator/paper-input-decorator.html">
+<!-- <link rel="import" href="../../lib/paper-input-decorator/paper-input-decorator.html"> -->
 
 <polymer-element name="form-field" attributes="label,type,bound,regexp,icon,errorMsg">
   <template>
@@ -72,15 +72,15 @@
 
   <!--
   Importing Darktooltip http://rubentd.com/darktooltip/
-  
+
   <link rel="stylesheet" href="../../lib/darktooltip/css/darktooltip.css">
   <script src="../../bower_components/jquery/dist/jquery.js"></script>
   <script src="../../lib/darktooltip/js/jquery.darktooltip.js"></script>
   -->
-  
+
   <!--
   Importing Darktooltip http://rubentd.com/darktooltip/
-  
+
   <script>
   $(document).ready(function(){
 
@@ -97,7 +97,7 @@
   });
   </script>
   -->
-  
+
 	<script>
 	(function() {
 		var values = {};
@@ -109,10 +109,10 @@
 				  var attr = this.attributes[i];
 				  values[attr.nodeName] = attr.value;
 				}
-        
+
         /*
         Importing Darktooltip http://rubentd.com/darktooltip/
-        
+
         $(this.$.field).darkTooltip({
           animation:'flipIn',
           gravity:'west',
@@ -129,7 +129,7 @@
         //console.log(this.$.input.value);
         //console.log(this.$.input.pattern);
         //console.log(this.$.field.error);
-        
+
         if (this.$.input.pattern) {
           if (!this.$.input.validity.valid) {
             this.$.icon.className = 'red';
