@@ -19,13 +19,13 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!--
 un objeto atriccle tiene:
-1. title
+1. htitle
 2. [bgimg]
 3. info
 4. topic
 -->
 
-<polymer-element name="core-artc" attributes="title,date,bgimg,content">
+<polymer-element name="core-artc" attributes="htitle,date,bgimg,content">
 
   <template>
 
@@ -78,7 +78,7 @@ un objeto atriccle tiene:
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
           <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
             <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-            <div id="div1">{{title}}</div>
+            <div id="div1">{{htitle}}</div>
             <div id="time">{{date}}</div>
           </core-toolbar>
           <section id="section">

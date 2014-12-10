@@ -3,9 +3,9 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="contacts-page" attributes="id">
+<polymer-element name="contacts-page" attributes="userid">
 
-  <template>    
+  <template>
     <style>
       #list {
         width:70%;
@@ -16,11 +16,11 @@
         margin: auto;
         background-color: rgb(255, 255, 255);
         margin-top:20px;
-      }  
+      }
     </style>
-    <main-menu iMenu="Contacts" iduser="{{id}}">
+    <main-menu iMenu="Contacts" iduser="{{userid}}">
         <div class="title">Contacts</div>
-        <div id="list">  
+        <div id="list">
         <template repeat="{{item in lista}}"></template>
         </div>
         <core-card><core-icon icon="load"></core-icon></core-card>
@@ -31,24 +31,24 @@
     (function () {
         function createPage(item) {
           var section = document.createElement('core-artc');
-          section.setAttribute('layout', ''); 
+          section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
           section.setAttribute('title', item.title);
           section.setAttribute('time', item.time);
           section.setAttribute('bgimg', item.bgimg);
           section.setAttribute('info', item.info);
-         
+
 
         var div = document.createElement('core-card');
-        div.setAttribute('id','list');
-        div.setAttribute('layout', ''); 
+        div.setAttribute('userid','list');
+        div.setAttribute('layout', '');
         div.setAttribute('vertical', '');
 
         div.appendChild(section);
-        
+
         return div;
         }
-        
+
         Polymer({
             domReady: function () {
                 this.lista = [

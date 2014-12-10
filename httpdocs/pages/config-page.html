@@ -3,14 +3,14 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<polymer-element name="config-page" attributes="id">
+<polymer-element name="config-page" attributes="userid">
 
   <template>
     <style>
     </style>
-    <main-menu iMenu="Config" iduser="{{id}}">
+    <main-menu iMenu="Config" iduser="{{userid}}">
         <div class="title">Settings</div>
-        <div id="list"> 
+        <div id="list">
         </div>
         <core-card><core-icon icon="load"></core-icon></core-card>
     </main-menu>
@@ -19,7 +19,7 @@
   <script>
 
     Polymer({
-      
+
     });
 
   </script>

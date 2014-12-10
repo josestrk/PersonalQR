@@ -4,11 +4,11 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
-<polymer-element name="myp-page" attributes="id">
+<polymer-element name="myp-page" attributes="userid">
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="My profile" iduser="{{id}}">
+    <main-menu imenu="My profile" iduser="{{userid}}">
         <div class="title">My profile</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
@@ -30,7 +30,7 @@
 
 
         var div = document.createElement('core-card');
-        div.setAttribute('id','list');
+        div.setAttribute('userid','list');
         div.setAttribute('layout', '');
         div.setAttribute('vertical', '');
 

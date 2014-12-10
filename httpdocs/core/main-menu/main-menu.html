@@ -62,10 +62,9 @@
                 </core-card>
                 <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"
-                                    label="{{page.name}}" active="{{ imenu === page.name}}">
-
-                            <a  href="{{page.hash}}"></a>
+                        <paper-item active="{{ imenu === page.name}}">
+                          <core-icon icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"></core-icon>
+                          <a  href="{{page.hash}}">{{page.name}}</a>
                         </paper-item>
                     </template>
                 </core-menu>
@@ -91,13 +90,12 @@
               this.pages = [
                   {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
                   {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
-                  {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id}
+                  {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
+                  {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+_id},
+                  {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+_id}
               ];
             }
-            
-            //{name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+_id},
-            //{name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+_id}
-            
+
             function addKeysToNumbers() {
                 var keys = this.$.keys;
                 var keysToAdd = Array.apply(null, this.pages).map(function (x, i) {

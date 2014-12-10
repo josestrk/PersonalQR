@@ -10,7 +10,7 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 
 
-<polymer-element name="editor-page" attributes="id">
+<polymer-element name="editor-page" attributes="userid">
 
   <template>
   <style>
@@ -59,7 +59,7 @@
   }
   </style>
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu iMenu="Edition Mode"  iduser="{{id}}">
+    <main-menu iMenu="Edition Mode"  iduser="{{userid}}">
         <div class="title">Editor</div>
         <div>
           <core-card id="core_card" layout vertical>

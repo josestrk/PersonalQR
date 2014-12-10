@@ -9,11 +9,11 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 
 
-<polymer-element name="wall-page" attributes="id">
+<polymer-element name="wall-page" attributes="userid">
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" iduser="{{id}}">
+    <main-menu imenu="Wall" iduser="{{userid}}">
         <div class="title">Wall</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
@@ -35,7 +35,7 @@
 
 
         var div = document.createElement('core-card');
-        div.setAttribute('id','list');
+        div.setAttribute('userid','list');
         div.setAttribute('layout', '');
         div.setAttribute('vertical', '');
 
