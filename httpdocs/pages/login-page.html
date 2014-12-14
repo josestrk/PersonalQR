@@ -56,9 +56,15 @@
         width: 80%;
         height: 30px;
       }
+      #email_field::shadow #decorator{
+        padding: 0px;
+      }
       #password_field {
         width: 80%;
-        height: 30px;
+        height: 35px;
+      }
+      #password_field::shadow #decorator{
+        padding: 0px;
       }
       #email_icon {
         width: 25px;
@@ -133,7 +139,9 @@
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="password_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Choose a Password" validationmessage="Completa este campo" type="password" id="password_field" layout vertical></paper-input>
+          <paper-input-decorator id="password_field" label="Choose a Password">
+            <input id="password_field" is="core-input" name="j_password" type="password" value="{{j_password}}"/>
+          </paper-input-decorator>
           <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{loged}}" ></paper-fab>
         </core-card>
 
