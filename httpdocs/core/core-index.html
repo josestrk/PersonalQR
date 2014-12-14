@@ -8,10 +8,10 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 
 
-<polymer-element name="core-index" attributes="t">
+<polymer-element name="core-index" >
 
-    <template>
-       <style>
+  <template>
+    <style>
       :host {
         left: 0px;
         top: 0px;
@@ -39,19 +39,22 @@
         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
         background-color: rgb(137, 191, 79);
       }
+      #paper_tabs::shadow #tabsContainer{
+        width: 100%;
+      }
       template {display: none !important;}
-        </style>
-        <core-animated-pages id="core_card" valueattr="hash" selected="{{t}}" layout vertical end-justified center transitions="slide-from-right">
+    </style>
+        <core-animated-pages id="core_card" layout vertical end-justified center transitions="slide-from-right">
 
-           <section hash="" layout vertical center-center>
+           <section layout vertical center-center>
                <core-card vertical layout  center-justified>
                     <slider-page></slider-page>
                </core-card>
            </section>
-            <section hash="signin" layout vertical center-center>
+            <section layout vertical center-center>
                 <signin-page></signin-page>
             </section>
-            <section hash="login" layout vertical center-center>
+            <section layout vertical center-center>
               <core-card vertical layout  center-justified>
                 <login-page></login-page>
               </core-card>
@@ -59,14 +62,14 @@
 
         </core-animated-pages>
 
-        <paper-tabs selected="{{t}}" selectedindex="0" id="paper_tabs" end-justified vertical layout wrap end>
+        <paper-tabs selectedindex="0" id="paper_tabs" vertical layout wrap end>
         <template repeat="{{page in pages}}">
-            <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}">
+            <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}">
               {{page.name}}
             </paper-tab>
         </template>
         </paper-tabs>
-    </template>
+  </template>
 
     <script>
         Polymer({
@@ -75,6 +78,10 @@
                     {name:'GET STARTED',id:'paper_tab', hash:'/#/?t=signin', select:'signin'},
                     {name:'LOG IN',id:'paper_tab1', hash:'/#/?t=login', select:'login'}
                 ];
+            },
+            clickedpaper: function(event, detail, sender){
+              sender.id=="paper_tab" ? this.$.core_card.selected=1 : console.log() ;
+              sender.id=="paper_tab1" ? this.$.core_card.selected=2 : console.log();
             }
         });
     </script>
