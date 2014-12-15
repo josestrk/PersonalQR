@@ -104,6 +104,22 @@
             errorToast.show();
             calback(false);
           });
+        },
+        verifyUsername : function(datos, that, callback){
+          var data={
+            username: datos
+          };
+          doAjax({
+            type: 'GET',
+            url: 'verifyUsername',
+            data: data
+          },function(result) {
+            callback(result, that);
+          }.bind(this),
+            function(xhr, err, desc){
+              callback(false, that);
+            }
+          );
         }
       });
     }());

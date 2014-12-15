@@ -8,6 +8,7 @@ router.post('/user', createUser);
 router.get('/user/:userId', getUser);
 router.get('/user', getUsersAll);
 router.get('/validateuser', validateUser);
+router.get('/verifyUsername', verifyUsername);
 router.put('/user/:userId', setUser);
 router.delete('/user/:userId', delUser);
 
@@ -82,6 +83,24 @@ function validateUser(req, res, next){
     });
   }else{
     next(new Error('There was no data provided:'));
+  }
+}
+
+function verifyUsername(req, res){
+  if(req.query.username!==undefined){
+    userManager.verifyUsername(req.query.username, function(err, result){
+      if(result[0] !== undefined){
+        res.json(result);
+      }else{
+        if(err !== null){
+          res.status(409).send('Username does not exist!');
+        }else{
+          res.status(409).send('Username does not exist!');
+        }
+      }
+    });
+  }else{
+    res.status(409).send('No data provided!');
   }
 }
 

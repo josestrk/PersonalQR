@@ -67,11 +67,19 @@ function validateUser(mail, password, callback) {
 	daoUser.validateUser(mail, password, callback);
 }
 
+function verifyUsername(username, callback){
+	if(username ===''){
+		return callback("There was no data provided:", []);
+	}
+	daoUser.verifyUsername(username, callback);
+}
+
 module.exports = {
 	createUser: createUser,
 	getUser: getUser,
 	getUsersAll: getUsersAll,
 	delUser: delUser,
 	setUser: setUser,
-	validateUser: validateUser
+	validateUser: validateUser,
+	verifyUsername: verifyUsername
 };

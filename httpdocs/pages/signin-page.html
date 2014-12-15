@@ -93,7 +93,9 @@
       paper-progress::shadow #activeProgress {
         background-color: #e9f613;
       }
-
+      #mensajes{
+        margin: 0px 40px 0px 0px;
+      }
       @media(max-width:320px){
         #core_card2 {
           width: 190px;
@@ -159,15 +161,17 @@
           <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
         </core-card>
         <core-card id="core_card2" center center-justified wrap horizontal layout>
-          <paper-input
-            inputvalueformirror="User name"
-            inputhasvalue="User name"
-            label="UserName"
-            willvalidate
-            id="username_field"
-            on-blur="{{infochanged}}"
-            layout vertical
-          ></paper-input>
+          <core-tooltip id="mensajes" label="" position="top" tabindex="0">
+            <paper-input
+              inputvalueformirror="User name"
+              inputhasvalue="User name"
+              label="UserName"
+              willvalidate
+              id="username_field"
+              on-blur="{{infochanged}}"
+              layout vertical
+            ></paper-input>
+          </core-tooltip>
           <paper-input
             inputvalueformirror=""
             inputhasvalue=""
@@ -240,7 +244,8 @@
 		},
 		validateUser: function() {
 			var string = this.$.username_field.value;
-			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
+      this.validateAjaxUsername(string);
+			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30);
 		},
 		validateEmail: function() {
 			var string = this.$.email_field.value;
@@ -284,6 +289,21 @@
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
+    },
+    validateAjaxUsername: function(data){
+      var ajaxhandler = this.$.ajaxhandler;
+      var that=this;
+      ajaxhandler.verifyUsername(data, that ,function(result, that){
+        if(!result){
+          that.$.core_card2.children.mensajes.show=false;
+          that.$.core_card2.children.mensajes.label='';
+          console.log('User is not in database');
+        }else{
+          that.$.core_card2.children.mensajes.show=true;
+          that.$.core_card2.children.mensajes.label='User already exists';
+          console.log('User is in the database');
+        }
+      });
     }
 	});
   </script>

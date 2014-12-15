@@ -11,46 +11,46 @@
 <polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
   <template>
     <style>
-    :host {
-      display: block;
-      position: relative;
-      padding: 0px;
-      width: 100%;
-      font-weight: 300;
-    }
+      :host {
+        display: block;
+        position: relative;
+        padding: 0px;
+        width: 100%;
+        font-weight: 300;
+      }
 
-    core-card {
-      width: auto;
-      height: 55px;
-      margin: auto;
-      opacity: 1;
-      background-color: white;
-    }
+      core-card {
+        width: auto;
+        height: 55px;
+        margin: auto;
+        opacity: 1;
+        background-color: white;
+      }
 
-    #icon {
-      width: 25px;
-      height: 25px;
-      margin: 10px;
-      color: black;
-    }
-    #icon.green {
-      color: #22aa00;
-    }
-    #icon.red {
-      color: #cc0022;
-    }
+      #icon {
+        width: 25px;
+        height: 25px;
+        margin: 10px;
+        color: black;
+      }
+      #icon.green {
+        color: #22aa00;
+      }
+      #icon.red {
+        color: #cc0022;
+      }
 
-    #field {
-      width: 80%;
-      height: 45px;
-      padding: 0px;
-    }
-    
-    * /deep/ core-tooltip::shadow #tooltip {
-      min-width: 250px;
-      white-space: normal;
-      line-height: 15px;
-    }
+      #field {
+        width: 80%;
+        height: 45px;
+        padding: 0px;
+      }
+
+      * /deep/ core-tooltip::shadow #tooltip {
+        min-width: 250px;
+        white-space: normal;
+        line-height: 15px;
+      }
     </style>
 
     <core-card id="form-field-container"

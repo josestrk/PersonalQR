@@ -27,6 +27,18 @@ function delUser(userId, callback) {
 	this.removeById(userId, callback);
 }
 
+function setUser(userId, update, callback) {
+	var query = {
+		_id: toObjectID(userId)
+	};
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
 function validateUser(mail, password, callback) {
 	var where={};
 	where["mail"]=mail;
@@ -40,16 +52,16 @@ function validateUser(mail, password, callback) {
 	});
 }
 
-function setUser(userId, update, callback) {
-	var query = {
-		_id: toObjectID(userId)
-	};
+function verifyUsername(username, callback) {
+	var where={};
+	where["username"]=username;
 
-	var sort = [
-		['_id', 1]
-	];
-
-	col.findAndModify(query, sort, update, {new: true}, callback);
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err+':', []);
+		}
+		cursor.toArray(callback);
+	});
 }
 
 col.bind({
@@ -59,7 +71,8 @@ col.bind({
 	delUsers: delUsers,
 	delUser: delUser,
 	setUser: setUser,
-	validateUser: validateUser
+	validateUser: validateUser,
+	verifyUsername: verifyUsername
 });
 
 module.exports = col;
