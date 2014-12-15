@@ -5,8 +5,10 @@
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <!-- <link rel="import" href="../../lib/paper-input-decorator/paper-input-decorator.html"> -->
+<link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
 
-<polymer-element name="form-field" attributes="label,type,bound,regexp,icon,errorMsg">
+
+<polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
   <template>
     <style>
     :host {
@@ -43,15 +45,23 @@
       height: 45px;
       padding: 0px;
     }
+    
+    * /deep/ core-tooltip::shadow #tooltip {
+      min-width: 250px;
+      white-space: normal;
+      line-height: 15px;
+    }
     </style>
 
     <core-card id="form-field-container"
       horizontal layout wrap center-justified>
-      <core-icon
-        id="icon"
-        icon="{{icon}}"
-        center-justified horizontal layout wrap center>
-      </core-icon>
+      <core-tooltip show?="{{!check}}" label="{{errorMsg}}" position="left" tabindex="0">
+        <core-icon
+          id="icon"
+          icon="{{icon}}"
+          center-justified horizontal layout wrap center>
+        </core-icon>
+      </core-tooltip>
       <paper-input-decorator
         id="field"
         label="{{label}}" floatingLabel
@@ -96,9 +106,11 @@
           if (!this.$.input.validity.valid) {
             this.$.icon.className = 'red';
             //this.$.field.isInvalid = true;
+            return false;
           } else {
             this.$.icon.className = 'green';
             //this.$.field.isInvalid = false;
+            return true;
           }
         }
 			},
