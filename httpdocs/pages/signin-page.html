@@ -93,9 +93,10 @@
       paper-progress::shadow #activeProgress {
         background-color: #e9f613;
       }
-      #mensajes{
+      #mensajes {
         margin: 0px 40px 0px 0px;
       }
+
       @media(max-width:320px){
         #core_card2 {
           width: 190px;
@@ -188,7 +189,7 @@
             id="name"
             label="Name"
             icon="account-circle"
-            errorMsg=""
+            errorMsg="Please write a name"
             regexp=".{3,}"
           ></form-field>
           <form-field
@@ -228,11 +229,11 @@
       this.addEventListener("blur", this.validforms);
       this.addEventListener("blur", this.validateAll);
     },
-		validatePattern: function(string, pattern){
-			return string.match(pattern) !== null;
-		},
-		infochanged: function(){
-			if(!this.validateUser()){
+    validatePattern: function(string, pattern){
+      return string.match(pattern) !== null;
+    },
+    infochanged: function(){
+      if(!this.validateUser()){
         this.$.core_card2.className="red";
       } else if(this.$.email_field.value==="") {
         this.$.core_card2.className="yellow";
@@ -241,39 +242,45 @@
       } else {
         this.$.core_card2.className="red";
       }
-		},
-		validateUser: function() {
-			var string = this.$.username_field.value;
+    },
+    validateUser: function() {
+      var string = this.$.username_field.value;
       this.validateAjaxUsername(string);
-			return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30);
-		},
-		validateEmail: function() {
-			var string = this.$.email_field.value;
-			return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
-		},
+      return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
+    },
+    validateEmail: function() {
+      var string = this.$.email_field.value;
+      return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
+    },
     checkPassword: function(event, detail, sender){
-      if (this.$.password.$.input.value === this.$.password2.$.input.value) {
-        this.$.password2.$.icon.className="green";
-        return true;
+      if (this.$.password2.$.input.value) {
+        if (this.$.password.$.input.value === this.$.password2.$.input.value) {
+          this.$.password2.$.icon.className = "green";
+          this.$.password2.error.visible = false;
+          return true;
+        } else {
+          this.$.password2.$.icon.className = "red";
+          this.$.password2.error.visible = true;
+          return false;
+        }
       } else {
-        this.$.password2.$.icon.className="red";
-        return false;
+        this.$.password2.$.icon.className = "";
       }
     },
-		validateAll: function() {
-			var fields = this.$.form.querySelectorAll('form-field');
-			var isValid = true;
-			Array.prototype.forEach.call(fields, function(field) {
+    validateAll: function() {
+      var fields = this.$.form.querySelectorAll('form-field');
+      var isValid = true;
+      Array.prototype.forEach.call(fields, function(field) {
         if (field.$.input.pattern && !field.$.input.validity.valid) {
-					isValid = false;
-				}
-			});
+          isValid = false;
+        }
+      });
       if (isValid && this.validforms()) {
-        this.$.send.style.visibility="visible";
+        this.$.send.style.visibility = "visible";
       } else {
-        this.$.send.style.visibility="hidden";
+        this.$.send.style.visibility = "hidden";
       }
-		},
+    },
     validforms:function(){
       var username = this.$.username_field;
       var mail = this.$.email_field;
@@ -282,10 +289,10 @@
     startProgress:function(){
       var datos={
         username: this.$.username_field.value,
-        name:this.$.name.$.field.input.value,
+        name: this.$.name.$.field.input.value,
         mail: this.$.email_field.value,
-        bdate:this.$.bdate.$.field.input.value,
-        password:this.$.password.$.field.input.value,
+        bdate: this.$.bdate.$.field.input.value,
+        password: this.$.password.$.field.input.value,
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
@@ -305,6 +312,6 @@
         }
       });
     }
-	});
+  });
   </script>
 </polymer-element>
