@@ -1,8 +1,6 @@
 <link rel="import" href="../pages/login-page.html">
 <link rel="import" href="../pages/signin-page.html">
 <link rel="import" href="../pages/slider-page.html">
-
-<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
@@ -75,8 +73,8 @@
         Polymer({
             ready: function() {
                 this.pages = [
-                    {name:'GET STARTED',id:'paper_tab', hash:'/#/?t=signin', select:'signin'},
-                    {name:'LOG IN',id:'paper_tab1', hash:'/#/?t=login', select:'login'}
+                    {name:'GET STARTED',id:'paper_tab', select:'signin'},
+                    {name:'LOG IN',id:'paper_tab1', select:'login'}
                 ];
             },
             clickedpaper: function(event, detail, sender){

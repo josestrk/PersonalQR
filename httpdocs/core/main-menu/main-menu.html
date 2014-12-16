@@ -2,7 +2,8 @@
 <link rel="import" href="../../../bower_components/core-scaffold/core-scaffold.html">
 <link rel="import" href="../../../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../../../bower_components/core-menu/core-menu.html">
-<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/core-item/core-item.html">
+<link rel="import" href="../../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../../bower_components/core-icons/image-icons.html">
 <link rel="import" href="../../../bower_components/core-animated-pages/core-animated-pages.html">
@@ -53,19 +54,16 @@
         <my-core-scaffold id="scaffold">
             <nav>
                 <core-card id="core_card" layout vertical>
-                    <!--<search-banner horizontal layout center-justified center></search-banner>-->
+                    <search-banner horizontal layout center-justified center></search-banner>
                     <id-card layout vertical center center-justified>
                         <img width="70" height="70" id='{{name}}' src="../../../img/avatar-01.svg" />
                         <h2>{{ username == undefined ? 'User' : username }}</h2>
-                        <p>{{follower > 0 ? follower : 0}} followers • {{following > 0 ? following : 0}} following</p>
+                        <p>{{ follower > 0 ? follower : 0 }} followers • {{ following > 0 ? following : 0 }} following</p>
                     </id-card>
                 </core-card>
                 <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
-                        <paper-item active="{{ imenu === page.name}}">
-                          <core-icon icon="{{page.logo}}{{ imenu != page.name ? '' : '-outline'}}"></core-icon>
-                          <a  href="{{page.hash}}">{{page.name}}</a>
-                        </paper-item>
+                        <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}"><a href="{{page.hash}}"></a></core-item>
                     </template>
                 </core-menu>
                 <core-card id="core_card_f" vertical layout end-justified end>
@@ -91,8 +89,8 @@
                   {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
                   {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
                   {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
-                  {name: 'Config', logo: 'check-circle', hash: '/#/settings/?id='+_id},
-                  {name: 'Contacts', logo: 'social:person', hash: '/#/contacts/?id='+_id}
+                  {name: 'Settings', logo: 'lock', hash: '/#/settings/?id='+_id},
+                  {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
               ];
             }
 

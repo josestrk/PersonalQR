@@ -29,34 +29,27 @@ articles and so on
         padding: 10px;
     }
     </style>
-    
+
   <div class="typeahead-container">
     <div class="typeahead-field">
       <span class="typeahead-query">
-        <input id="q"
-          name="q"
-          type="search"
-          placeholder="Search"
-          autocomplete="off">
-      </span> 
+        <input id="q" name="q" type="search" placeholder="Search" autocomplete="off">
+      </span>
     </div>
   </div>
   <core-icon icon="search" id="core_icon1"></core-icon>
-  
+
   </template>
-  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="jquery.typeahead.js"></script>
   <script>
-    (function () { 
+    (function () {
       var base = '/topic';
 
-      function defaultAjaxErrorHandler(xhr, err, desc) { // xhr = XMLHttpRequest
+      function defaultAjaxErrorHandler(xhr, err, desc) {
         var errorToast = document.querySelector('#errorToast');
-        // example: '[404] Not Found: Cannot GET <url>'
         errorToast.text = '[' + xhr.status + '] ' + desc + ': ' + xhr.response;
         errorToast.show();
       }
-      
+
       function doAjax(options, success, error) {
         options.type = options.type || 'GET';
         options.url = base + (options.url || '');
@@ -66,7 +59,7 @@ articles and so on
         options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
         $.ajax(options);
       }
-      
+
       function search(){
         $(this.$.q).typeahead({
           minLength: 1,
@@ -89,7 +82,7 @@ articles and so on
         created: function() {
           if (!topics) {
             doAjax({}, function(data) {
-              
+
               (function () {
                 var p = new Promise (
                   function(resolve, reject) {
@@ -97,26 +90,20 @@ articles and so on
                   }
                 );
               })();
-              
+
               this.topics = topics;
-              //console.log(this.topics);
             }.bind(this));
           }
         },
         ready: function () {
           search.bind(this)();
-          //console.log('ready');
-          //console.log(this.topics);
         },
         showTopics: function() {
-          //console.log('showTopics');
-          //console.log(this.topics);
           doAjax({
             type: 'GET',
             url: '/topic'
           }, function(data) {
-            debugger
-            $.each(this.topics, function(key, value) {
+          $.each(this.topics, function(key, value) {
               this.topics.push(value);
             });
           }.bind(this));
@@ -126,4 +113,3 @@ articles and so on
     }());
   </script>
 </polymer-element>
-

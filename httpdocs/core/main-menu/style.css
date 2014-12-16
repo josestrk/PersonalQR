@@ -4,12 +4,12 @@
     -webkit-user-select: none;
     overflow-x: hidden;
     }
-    
+
     body /deep/ core-toolbar {
     background-color: #03a9f4;
     color: #fff;
     }
- 
+
     core-animated-pages > * {
     border-radius: 5px;
     font-size: 50px;
@@ -27,14 +27,14 @@
     #paper_icon_button {
     margin: auto 0px 0px;
     }
-    
+
     #core_card_f {
         color:white;
     }
     
-@media all and (max-width: 1024px){
-    core-animated-pages {
-      width: 100%;
-      height: 100%;
+    @media all and (max-width: 1024px){
+        core-animated-pages {
+          width: 100%;
+          height: 100%;
+        }
     }
-}
