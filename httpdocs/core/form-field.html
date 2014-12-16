@@ -11,51 +11,51 @@
 <polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
   <template>
     <style>
-      :host {
-        display: block;
-        position: relative;
-        padding: 0px;
-        width: 100%;
-        font-weight: 300;
-      }
+    :host {
+      display: block;
+      position: relative;
+      padding: 0px;
+      width: 100%;
+      font-weight: 300;
+    }
 
-      core-card {
-        width: auto;
-        height: 55px;
-        margin: auto;
-        opacity: 1;
-        background-color: white;
-      }
+    core-card {
+      width: auto;
+      height: 55px;
+      margin: auto;
+      opacity: 1;
+      background-color: white;
+    }
 
-      #icon {
-        width: 25px;
-        height: 25px;
-        margin: 10px;
-        color: black;
-      }
-      #icon.green {
-        color: #22aa00;
-      }
-      #icon.red {
-        color: #cc0022;
-      }
+    #icon {
+      width: 25px;
+      height: 25px;
+      margin: 10px;
+      color: black;
+    }
+    #icon.green {
+      color: #22aa00;
+    }
+    #icon.red {
+      color: #cc0022;
+    }
 
-      #field {
-        width: 80%;
-        height: 45px;
-        padding: 0px;
-      }
-
-      * /deep/ core-tooltip::shadow #tooltip {
-        min-width: 250px;
-        white-space: normal;
-        line-height: 15px;
-      }
+    #field {
+      width: 80%;
+      height: 45px;
+      padding: 0px;
+    }
+    
+    * /deep/ core-tooltip::shadow #tooltip {
+      min-width: 250px;
+      white-space: normal;
+      line-height: 14px;
+    }
     </style>
 
     <core-card id="form-field-container"
       horizontal layout wrap center-justified>
-      <core-tooltip show?="{{!check}}" label="{{errorMsg}}" position="left" tabindex="0">
+      <core-tooltip show?="{{error.visible}}" label="{{errorMsg}}" position="left" tabindex="0">
         <core-icon
           id="icon"
           icon="{{icon}}"
@@ -78,48 +78,45 @@
     </core-card>
 
     <content></content>
-	</template>
+  </template>
 
-	<script>
-	(function() {
-		var values = {};
+  <script>
+  (function() {
+    var values = {};
 
-		Polymer('form-field', {
-			ready: function() {
-				this.values = values;
-				for (var i = 0; i < this.attributes.length; i++) {
-				  var attr = this.attributes[i];
-				  values[attr.nodeName] = attr.value;
-				}
+    Polymer('form-field', {
+      ready: function() {
+        this.values = values;
+        for (var i = 0; i < this.attributes.length; i++) {
+          var attr = this.attributes[i];
+          values[attr.nodeName] = attr.value;
+        }
 
-				this.addEventListener('blur', this.check);
-				this.addEventListener('keydown', this.keydown);
-			},
-			check: function(event, detail, sender) {
-        //console.log(this.$.input);
-        //console.log(this.$.input.validity);
-        //console.log(this.$.input.value);
-        //console.log(this.$.input.pattern);
-        //console.log(this.$.field.error);
-
+        this.addEventListener('blur', this.check);
+        this.addEventListener('keydown', this.keydown);
+      },
+      created: function() {
+        this.error = {
+          visible: false
+        }
+      },
+      check: function(event, detail, sender) {
         if (this.$.input.pattern) {
           if (!this.$.input.validity.valid) {
             this.$.icon.className = 'red';
-            //this.$.field.isInvalid = true;
-            return false;
+            this.error.visible = true;
           } else {
             this.$.icon.className = 'green';
-            //this.$.field.isInvalid = false;
-            return true;
+            this.error.visible = false;
           }
         }
-			},
-			keydown: function(event, detail, sender) {
-				if(event.keyCode === 13) {
-					this.check();
-				}
-			}
-		});
-	})();
-	</script>
+      },
+      keydown: function(event, detail, sender) {
+        if(event.keyCode === 13) {
+          this.check();
+        }
+      }
+    });
+  })();
+  </script>
 </polymer-element>
