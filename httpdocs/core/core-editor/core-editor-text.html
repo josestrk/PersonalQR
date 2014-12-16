@@ -1,4 +1,4 @@
-<polymer-element name="editor-page" attributes="id">
+<polymer-element name="core-editor-text">
 
   <template>
   <style>
@@ -9,15 +9,14 @@
   }
   </style>
   <link type="text/css" rel="stylesheet" href="../../../lib/editor-text/jquery-te-1.4.0.css">
-
-  <textarea name="textarea" class="jqte-test"><b> <u><span style="color:rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
+  <textarea name="textarea" class="jqte-test"><b><u><span style="color:rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
   <button class="status">Enviar</button>
 
   </template>
 
   <script>
   (function() {
-    /*function editor(){
+    function editor(){
       $('.jqte-test').jqte();
 
       // settings of status
@@ -27,10 +26,10 @@
         jqteStatus = jqteStatus ? false : true;
         $('.jqte-test').jqte({"status" : jqteStatus})
       });
-    }*/
+    }
     Polymer({
             ready: function(){
-            
+
             }
     });
   })();

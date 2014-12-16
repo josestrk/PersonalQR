@@ -5,7 +5,7 @@
 <link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="../../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<!-- <link rel="import" href="../core/core-editor/core-editor-text.html"> -->
+<link rel="import" href="../core/core-editor/core-editor-text.html">
 <link rel="import" href="../core/core-editor/core-editor-img.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
@@ -65,8 +65,8 @@
           <core-card id="core_card" layout vertical>
                 <input id="input" placeholder="Title articcle" is="core-input">
                 <core-editor-img id="editor" vertical layout  center-justified></core-editor-img>
-               <!-- <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea> -->
-                <!-- <core-text-editor></core-text-editor> -->
+                <textarea id="input2" rows="20" placeholder="You said..." maxlength="8000" aria-invalid="false" ></textarea>
+                <core-text-editor></core-text-editor>
                 <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
           </core-card>
         </div>
