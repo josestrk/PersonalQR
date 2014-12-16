@@ -253,14 +253,18 @@
       return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
     },
     checkPassword: function(event, detail, sender){
-      if (this.$.password.$.input.value === this.$.password2.$.input.value) {
-        this.$.password2.$.icon.className = "green";
-        this.$.password2.error.visible = false;
-        return true;
+      if (this.$.password2.$.input.value) {
+        if (this.$.password.$.input.value === this.$.password2.$.input.value) {
+          this.$.password2.$.icon.className = "green";
+          this.$.password2.error.visible = false;
+          return true;
+        } else {
+          this.$.password2.$.icon.className = "red";
+          this.$.password2.error.visible = true;
+          return false;
+        }
       } else {
-        this.$.password2.$.icon.className = "red";
-        this.$.password2.error.visible = true;
-        return false;
+        this.$.password2.$.icon.className = "";
       }
     },
     validateAll: function() {
