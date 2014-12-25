@@ -1,0 +1,50 @@
+<link rel="import" href="../core-artc/core-artc.html">
+
+<polymer-element name="core-list" attributes="lista">
+
+  <template>
+    <style>
+        #list{
+            position: absolute;
+            width: 100%;
+            height: 150px;
+            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+            background-color: rgb(60, 60, 60);
+        }
+    </style>
+    <div layout horizontal fit>
+        <core-card id="list">
+            <template repeat="{{item in lista}}"></template>
+        </core-card>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+        function createPage(item) {
+          var section = document.createElement('core-artc');
+          section.setAttribute('layout', '');
+          section.setAttribute('post', item);
+          section.setAttribute('vertical', '');
+          section.setAttribute('center-center', '');
+          section.setAttribute('hash', item.hash);
+
+          var div = document.createElement('div');
+          var component = document.createElement(item.component);
+          div.appendChild(component);
+          section.appendChild(div);
+          return section;
+        }
+        Polymer({
+            domReady: function () {
+                var listPost = this.$.list;
+                this.lista.forEach(function (item) {
+                   listPost.appendChild(createPage(item));
+                });
+            }
+        });
+    })();
+
+  </script>
+
+</polymer-element>

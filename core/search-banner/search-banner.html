@@ -1,0 +1,111 @@
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<script src="jquery.typeahead.js" type="text/javascript"></script>
+
+<polymer-element name="search-banner">
+  <template>
+    <style>
+    @import 'jquery.typeahead.css';
+    :host {
+        height: 30px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        margin: 15px 15px 10px;
+        padding: 2px 5px;
+        border: 2px solid #fff;
+        color: white;
+        font-weight: 300;
+    }
+    #core_icon1 {
+        height: 30px;
+        width: 10%;
+    }
+    #core_input {
+        width: 80%;
+        padding: 10px;
+    }
+    </style>
+
+  <div class="typeahead-container">
+    <div class="typeahead-field">
+      <span class="typeahead-query">
+        <input id="q" name="q" type="search" placeholder="Search" autocomplete="off">
+      </span>
+    </div>
+  </div>
+  <core-icon icon="search" id="core_icon1"></core-icon>
+
+  </template>
+  <script>
+    (function () {
+      var base = '/topic';
+
+      function defaultAjaxErrorHandler(xhr, err, desc) {
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = '[' + xhr.status + '] ' + desc + ': ' + xhr.response;
+        errorToast.show();
+      }
+
+      function doAjax(options, success, error) {
+        options.type = options.type || 'GET';
+        options.url = base + (options.url || '');
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+        $.ajax(options);
+      }
+
+      function search(){
+        $(this.$.q).typeahead({
+          minLength: 1,
+          order: "asc",
+          group: true,
+          hint: true,
+          list: false,
+          backdrop: false,
+          source: {
+            topics: {
+              data: topics
+            }
+          }
+        });
+      }
+
+      var topics;
+
+      Polymer('search-banner', {
+        created: function() {
+          if (!topics) {
+            doAjax({}, function(data) {
+
+              (function () {
+                var p = new Promise (
+                  function(resolve, reject) {
+                    topics = data;
+                  }
+                );
+              })();
+
+              this.topics = topics;
+            }.bind(this));
+          }
+        },
+        ready: function () {
+          search.bind(this)();
+        },
+        showTopics: function() {
+          doAjax({
+            type: 'GET',
+            url: '/topic'
+          }, function(data) {
+          $.each(this.topics, function(key, value) {
+              this.topics.push(value);
+            });
+          }.bind(this));
+          console.log('showTopics');
+        }
+      });
+    }());
+  </script>
+</polymer-element>

@@ -1,0 +1,122 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/core-input/core-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<!-- <link rel="import" href="../lib/paper-input-decorator/paper-input-decorator.html"> -->
+<link rel="import" href="../bower_components/core-tooltip/core-tooltip.html">
+
+
+<polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
+  <template>
+    <style>
+    :host {
+      display: block;
+      position: relative;
+      padding: 0px;
+      width: 100%;
+      font-weight: 300;
+    }
+
+    core-card {
+      width: auto;
+      height: 55px;
+      margin: auto;
+      opacity: 1;
+      background-color: white;
+    }
+
+    #icon {
+      width: 25px;
+      height: 25px;
+      margin: 10px;
+      color: black;
+    }
+    #icon.green {
+      color: #22aa00;
+    }
+    #icon.red {
+      color: #cc0022;
+    }
+
+    #field {
+      width: 80%;
+      height: 45px;
+      padding: 0px;
+    }
+    
+    * /deep/ core-tooltip::shadow #tooltip {
+      min-width: 250px;
+      white-space: normal;
+      line-height: 14px;
+    }
+    </style>
+
+    <core-card id="form-field-container"
+      horizontal layout wrap center-justified>
+      <core-tooltip show?="{{error.visible}}" label="{{errorMsg}}" position="left" tabindex="-1">
+        <core-icon
+          id="icon"
+          icon="{{icon}}"
+          center-justified horizontal layout wrap center>
+        </core-icon>
+      </core-tooltip>
+      <paper-input-decorator
+        id="field"
+        label="{{label}}" floatingLabel
+        error="{{errorMsg}}"
+        willvalidate>
+          <input
+            id="input"
+            is="core-input"
+            type="{{type}}"
+            pattern="{{regexp}}"
+            data-tooltip="Hello world"
+            required>
+      </paper-input-decorator>
+    </core-card>
+
+    <content></content>
+  </template>
+
+  <script>
+  (function() {
+    var values = {};
+
+    Polymer('form-field', {
+      ready: function() {
+        this.values = values;
+        for (var i = 0; i < this.attributes.length; i++) {
+          var attr = this.attributes[i];
+          values[attr.nodeName] = attr.value;
+        }
+
+        this.addEventListener('blur', this.check);
+        this.addEventListener('keydown', this.keydown);
+      },
+      created: function() {
+        this.error = {
+          visible: false
+        }
+      },
+      check: function(event, detail, sender) {
+        if (this.$.input.pattern) {
+          if (!this.$.input.validity.valid) {
+            this.$.icon.className = 'red';
+            this.error.visible = true;
+          } else {
+            this.$.icon.className = 'green';
+            this.error.visible = false;
+          }
+        }
+      },
+      keydown: function(event, detail, sender) {
+        if(event.keyCode === 13) {
+          this.check();
+        }
+      }
+    });
+  })();
+  </script>
+</polymer-element>

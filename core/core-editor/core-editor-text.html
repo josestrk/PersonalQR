@@ -1,0 +1,36 @@
+<script src="jquery-te-1.4.0.min.js" type="text/javascript"></script>
+
+<polymer-element name="core-editor-text">
+  <template>
+  <style>
+    #input2 {
+      padding: 25px;
+      margin: 30px auto 0px;
+      width: 80%;
+    }
+  </style>
+
+  <link rel="stylesheet" href="core-editor.css">
+      
+  <textarea name="textarea" class="jqte-test"><b>Your articcle <u><span style="color:rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
+  <button class="status">Sent</button>
+
+  <script>
+    $('.jqte-test').jqte();
+
+    // settings of status
+    var jqteStatus = true;
+    $(".status").click(function()
+    {
+      jqteStatus = jqteStatus ? false : true;
+      $('.jqte-test').jqte({"status" : jqteStatus})
+    });
+  </script>
+
+  </template>
+
+  <script>
+    Polymer({});
+  </script>
+
+</polymer-element>

@@ -1,0 +1,133 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<polymer-element name="core-ajax-handler">
+  <template></template>
+  <script>
+    (function() {
+      var base = '/';
+
+      function defaultAjaxErrorHandler(xhr, err, desc) {
+        console.log(xhr);
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.responseText.split(':')[1];
+        errorToast.show();
+      }
+      function doAjax(options, success, error) {
+        options.type = options.type || 'GET';
+        options.url = base + (options.url || '');
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+        $.ajax(options);
+      }
+
+
+      Polymer('core-ajax-handler', {
+        get : function(mail, password){
+          var data={
+            mail:mail,
+            password: password
+          };
+          doAjax({
+            type: 'GET',
+            url: 'validateuser',
+            data: data
+          },function(result) {
+            document.getElementById('user').data(result);
+            window.location.hash="/wall/?id="+result[0]._id;
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        create : function(datos){
+          doAjax({
+            type: 'POST',
+            url: 'user',
+            data: datos
+          },function(result) {
+            document.getElementById('user').data(result);
+            window.location.hash="/profile/?id="+result[0]._id;
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        sendArticle : function(datos){
+          doAjax({
+            type: 'POST',
+            url: 'article',
+            data: datos
+          },function(result) {
+            window.location.hash="/profile/?id="+result[0].iduser;
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = "Could not connect to server";
+            errorToast.show();
+          });
+        },
+        setUser : function(id, datos){
+          doAjax({
+            type: 'PUT',
+            url: 'user/'+id,
+            data: datos
+          },function(result) {
+            document.getElementById('user').data(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        getArticles : function(id,callback){
+          doAjax({
+            type: 'GET',
+            url: 'article/'+id,
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error could not load';
+            errorToast.show();
+            calback(false);
+          });
+        },
+        verifyUsername : function(datos, that, callback){
+          var data={
+            username: datos
+          };
+          doAjax({
+            type: 'GET',
+            url: 'verifyUsername',
+            data: data
+          },function(result) {
+            callback(result, that);
+          }.bind(this),
+            function(xhr, err, desc){
+              callback(false, that);
+            }
+          );
+        }
+      });
+    }());
+
+    // Para la PAgina de configuracion, cuando meta el usuario lo que sea sobre sus datos
+    // var usuarioexistente = document.getElementById('user');
+    // var id= usuariocreado.datos._id;
+    // var datos={
+    //   username: this.$.paper_input.value,
+    //   name:"Alex",
+    //   mail: this.$.paper_input1.value
+    // }
+    // ajaxhandler.setUser(id, JSON.stringify(datos));
+
+  </script>
+</polymer-element>
