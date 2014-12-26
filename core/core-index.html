@@ -37,13 +37,6 @@
         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
         background-color: rgb(137, 191, 79);
       }
-      #paper_tabs_up {
-        height: 5%;
-        width: 100%;
-        color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
-        background-color: rgba(7, 18, 14,0.5);
-      }
       #paper_tabs::shadow #tabsContainer{
         width: 100%;
       }
@@ -51,16 +44,7 @@
     </style>
         <core-animated-pages id="core_card" layout vertical end-justified center transitions="slide-from-right">
             <section layout vertical center-center>
-                    <paper-tabs selectedindex="0" id="paper_tabs_up" vertical layout rigth>
-                    <template repeat="{{info in infos}}">
-                        <paper-tab on-click="{{clickedpaper}}">
-                          {{info.name}}
-                        </paper-tab>
-                    </template>
-                    </paper-tabs>
-                   <core-card vertical layout  center-justified>
                         <slider-page></slider-page>
-                   </core-card>
             </section>
             <section layout vertical center-center>
                 <signin-page></signin-page>
@@ -87,11 +71,6 @@
                 this.pages = [
                     {name:'GET STARTED',id:'paper_tab', select:'signin'},
                     {name:'LOG IN',id:'paper_tab1'}
-                ];
-                this.infos = [
-                    {name:'Info',id:'paper_tab'},
-                    {name:'Help',id:'paper_tab'},
-                    {name:'Git',id:'paper_tab'}
                 ];
             },
             clickedpaper: function(event, detail, sender){

@@ -153,74 +153,74 @@
     </style>
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-
-    <core-card id="core_card" layout vertical>
-      <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
-      <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
-      <core-card id="core_card1" wrap center horizontal layout>
-        <core-card id="core_logo" vertical layout wrap center-justified center>
-          <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
-        </core-card>
-        <core-card id="core_card2" center center-justified wrap horizontal layout>
-          <core-tooltip id="mensajes" label="" position="top" tabindex="0">
-            <paper-input
-              inputvalueformirror="User name"
-              inputhasvalue="User name"
-              label="UserName"
-              willvalidate
-              id="username_field"
-              on-blur="{{infochanged}}"
-              layout vertical
-            ></paper-input>
-          </core-tooltip>
-          <paper-input
-            inputvalueformirror=""
-            inputhasvalue=""
-            label="Email Address"
-            willvalidate
-            error="Email not allowed"
-            id="email_field"
-            on-blur="{{infochanged}}"
-            layout vertical
-          ></paper-input>
-        </core-card>
-        <core-card id="form" center-justified vertical layout>
-          <form-field
-            id="name"
-            label="Name"
-            icon="account-circle"
-            errorMsg="Please write a name"
-            regexp=".{3,}"
-          ></form-field>
-          <form-field
-            id="password"
-            type="password"
-            label="Choose password"
-            icon="lock"
-            errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
-            on-blur="{{checkPassword}}"
-            regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
-          ></form-field>
-          <form-field
-            id="password2"
-            type="password"
-            label="Re-enter password"
-            icon="lock"
-            errorMsg="Must be the same password"
-            on-blur="{{checkPassword}}"
-            regexp=""
-          ></form-field>
-          <form-field
-            id="bdate"
-            label="Birth date"
-            icon="redeem"
-            errorMsg="Fill in a valid date.(dd-mm-yy)"
-            regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
-          ></form-field>
-          <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
+      <core-card id="core_card" layout vertical>
+          <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
+          <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
+          <core-card id="core_card1" wrap center horizontal layout>
+            <core-card id="core_logo" vertical layout wrap center-justified center>
+              <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
+            </core-card>
+            <core-card id="core_card2" center center-justified wrap horizontal layout>
+              <core-tooltip id="mensajes" label="" position="top" tabindex="0">
+                <paper-input
+                  inputvalueformirror="User name"
+                  inputhasvalue="User name"
+                  label="UserName"
+                  willvalidate
+                  id="username_field"
+                  on-blur="{{infochanged}}"
+                  layout vertical
+                ></paper-input>
+              </core-tooltip>
+              <paper-input
+                inputvalueformirror=""
+                inputhasvalue=""
+                label="Email Address"
+                willvalidate
+                error="Email not allowed"
+                id="email_field"
+                on-blur="{{infochanged}}"
+                layout vertical
+              ></paper-input>
+            </core-card>
+            <core-card id="form" center-justified vertical layout>
+              <form-field
+                id="name"
+                label="Name"
+                icon="account-circle"
+                errorMsg="Please write a name"
+                regexp=".{3,}"
+              ></form-field>
+              <form-field
+                id="password"
+                type="password"
+                label="Choose password"
+                icon="lock"
+                errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
+                on-blur="{{checkPassword}}"
+                regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
+              ></form-field>
+              <form-field
+                id="password2"
+                type="password"
+                label="Re-enter password"
+                icon="lock"
+                errorMsg="Must be the same password"
+                on-blur="{{checkPassword}}"
+                regexp=""
+              ></form-field>
+              <form-field
+                id="bdate"
+                label="Birth date"
+                icon="redeem"
+                errorMsg="Fill in a valid date.(dd-mm-yy)"
+                regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
+              ></form-field>
+              <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
+            </core-card>
+          </core-card>
         </core-card>
       </core-card>
-    </core-card>
   </template>
 
   <script>
