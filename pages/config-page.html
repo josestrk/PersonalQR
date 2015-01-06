@@ -2,15 +2,24 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../lib/webcomponent/github-card.html">
+
 
 <polymer-element name="config-page" attributes="userid">
 
   <template>
     <style>
+    .card{
+      width: 100%;
+      position: relative;
+      left:20%;
+    }
     </style>
     <main-menu iMenu="Settings" iduser="{{userid}}">
         <div class="title">Settings</div>
         <div id="list">
+          <github-card user="Alevale" class="card"></github-card>
+          <github-card user="Josestrk" class="card"></github-card>
         </div>
         <core-card><core-icon icon="load"></core-icon></core-card>
     </main-menu>

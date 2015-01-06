@@ -17,6 +17,7 @@
 <link rel="import" href="../core-scaffold/core-scaffold.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
 <link rel="import" href="../core-qr/core-qr.html">
+<link rel="import" href="../core-add/core-add.html">
 
 
 <polymer-element name="main-menu" attributes="imenu, iduser">
@@ -47,6 +48,10 @@
                 color:#FFF;
                 padding: 10px
             }
+            .right{
+              position: absolute;
+              left:95%;
+            }
         </style>
 
         <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
@@ -75,6 +80,9 @@
                 <content select=".title"></content>
                 <core-notifi></core-notifi>
                 <core-qr></core-qr>
+                <template if="{{imenu=='Settings'}}">
+                  <core-add class="right"></core-add>
+                </template>
             </core-toolbar>
 
             <content></content>
@@ -140,6 +148,9 @@
                     if (detail.isSelected) {
                         this.$.scaffold.closeDrawer();
                     }
+                },
+                showAdd: function (e, detail, sender){
+                  return document.URL.split('/').indexOf('settings');
                 }
             });
         }());

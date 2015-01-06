@@ -1,0 +1,142 @@
+<link href="../../bower_components/core-collapse/core-collapse.html" rel="import">
+<link href="../../bower_components/core-dropdown/core-dropdown.html" rel="import">
+<link href="../../bower_components/core-icons/core-icons.html" rel="import">
+<link href="../../bower_components/core-icon-button/core-icon-button.html" rel="import">
+<link href="../../bower_components/core-item/core-item.html" rel="import">
+<link href="../../bower_components/core-menu/core-menu.html" rel="import">
+<link href="../../bower_components/core-dropdown-menu/core-dropdown-menu.html" rel="import">
+<link href="../../bower_components/paper-button/paper-button.html" rel="import">
+
+<polymer-element name="core-add">
+  <template>
+  <style>
+    core-dropdown {
+      background-color: #eee;
+      color: #000;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    drop-down.margin::shadow core-dropdown {
+      margin: 12px;
+    }
+
+    drop-down.open-below::shadow core-dropdown {
+      position: absolute;
+      top: 100px;
+      left: 10000px;
+    }
+
+    drop-down.constrained::shadow core-dropdown {
+      max-height: 500px;
+    }
+
+    .dropdown {
+      padding: 12px;
+    }
+
+    .toolbar {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .toolbar-1 {
+      background-color: #3b78e7;
+    }
+
+    .toolbar-2 {
+      background-color: #4285f4;
+    }
+
+    .toolbar-3 {
+      background-color: #5e97f6;
+    }
+
+    .bottom-toolbar-1 {
+      background-color: #0d904f;
+    }
+
+    .bottom-toolbar-2 {
+      background-color: #0f9d58;
+    }
+
+    .bottom-toolbar-3 {
+      background-color: #33ac71;
+    }
+
+    .toolbar > * {
+      padding: 12px;
+    }
+
+    .toolbar-label {
+      width: 100px;
+    }
+
+    .middle {
+      overflow: auto;
+    }
+
+    .middle > * {
+      padding: 8px;
+    }
+
+    html /deep/ .size-position::shadow #scroller {
+      width: 300px;
+      height: 300px;
+    }
+    html /deep/ paper-dialog {
+      color: green;
+    }
+    core-icon-button{
+      margin: 11px 2px;
+    }
+  </style>
+
+    <div flex class="middle">
+      <core-icon-button class="core-dropdown-trigger" icon="add" on-click="{{toggleDialog}}"></core-icon-button>
+
+      <paper-dialog id="dia" backdrop transition="core-transition-bottom">
+        <p>
+          Choose the social media you want to import to your personal profile.
+        </p>
+        <div>
+          <core-dropdown-menu label="Social media" on-click="{{moreheight}}">
+            <core-dropdown class="dropdown">
+              <core-menu>
+                <template repeat="{{socialMedias}}">
+                  <core-item on-click="{{lessheight}}">{{}}</core-item>
+                </template>
+              </core-menu>
+            </core-dropdown>
+          </core-dropdown-menu>
+          <input is="core-input" placeholder="Your profile link" style="border: solid 1px; border-radius: 4px; border-color: rgb(169, 169, 169);">
+        </div>
+        <paper-button on-click="{{closetap}}" style="color: #4285f4; position: relative; left: 70%;" class="colored" role="button" tabindex="0">colored</paper-button>
+      </paper-dialog>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    socialMedias : [
+    'Facebook',
+    'Twitter',
+    'Github',
+    'Linkedin',
+    'Spotify'
+    ],
+    toggleDialog: function() {
+      this.$.dia.toggle();
+    },
+    moreheight: function(e,d,s){
+      s.style.height='200px';
+    },
+    lessheight: function(e,d,s){
+      s.parentElement.parentElement.parentElement.style.height='initial';
+      e.stopPropagation();
+    },
+    closetap:function(){
+      this.$.dia.toggle();
+    }
+  });
+  </script>
+</polymer-element>
