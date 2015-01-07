@@ -2,7 +2,6 @@
 <link href="../../bower_components/core-dropdown/core-dropdown.html" rel="import">
 <link href="../../bower_components/core-icons/core-icons.html" rel="import">
 <link href="../../bower_components/core-icon-button/core-icon-button.html" rel="import">
-<link href="../../bower_components/core-item/core-item.html" rel="import">
 <link href="../../bower_components/core-menu/core-menu.html" rel="import">
 <link href="../../bower_components/core-dropdown-menu/core-dropdown-menu.html" rel="import">
 <link href="../../bower_components/paper-button/paper-button.html" rel="import">
@@ -27,49 +26,9 @@
       left: 10000px;
     }
 
-    drop-down.constrained::shadow core-dropdown {
-      max-height: 500px;
-    }
 
     .dropdown {
       padding: 12px;
-    }
-
-    .toolbar {
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .toolbar-1 {
-      background-color: #3b78e7;
-    }
-
-    .toolbar-2 {
-      background-color: #4285f4;
-    }
-
-    .toolbar-3 {
-      background-color: #5e97f6;
-    }
-
-    .bottom-toolbar-1 {
-      background-color: #0d904f;
-    }
-
-    .bottom-toolbar-2 {
-      background-color: #0f9d58;
-    }
-
-    .bottom-toolbar-3 {
-      background-color: #33ac71;
-    }
-
-    .toolbar > * {
-      padding: 12px;
-    }
-
-    .toolbar-label {
-      width: 100px;
     }
 
     .middle {
@@ -80,22 +39,16 @@
       padding: 8px;
     }
 
-    html /deep/ .size-position::shadow #scroller {
-      width: 300px;
-      height: 300px;
-    }
-    html /deep/ paper-dialog {
-      color: green;
-    }
     core-icon-button{
       margin: 11px 2px;
     }
+
   </style>
 
     <div flex class="middle">
       <core-icon-button class="core-dropdown-trigger" icon="add" on-click="{{toggleDialog}}"></core-icon-button>
 
-      <paper-dialog id="dia" backdrop transition="core-transition-bottom">
+      <paper-dialog id="dia" backdrop transition="core-transition-top">
         <p>
           Choose the social media you want to import to your personal profile.
         </p>
@@ -111,28 +64,41 @@
           </core-dropdown-menu>
           <input is="core-input" placeholder="Your profile link" style="border: solid 1px; border-radius: 4px; border-color: rgb(169, 169, 169);">
         </div>
-        <paper-button on-click="{{closetap}}" style="color: #4285f4; position: relative; left: 70%;" class="colored" role="button" tabindex="0">colored</paper-button>
+        <div style="background-color: #b7e1cd; font-size:12px; visibility: hidden;">Copia la URL que aparece en tu pagina de perfil.</div>
+        <paper-button on-click="{{closetap}}" style="color: #4285f4; position: relative; margin-top:15px;left: 80%;" class="colored" role="button" tabindex="0">Accept</paper-button>
       </paper-dialog>
     </div>
   </template>
   <script>
   Polymer({
+    // socialMedias : [
+    // { name: 'Facebook', explanation: 'Copy the URL from your profile.'},
+    // { name: 'Twitter', explanation: ''},
+    // { name: 'Github', explanation: ''},
+    // { name: 'Linkedin', explanation: ''},
+    // { name: 'Google+', explanation: ''},
+    // { name: 'Tumblr', explanation: ''},
+    // { name: 'Instagram', explanation: ''}
+    // ],
     socialMedias : [
     'Facebook',
     'Twitter',
     'Github',
     'Linkedin',
-    'Spotify'
+    'Google+',
+    'Tumblr',
+    'Instagram'
     ],
     toggleDialog: function() {
       this.$.dia.toggle();
     },
     moreheight: function(e,d,s){
-      s.style.height='200px';
+      s.style.height='300px';
     },
     lessheight: function(e,d,s){
       s.parentElement.parentElement.parentElement.style.height='initial';
       e.stopPropagation();
+      s.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[5].style.visibility='visible';
     },
     closetap:function(){
       this.$.dia.toggle();
