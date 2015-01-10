@@ -8,7 +8,7 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="My profile" iduser="{{userid}}">
+    <main-menu imenu="My profile" iduser="{{id}}">
         <div class="title">My profile</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
@@ -43,6 +43,8 @@
             ready: function(){
               var that=this;
               var ajaxhandler = this.$.ajaxhandler;
+              debugger
+              //hasta aqui esta bien el tema del iduser, id aqui es igual a lo que nos ha llegado desde la URL
               ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
                 if(result){
                   that.lista=result.reverse();

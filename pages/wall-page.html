@@ -10,7 +10,7 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" iduser="{{userid}}">
+    <main-menu imenu="Wall" iduser="{{id}}">
         <div class="title">Wall</div>
         <div id="list">
         <template repeat="{{item in lista}}"></template>
@@ -44,7 +44,7 @@
         Polymer({
             ready: function(){
               var that=this;
-
+              //hasta aqui esta bien el tema del iduser, id aqui es igual a lo que nos ha llegado desde la URL
               var ajaxhandler = this.$.ajaxhandler;
               id="";
               ajaxhandler.getArticles(id,function (result){
