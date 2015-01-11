@@ -23,11 +23,12 @@
           var section = document.createElement('core-artc');
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
-          section.setAttribute('title', item.title);
+          section.setAttribute('htitle', item.title);
           section.setAttribute('content', item.content);
           section.setAttribute('date', item.date);
           section.setAttribute('bgimg', item.bgimg);
-
+          section.setAttribute('owner', item.iduser);
+          section.setAttribute('idart', item._id);
 
         var div = document.createElement('core-card');
         div.setAttribute('userid','list');
@@ -43,8 +44,6 @@
             ready: function(){
               var that=this;
               var ajaxhandler = this.$.ajaxhandler;
-              debugger
-              //hasta aqui esta bien el tema del iduser, id aqui es igual a lo que nos ha llegado desde la URL
               ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
                 if(result){
                   that.lista=result.reverse();

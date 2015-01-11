@@ -148,10 +148,10 @@ function delArticle(req, res) {
   var articleId = req.param('articleId');
 
   articleManager.delArticle(articleId, function(err, result){
-    if(result === null){
-      next(new Error(new Error('Specified ID ' + articleId + ' does not exist')));
+    if(result === 0){
+      res.status(404).send('Article ' + articleId + ' does not exist at our server. ');
     }else{
-      res.send('Article ' + articleId + ' removed.');
+      res.status(200).send('Article ' + articleId + ' removed. ');
     }
   });
 }

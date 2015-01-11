@@ -97,7 +97,22 @@
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = 'Error could not load';
             errorToast.show();
-            calback(false);
+            callback(false);
+          });
+        },
+        deleteArticles : function(id,callback){
+          doAjax({
+            type: 'DELETE',
+            url: 'article/'+id,
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            //puesto que no se que pasa xq no consigue ajax identificar que la respuesta ha sido de estado 200 como "buena" la hacemos a mano...
+            xhr.status === 200 ? errorToast.text = 'The Article was succesfully deleted': errorToast.text = 'Error, could not delete this article, refresh the page and try it later.';
+            errorToast.show();
+            callback(false);
           });
         },
         verifyUsername : function(datos, that, callback){

@@ -25,10 +25,12 @@
           var section = document.createElement('core-artc');
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
-          section.setAttribute('title', item.title);
+          section.setAttribute('htitle', item.title);
           section.setAttribute('content', item.content);
           section.setAttribute('date', item.date);
           section.setAttribute('bgimg', item.bgimg);
+          section.setAttribute('owner', item.iduser);
+          section.setAttribute('idart', item._id);
 
 
         var div = document.createElement('core-card');
@@ -44,7 +46,6 @@
         Polymer({
             ready: function(){
               var that=this;
-              //hasta aqui esta bien el tema del iduser, id aqui es igual a lo que nos ha llegado desde la URL
               var ajaxhandler = this.$.ajaxhandler;
               id="";
               ajaxhandler.getArticles(id,function (result){
@@ -56,7 +57,6 @@
                   });
                 }
               });
-
             }
         });
     })();

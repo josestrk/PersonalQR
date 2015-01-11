@@ -15,19 +15,21 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
+<link rel="import" href="../core-ajax-handler.html">
 
-<polymer-element name="core-artc" attributes="htitle,date,bgimg,content">
+<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart">
 
   <template>
 
-    <style>
-	#core-artc{
+<style>
+	      #core-artc{
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.1980392) 5px 10px 9px;
+            margin-bottom:20px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
             border-bottom-left-radius: 3px;
-	}
+	      }
         #core_header_panel {
             width: 100%;
             height: 352px;
@@ -63,7 +65,10 @@
         paper-tabs.transparent-teal paper-tab::shadow #ink {
             color: #03a9f4;
         }
-    </style>
+        #paper_tab4{
+          color: red;
+        }
+</style>
 
     <core-card id="core-artc">
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
@@ -76,12 +81,45 @@
           {{content}}
           </section>
         </core-header-panel>
-        <paper-tabs id="paper_tabs" class="transparent-teal" vertical layout center-justified>
-            <paper-tab id="paper_tab1"><core-icon-button icon="favorite-outline" id="core_icon_button2"></core-icon-button><span id='txt'>Like</span></paper-tab>
-            <paper-tab id="paper_tab2"><core-icon-button icon="announcement" id="core_icon_button2"></core-icon-button><span id='txt'>Comment</span></paper-tab>
-            <paper-tab id="paper_tab3"><core-icon-button icon="loyalty" id="core_icon_button2"></core-icon-button><span id='txt'>R</span></paper-tab>
+        <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
+          <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
+            <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
+            <span id="txt">Like</span>
+          </paper-tab>
+          <paper-tab id="paper_tab2" inline flex center-center horizontal layout>
+            <core-icon icon="announcement" id="core_icon_button2"></core-icon>
+            <span id="txt">Comment</span>
+          </paper-tab>
+          <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
+            <core-icon icon="loyalty" id="core_icon_button2"></core-icon>
+            <span id="txt">R</span>
+          </paper-tab>
+          <template if="{{show}}">
+          <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
+            <core-icon icon="delete" id="core_icon_button3"></core-icon>
+            <span id="txt">Delete</span>
+          </paper-tab>
+          </template>
         </paper-tabs>
     </core-card>
+
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
+
+    <paper-dialog id="dia" backdrop transition="core-transition-center">
+      <p>
+        -Are you sure?
+      </p>
+      <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+        <paper-tab style="color: red;" on-click="{{dialog}}" id="paper_tab11" inline flex center-center horizontal layout>
+          <core-icon icon="cancel" id="core_icon_button3"></core-icon>
+          <span id="txt">Cancel</span>
+        </paper-tab>
+        <paper-tab style="color: green;" on-click="{{deletePost}}" id="paper_tab12" inline flex center-center horizontal layout>
+          <core-icon icon="check" id="core_icon_button3"></core-icon>
+          <span id="txt">Yes</span>
+        </paper-tab>
+      </paper-tabs>
+    </paper-dialog>
 
   </template>
 
@@ -94,6 +132,20 @@
         Polymer({
             domReady: function () {
                 loadPost.bind(this);
+                this.showDelete() ? this.show='true' : this.show='';
+            },
+            showDelete: function(){
+              return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
+            },
+            dialog: function(){
+              this.$.dia.toggle();
+            },
+            deletePost: function(e,d,s){
+              this.$.ajaxhandler.deleteArticles(this.idart,function(result){
+                return result;
+              });
+              this.remove();
+              this.dialog();
             }
         });
     })();
