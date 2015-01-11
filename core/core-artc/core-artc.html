@@ -17,7 +17,7 @@
 <link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../core-ajax-handler.html">
 
-<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart">
+<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart,coments">
 
   <template>
 
@@ -48,10 +48,10 @@
             border-top-right-radius: 3px;
         }
         #section {
-                padding-top: 105px;
                 padding-left: 15px;
                 padding-right: 15px;
-                height: 400px;
+                word-wrap: break-word;
+                min-height: 250px;
                 background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
         }
         paper-tabs.transparent-teal {
@@ -68,6 +68,27 @@
         #paper_tab4{
           color: red;
         }
+        .noheight{
+          padding-top: 20px;
+        }
+        .moreheight{
+          padding-top: 65px;
+        }
+        .cont{
+          font-size:18px;
+        }
+        .comentario{
+          font-size:15px;
+        }
+        #div1{
+          font-size: 28px;
+          font-variant: small-caps;
+          font-weight: bold;
+        }
+        #time{
+          font-variant: small-caps;
+          font-weight: bold;
+        }
 </style>
 
     <core-card id="core-artc">
@@ -77,16 +98,18 @@
             <div id="div1">{{htitle}}</div>
             <div id="time">{{date}}</div>
           </core-toolbar>
-          <section id="section">
-          {{content}}
-          </section>
+          <div id="section" class="noheight">
+          <div class="cont">{{content}}</div>
+          <br>
+          <div class="comentario">{{coments}}User: Alejandro<br>Comment: Este es un comentario sobre la noticia, son las 5, ya mañana de dare estilos ^^</div>
+        </div>
         </core-header-panel>
         <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
           <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
             <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
             <span id="txt">Like</span>
           </paper-tab>
-          <paper-tab id="paper_tab2" inline flex center-center horizontal layout>
+          <paper-tab on-click="{{comment}}" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
@@ -121,6 +144,22 @@
       </paper-tabs>
     </paper-dialog>
 
+    <paper-dialog id="comment" backdrop transition="core-transition-center">
+      <p>
+        -What do you want to say?
+      </p>
+      <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+        <paper-tab style="color: red;" on-click="{{comment}}" id="paper_tab11" inline flex center-center horizontal layout>
+          <core-icon icon="cancel" id="core_icon_button3"></core-icon>
+          <span id="txt">Cancel</span>
+        </paper-tab>
+        <paper-tab style="color: green;" on-click="{{deletePost}}" id="paper_tab12" inline flex center-center horizontal layout>
+          <core-icon icon="check" id="core_icon_button3"></core-icon>
+          <span id="txt">Yes</span>
+        </paper-tab>
+      </paper-tabs>
+    </paper-dialog>
+
   </template>
 
   <script>
@@ -133,12 +172,28 @@
             domReady: function () {
                 loadPost.bind(this);
                 this.showDelete() ? this.show='true' : this.show='';
+
+                //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
+                //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
+                this.$.core_header_panel.addEventListener('scroll', function(e) {
+                    var scroller = e.detail.target;
+                    if(scroller.scrollTop === 0){
+                      this.lastElementChild.className="noheight";
+                    }else{
+                      this.lastElementChild.className="moreheight";
+                      this.firstElementChild.className="animate";
+                    }
+                    console.log(scroller.scrollTop);
+                  });
             },
             showDelete: function(){
               return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
             },
             dialog: function(){
               this.$.dia.toggle();
+            },
+            comment: function(){
+              this.$.comment.toggle();
             },
             deletePost: function(e,d,s){
               this.$.ajaxhandler.deleteArticles(this.idart,function(result){

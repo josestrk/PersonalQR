@@ -121,6 +121,15 @@
                     //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
                     loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
+
+                    //Encontrado por internet...
+                    var scaffold = this.$.scaffold;
+                    addEventListener('polymer-ready', function() {
+                      scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
+                        var scroller = e.detail.target;
+                        scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
+                      });
+                    });
                 },
                 keyHandler: function (e, detail, sender) {
                     var pages = this.$.pages;
