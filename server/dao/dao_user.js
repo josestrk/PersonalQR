@@ -64,6 +64,18 @@ function verifyUsername(username, callback) {
 	});
 }
 
+function verifyEmail(email, callback) {
+	var where={};
+	where["mail"]=email;
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err+':', []);
+		}
+		cursor.toArray(callback);
+	});
+}
+
 col.bind({
 	createUser: createUser,
 	getUser: getUser,
@@ -72,7 +84,8 @@ col.bind({
 	delUser: delUser,
 	setUser: setUser,
 	validateUser: validateUser,
-	verifyUsername: verifyUsername
+	verifyUsername: verifyUsername,
+	verifyEmail: verifyEmail
 });
 
 module.exports = col;

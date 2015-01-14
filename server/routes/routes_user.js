@@ -11,6 +11,7 @@ function worker(io) {
   router.get('/user', getUsersAll);
   router.get('/validateuser', validateUser);
   router.get('/verifyUsername', verifyUsername);
+  router.get('/verifyEmail', verifyEmail);
   router.put('/user/:userId', setUser);
   router.delete('/user/:userId', delUser);
 
@@ -98,6 +99,24 @@ function worker(io) {
             res.status(409).send('Username does not exist!');
           }else{
             res.status(409).send('Username does not exist!');
+          }
+        }
+      });
+    }else{
+      res.status(409).send('No data provided!');
+    }
+  }
+
+  function verifyEmail(req, res){
+    if(req.query.email!==undefined){
+      userManager.verifyEmail(req.query.email, function(err, result){
+        if(result[0] !== undefined){
+          res.json(result);
+        }else{
+          if(err !== null){
+            res.status(409).send('Email does not exist!');
+          }else{
+            res.status(409).send('Email does not exist!');
           }
         }
       });

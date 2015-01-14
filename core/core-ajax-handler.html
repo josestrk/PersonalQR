@@ -130,6 +130,22 @@
               callback(false, that);
             }
           );
+        },
+        verifyEmail : function(datos, that, callback){
+          var data={
+            email: datos
+          };
+          doAjax({
+            type: 'GET',
+            url: 'routes_user/verifyEmail',
+            data: data
+          },function(result) {
+            callback(result, that);
+          }.bind(this),
+            function(xhr, err, desc){
+              callback(false, that);
+            }
+          );
         }
       });
     }());

@@ -68,10 +68,17 @@ function validateUser(mail, password, callback) {
 }
 
 function verifyUsername(username, callback){
-	if(username ===''){
+	if(username === ''){
 		return callback("There was no data provided:", []);
 	}
 	daoUser.verifyUsername(username, callback);
+}
+
+function verifyEmail(email, callback){
+	if(email === ''){
+		return callback("There was no data provided:", []);
+	}
+	daoUser.verifyEmail(email, callback);
 }
 
 module.exports = {
@@ -81,5 +88,6 @@ module.exports = {
 	delUser: delUser,
 	setUser: setUser,
 	validateUser: validateUser,
-	verifyUsername: verifyUsername
+	verifyUsername: verifyUsername,
+	verifyEmail: verifyEmail
 };
