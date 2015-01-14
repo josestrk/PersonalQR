@@ -161,7 +161,7 @@
               <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
             </core-card>
             <core-card id="core_card2" center center-justified wrap horizontal layout>
-              <core-tooltip id="mensajes" label="" position="top" tabindex="0">
+              <core-tooltip id="usermsg" label="" position="top" tabindex="0">
                 <paper-input
                   inputvalueformirror="User name"
                   inputhasvalue="User name"
@@ -172,16 +172,18 @@
                   layout vertical
                 ></paper-input>
               </core-tooltip>
-              <paper-input
-                inputvalueformirror=""
-                inputhasvalue=""
-                label="Email Address"
-                willvalidate
-                error="Email not allowed"
-                id="email_field"
-                on-blur="{{infochanged}}"
-                layout vertical
-              ></paper-input>
+              <core-tooltip id="emailmsg" label="" position="top" tabindex="0">
+                <paper-input
+                  inputvalueformirror=""
+                  inputhasvalue=""
+                  label="Email Address"
+                  willvalidate
+                  error="Email not allowed"
+                  id="email_field"
+                  on-blur="{{infochanged}}"
+                  layout vertical
+                ></paper-input>
+              </core-tooltip>
             </core-card>
             <core-card id="form" center-justified vertical layout>
               <form-field
@@ -250,6 +252,7 @@
     },
     validateEmail: function() {
       var string = this.$.email_field.value;
+      this.validateAjaxEmail(string);
       return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
     },
     checkPassword: function(event, detail, sender){
@@ -302,13 +305,28 @@
       var that=this;
       ajaxhandler.verifyUsername(data, that ,function(result, that){
         if(!result){
-          that.$.core_card2.children.mensajes.show=false;
-          that.$.core_card2.children.mensajes.label='';
+          that.$.core_card2.children.usermsg.show=false;
+          that.$.core_card2.children.usermsg.label='';
           console.log('User is not in database');
         }else{
-          that.$.core_card2.children.mensajes.show=true;
-          that.$.core_card2.children.mensajes.label='User already exists';
+          that.$.core_card2.children.usermsg.show=true;
+          that.$.core_card2.children.usermsg.label='User already exists';
           console.log('User is in the database');
+        }
+      });
+    },
+    validateAjaxEmail: function(data){
+      var ajaxhandler = this.$.ajaxhandler;
+      var that=this;
+      ajaxhandler.verifyEmail(data, that ,function(result, that){
+        if(!result){
+          that.$.core_card2.children.emailmsg.show=false;
+          that.$.core_card2.children.emailmsg.label='';
+          console.log('Email is not in database');
+        }else{
+          that.$.core_card2.children.emailmsg.show=true;
+          that.$.core_card2.children.emailmsg.label='Email already exists';
+          console.log('Email is in the database');
         }
       });
     }
