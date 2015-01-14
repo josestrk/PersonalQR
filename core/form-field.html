@@ -51,17 +51,40 @@
       white-space: normal;
       line-height: 14px;
     }
+    
+    #errordiv {
+      max-width: 100%;
+      margin-left: 55px;
+      font-size: 10px;
+      color: rgb(192, 0, 0);
+    }
+    
+    .nodisplay {
+      display: none;
+    }
+    
+    @media(max-width:1080px) {
+      core-tooltip {
+        display: none;
+      }
+    }
+    @media(min-width:1081px) {
+      #errordiv {
+        display: none;
+      }
+    }
     </style>
 
     <core-card id="form-field-container"
       horizontal layout wrap center-justified>
       <core-tooltip show?="{{error.visible}}" label="{{errorMsg}}" position="left" tabindex="-1">
-        <core-icon
+
+      </core-tooltip>
+              <core-icon
           id="icon"
           icon="{{icon}}"
-          center-justified horizontal layout wrap center>
+          center-justified vertical layout wrap center>
         </core-icon>
-      </core-tooltip>
       <paper-input-decorator
         id="field"
         label="{{label}}" floatingLabel
@@ -76,8 +99,10 @@
             required>
       </paper-input-decorator>
     </core-card>
-
-    <content></content>
+    
+    <content>
+      <div id="errordiv" class="nodisplay">{{errorMsg}}</div>
+    </content>
   </template>
 
   <script>
@@ -105,9 +130,11 @@
           if (!this.$.input.validity.valid) {
             this.$.icon.className = 'red';
             this.error.visible = true;
+            this.$.errordiv.className = '';
           } else {
             this.$.icon.className = 'green';
             this.error.visible = false;
+            this.$.errordiv.className = 'nodisplay';
           }
         }
       },
