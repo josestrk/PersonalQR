@@ -31,7 +31,7 @@
           };
           doAjax({
             type: 'GET',
-            url: 'validateuser',
+            url: 'routes_user/validateuser',
             data: data
           },function(result) {
             document.getElementById('user').data(result);
@@ -46,7 +46,7 @@
         create : function(datos){
           doAjax({
             type: 'POST',
-            url: 'user',
+            url: 'routes_user/user',
             data: datos
           },function(result) {
             document.getElementById('user').data(result);
@@ -61,7 +61,7 @@
         sendArticle : function(datos){
           doAjax({
             type: 'POST',
-            url: 'article',
+            url: 'routes_article/article',
             data: datos
           },function(result) {
             window.location.hash="/profile/?id="+result[0].iduser;
@@ -75,7 +75,7 @@
         setUser : function(id, datos){
           doAjax({
             type: 'PUT',
-            url: 'user/'+id,
+            url: 'routes_user/user/'+id,
             data: datos
           },function(result) {
             document.getElementById('user').data(result);
@@ -89,7 +89,7 @@
         getArticles : function(id,callback){
           doAjax({
             type: 'GET',
-            url: 'article/'+id,
+            url: 'routes_article/article/'+id,
           },function(result) {
             callback(result);
           }.bind(this),
@@ -103,7 +103,7 @@
         deleteArticles : function(id,callback){
           doAjax({
             type: 'DELETE',
-            url: 'article/'+id,
+            url: 'routes_article/article/'+id,
           },function(result) {
             callback(result);
           }.bind(this),
@@ -121,7 +121,7 @@
           };
           doAjax({
             type: 'GET',
-            url: 'verifyUsername',
+            url: 'routes_user/verifyUsername',
             data: data
           },function(result) {
             callback(result, that);

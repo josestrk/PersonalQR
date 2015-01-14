@@ -21,8 +21,9 @@
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-jshint": "^0.10.0",
     "mocha": "^1.21.5",
+    "mongoskin": "~1.4.4",
     "serve-favicon": "^2.1.6",
-    "mongoskin": "~1.4.4"
+    "socket.io": "^1.2.1"
   },
   "scripts": {
     "test": "mocha",

@@ -24,6 +24,7 @@
     "pushstate-anchor": "~0.3.0"
   },
   "devDependencies": {
-    "app-router": "2.0.2"
+    "app-router": "2.0.2",
+    "socket.io-client": "~1.2.1"
   }
 }

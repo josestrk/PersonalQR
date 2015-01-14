@@ -11,6 +11,9 @@ var fs = require('fs');
 var config = require('./util/config');
 
 var app = express();
+var http = require('http').Server(app);
+
+var io = require('./util/socket.io')(http);
 
 app.use(favicon('./img/favicon.ico')); //Sirve el favicon de la pagina
 app.use(bodyParser.json());
@@ -21,7 +24,7 @@ app.use(express.static(path.join(__dirname, '../')));
 
 
 // Custom error handler
-//esto se podria uncluso quitar pero lo dejamos, porque no
+//esto se podria uncluso quitar pero lo dejamos
 app.use(function(err, req, res, next) {
 	if (err) {
             if (!err.statusCode || err.statusCode === 500) {
@@ -46,15 +49,16 @@ app.use(function(err, req, res, next) {
 var basePath = path.join(__dirname, '/routes/');
 
 fs.readdirSync(basePath).forEach(function(filename) {
-	var basePathService = '/';
+	console.log("****", filename)
+	var basePathService = '/' + filename.replace(/\.js$/, '');
 	var serviceDefinition = basePath + filename;
-	app.use(basePathService, require(serviceDefinition));
+	app.use(basePathService, require(serviceDefinition)(io));
 });
 
 var ip = config.server.ip;
 var port = config.server.port;
 
-app.listen(port, ip, function() {
+http.listen(port, ip, function() {
 	debug('Application listening on http://' + ip + ':' + port);
 });
 

@@ -97,7 +97,7 @@
         showTopics: function() {
           doAjax({
             type: 'GET',
-            url: '/topic'
+            url: 'routes_topic/topic'
           }, function(data) {
           $.each(this.topics, function(key, value) {
               this.topics.push(value);
