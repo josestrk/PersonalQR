@@ -94,16 +94,15 @@
         ready: function () {
           search.bind(this)();
         },
-        showTopics: function() {
-          doAjax({
-            type: 'GET',
-            url: 'routes_topic/topic'
-          }, function(data) {
-          $.each(this.topics, function(key, value) {
-              this.topics.push(value);
-            });
-          }.bind(this));
-          console.log('showTopics');
+        arrayofTopics: function(data){
+          var ajaxhandler = this.$.ajaxhandler;
+          var that=this;
+          ajaxhandler.showTopics(data, function(result){
+            debugger
+            // $.each(that.topics, function(key, value) {
+            //     this.topics.push(value);
+            //   });
+          });
         }
       });
     }());

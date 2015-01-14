@@ -10,8 +10,8 @@ function getTopic(topicId, callback) {
 	this.findById(topicId, callback);
 }
 
-function getTopicsAll(callback) {
-	this.find({}, function(err, cursor) {
+function getTopicsByLetter(letter, callback) {
+	this.find({ name: new RegExp('^' + letter) }, function(err, cursor) {
 		if (err) {
 			return callback(err);
 		}
@@ -42,7 +42,7 @@ function setTopic(topicId, update, callback) {
 col.bind({
 	createTopic: createTopic,
 	getTopic: getTopic,
-	getTopicsAll: getTopicsAll,
+	getTopicsByLetter: getTopicsByLetter,
 	delTopics: delTopics,
 	delTopic: delTopic,
 	setTopic: setTopic

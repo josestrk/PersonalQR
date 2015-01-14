@@ -5,14 +5,17 @@ var topicManager = require('../manager/manager_topic');
 function worker(io) {
 
   //topics
-  router.post('/topic', createTopic);
+  router.get('/topic', getTopicsByLetter);
   router.get('/topic/:topicId', getTopic);
-  router.get('/topic', getTopicsAll);
+  router.post('/topic', createTopic);
   router.put('/topic/:topicId', setTopic);
   router.delete('/topic/:topicId', delTopic);
 
   function createTopic(req, res) {
-    topicManager.createTopic(function(err, result){
+    var temporalTopic = {
+      name : req.body.name,
+    };
+    topicManager.createTopic(temporalTopic, function(err, result){
       res.json(result);
     });
   }
@@ -28,8 +31,11 @@ function worker(io) {
     });
   }
 
-  function getTopicsAll(req, res) {
-    topicManager.getTopicsAll(function(err, result){
+//como no vamos a recibir todos los los topics, vamos a recibirlos en funcion de la primeras letras
+  function getTopicsByLetter(req, res) {
+    console.log(req.param('letter'));
+    var letter = req.param('letter');
+    topicManager.getTopicsByLetter(letter, function(err, result){
       res.json(result);
     });
   }

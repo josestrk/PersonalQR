@@ -1,9 +1,6 @@
 var daoTopic = require('../dao/dao_topic');
 
-function createTopic(callback) {
-  var temporalTopic = {
-    name : "",
-  };
+function createTopic(temporalTopic, callback) {
   daoTopic.createTopic(temporalTopic, callback);
 }
 
@@ -15,15 +12,15 @@ function delTopic(topicId, callback) {
   daoTopic.delTopic(topicId, callback);
 }
 
-function getTopicsAll(callback) {
-  daoTopic.getTopicsAll(callback);
+function getTopicsByLetter(letter, callback) {
+  daoTopic.getTopicsByLetter(letter, callback);
 }
 
 function setTopic(topicId, data, callback){
   var res = data.name.match(/[\w*\s+]*/)[0];
   if(data.name!==res){
     return callback("Error", null);//asi se crea un error para el ajax
-  }//gracias al return se interrumpe la ejecucion del codigo 
+  }//gracias al return se interrumpe la ejecucion del codigo
   data.name = res;
   daoTopic.setTopic(topicId, data, callback);
 }
@@ -31,7 +28,7 @@ function setTopic(topicId, data, callback){
 module.exports = {
 	createTopic: createTopic,
 	getTopic: getTopic,
-	getTopicsAll: getTopicsAll,
+	getTopicsByLetter: getTopicsByLetter,
 	delTopic: delTopic,
 	setTopic: setTopic
 };
