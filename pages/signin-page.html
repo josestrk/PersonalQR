@@ -59,13 +59,8 @@
       #core_card2.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #username_field {
-        width: 95%;
-        padding: 0px 25px;
-        margin: auto;
-      }
-      #email_field {
-        width: 95%;
+      #username_field, #email_field {
+        width: auto;
         padding: 0px 25px;
         margin: auto;
       }
@@ -160,8 +155,8 @@
             <core-card id="core_logo" vertical layout wrap center-justified center>
               <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
             </core-card>
-            <core-card id="core_card2" center center-justified wrap horizontal layout>
-              <core-tooltip id="usermsg" label="" position="top" tabindex="0">
+            <core-card id="core_card2" center center-justified wrap vertical layout>
+              <core-tooltip id="usermsg" label="" position="top" tabindex="-1">
                 <paper-input
                   inputvalueformirror="User name"
                   inputhasvalue="User name"
@@ -172,7 +167,7 @@
                   layout vertical
                 ></paper-input>
               </core-tooltip>
-              <core-tooltip id="emailmsg" label="" position="top" tabindex="0">
+              <core-tooltip id="emailmsg" label="" position="bottom" tabindex="-1">
                 <paper-input
                   inputvalueformirror=""
                   inputhasvalue=""
@@ -237,8 +232,9 @@
     infochanged: function(){
       if(!this.validateUser()){
         this.$.core_card2.className="red";
-      } else if(this.$.email_field.value==="") {
+      } else if(this.$.core_card2.children.usermsg.label || this.$.core_card2.children.emailmsg.label) {
         this.$.core_card2.className="yellow";
+        console.log('Mensaje: ' + this.$.core_card2.children.usermsg);
       } else if(this.validateEmail()) {
         this.$.core_card2.className="green";
       } else {
@@ -247,13 +243,21 @@
     },
     validateUser: function() {
       var string = this.$.username_field.value;
-      this.validateAjaxUsername(string);
-      return (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) ;
+      if (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) {
+        this.validateAjaxUsername(string);
+        return true;
+      } else {
+        return false;
+      }
     },
     validateEmail: function() {
       var string = this.$.email_field.value;
-      this.validateAjaxEmail(string);
-      return this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/);
+      if (this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/)) {
+        this.validateAjaxEmail(string);
+        return true;
+      } else {
+        return false;
+      }
     },
     checkPassword: function(event, detail, sender){
       if (this.$.password2.$.input.value) {
@@ -295,40 +299,55 @@
         name: this.$.name.$.field.input.value,
         mail: this.$.email_field.value,
         bdate: this.$.bdate.$.field.input.value,
-        password: this.$.password.$.field.input.value,
+        password: this.$.password.$.field.input.value
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
     },
     validateAjaxUsername: function(data){
       var ajaxhandler = this.$.ajaxhandler;
-      var that=this;
-      ajaxhandler.verifyUsername(data, that ,function(result, that){
-        if(!result){
-          that.$.core_card2.children.usermsg.show=false;
-          that.$.core_card2.children.usermsg.label='';
-          console.log('User is not in database');
-        }else{
-          that.$.core_card2.children.usermsg.show=true;
-          that.$.core_card2.children.usermsg.label='User already exists';
+      var that = this;
+      ajaxhandler.verifyUsername(data, that, function(result, that) {
+        if (!result) {
+          that.displayUsernameErrorMessage('');
+          console.log('User is not in the database');
+        } else {
+          that.displayUsernameErrorMessage('User already exists');
           console.log('User is in the database');
         }
       });
     },
     validateAjaxEmail: function(data){
       var ajaxhandler = this.$.ajaxhandler;
-      var that=this;
-      ajaxhandler.verifyEmail(data, that ,function(result, that){
-        if(!result){
-          that.$.core_card2.children.emailmsg.show=false;
-          that.$.core_card2.children.emailmsg.label='';
+      var that = this;
+      ajaxhandler.verifyEmail(data, that, function(result, that) {
+        if (!result) {
+          that.displayEmailErrorMessage('');
           console.log('Email is not in database');
-        }else{
-          that.$.core_card2.children.emailmsg.show=true;
-          that.$.core_card2.children.emailmsg.label='Email already exists';
+        } else {
+          that.displayEmailErrorMessage('Email already exists');
           console.log('Email is in the database');
         }
       });
+    },
+    displayUsernameErrorMessage: function(message) {
+      var element = this.$.core_card2.children.usermsg;
+      this.displayErrorMessage(element, message);
+      return message;
+    },
+    displayEmailErrorMessage: function(message) {
+      var element = this.$.core_card2.children.emailmsg;
+      this.displayErrorMessage(element, message);
+      return message;
+    },
+    displayErrorMessage: function(element, message) {
+      if (message) {
+        element.show=true;
+        element.label=message;
+      } else {
+        element.show=false;
+        element.label='';
+      }      
     }
   });
   </script>
