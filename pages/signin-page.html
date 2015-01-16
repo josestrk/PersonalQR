@@ -218,26 +218,38 @@
 
   <script>
   Polymer({
-    ready:function(){
+    ready: function() {
       this.addEventListener("blur", this.validateAll);
     },
-    validatePattern: function(string, pattern){
+    validatePattern: function(string, pattern) {
       return string.match(pattern) !== null;
     },
     validateLeftForm: function() {
       var validUser = this.validateUser(),
-        validEmail = this.validateEmail();
-      console.log(validUser + ' ' + validEmail);
+        validEmail = this.validateEmail(),
+        that = this;
       
-      if(!validUser || !validEmail) {
-        this.$.leftform.className="red";
+      if(!validUser && !validEmail) {
+        this.$.leftform.className = 'red';
         return false;
-      } else if(this.$.leftform.children.usermsg.label || this.$.leftform.children.emailmsg.label) {
-        this.$.leftform.className="yellow";
+      } else if(!validEmail || !validEmail) {
+        this.$.leftform.className = 'yellow';
         return false;
       } else {
-        this.$.leftform.className="green";
-        return true;
+        var userInDB = (function() {
+          return that.$.leftform.children.usermsg.label;
+        })();
+        var emailInDB = (function() {
+          return that.$.leftform.children.emailmsg.label;
+        })();
+        
+        if(!userInDB && !emailInDB) {
+          this.$.leftform.className = 'green';
+          return true;
+        } else {
+          this.$.leftform.className = 'yellow';
+          return true;
+        }
       }
     },
     validateUser: function() {
