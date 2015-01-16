@@ -41,7 +41,7 @@
         outline: none;
         display: none;
       }
-      #core_card2 {
+      #leftform {
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
@@ -50,13 +50,13 @@
         opacity: 0.9;
         background-color: rgb(255, 255, 255);
       }
-      #core_card2.green {
+      #leftform.green {
         box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #core_card2.yellow {
+      #leftform.yellow {
         box-shadow: rgb(255, 193, 7) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #core_card2.red {
+      #leftform.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
       #username_field, #email_field {
@@ -64,7 +64,7 @@
         padding: 0px 25px;
         margin: auto;
       }
-      #form {
+      #rightform {
         width: 300px;
         height: auto;
         border-radius: 8px;
@@ -93,13 +93,13 @@
       }
 
       @media(max-width:320px){
-        #core_card2 {
+        #leftform {
           width: 190px;
         }
       }
 
       @media(max-width:450px){
-        #core_card2 {
+        #leftform {
           position: absolute;
           top: 10px;
           bottom: 0px;
@@ -116,7 +116,7 @@
           left: 15px;
           width: 70px;
         }
-        #form {
+        #rightform {
           position: absolute;
           left: 0px;
           top: 182px;
@@ -138,10 +138,10 @@
         #core_card1 {
           background-size: 100% 450px;
         }
-        #core_card2 {
+        #leftform {
           margin-top: 150px;
         }
-        #form {
+        #rightform {
           margin: 10px auto;
         }
       }
@@ -149,96 +149,95 @@
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
       <core-card id="core_card" layout vertical>
-          <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
-          <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
-          <core-card id="core_card1" wrap center horizontal layout>
-            <core-card id="core_logo" vertical layout wrap center-justified center>
-              <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
-            </core-card>
-            <core-card id="core_card2" center center-justified wrap vertical layout>
-              <core-tooltip id="usermsg" label="" position="top" tabindex="-1">
-                <paper-input
-                  inputvalueformirror="User name"
-                  inputhasvalue="User name"
-                  label="UserName"
-                  willvalidate
-                  id="username_field"
-                  on-blur="{{infochanged}}"
-                  layout vertical
-                ></paper-input>
-              </core-tooltip>
-              <core-tooltip id="emailmsg" label="" position="bottom" tabindex="-1">
-                <paper-input
-                  inputvalueformirror=""
-                  inputhasvalue=""
-                  label="Email Address"
-                  willvalidate
-                  error="Email not allowed"
-                  id="email_field"
-                  on-blur="{{infochanged}}"
-                  layout vertical
-                ></paper-input>
-              </core-tooltip>
-            </core-card>
-            <core-card id="form" center-justified vertical layout>
-              <form-field
-                id="name"
-                label="Name"
-                icon="account-circle"
-                errorMsg="Please write a name"
-                regexp=".{3,}"
-              ></form-field>
-              <form-field
-                id="password"
-                type="password"
-                label="Choose password"
-                icon="lock"
-                errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
-                on-blur="{{checkPassword}}"
-                regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
-              ></form-field>
-              <form-field
-                id="password2"
-                type="password"
-                label="Re-enter password"
-                icon="lock"
-                errorMsg="Must be the same password"
-                on-blur="{{checkPassword}}"
-                regexp=""
-              ></form-field>
-              <form-field
-                id="bdate"
-                label="Birth date"
-                icon="redeem"
-                errorMsg="Fill in a valid date.(dd-mm-yy)"
-                regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
-              ></form-field>
-              <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
-            </core-card>
+        <paper-progress id="paper_progress" min="0" max="100"></paper-progress>
+        <paper-toast text="Toast!" id="paper_toast" class="core-transition-bottom core-transition" touch-action="none"></paper-toast>
+        <core-card id="core_card1" wrap center horizontal layout>
+          <core-card id="core_logo" vertical layout wrap center-justified center>
+            <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
+          </core-card>
+          <core-card id="leftform" center center-justified wrap vertical layout>
+            <core-tooltip id="usermsg" label="" position="top" tabindex="-1">
+              <paper-input
+                label="User name"
+                willvalidate
+                id="username_field"
+                on-blur="{{validateLeftForm}}"
+                layout vertical
+              ></paper-input>
+            </core-tooltip>
+            <core-tooltip id="emailmsg" label="" position="bottom" tabindex="-1">
+              <paper-input
+                label="Email address"
+                willvalidate
+                error="Email not allowed"
+                id="email_field"
+                on-blur="{{validateLeftForm}}"
+                layout vertical
+              ></paper-input>
+            </core-tooltip>
+          </core-card>
+          <core-card id="rightform" center-justified vertical layout>
+            <form-field
+              id="name"
+              label="Name"
+              icon="account-circle"
+              errorMsg="Please write a name"
+              regexp=".{3,}"
+            ></form-field>
+            <form-field
+              id="password"
+              type="password"
+              label="Choose password"
+              icon="lock"
+              errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
+              on-blur="{{checkPassword}}"
+              regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
+            ></form-field>
+            <form-field
+              id="password2"
+              type="password"
+              label="Re-enter password"
+              icon="lock"
+              errorMsg="Must be the same password"
+              on-blur="{{checkPassword}}"
+              regexp=""
+            ></form-field>
+            <form-field
+              id="bdate"
+              label="Birth date"
+              icon="redeem"
+              errorMsg="Fill in a valid date.(dd-mm-yy)"
+              regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
+            ></form-field>
+            <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
           </core-card>
         </core-card>
       </core-card>
+    </core-card>
   </template>
 
   <script>
   Polymer({
     ready:function(){
-      this.addEventListener("blur", this.validforms);
       this.addEventListener("blur", this.validateAll);
     },
     validatePattern: function(string, pattern){
       return string.match(pattern) !== null;
     },
-    infochanged: function(){
-      if(!this.validateUser()){
-        this.$.core_card2.className="red";
-      } else if(this.$.core_card2.children.usermsg.label || this.$.core_card2.children.emailmsg.label) {
-        this.$.core_card2.className="yellow";
-        console.log('Mensaje: ' + this.$.core_card2.children.usermsg);
-      } else if(this.validateEmail()) {
-        this.$.core_card2.className="green";
+    validateLeftForm: function() {
+      var validUser = this.validateUser(),
+        validEmail = this.validateEmail();
+      console.log(validUser + ' ' + validEmail);
+      
+      if(!validUser || !validEmail) {
+        this.$.leftform.className="red";
+        return false;
+      } else if(this.$.leftform.children.usermsg.label || this.$.leftform.children.emailmsg.label) {
+        this.$.leftform.className="yellow";
+        return false;
       } else {
-        this.$.core_card2.className="red";
+        this.$.leftform.className="green";
+        return true;
       }
     },
     validateUser: function() {
@@ -259,7 +258,8 @@
         return false;
       }
     },
-    checkPassword: function(event, detail, sender){
+    checkPassword: function(){
+      console.log('hola');
       if (this.$.password2.$.input.value) {
         if (this.$.password.$.input.value === this.$.password2.$.input.value) {
           this.$.password2.$.icon.className = "green";
@@ -275,23 +275,18 @@
       }
     },
     validateAll: function() {
-      var fields = this.$.form.querySelectorAll('form-field');
+      var fields = this.$.rightform.querySelectorAll('form-field');
       var isValid = true;
       Array.prototype.forEach.call(fields, function(field) {
         if (field.$.input.pattern && !field.$.input.validity.valid) {
           isValid = false;
         }
       });
-      if (isValid && this.validforms()) {
+      if (isValid && this.validateLeftForm()) {
         this.$.send.style.visibility = "visible";
       } else {
         this.$.send.style.visibility = "hidden";
       }
-    },
-    validforms:function(){
-      var username = this.$.username_field;
-      var mail = this.$.email_field;
-      return (this.validateEmail(mail.value) && this.validateUser(username.value));
     },
     startProgress:function(){
       var datos={
@@ -331,12 +326,12 @@
       });
     },
     displayUsernameErrorMessage: function(message) {
-      var element = this.$.core_card2.children.usermsg;
+      var element = this.$.leftform.children.usermsg;
       this.displayErrorMessage(element, message);
       return message;
     },
     displayEmailErrorMessage: function(message) {
-      var element = this.$.core_card2.children.emailmsg;
+      var element = this.$.leftform.children.emailmsg;
       this.displayErrorMessage(element, message);
       return message;
     },
