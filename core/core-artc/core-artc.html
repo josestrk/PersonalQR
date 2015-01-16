@@ -47,6 +47,9 @@
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
         }
+        #core-drawer-panel{
+          height:192px;
+        }
         #section {
                 padding-left: 15px;
                 padding-right: 15px;
@@ -94,11 +97,32 @@
     <core-card id="core-artc">
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
           <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
-            <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-            <div id="div1">{{htitle}}</div>
-            <div id="time">{{date}}</div>
+            <core-drawer-panel id="core-drawer-panel">
+              <div drawer>
+                <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
+                <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
+                  <core-icon icon="delete" id="core_icon_button3"></core-icon>
+                  <span id="txt">Delete</span>
+                </paper-tab>
+                <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
+                  <core-icon icon="create" id="core_icon_button3"></core-icon>
+                  <span id="txt">Edit</span>
+                </paper-tab>
+                <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
+                  <core-icon icon="face-unlock" id="core_icon_button3"></core-icon>
+                  <span id="txt">Share</span>
+                </paper-tab>
+              </paper-tabs>
+              </div>
+              <div main>
+                 <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
+                  <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
+                  <div id="div1">{{htitle}}</div>
+                  <div id="time">{{date}}</div>
+              </div>
+            </core-drawer-panel>
           </core-toolbar>
-          <div id="section" class="noheight">
+        <div id="section" class="noheight">
           <div class="cont">{{content}}</div>
           <br>
           <div class="comentario">{{coments}}User: Alejandro<br>Comment: Este es un comentario sobre la noticia, son las 5, ya mañana de dare estilos ^^</div>
@@ -118,10 +142,6 @@
             <span id="txt">R</span>
           </paper-tab>
           <template if="{{show}}">
-          <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
-            <core-icon icon="delete" id="core_icon_button3"></core-icon>
-            <span id="txt">Delete</span>
-          </paper-tab>
           </template>
         </paper-tabs>
     </core-card>
@@ -153,7 +173,7 @@
           <core-icon icon="cancel" id="core_icon_button3"></core-icon>
           <span id="txt">Cancel</span>
         </paper-tab>
-        <paper-tab style="color: green;" on-click="{{deletePost}}" id="paper_tab12" inline flex center-center horizontal layout>
+        <paper-tab style="color: green;" on-click="{{comment}}" id="paper_tab12" inline flex center-center horizontal layout>
           <core-icon icon="check" id="core_icon_button3"></core-icon>
           <span id="txt">Yes</span>
         </paper-tab>

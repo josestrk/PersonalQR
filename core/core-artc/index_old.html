@@ -1,0 +1,210 @@
+<link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-scroll-header-panel/core-scroll-header-panel.html">
+<link rel="import" href="../../bower_components/core-field/core-field.html">
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-down.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-up.html">
+<link rel="import" href="../../bower_components/core-animated-pages/transitions/tile-cascade.html">
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
+<link rel="import" href="../core-ajax-handler.html">
+
+<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart,coments">
+
+  <template>
+
+  <style>
+  #core-artc{
+    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.1980392) 5px 10px 9px;
+    margin-bottom:20px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  #core_header_panel {
+    width: 100%;
+    height: 352px;
+    position: relative;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  #core_toolbar {
+    color: rgb(255, 255, 255);
+    background-color: rgb(79, 125, 201);
+    fill: rgb(241, 241, 241);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  #section {
+    padding-left: 15px;
+    padding-right: 15px;
+    word-wrap: break-word;
+    min-height: 250px;
+    background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
+  }
+  paper-tabs.transparent-teal {
+    background-color: transparent;
+    color: #03a9f4;
+    box-shadow: none;
+  }
+  paper-tabs.transparent-teal::shadow #selectionBar {
+    background-color: #03a9f4;
+  }
+  paper-tabs.transparent-teal paper-tab::shadow #ink {
+    color: #03a9f4;
+  }
+  #paper_tab4{
+    color: red;
+  }
+  .noheight{
+    padding-top: 20px;
+  }
+  .moreheight{
+    padding-top: 65px;
+  }
+  .cont{
+    font-size:18px;
+  }
+  .comentario{
+    font-size:15px;
+  }
+  #div1{
+    font-size: 28px;
+    font-variant: small-caps;
+    font-weight: bold;
+  }
+  #time{
+    font-variant: small-caps;
+    font-weight: bold;
+  }
+</style>
+
+<core-card id="core-artc">
+  <core-header-panel mode="waterfall-tall" id="core_header_panel">
+
+    <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
+      <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
+      <div id="div1">{{htitle}}</div>
+      <div id="time">{{date}}</div>
+    </core-toolbar>
+    <div id="section" class="noheight">
+      <div class="cont">{{content}}</div>
+      <br>
+      <div class="comentario">{{coments}}User: Alejandro<br>Comment: Este es un comentario sobre la noticia, son las 5, ya mañana de dare estilos ^^</div>
+    </div>
+  </core-header-panel>
+  <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
+    <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
+      <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
+      <span id="txt">Like</span>
+    </paper-tab>
+    <paper-tab on-click="{{comment}}" id="paper_tab2" inline flex center-center horizontal layout>
+      <core-icon icon="announcement" id="core_icon_button2"></core-icon>
+      <span id="txt">Comment</span>
+    </paper-tab>
+    <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
+      <core-icon icon="loyalty" id="core_icon_button2"></core-icon>
+      <span id="txt">R</span>
+    </paper-tab>
+    <template if="{{show}}">
+      <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
+        <core-icon icon="delete" id="core_icon_button3"></core-icon>
+        <span id="txt">Delete</span>
+      </paper-tab>
+    </template>
+  </paper-tabs>
+</core-card>
+
+<core-ajax-handler id="ajaxhandler"></core-ajax-handler>
+
+<paper-dialog id="dia" backdrop transition="core-transition-center">
+  <p>
+    -Are you sure?
+  </p>
+  <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+    <paper-tab style="color: red;" on-click="{{dialog}}" id="paper_tab11" inline flex center-center horizontal layout>
+      <core-icon icon="cancel" id="core_icon_button3"></core-icon>
+      <span id="txt">Cancel</span>
+    </paper-tab>
+    <paper-tab style="color: green;" on-click="{{deletePost}}" id="paper_tab12" inline flex center-center horizontal layout>
+      <core-icon icon="check" id="core_icon_button3"></core-icon>
+      <span id="txt">Yes</span>
+    </paper-tab>
+  </paper-tabs>
+</paper-dialog>
+
+<paper-dialog id="comment" backdrop transition="core-transition-center">
+  <p>
+    -What do you want to say?
+  </p>
+  <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+    <paper-tab style="color: red;" on-click="{{comment}}" id="paper_tab11" inline flex center-center horizontal layout>
+      <core-icon icon="cancel" id="core_icon_button3"></core-icon>
+      <span id="txt">Cancel</span>
+    </paper-tab>
+    <paper-tab style="color: green;" on-click="{{deletePost}}" id="paper_tab12" inline flex center-center horizontal layout>
+      <core-icon icon="check" id="core_icon_button3"></core-icon>
+      <span id="txt">Yes</span>
+    </paper-tab>
+  </paper-tabs>
+</paper-dialog>
+
+</template>
+
+<script>
+  (function () {
+    function loadPost() {
+      var post = this.$.core-artc;
+    }
+
+    Polymer({
+      domReady: function () {
+        loadPost.bind(this);
+        this.showDelete() ? this.show='true' : this.show='';
+
+        //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
+        //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
+        this.$.core_header_panel.addEventListener('scroll', function(e) {
+          var scroller = e.detail.target;
+          if(scroller.scrollTop === 0){
+            this.lastElementChild.className="noheight";
+          }else{
+            this.lastElementChild.className="moreheight";
+            this.firstElementChild.className="animate";
+          }
+          console.log(scroller.scrollTop);
+        });
+      },
+      showDelete: function(){
+        return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
+      },
+      dialog: function(){
+        this.$.dia.toggle();
+      },
+      comment: function(){
+        this.$.comment.toggle();
+      },
+      deletePost: function(e,d,s){
+        this.$.ajaxhandler.deleteArticles(this.idart,function(result){
+          return result;
+        });
+        this.remove();
+        this.dialog();
+      }
+    });
+  })();
+</script>
+
+</polymer-element>
