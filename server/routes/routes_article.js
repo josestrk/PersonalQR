@@ -8,6 +8,7 @@ function worker(io) {
 
   //articles
   router.post('/article', createArticle);
+  router.post('/editarticle', editArticle);
   // router.get('/article/:articleId', getArticle);
   router.get('/article/:userId', getUserArticles);
   router.get('/article', getArticlesAll);
@@ -40,6 +41,36 @@ function worker(io) {
 
 
     articleManager.createArticle(Article, function(err, result){
+      res.json(result);
+    });
+  }
+
+  function editArticle(req, res) {
+    var Article={
+    };
+    //controladores de acceso
+    if(req.body.iduser!==undefined){
+      Article["iduser"]=req.body.iduser;
+    }else{
+      //esto no se deberia permitir pero... de momento lo dejamos..
+      Article["iduser"]="";
+    }
+    if(req.body.title!==undefined){
+      Article["title"]=req.body.title;
+    }else{
+      Article["title"]="";
+    }
+    if(req.body.content!==undefined){
+      Article["content"]=req.body.content;
+    }else{
+      Article["content"]="";
+    }
+    Article["topic"]=getTopics(req.body.content);
+    Article["date"]=getDateTime();
+    req.body.bgimg!==undefined ? Article["bgimg"]=req.body.bgimg: Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-1.jpg";
+    Article["_id"]=req.body._id;
+
+    articleManager.editArticle(Article, function(err, result){
       res.json(result);
     });
   }
@@ -98,7 +129,7 @@ function worker(io) {
   }
 
   function getUserArticles(req, res) {
-    console.log(req.param('userId'));
+    //console.log(req.param('userId'));
     articleManager.getUserArticles(req.param('userId'), function(err, result){
       res.json(result);
     });

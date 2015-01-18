@@ -19,6 +19,8 @@
         options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
         $.ajax(options);
       }
+
+
       Polymer('core-ajax-handler', {
         get : function(mail, password){
           var data={
@@ -62,6 +64,26 @@
           },function(result) {
             window.location.hash="/profile/?id="+result[0].iduser;
           }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = "Could not connect to server";
+            errorToast.show();
+          });
+        },
+        editArticle : function(that, datos){
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/editarticle',
+            data: datos
+          },function(result) {
+            this.setAttribute('htitle', result[0].title);
+            this.setAttribute('content', result[0].content);
+            this.setAttribute('date', result[0].date);
+            this.setAttribute('bgimg', result[0].bgimg);
+            this.setAttribute('owner', result[0].iduser);
+            this.setAttribute('idart', result[0]._id);
+            this.setAttribute('coments', result[0].coments);
+          }.bind(that),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = "Could not connect to server";
@@ -143,14 +165,11 @@
             });
         },
         showTopics: function(datos, callback) {
-          var data={
-            letter: datos
-          };
           doAjax({
             type: 'GET',
-            url: 'routes_topic/topic',
-            data: data
+            url: 'routes_topic/topic?letter='+datos,
           },function(result) {
+            console.log(result);
             callback(result);
           }.bind(this),
           function(xhr, err, desc){
@@ -162,7 +181,7 @@
         }
       });
     }());
-    
+
     // Para la PAgina de configuracion, cuando meta el usuario lo que sea sobre sus datos
     // var usuarioexistente = document.getElementById('user');
     // var id= usuariocreado.datos._id;

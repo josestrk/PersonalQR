@@ -6,6 +6,18 @@ function createArticle(article, callback) {
 	this.insert(article, callback);
 }
 
+function editArticle(article, callback) {
+	var that = this;
+	//puesto que no me funciona el find, and modify lo fuerzo
+	this.removeById(toObjectID(article['_id']), function(){
+		article['_id']=undefined;
+		that.insert(article, callback);
+	});
+
+	// col.findAndModify(query, sort, update, {new: true}, callback);
+
+}
+
 function getArticle(articleId, callback) {
 	this.findById(articleId, callback);
 }
@@ -58,7 +70,8 @@ col.bind({
 	getArticlesAll: getArticlesAll,
 	delArticles: delArticles,
 	delArticle: delArticle,
-	setArticle: setArticle
+	setArticle: setArticle,
+	editArticle: editArticle
 });
 
 module.exports = col;

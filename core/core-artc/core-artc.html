@@ -99,20 +99,22 @@
           <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
             <core-drawer-panel id="core-drawer-panel">
               <div drawer>
-                <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
-                <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
-                  <core-icon icon="delete" id="core_icon_button3"></core-icon>
-                  <span id="txt">Delete</span>
-                </paper-tab>
-                <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
-                  <core-icon icon="create" id="core_icon_button3"></core-icon>
-                  <span id="txt">Edit</span>
-                </paper-tab>
-                <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
-                  <core-icon icon="face-unlock" id="core_icon_button3"></core-icon>
-                  <span id="txt">Share</span>
-                </paper-tab>
-              </paper-tabs>
+                <paper-tabs id="paper_tabs" class="transparent-teal" horizontal center layout>
+                  <template if="{{show}}">
+                    <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
+                  	   <core-icon icon="delete" id="core_icon_button3"></core-icon>
+                       <span id="txt">Delete</span>
+                     </paper-tab>
+                     <paper-tab on-click="{{edit}}" id="paper_tab3" inline flex center-center horizontal layout>
+                       <core-icon icon="create" id="core_icon_button3"></core-icon>
+                       <span id="txt">Edit</span>
+                     </paper-tab>
+                   </template>
+                   <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
+                     <core-icon icon="face-unlock" id="core_icon_button3"></core-icon>
+                     <span id="txt">Share</span>
+                   </paper-tab>
+                 </paper-tabs>
               </div>
               <div main>
                  <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
@@ -180,6 +182,22 @@
       </paper-tabs>
     </paper-dialog>
 
+    <paper-dialog id="edit" backdrop transition="core-transition-center">
+      <p>-What do you want to write instead?</p>
+      <input id="input" placeholder="{{htitle}}" is="core-input" style="position: fixed;">
+      <textarea id="input2" rows="5" placeholder="{{content}}" maxlength="8000" aria-invalid="false" style="position: static; margin-top: 26px;" ></textarea>
+      <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+        <paper-tab style="color: red;" on-click="{{edit}}" id="paper_tab11" inline flex center-center horizontal layout>
+          <core-icon icon="cancel" id="core_icon_button3"></core-icon>
+          <span id="txt">Cancel</span>
+        </paper-tab>
+        <paper-tab style="color: green;" on-click="{{submit}}" id="paper_tab12" inline flex center-center horizontal layout>
+          <core-icon icon="check" id="core_icon_button3"></core-icon>
+          <span id="txt">Yes</span>
+        </paper-tab>
+      </paper-tabs>
+    </paper-dialog>
+
   </template>
 
   <script>
@@ -214,6 +232,21 @@
             },
             comment: function(){
               this.$.comment.toggle();
+            },
+            edit: function(){
+              this.$.edit.toggle();
+            },
+            submit: function(){
+              var datos={
+                iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
+                title: this.$.input.value,
+                content:this.$.input2.value,
+                bgimg: this.bgimg,
+                _id: this.idart
+              }
+              var ajaxhandler = this.$.ajaxhandler;
+              ajaxhandler.editArticle(this,JSON.stringify(datos));
+              this.$.edit.toggle();
             },
             deletePost: function(e,d,s){
               this.$.ajaxhandler.deleteArticles(this.idart,function(result){

@@ -35,6 +35,7 @@
     </div>
   </div>
   <core-icon icon="search" id="core_icon1"></core-icon>
+  <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
   </template>
   <script>
@@ -77,22 +78,28 @@
 
       Polymer('search-banner', {
         created: function() {
-          if (!topics) {
-            doAjax({}, function(data) {
-
-              (function () {
-                var p = new Promise (
-                  function(resolve, reject) {
-                    topics = data;
-                  }
-                );
-              })();
-
-              this.topics = topics;
-            }.bind(this));
-          }
+          // if (!topics) {
+          //   debugger
+          //   doAjax({}, function(data) {
+          //
+          //     (function () {
+          //       var p = new Promise (
+          //         function(resolve, reject) {
+          //           topics = data;
+          //         }
+          //       );
+          //     })();
+          //
+          //     this.topics = topics;
+          //   }.bind(this));
+          // }
         },
         ready: function () {
+          this.$.q.onkeypress = function(event){
+            console.log('Has introducido '+String.fromCharCode(event.charCode));
+            console.log('Todos tus textos -> '+this.value+String.fromCharCode(event.charCode));
+          };
+          //this.arrayofTopics(this.$.q.onkeypress());
           search.bind(this)();
         },
         arrayofTopics: function(data){

@@ -6,6 +6,12 @@ function createArticle(article, callback) {
   daoArticle.createArticle(article, callback);
 }
 
+function editArticle(article, callback) {
+  // article["likes"]= "";
+  // article["coments"]=[];
+  daoArticle.editArticle(article, callback);
+}
+
 function getArticle(articleId, callback) {
   daoArticle.getArticle(articleId, callback);
 }
@@ -63,4 +69,5 @@ module.exports = {
 	getArticlesAll: getArticlesAll,
 	delArticle: delArticle,
 	setArticle: setArticle,
+  editArticle: editArticle
 };
