@@ -71,6 +71,9 @@
         #paper_tab4{
           color: red;
         }
+        .coments-add{
+          height: 35px;
+        }
         .noheight{
           padding-top: 20px;
         }
@@ -78,19 +81,33 @@
           padding-top: 65px;
         }
         .cont{
-          font-size:18px;
+          font-size:1.5rem;
+        }
+        .comentarios{
+          font-size: 1rem;
+          padding-left: 15px;
+          padding-right: 15px;
+          word-wrap: break-word;
+          background: rgb(214, 227, 231);
+          border-top: 1px solid grey;
+          margin: 0;
+          list-style:  none;
+          /*visibility: hidden;*/
         }
         .comentario{
-          font-size:15px;
+          padding: 5px 10px;
         }
         #div1{
-          font-size: 28px;
+          font-size: 2rem;
           font-variant: small-caps;
           font-weight: bold;
         }
         #time{
           font-variant: small-caps;
+          font-size: 0.75em;
           font-weight: bold;
+          text-align: right;
+          padding: 0px 15px;
         }
 </style>
 
@@ -118,24 +135,31 @@
               </div>
               <div main>
                  <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
-                  <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-                  <div id="div1">{{htitle}}</div>
+                  <div id="div1"><core-icon-button icon="class" id="core_icon_button4"></core-icon-button> {{htitle}}</div>
                   <div id="time">{{date}}</div>
               </div>
             </core-drawer-panel>
           </core-toolbar>
         <div id="section" class="noheight">
           <div class="cont">{{content}}</div>
-          <br>
-          <div class="comentario">{{coments}}User: Alejandro<br>Comment: Este es un comentario sobre la noticia, son las 5, ya mañana de dare estilos ^^</div>
         </div>
         </core-header-panel>
+        <ul id="comentarios" class="comentarios">
+          <li class="comentario">{{coments}} Alejandro : Comentario1</li>
+          <li class="comentario">{{coments}} Jose : Comentario1</li>
+          <li class="comentario">{{coments}} David : Comentario1</li>
+          <li><paper-tabs selected="0" selectedindex="0" id="coments-add" class="coments-add" horizontal center layout>
+          <paper-tab id="com-add" inline flex center-center horizontal layout active>
+            <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
+            <span id="txt">Add</span>
+          </paper-tab></paper-tabs></li>
+        </ul>
         <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
           <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
             <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
             <span id="txt">Like</span>
           </paper-tab>
-          <paper-tab on-click="{{comment}}" id="paper_tab2" inline flex center-center horizontal layout>
+          <paper-tab onClick="visible()" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
@@ -150,6 +174,7 @@
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
+    <!--Papaers dialog-->
     <paper-dialog id="dia" backdrop transition="core-transition-center">
       <p>
         -Are you sure?
@@ -166,7 +191,7 @@
       </paper-tabs>
     </paper-dialog>
 
-    <paper-dialog id="comment" backdrop transition="core-transition-center">
+    <!-- <paper-dialog id="comment" backdrop transition="core-transition-center">
       <p>
         -What do you want to say?
       </p>
@@ -180,12 +205,12 @@
           <span id="txt">Yes</span>
         </paper-tab>
       </paper-tabs>
-    </paper-dialog>
+    </paper-dialog> -->
 
     <paper-dialog id="edit" backdrop transition="core-transition-center">
       <p>-What do you want to write instead?</p>
-      <input id="input" placeholder="{{htitle}}" is="core-input" style="position: fixed;">
-      <textarea id="input2" rows="5" placeholder="{{content}}" maxlength="8000" aria-invalid="false" style="position: static; margin-top: 26px;" ></textarea>
+      <input id="input" value="{{htitle}}" is="core-input" style="position: fixed;" required>
+      <textarea id="input2" rows="5" value="{{content}}" maxlength="8000" aria-invalid="false" style="position: static; margin-top: 26px;" required></textarea>
       <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
         <paper-tab style="color: red;" on-click="{{edit}}" id="paper_tab11" inline flex center-center horizontal layout>
           <core-icon icon="cancel" id="core_icon_button3"></core-icon>
@@ -201,11 +226,14 @@
   </template>
 
   <script>
+    function visible(){
+      debugger
+      document.getElementById("comentarios").style.visibility='visible';
+    }
     (function () {
         function loadPost() {
             var post = this.$.core-artc;
         }
-
         Polymer({
             domReady: function () {
                 loadPost.bind(this);

@@ -1,7 +1,11 @@
 /node_modules
 /bower_components
-/nbproject
-/httpdocs/img/
+/img
+/server/util/config.js
 
 *.jpg
 *.png
+nbproject/private/private.properties
+nbproject/private/private.xml
+server/util/config.js
+server/util/config.js
