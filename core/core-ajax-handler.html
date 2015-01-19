@@ -10,6 +10,13 @@
         errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.responseText.split(':')[1];
         errorToast.show();
       }
+
+      function showMsg(msg) {
+        var toast = document.querySelector('#toast');
+        toast.text = msg;
+        toast.show();
+      }
+
       function doAjax(options, success, error) {
         options.type = options.type || 'GET';
         options.url = base + (options.url || '');
@@ -20,7 +27,55 @@
         $.ajax(options);
       }
 
+      function refresh() {
+        doAjax({
+          type: 'GET',
+          url: 'routes_article/article/',
+        },function(result) {
+          debugger
+          static.articles = result;
+          addListeners(static);
+        });
+      }
 
+      function addListeners(static) {
+          window.addEventListener('focus', function() {
+            //refresh();
+          });
+
+          socket.on('err', function(msg) {
+            showMsg(msg);
+          });
+          //cuando se crea un score lo que hace es lanzar esta funcion y recogerla
+          socket.on('articleCreated', function(result) {
+            static.articles.push(result);
+            showMsg('A new article has been added');
+          });
+
+          // socket.on('scoreDestroyed', function(scoreId) {
+          // 	for (var i = 0; i < static.scores.length; i++) {
+          // 		if (scoreId === static.scores[i]._id) {
+          // 			static.scores.splice(i, 1);
+          // 			showMsg('Score [' + scoreId + '] destroyed');
+          // 		}
+          // 	}
+          // });
+          //
+          // socket.on('scoreSetted', function(score) {
+          // 	for (var i = 0; i < static.scores.length; i++) {
+          // 		if (score._id === static.scores[i]._id) {
+          // 			static.scores[i].home = score.home;
+          // 			static.scores[i].guest = score.guest;
+          // 		}
+          // 	}
+          // });
+      }
+
+      var static = {
+        articles: null
+      };
+
+      refresh();
       Polymer('core-ajax-handler', {
         get : function(mail, password){
           var data={
