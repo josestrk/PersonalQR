@@ -59,11 +59,6 @@
       #leftform.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #username_field, #email_field {
-        width: auto;
-        padding: 0px 25px;
-        margin: auto;
-      }
       #rightform {
         width: 300px;
         height: auto;
@@ -176,6 +171,23 @@
               ></paper-input>
             </core-tooltip>
           </core-card>
+          <!--<core-card id="leftform" center-justified vertical layout>
+            <form-field
+              id="username_field"
+              label="Username"
+              icon="account-circle"
+              errorMsg="Please write a valid username"
+              regexp=".{3,}"
+            ></form-field>
+            <form-field
+              id="email"
+              type="email_field"
+              label="Write your e-mail address"
+              icon="mail"
+              errorMsg="Should be a valid email address"
+              regexp="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}"
+            ></form-field>
+          </core-card>-->
           <core-card id="rightform" center-justified vertical layout>
             <form-field
               id="name"
@@ -219,7 +231,8 @@
   <script>
   Polymer({
     ready: function() {
-      this.addEventListener("blur", this.validateAll);
+      this.addEventListener('blur', this.validateAll);
+      this.addEventListener('keydown', this.keydown);
     },
     validatePattern: function(string, pattern) {
       return string.match(pattern) !== null;
@@ -227,14 +240,13 @@
     validateLeftForm: function() {
       var validUser = this.validateUser(),
         validEmail = this.validateEmail(),
+        color = '',
         that = this;
       
       if(!validUser && !validEmail) {
-        this.$.leftform.className = 'red';
-        return false;
-      } else if(!validEmail || !validEmail) {
-        this.$.leftform.className = 'yellow';
-        return false;
+        color = 'red';
+      } else if(!validUser || !validEmail) {
+        color = 'yellow';
       } else {
         var userInDB = (function() {
           return that.$.leftform.children.usermsg.label;
@@ -242,15 +254,16 @@
         var emailInDB = (function() {
           return that.$.leftform.children.emailmsg.label;
         })();
-        
+
         if(!userInDB && !emailInDB) {
-          this.$.leftform.className = 'green';
-          return true;
+          color = 'green';
         } else {
-          this.$.leftform.className = 'yellow';
-          return true;
+          color = 'yellow';
         }
       }
+
+      that.$.leftform.className = color;
+      return color === 'green';
     },
     validateUser: function() {
       var string = this.$.username_field.value;
@@ -355,6 +368,11 @@
         element.show=false;
         element.label='';
       }      
+    },
+    keydown: function(event) {
+      if(event.keyCode === 13) {
+        this.validateLeftForm();
+      }
     }
   });
   </script>

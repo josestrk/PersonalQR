@@ -134,15 +134,15 @@
       <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;"></core-card>
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
-          <core-icon icon="account-circle" id="email_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" validationmessage="Completa este campo" id="email_field" layout vertical></paper-input>
+          <core-icon icon="mail" id="email_icon" center-justified horizontal layout wrap center></core-icon>
+          <paper-input label="Email Address" id="email_field" layout vertical></paper-input>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="password_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input-decorator id="password_field" label="Choose a Password">
-            <input id="password_field" is="core-input" name="j_password" type="password" value="{{j_password}}"/>
+          <paper-input-decorator id="password_field" label="Enter your password">
+            <input id="password_field" is="core-input" name="password" type="password" value="{{password}}"/>
           </paper-input-decorator>
-          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{loged}}" ></paper-fab>
+          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{logged}}" ></paper-fab>
         </core-card>
 
       </core-card>
@@ -152,7 +152,8 @@
   <script>
     Polymer('login-page', {
       ready: function(){
-        this.addEventListener('blur', this.intervals);
+        this.addEventListener('blur', this.check);
+        this.addEventListener('keydown', this.keydown);
       },
       mailcheck: function(){
         var string = arguments[0];
@@ -170,7 +171,7 @@
           return false;
         }
       },
-      intervals: function(){
+      check: function(){
         if(this.$.email_field.value === "" || this.$.password_field.value === "") {
           this.$.core_card_main.className="yellow";
         } else if (this.mailcheck(this.$.email_field.value) && this.passcheck(this.$.password_field.value)){
@@ -179,9 +180,14 @@
           this.$.core_card_main.className="red";
         }
       },
-      loged: function(){
+      logged: function() {
         var ajaxhandler = this.$.ajaxhandler;
         ajaxhandler.get(this.$.email_field.value, this.$.password_field.value);
+      },
+      keydown: function(event, detail, sender) {
+        if(event.keyCode === 13) {
+          this.check();
+        }
       }
     });
 
