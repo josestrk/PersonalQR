@@ -92,7 +92,9 @@
           border-top: 1px solid grey;
           margin: 0;
           list-style:  none;
-          /*visibility: hidden;*/
+          visibility: hidden;
+          height: 0px;
+          transition: height 2s ease;
         }
         .comentario{
           padding: 5px 10px;
@@ -159,7 +161,7 @@
             <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
             <span id="txt">Like</span>
           </paper-tab>
-          <paper-tab onClick="visible()" id="paper_tab2" inline flex center-center horizontal layout>
+          <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
@@ -226,10 +228,6 @@
   </template>
 
   <script>
-    function visible(){
-      debugger
-      document.getElementById("comentarios").style.visibility='visible';
-    }
     (function () {
         function loadPost() {
             var post = this.$.core-artc;
@@ -252,6 +250,18 @@
                     console.log(scroller.scrollTop);
                   });
             },
+            visiblecomments: function (){
+              if(this.flag){
+                this.$.comentarios.style.visibility = "visible";
+                this.$.comentarios.style.height = "inherit";
+                this.flag=!this.flag;
+              }else{
+                this.$.comentarios.style.visibility = "hidden";
+                this.$.comentarios.style.height = "0px";
+                this.flag=!this.flag;
+              }
+            },
+            flag: true,
             showDelete: function(){
               return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
             },
