@@ -49,7 +49,6 @@ app.use(function(err, req, res, next) {
 var basePath = path.join(__dirname, '/routes/');
 
 fs.readdirSync(basePath).forEach(function(filename) {
-	console.log("****", filename)
 	var basePathService = '/' + filename.replace(/\.js$/, '');
 	var serviceDefinition = basePath + filename;
 	app.use(basePathService, require(serviceDefinition)(io));
