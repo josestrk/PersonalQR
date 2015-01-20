@@ -45,7 +45,7 @@
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
-        width: 220px;
+        width: 260px;
         height: 130px;
         opacity: 0.9;
         background-color: rgb(255, 255, 255);
@@ -150,12 +150,12 @@
           <core-card id="core_logo" vertical layout wrap center-justified center>
             <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
           </core-card>
-          <core-card id="leftform" center center-justified wrap vertical layout>
+          <!--<core-card id="leftform" center center-justified wrap vertical layout>
             <core-tooltip id="usermsg" label="" position="top" tabindex="-1">
               <paper-input
                 label="User name"
                 willvalidate
-                id="username_field"
+                id="username"
                 on-blur="{{validateLeftForm}}"
                 layout vertical
               ></paper-input>
@@ -165,29 +165,31 @@
                 label="Email address"
                 willvalidate
                 error="Email not allowed"
-                id="email_field"
+                id="email"
                 on-blur="{{validateLeftForm}}"
                 layout vertical
               ></paper-input>
             </core-tooltip>
-          </core-card>
-          <!--<core-card id="leftform" center-justified vertical layout>
+          </core-card>-->
+          <core-card id="leftform" center-justified vertical layout>
             <form-field
-              id="username_field"
+              id="username"
               label="Username"
               icon="account-circle"
               errorMsg="Please write a valid username"
+              on-blur="{{validateAjaxUsername}}"
               regexp=".{3,}"
             ></form-field>
             <form-field
               id="email"
-              type="email_field"
-              label="Write your e-mail address"
+              type="email"
+              label="E-mail address"
               icon="mail"
               errorMsg="Should be a valid email address"
+              on-blur="{{validateAjaxEmail}}"
               regexp="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}"
             ></form-field>
-          </core-card>-->
+          </core-card>
           <core-card id="rightform" center-justified vertical layout>
             <form-field
               id="name"
@@ -263,28 +265,10 @@
       }
 
       that.$.leftform.className = color;
+      console.log(color);
       return color === 'green';
     },
-    validateUser: function() {
-      var string = this.$.username_field.value;
-      if (this.validatePattern(string,/^[a-z0-9áéíóúñ_/-]*$/i) && string.length >= 4 && string.length <= 30) {
-        this.validateAjaxUsername(string);
-        return true;
-      } else {
-        return false;
-      }
-    },
-    validateEmail: function() {
-      var string = this.$.email_field.value;
-      if (this.validatePattern(string,/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/)) {
-        this.validateAjaxEmail(string);
-        return true;
-      } else {
-        return false;
-      }
-    },
     checkPassword: function(){
-      console.log('hola');
       if (this.$.password2.$.input.value) {
         if (this.$.password.$.input.value === this.$.password2.$.input.value) {
           this.$.password2.$.icon.className = "green";
@@ -300,14 +284,22 @@
       }
     },
     validateAll: function() {
-      var fields = this.$.rightform.querySelectorAll('form-field');
+      var leftfields = Array.prototype.slice.call(this.$.leftform.querySelectorAll('form-field'));
+      var rightfields = Array.prototype.slice.call(this.$.rightform.querySelectorAll('form-field'));
+      var fields = [];
+      for (field in leftfields) {
+        fields.push(leftfields[field]);
+      }
+      for (field in rightfields) {
+        fields.push(rightfields[field]);
+      }
       var isValid = true;
       Array.prototype.forEach.call(fields, function(field) {
         if (field.$.input.pattern && !field.$.input.validity.valid) {
           isValid = false;
         }
       });
-      if (isValid && this.validateLeftForm()) {
+      if (isValid) {
         this.$.send.style.visibility = "visible";
       } else {
         this.$.send.style.visibility = "hidden";
@@ -315,21 +307,22 @@
     },
     startProgress:function(){
       var datos={
-        username: this.$.username_field.value,
+        username: this.$.username.$.field.input.value,
         name: this.$.name.$.field.input.value,
-        mail: this.$.email_field.value,
+        mail: this.$.email.$.field.input.value,
         bdate: this.$.bdate.$.field.input.value,
         password: this.$.password.$.field.input.value
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
     },
-    validateAjaxUsername: function(data){
+    validateAjaxUsername: function(){
       var ajaxhandler = this.$.ajaxhandler;
+      var data = this.$.username.$.field.input.value;
       var that = this;
       ajaxhandler.verifyUsername(data, that, function(result, that) {
         if (!result) {
-          that.displayUsernameErrorMessage('');
+          //that.displayUsernameErrorMessage('');
           console.log('User is not in the database');
         } else {
           that.displayUsernameErrorMessage('User already exists');
@@ -337,12 +330,13 @@
         }
       });
     },
-    validateAjaxEmail: function(data){
+    validateAjaxEmail: function(){
       var ajaxhandler = this.$.ajaxhandler;
+      var data = this.$.email.$.field.input.value;
       var that = this;
       ajaxhandler.verifyEmail(data, that, function(result, that) {
         if (!result) {
-          that.displayEmailErrorMessage('');
+          //that.displayEmailErrorMessage('');
           console.log('Email is not in database');
         } else {
           that.displayEmailErrorMessage('Email already exists');
@@ -351,12 +345,12 @@
       });
     },
     displayUsernameErrorMessage: function(message) {
-      var element = this.$.leftform.children.usermsg;
+      var element = this.$.username.$.field.error;
       this.displayErrorMessage(element, message);
       return message;
     },
     displayEmailErrorMessage: function(message) {
-      var element = this.$.leftform.children.emailmsg;
+      var element = this.$.email.$.field.error;
       this.displayErrorMessage(element, message);
       return message;
     },
