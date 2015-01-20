@@ -22,24 +22,23 @@
   <template>
 
 <style>
-	      #core-artc{
+	#core-artc{
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.1980392) 5px 10px 9px;
             margin-bottom:20px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
             border-bottom-left-radius: 3px;
-	      }
+	}
         #core_header_panel {
             width: 100%;
-            height: 352px;
+            height: 452px;
             position: relative;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
             border-bottom-left-radius: 3px;
         }
-
         #core_toolbar {
             color: rgb(255, 255, 255);
             background-color: rgb(79, 125, 201);
@@ -54,7 +53,7 @@
                 padding-left: 15px;
                 padding-right: 15px;
                 word-wrap: break-word;
-                min-height: 250px;
+                min-height: 400px;
                 background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
         }
         paper-tabs.transparent-teal {
@@ -73,6 +72,7 @@
         }
         .coments-add{
           height: 35px;
+          color: #03a9f4;
         }
         .noheight{
           padding-top: 20px;
@@ -94,10 +94,20 @@
           list-style:  none;
           visibility: hidden;
           height: 0px;
-          transition: height 2s ease;
+          overflow:scroll;
+          transition: height 0.5s ease;
         }
         .comentario{
           padding: 5px 10px;
+        }
+        #paper_manager{
+          font-size: 20px;
+          font-weight: bold;
+          color:white;
+        }
+        #manage-ico{
+          width: 50px;
+          height: 50px;
         }
         #div1{
           font-size: 2rem;
@@ -117,27 +127,23 @@
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
           <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
             <core-drawer-panel id="core-drawer-panel">
-              <div drawer>
-                <paper-tabs id="paper_tabs" class="transparent-teal" horizontal center layout>
-                  <template if="{{show}}">
+              <div drawer id="drawerp">
+                <paper-tabs id="paper_manager" class="transparent-teal" horizontal center layout>
+                <template if="{{show}}">
                     <paper-tab on-click="{{dialog}}" id="paper_tab4" inline flex center-center horizontal layout>
-                  	   <core-icon icon="delete" id="core_icon_button3"></core-icon>
+                  	   <core-icon icon="delete" id="manage-ico"></core-icon>
                        <span id="txt">Delete</span>
                      </paper-tab>
-                     <paper-tab on-click="{{edit}}" id="paper_tab3" inline flex center-center horizontal layout>
-                       <core-icon icon="create" id="core_icon_button3"></core-icon>
+                     <paper-tab on-click="{{edit}}" id="paper_mg" inline flex center-center horizontal layout>
+                       <core-icon icon="create" id="manage"></core-icon>
                        <span id="txt">Edit</span>
                      </paper-tab>
-                   </template>
-                   <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
-                     <core-icon icon="face-unlock" id="core_icon_button3"></core-icon>
-                     <span id="txt">Share</span>
-                   </paper-tab>
-                 </paper-tabs>
+                </template>
+                </paper-tabs>
               </div>
               <div main>
-                 <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
-                  <div id="div1"><core-icon-button icon="class" id="core_icon_button4"></core-icon-button> {{htitle}}</div>
+
+                  <div id="div1"><core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button> <core-icon-button icon="class" id="core_icon_button4"></core-icon-button> {{htitle}}</div>
                   <div id="time">{{date}}</div>
               </div>
             </core-drawer-panel>
@@ -146,16 +152,22 @@
           <div class="cont">{{content}}</div>
         </div>
         </core-header-panel>
+
+        <!-- comentarios -->
+
         <ul id="comentarios" class="comentarios">
-          <li class="comentario">{{coments}} Alejandro : Comentario1</li>
-          <li class="comentario">{{coments}} Jose : Comentario1</li>
-          <li class="comentario">{{coments}} David : Comentario1</li>
+            <template repeat="{{comentario in Arrcomentarios}}">
+                <li class="comentario">{{comentario.user}} : {{comentario.com}}</li>
+            </template>
           <li><paper-tabs selected="0" selectedindex="0" id="coments-add" class="coments-add" horizontal center layout>
-          <paper-tab id="com-add" inline flex center-center horizontal layout active>
+          <paper-tab id="com-add" on-click="{{dialog}}" inline flex center-center horizontal layout active>
             <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
             <span id="txt">Add</span>
           </paper-tab></paper-tabs></li>
         </ul>
+
+        <!-- buttons -->
+
         <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
           <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
             <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
@@ -165,22 +177,23 @@
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
-          <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
-            <core-icon icon="loyalty" id="core_icon_button2"></core-icon>
-            <span id="txt">R</span>
+          <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
+                     <core-icon icon="face-unlock" id="core_icon_button2"></core-icon>
+                     <span id="txt">Share</span>
           </paper-tab>
-          <template if="{{show}}">
-          </template>
         </paper-tabs>
     </core-card>
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
-    <!--Papaers dialog-->
+    <!--dialog-float
+    necesito un campo para p otro para tex are y otro para evento 
+    -->
     <paper-dialog id="dia" backdrop transition="core-transition-center">
       <p>
         -Are you sure?
       </p>
+
       <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
         <paper-tab style="color: red;" on-click="{{dialog}}" id="paper_tab11" inline flex center-center horizontal layout>
           <core-icon icon="cancel" id="core_icon_button3"></core-icon>
@@ -193,21 +206,24 @@
       </paper-tabs>
     </paper-dialog>
 
-    <!-- <paper-dialog id="comment" backdrop transition="core-transition-center">
+    <paper-dialog id="addcomment" backdrop transition="core-transition-center">
       <p>
         -What do you want to say?
       </p>
+
+      <textarea id="input2" rows="5" value="{{coments}}" maxlength="8000" aria-invalid="false" style="position: static; margin-top: 26px;" required></textarea>
+
       <paper-tabs noink selectedindex="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
         <paper-tab style="color: red;" on-click="{{comment}}" id="paper_tab11" inline flex center-center horizontal layout>
           <core-icon icon="cancel" id="core_icon_button3"></core-icon>
           <span id="txt">Cancel</span>
         </paper-tab>
-        <paper-tab style="color: green;" on-click="{{comment}}" id="paper_tab12" inline flex center-center horizontal layout>
+        <paper-tab style="color: green;" on-click="{{submit}}" id="paper_tab12" inline flex center-center horizontal layout>
           <core-icon icon="check" id="core_icon_button3"></core-icon>
           <span id="txt">Yes</span>
         </paper-tab>
       </paper-tabs>
-    </paper-dialog> -->
+    </paper-dialog>
 
     <paper-dialog id="edit" backdrop transition="core-transition-center">
       <p>-What do you want to write instead?</p>
@@ -237,6 +253,7 @@
                 loadPost.bind(this);
                 this.showDelete() ? this.show='true' : this.show='';
 
+                var Arrcomentarios = [[user='pepe',coment='mwerthyjkcvbnm,'],[user='pepe2',coment='mwerthyjkcvbnm,2']]
                 //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
                 //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
                 this.$.core_header_panel.addEventListener('scroll', function(e) {
@@ -253,7 +270,7 @@
             visiblecomments: function (){
               if(this.flag){
                 this.$.comentarios.style.visibility = "visible";
-                this.$.comentarios.style.height = "inherit";
+                this.$.comentarios.style.height = "160px";
                 this.flag=!this.flag;
               }else{
                 this.$.comentarios.style.visibility = "hidden";
