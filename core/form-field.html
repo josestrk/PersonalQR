@@ -7,6 +7,7 @@
 <!-- <link rel="import" href="../lib/paper-input-decorator/paper-input-decorator.html"> -->
 <link rel="import" href="../bower_components/core-tooltip/core-tooltip.html">
 
+<link rel="import" href="../core/core-ajax-handler.html">
 
 <polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
   <template>
@@ -102,6 +103,7 @@
     </core-card>
     
     <content>
+      <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
       <div id="errordiv" class="nodisplay">{{errorMsg}}</div>
     </content>
   </template>
@@ -136,12 +138,33 @@
             this.$.icon.className = 'green';
             this.error.visible = false;
             this.$.errordiv.className = 'nodisplay';
+            this.checkInDatabase();
           }
         }
+      },
+      checkInDatabase: function() {
+        var ajaxhandler = this.$.ajaxhandler;
+        var data = this.$.input.value;
+        var that = this;
+        debugger
+        ajaxhandler.verifyUsername(data, that, function(result, that) {
+          if (!result) {
+            console.log('User is not in the database');
+          } else {
+            console.log('User is in the database');
+          }
+        });
       },
       keydown: function(event, detail, sender) {
         if(event.keyCode === 13) {
           this.check();
+          var parentArray = this.parentNode.getElementsByTagName('form-field');
+          for (i = 0; i < parentArray.length - 1; i++) {
+            if (parentArray[i] === this) {
+              parentArray[i+1].$.input.focus();
+              break;
+            }
+          }
         }
       }
     });
