@@ -142,6 +142,13 @@
       keydown: function(event, detail, sender) {
         if(event.keyCode === 13) {
           this.check();
+          var parentArray = this.parentNode.getElementsByTagName('form-field');
+          for (i = 0; i < parentArray.length - 1; i++) {
+            if (parentArray[i] === this) {
+              parentArray[i+1].$.input.focus();
+              break;
+            }
+          }
         }
       }
     });
