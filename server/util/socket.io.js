@@ -28,6 +28,13 @@ module.exports = function(http) {
 		}
 	};
 
+	io.alexEmit = function(event, data) {
+		for(var idSocket in clients) {
+			var socket = io.sockets.connected[idSocket];
+			socket.emit(event, data);
+		}
+	};
+
 	return io;
 
 };
