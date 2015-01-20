@@ -26,37 +26,36 @@ function setUser(userId, data, callback) {//in case any error with data, then no
 				case 'username':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
-						return callback("Error", null);
+						return callback("Error, bad "+key , null);
 					}
 					break;
 				case 'name':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
-						return callback("Error", null);
+						return callback("Error, bad "+key , null);
 					}
 					break;
 				case 'mail':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
-						return callback("Error", null);
+						return callback("Error, bad "+key , null);
 					}
 					break;
 				case 'password':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
-						return callback("Error", null);
+						return callback("Error, bad "+key , null);
 					}
 					break;
 				case 'bdate':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
-						return callback("Error", null);
+						return callback("Error, bad "+key , null);
 					}
 					break;
 			}
 		}
 	}
-
 	daoUser.setUser(userId, data, callback);
 }
 

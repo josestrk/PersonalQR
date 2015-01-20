@@ -42,7 +42,6 @@ function worker(io) {
 
     articleManager.createArticle(Article, function(err, result){
       res.json(result);
-      console.log(io.emitOthers);
       io.alexEmit('articleCreated', result);
     });
   }
@@ -131,7 +130,6 @@ function worker(io) {
   }
 
   function getUserArticles(req, res) {
-    //console.log(req.param('userId'));
     articleManager.getUserArticles(req.param('userId'), function(err, result){
       res.json(result);
     });

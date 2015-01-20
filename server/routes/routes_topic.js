@@ -33,7 +33,6 @@ function worker(io) {
 
 //como no vamos a recibir todos los los topics, vamos a recibirlos en funcion de la primeras letras
   function getTopicsByLetter(req, res) {
-    console.log(req.param('letter'));
     var letter = req.param('letter');
     topicManager.getTopicsByLetter(letter, function(err, result){
       res.json(result);

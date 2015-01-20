@@ -152,7 +152,7 @@ function worker(io) {
 
     userManager.setUser(userId, User, function(err, result){
       if(result === null){
-          next(new Error(new Error('Specified ID ' + userId + ' does not exist')));
+        res.status(401).send(err);
       }else{
           res.json(result);
       }
