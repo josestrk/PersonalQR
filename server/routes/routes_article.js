@@ -42,8 +42,8 @@ function worker(io) {
 
     articleManager.createArticle(Article, function(err, result){
       res.json(result);
-      console.log();
-      io.emitOthers('articleCreated', result, req.query.socketId);
+      console.log(io.emitOthers);
+      io.alexEmit('articleCreated', result);
     });
   }
 

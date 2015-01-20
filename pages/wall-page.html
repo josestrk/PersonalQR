@@ -10,12 +10,12 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" iduser="{{id}}">
+    <main-menu imenu="Wall" id="wall" iduser="{{id}}">
         <div class="title">Wall</div>
+        <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
         <div id="list">
-        <template repeat="{{item in lista}}"></template>
+          <template repeat="{{item in lista}}"></template>
         </div>
-        <core-card><core-icon icon="load"></core-icon></core-card>
     </main-menu>
   </template>
 

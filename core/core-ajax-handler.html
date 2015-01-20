@@ -12,10 +12,33 @@
       }
 
       function showMsg(msg) {
-        var toast = document.querySelector('#toast');
+        var toast = document.querySelector('#errorToast');
         toast.text = msg;
         toast.show();
       }
+      function createArticle(item) {
+        var section = document.createElement('core-artc');
+        section.setAttribute('layout', '');
+        section.setAttribute('vertical', '');
+        section.setAttribute('htitle', item.title);
+        section.setAttribute('content', item.content);
+        section.setAttribute('date', item.date);
+        section.setAttribute('bgimg', item.bgimg);
+        section.setAttribute('owner', item.iduser);
+        section.setAttribute('idart', item._id);
+        section.setAttribute('coments', item.coments);
+
+
+        var div = document.createElement('core-card');
+        div.setAttribute('userid','list');
+        div.setAttribute('layout', '');
+        div.setAttribute('vertical', '');
+
+        div.appendChild(section);
+
+        return div;
+      }
+
 
       function doAjax(options, success, error) {
         options.type = options.type || 'GET';
@@ -32,7 +55,6 @@
           type: 'GET',
           url: 'routes_article/article/',
         },function(result) {
-          debugger
           static.articles = result;
           addListeners(static);
         });
@@ -48,7 +70,23 @@
           });
           //cuando se crea un score lo que hace es lanzar esta funcion y recogerla
           socket.on('articleCreated', function(result) {
-            static.articles.push(result);
+            // static.articles.push(result);
+
+            //document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="red"
+
+
+            
+            // Get a reference to the element in which we want to insert a new node
+            var parentElement = document.getElementsByTagName('wall-page')[0].$.list;
+            // Get a reference to the first child
+            var theFirstChild = parentElement.firstChild;
+
+            // Create a new element
+            var newElement = createArticle(result[0]);
+
+            // Insert the new element before the first child
+            parentElement.insertBefore(newElement, theFirstChild);
+
             showMsg('A new article has been added');
           });
 
