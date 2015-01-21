@@ -114,7 +114,7 @@
         articles: null
       };
 
-      refresh();
+      //refresh();
       Polymer('core-ajax-handler', {
         get : function(mail, password){
           var data={
@@ -210,6 +210,23 @@
             errorToast.text = 'Error could not load';
             errorToast.show();
             callback(false);
+          });
+        },
+        getAllArticles : function(skip, callback){
+          doAjax({
+            type: 'GET',
+            url: 'routes_article/articles/'+skip,
+          },function(result) {
+            if(result[0] == null){
+              callback(result, 'fin');
+            }else{
+              callback(result);
+            }
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = "Could not connect to server";
+            errorToast.show();
           });
         },
         deleteArticles : function(id,callback){

@@ -59,7 +59,7 @@
         }
         function search(data){
             $(this.$.q).typeahead({
-                minLength: 1,
+                minLength: 3,
                 order: "asc",
                 group: true,
                 hint: true,
@@ -73,60 +73,64 @@
             });
         }
 
-      //   //funcionalidad para buscar en funcion de las letras y no recuperar nada... TODO
-      //   Polymer('search-banner', {
-      //     ready: function () {
-      //       var that = this;
-      //       this.$.q.onkeypress = function(event){
-      //         console.log('Has introducido '+String.fromCharCode(event.charCode));
-      //         console.log('Todos tus textos -> '+this.$.q.value+String.fromCharCode(event.charCode));
-      //         this.arrayofTopics(this.$.q.value+String.fromCharCode(event.charCode));
-      //       }.bind(that);
-      //       //this.arrayofTopics(this.$.q.onkeypress());
-      //     },
-      //     arrayofTopics: function(datos){
-      //       var ajaxhandler = this.$.ajaxhandler;
-      //       var that=this;
-      //       ajaxhandler.showTopics(datos, function(result){
-      //         debugger
-      //         var data = {
-      //           topics: ['eluno']
-      //         };
-      //         for(var i = 0; i < result.length; i++){
-      //           data.topics.push(result[i].name);
-      //         }
-      //         search.bind(this)(data);
-      //         if(datos.length<=1){
-      //           this.blur();
-      //         }
-      //       }.bind(that));
-      //     }
-      //   });
-      // }());
+        //funcionalidad para buscar en funcion de las letras y no recuperar nada...
+        Polymer('search-banner', {
+          ready: function () {
+            var that = this;
+            this.$.q.onkeyup = function(event){
+              console.log('Has introducido '+String.fromCharCode(event.charCode));
+              console.log('Todos tus textos -> '+this.$.q.value+String.fromCharCode(event.charCode));
+              if(this.$.q.value.length>0){
+                this.arrayofTopics(this.$.q.value+String.fromCharCode(event.charCode));
+              }
+            }.bind(that);
+          },
+          arrayofTopics: function(datos){
+            var ajaxhandler = this.$.ajaxhandler;
+            var that=this;
+            ajaxhandler.showTopics(datos, function(result){
+              var data = {
+                topics: ['eluno']
+              };
+              for(var i = 0; i < result.length; i++){
+                data.topics.push(result[i].name);
+              }
+              search.bind(this)(data);
+              if(datos.length<=1){
+                this.blur();
+              }
+            }.bind(that));
+          },
+          // debug: function(){
+          //   debugger
+          //   on-keypress="{{debug}}";
+          // }
+        });
+      }());
 
-    Polymer('search-banner', {
-        ready: function () {
-          this.$.q.onkeypress = function(event){
-            console.log('Has introducido '+String.fromCharCode(event.charCode));
-            console.log('Todos tus textos -> '+this.value+String.fromCharCode(event.charCode));
-          };
-          this.arrayofTopics('al');
-          //this.arrayofTopics(this.$.q.onkeypress());
-        },
-        arrayofTopics: function(datos){
-          var ajaxhandler = this.$.ajaxhandler;
-          var that=this;
-          ajaxhandler.showTopics(datos, function(result){
-            var data = {
-              topics: ['eluno']
-            };
-            for(var i = 0; i < result.length; i++){
-              data.topics.push(result[i].name);
-            }
-            search.bind(this)(data);
-          }.bind(that));
-        }
-      });
-    }());
+    // Polymer('search-banner', {
+    //     ready: function () {
+    //       this.$.q.onkeypress = function(event){
+    //         console.log('Has introducido '+String.fromCharCode(event.charCode));
+    //         console.log('Todos tus textos -> '+this.value+String.fromCharCode(event.charCode));
+    //       };
+    //       this.arrayofTopics('al');
+    //       //this.arrayofTopics(this.$.q.onkeypress());
+    //     },
+    //     arrayofTopics: function(datos){
+    //       var ajaxhandler = this.$.ajaxhandler;
+    //       var that=this;
+    //       ajaxhandler.showTopics(datos, function(result){
+    //         var data = {
+    //           topics: ['eluno']
+    //         };
+    //         for(var i = 0; i < result.length; i++){
+    //           data.topics.push(result[i].name);
+    //         }
+    //         search.bind(this)(data);
+    //       }.bind(that));
+    //     }
+    //   });
+    // }());
   </script>
 </polymer-element>

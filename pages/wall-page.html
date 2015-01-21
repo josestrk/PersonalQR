@@ -10,7 +10,7 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" id="wall" iduser="{{id}}">
+    <main-menu imenu="Wall" id="wall" iduser="{{id}}" on-endofpage="{{debug}}">
         <div class="title">Wall</div>
         <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
         <div id="list">
@@ -46,13 +46,32 @@
         }
 
         Polymer({
-            ready: function(){
-              var that=this;
-              var ajaxhandler = this.$.ajaxhandler;
-              id="";
-              ajaxhandler.getArticles(id,function (result){
+          ready: function(){
+            var that=this;
+            var ajaxhandler = this.$.ajaxhandler;
+            var sk= this.skip;
+            ajaxhandler.getAllArticles(sk,function (result){
+              if(result){
+                that.lista=result;
+                var listPost = that.$.list;
+                that.lista.forEach(function (item) {
+                   listPost.appendChild(createPage(item));
+                });
+              }
+            });
+            this.skip++;
+          },
+          debug: function(){
+            var that=this;
+            var ajaxhandler = this.$.ajaxhandler;
+            var sk= this.skip;
+            if(this.status!=='fin'){
+              ajaxhandler.getAllArticles(sk,function (result, status){
+                if(status==='fin'){
+                  that.status='fin';
+                }
                 if(result){
-                  that.lista=result.reverse();
+                  that.lista=result;
                   var listPost = that.$.list;
                   that.lista.forEach(function (item) {
                      listPost.appendChild(createPage(item));
@@ -60,8 +79,12 @@
                 }
               });
             }
-        });
-    })();
+            this.skip++;
+          },
+            skip: 0,
+            status : ''
+          });
+        })();
   </script>
 
 </polymer-element>

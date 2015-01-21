@@ -11,7 +11,7 @@ function worker(io) {
   router.post('/editarticle', editArticle);
   // router.get('/article/:articleId', getArticle);
   router.get('/article/:userId', getUserArticles);
-  router.get('/article', getArticlesAll);
+  router.get('/articles/:id', getArticlesAll);
   router.put('/article/:articleId', setArticle);
   router.delete('/article/:articleId', delArticle);
 
@@ -118,16 +118,16 @@ function worker(io) {
   }
 
 
-  function getArticle(req, res) {
-    var articleId = req.param('articleId');
-    articleManager.getArticle(articleId, function(err, result){
-      if(result){
-        res.json(result);
-      } else {
-        next(new Error(new Error(articleId + 'as article id does not exist')));
-      }
-    });
-  }
+  // function getArticle(req, res) {
+  //   var articleId = req.param('articleId');
+  //   articleManager.getArticle(articleId, function(err, result){
+  //     if(result){
+  //       res.json(result);
+  //     } else {
+  //       next(new Error(new Error(articleId + 'as article id does not exist')));
+  //     }
+  //   });
+  // }
 
   function getUserArticles(req, res) {
     articleManager.getUserArticles(req.param('userId'), function(err, result){
@@ -136,9 +136,11 @@ function worker(io) {
   }
 
   function getArticlesAll(req, res) {
+    var skip = req.param('id');
+    console.log(skip);
     articleManager.getArticlesAll(function(err, result){
       res.json(result);
-    });
+    }, skip);
   }
 
   function setArticle(req, res) {

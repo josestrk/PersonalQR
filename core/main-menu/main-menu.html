@@ -126,8 +126,20 @@
                     var scaffold = this.$.scaffold;
                     addEventListener('polymer-ready', function() {
                       scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
+                        // $(window).height()
                         var scroller = e.detail.target;
                         scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
+                        console.log(scroller.scrollTop);
+
+                        var a  =  scroller.scrollTop  ;
+                        var b  =  scroller.scrollHeight - scroller.clientHeight  ;
+                        var c  =  a / b  ;
+                        var that = this;
+                        if(c*100 >85){
+                          this.fire('endofpage');
+                        }
+
+
                       });
                     });
                 },

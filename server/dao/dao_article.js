@@ -22,11 +22,15 @@ function getArticle(articleId, callback) {
 	this.findById(articleId, callback);
 }
 
-function getArticlesAll(callback) {
+function getArticlesAll(callback, skip) {
 	this.find({}, function(err, cursor) {
 		if (err) {
 			return callback(err);
 		}
+		var numbers=3;
+		cursor.sort({date: -1});
+		cursor.limit(numbers);
+		cursor.skip((skip*numbers) || 0);
 		cursor.toArray(callback);
 	});
 }

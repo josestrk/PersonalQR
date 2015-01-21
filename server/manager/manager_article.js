@@ -24,8 +24,8 @@ function delArticle(articleId, callback) {
   daoArticle.delArticle(articleId, callback);
 }
 
-function getArticlesAll(callback) {
-  daoArticle.getArticlesAll(callback);
+function getArticlesAll(callback, skip) {
+  daoArticle.getArticlesAll(callback, skip);
 }
 
 function setArticle(articleId, data, callback){
