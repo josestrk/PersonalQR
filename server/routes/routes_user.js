@@ -75,6 +75,7 @@ function worker(io) {
     if(req.query.mail!==undefined && req.query.password!==undefined){
       userManager.validateUser(req.query.mail, req.query.password, function(err, result){
         if(result[0] !== undefined){
+          io.alexEmit('userconnected', result);
           res.json(result);
         }else{
           if(err !== null){
