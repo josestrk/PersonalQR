@@ -53,7 +53,7 @@
       function refresh() {
         doAjax({
           type: 'GET',
-          url: 'routes_article/article/',
+          url: 'routes_article/articles/0',
         },function(result) {
           static.articles = result;
           addListeners(static);
@@ -114,7 +114,7 @@
         articles: null
       };
 
-      //refresh();
+      refresh();
       Polymer('core-ajax-handler', {
         get : function(mail, password){
           var data={
