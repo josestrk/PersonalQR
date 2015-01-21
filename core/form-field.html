@@ -9,7 +9,7 @@
 
 <link rel="import" href="../core/core-ajax-handler.html">
 
-<polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg">
+<polymer-element name="form-field" attributes="label,type,regexp,icon,errorMsg,checkInDB">
   <template>
     <style>
     :host {
@@ -36,6 +36,9 @@
     }
     #icon.green {
       color: #22aa00;
+    }
+    #icon.yellow {
+      color: rgb(255, 193, 7);
     }
     #icon.red {
       color: #cc0022;
@@ -79,7 +82,7 @@
 
     <core-card id="form-field-container"
       horizontal layout wrap center-justified>
-      <core-tooltip show?="{{error.visible}}" label="{{errorMsg}}" position="left" tabindex="-1">
+      <core-tooltip id="message" show?="{{error.visible}}" label="{{errorMsg}}" position="left" tabindex="-1">
 
       </core-tooltip>
         <core-icon
@@ -128,17 +131,20 @@
           visible: false
         }
       },
-      check: function(event, detail, sender) {
+      check: function() {
         if (this.$.input.pattern) {
           if (!this.$.input.validity.valid) {
             this.$.icon.className = 'red';
+            this.displayError(this.errorMsg);
             this.error.visible = true;
             this.$.errordiv.className = '';
           } else {
             this.$.icon.className = 'green';
+            this.displayError('');
             this.error.visible = false;
-            this.$.errordiv.className = 'nodisplay';
-            this.checkInDatabase();
+            if (this.checkInDB) {
+              this.checkInDatabase();
+            }
           }
         }
       },
@@ -146,14 +152,28 @@
         var ajaxhandler = this.$.ajaxhandler;
         var data = this.$.input.value;
         var that = this;
-        debugger
-        ajaxhandler.verifyUsername(data, that, function(result, that) {
+        
+        /* The name of the function used in ajaxhandler must be
+         * 'verify' followed by the field ID with the first letter in uppercase.
+         * For example, 'verifyUsername'.
+         */
+        var thisID = this.id.charAt(0).toUpperCase() + this.id.slice(1);
+        var functionName = 'verify' + thisID;
+        ajaxhandler[functionName](data, that, function(result, that) {
           if (!result) {
-            console.log('User is not in the database');
+            console.log(thisID + ' is not in the database');
           } else {
-            console.log('User is in the database');
+            console.log(thisID + ' is in the database');
+            that.$.icon.className = 'yellow';
+            that.displayError(thisID + ' already exists in the database');
+            that.error.visible = true;
+            that.$.errordiv.className = '';
           }
         });
+      },
+      displayError: function(error) {
+        this.$.message.$.c.innerText = error;
+        this.$.errordiv.innerText = error;
       },
       keydown: function(event, detail, sender) {
         if(event.keyCode === 13) {

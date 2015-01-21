@@ -177,7 +177,7 @@
               label="Username"
               icon="account-circle"
               errorMsg="Please write a valid username"
-              on-blur="{{validateAjaxUsername}}"
+              checkInDB="true"
               regexp=".{3,}"
             ></form-field>
             <form-field
@@ -186,7 +186,7 @@
               label="E-mail address"
               icon="mail"
               errorMsg="Should be a valid email address"
-              on-blur="{{validateAjaxEmail}}"
+              checkInDB="true"
               regexp="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}"
             ></form-field>
           </core-card>
@@ -234,39 +234,6 @@
   Polymer({
     ready: function() {
       this.addEventListener('blur', this.validateAll);
-      this.addEventListener('keydown', this.keydown);
-    },
-    validatePattern: function(string, pattern) {
-      return string.match(pattern) !== null;
-    },
-    validateLeftForm: function() {
-      var validUser = this.validateUser(),
-        validEmail = this.validateEmail(),
-        color = '',
-        that = this;
-      
-      if(!validUser && !validEmail) {
-        color = 'red';
-      } else if(!validUser || !validEmail) {
-        color = 'yellow';
-      } else {
-        var userInDB = (function() {
-          return that.$.leftform.children.usermsg.label;
-        })();
-        var emailInDB = (function() {
-          return that.$.leftform.children.emailmsg.label;
-        })();
-
-        if(!userInDB && !emailInDB) {
-          color = 'green';
-        } else {
-          color = 'yellow';
-        }
-      }
-
-      that.$.leftform.className = color;
-      console.log(color);
-      return color === 'green';
     },
     checkPassword: function(){
       if (this.$.password2.$.input.value) {
@@ -315,58 +282,6 @@
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.create(JSON.stringify(datos));
-    },
-    validateAjaxUsername: function(){
-      var ajaxhandler = this.$.ajaxhandler;
-      var data = this.$.username.$.field.input.value;
-      var that = this;
-      ajaxhandler.verifyUsername(data, that, function(result, that) {
-        if (!result) {
-          //that.displayUsernameErrorMessage('');
-          console.log('User is not in the database');
-        } else {
-          that.displayUsernameErrorMessage('User already exists');
-          console.log('User is in the database');
-        }
-      });
-    },
-    validateAjaxEmail: function(){
-      var ajaxhandler = this.$.ajaxhandler;
-      var data = this.$.email.$.field.input.value;
-      var that = this;
-      ajaxhandler.verifyEmail(data, that, function(result, that) {
-        if (!result) {
-          //that.displayEmailErrorMessage('');
-          console.log('Email is not in database');
-        } else {
-          that.displayEmailErrorMessage('Email already exists');
-          console.log('Email is in the database');
-        }
-      });
-    },
-    displayUsernameErrorMessage: function(message) {
-      var element = this.$.username.$.field.error;
-      this.displayErrorMessage(element, message);
-      return message;
-    },
-    displayEmailErrorMessage: function(message) {
-      var element = this.$.email.$.field.error;
-      this.displayErrorMessage(element, message);
-      return message;
-    },
-    displayErrorMessage: function(element, message) {
-      if (message) {
-        element.show=true;
-        element.label=message;
-      } else {
-        element.show=false;
-        element.label='';
-      }      
-    },
-    keydown: function(event) {
-      if(event.keyCode === 13) {
-        this.validateLeftForm();
-      }
     }
   });
   </script>
