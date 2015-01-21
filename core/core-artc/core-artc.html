@@ -21,107 +21,7 @@
 
   <template>
 
-<style>
-	#core-artc{
-            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.1980392) 5px 10px 9px;
-            margin-bottom:20px;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
-	}
-        #core_header_panel {
-            width: 100%;
-            height: 452px;
-            position: relative;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
-        }
-        #core_toolbar {
-            color: rgb(255, 255, 255);
-            background-color: rgb(79, 125, 201);
-            fill: rgb(241, 241, 241);
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-        }
-        #core-drawer-panel{
-          height:192px;
-        }
-        #section {
-                padding-left: 15px;
-                padding-right: 15px;
-                word-wrap: break-word;
-                min-height: 400px;
-                background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
-        }
-        paper-tabs.transparent-teal {
-            background-color: transparent;
-            color: #03a9f4;
-            box-shadow: none;
-        }
-        paper-tabs.transparent-teal::shadow #selectionBar {
-            background-color: #03a9f4;
-        }
-        paper-tabs.transparent-teal paper-tab::shadow #ink {
-            color: #03a9f4;
-        }
-        #paper_tab4{
-          color: red;
-        }
-        .coments-add{
-          height: 35px;
-          color: #03a9f4;
-        }
-        .noheight{
-          padding-top: 20px;
-        }
-        .moreheight{
-          padding-top: 65px;
-        }
-        .cont{
-          font-size:1.5rem;
-        }
-        .comentarios{
-          font-size: 1rem;
-          padding-left: 15px;
-          padding-right: 15px;
-          word-wrap: break-word;
-          background: rgb(214, 227, 231);
-          border-top: 1px solid grey;
-          margin: 0;
-          list-style:  none;
-          visibility: hidden;
-          height: 0px;
-          overflow:scroll;
-          transition: height 0.5s ease;
-        }
-        .comentario{
-          padding: 5px 10px;
-        }
-        #paper_manager{
-          font-size: 20px;
-          font-weight: bold;
-          color:white;
-        }
-        #manage-ico{
-          width: 50px;
-          height: 50px;
-        }
-        #div1{
-          font-size: 2rem;
-          font-variant: small-caps;
-          font-weight: bold;
-        }
-        #time{
-          font-variant: small-caps;
-          font-size: 0.75em;
-          font-weight: bold;
-          text-align: right;
-          padding: 0px 15px;
-        }
-</style>
+    <link rel="stylesheet" href="core-art.css">
 
     <core-card id="core-artc">
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
@@ -187,7 +87,7 @@
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
     <!--dialog-float
-    necesito un campo para p otro para tex are y otro para evento 
+    necesito un campo para p otro para tex are y otro para evento
     -->
     <paper-dialog id="dia" backdrop transition="core-transition-center">
       <p>
@@ -205,7 +105,6 @@
         </paper-tab>
       </paper-tabs>
     </paper-dialog>
-
     <paper-dialog id="addcomment" backdrop transition="core-transition-center">
       <p>
         -What do you want to say?
@@ -224,7 +123,6 @@
         </paper-tab>
       </paper-tabs>
     </paper-dialog>
-
     <paper-dialog id="edit" backdrop transition="core-transition-center">
       <p>-What do you want to write instead?</p>
       <input id="input" value="{{htitle}}" is="core-input" style="position: fixed;" required>
