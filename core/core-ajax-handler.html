@@ -70,12 +70,6 @@
           });
           //cuando se crea un score lo que hace es lanzar esta funcion y recogerla
           socket.on('articleCreated', function(result) {
-            // static.articles.push(result);
-
-            //document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="red"
-
-
-            
             // Get a reference to the element in which we want to insert a new node
             var parentElement = document.getElementsByTagName('wall-page')[0].$.list;
             // Get a reference to the first child
@@ -88,6 +82,13 @@
             parentElement.insertBefore(newElement, theFirstChild);
 
             showMsg('A new article has been added');
+          });
+
+          socket.on('userconnected', function(result) {
+            document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="green";
+            document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.icon = "social:notifications-on";
+            showMsg('A new user has been registered!');
+            debugger
           });
 
           // socket.on('scoreDestroyed', function(scoreId) {
