@@ -128,7 +128,8 @@
       },
       created: function() {
         this.error = {
-          visible: false
+          visible: false,
+          inDB: false
         }
       },
       check: function() {
@@ -137,7 +138,6 @@
             this.$.icon.className = 'red';
             this.displayError(this.errorMsg);
             this.error.visible = true;
-            this.$.errordiv.className = '';
           } else {
             this.$.icon.className = 'green';
             this.displayError('');
@@ -160,20 +160,20 @@
         var thisID = this.id.charAt(0).toUpperCase() + this.id.slice(1);
         var functionName = 'verify' + thisID;
         ajaxhandler[functionName](data, that, function(result, that) {
-          if (!result) {
-            console.log(thisID + ' is not in the database');
-          } else {
-            console.log(thisID + ' is in the database');
+          if (result) {
             that.$.icon.className = 'yellow';
             that.displayError(thisID + ' already exists in the database');
             that.error.visible = true;
-            that.$.errordiv.className = '';
+            that.error.inDB = true;
+          } else {
+            that.error.inDB = false;
           }
         });
       },
       displayError: function(error) {
         this.$.message.$.c.innerText = error;
         this.$.errordiv.innerText = error;
+        this.$.errordiv.className = error ? '' : 'nodisplay';
       },
       keydown: function(event, detail, sender) {
         if(event.keyCode === 13) {
