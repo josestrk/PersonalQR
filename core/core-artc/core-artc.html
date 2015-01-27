@@ -30,7 +30,6 @@
             <core-drawer-panel id="core-drawer-panel" responsiveWidth='2100px'>
               <div drawer>
                 <paper-tabs id="paper_manager" class="transparent-teal" vertical center layout>
-                <template if="{{show}}">
                     <paper-tab on-click="{{dialog}}" id="paper_tab-dw" inline flex center-center horizontal layout>
                   	   <core-icon icon="delete" id="manage-ico"></core-icon>
                        <span id="txt">Delete</span>
@@ -39,12 +38,15 @@
                        <core-icon icon="create" id="manage"></core-icon>
                        <span id="txt">Edit</span>
                      </paper-tab>
-                </template>
                 </paper-tabs>
               </div>
               <div main>
-
-                  <div id="div1"><core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button> <core-icon-button icon="class" id="core_icon_button4"></core-icon-button> {{htitle}}</div>
+                  <div id="div1">
+                <template if="{{show}}">
+                    <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
+                  </template>
+                     <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
+                      {{htitle}}</div>
                   <div id="time">{{date}}</div>
               </div>
             </core-drawer-panel>
