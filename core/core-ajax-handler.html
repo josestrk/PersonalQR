@@ -85,7 +85,6 @@
           });
 
           socket.on('userconnected', function(result) {
-            debugger
             //esto va a haber que cambiarlo para que nos coja el id de cada "wall-page y no el del user..."
             document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="green";
             document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.icon = "social:notifications-on";
