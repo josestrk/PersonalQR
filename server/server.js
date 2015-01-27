@@ -7,6 +7,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var passport = require('passport');
 
 var config = require('./util/config');
 
@@ -22,6 +23,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 //esto de abajo es para servir la parte estatica, seria mejor montarlo sobre nginx
 app.use(express.static(path.join(__dirname, '../')));
 
+//add to autentification
+app.use(passport.initialize());
+app.all('*', function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With, Authorization");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	next();
+});
 
 // Custom error handler
 //esto se podria uncluso quitar pero lo dejamos

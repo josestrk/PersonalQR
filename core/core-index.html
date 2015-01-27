@@ -42,7 +42,8 @@
       }
       template {display: none !important;}
     </style>
-        <core-animated-pages id="core_card" layout vertical end-justified center transitions="slide-from-right">
+        <app-login id="login"></app-login>
+        <core-animated-pages id="core_card" on-login="{{handleLogin}}" on-logout="{{handleLogout}}"  layout vertical end-justified center transitions="slide-from-right">
             <section layout vertical center-center>
                         <slider-page></slider-page>
             </section>
@@ -72,10 +73,17 @@
                     {name:'GET STARTED',id:'paper_tab', select:'signin'},
                     {name:'LOG IN',id:'paper_tab1'}
                 ];
+                this.login = this.$.login;
             },
             clickedpaper: function(event, detail, sender){
               sender.id=="paper_tab" ? this.$.core_card.selected=1 : console.log() ;
               sender.id=="paper_tab1" ? this.$.core_card.selected=2 : console.log();
+            },
+            handleLogin: function(event, detail) {
+              this.$.login.login();
+            },
+            handleLogout: function(event, detail) {
+              this.$.login.logout();
             }
         });
     </script>

@@ -7,6 +7,10 @@
     "test": "test"
   },
   "dependencies": {
+    "jsonwebtoken": "^3.2.2",
+    "passport": "^0.2.1",
+    "passport-google-oauth": "^0.1.5",
+    "request": "^2.51.0",
     "webcomponents.js": "^0.5.1-1"
   },
   "devDependencies": {

@@ -3,17 +3,20 @@ var express = require('express');
 var router = express.Router();
 var userManager = require('../manager/manager_user');
 
+var ensureAuth = require('../middleware/sec').ensureAuthenticated;
+var ensureOwner = require('../middleware/sec').ensureOwner;
+
 function worker(io) {
 
   //users
-  router.post('/user', createUser);
+  router.post('/user',  createUser);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
   router.get('/validateuser', validateUser);
   router.get('/verifyUsername', verifyUsername);
   router.get('/verifyEmail', verifyEmail);
-  router.put('/user/:userId', setUser);
-  router.delete('/user/:userId', delUser);
+  router.put('/user/:userId', ensureAuth,ensureOwner, setUser);
+  router.delete('/user/:userId', ensureAuth,ensureOwner, delUser);
 
   //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
   function createUser(req, res) {

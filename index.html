@@ -35,17 +35,20 @@
     <link rel="import" href="core/core-user/core-user.html">
     <link rel="import" href="core/core-index.html">
     <link rel="import" href="core/main-menu/main-menu.html">
+    <link rel="import" href="pages/user-loader.html">
     <link rel="import" href="pages/wall-page.html">
     <link rel="import" href="pages/myp-page.html">
     <link rel="import" href="pages/editor-page.html">
     <link rel="import" href="pages/config-page.html">
     <link rel="import" href="pages/contacts-page.html">
 
+    <link rel="import" href="core/app-login/app-login.html">
+
   <title>PersonalQr</title>
 </head>
 
 <body unresolved fullbleed>
-
+    <!-- <app-login id="login"></app-login> -->
     <core-user id="user"></core-user>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
     <app-router core-animated-pages transitions="slide-from-right">
@@ -55,6 +58,7 @@
         <app-route path="/editor/" element="editor-page"></app-route>
         <app-route path="/settings/" element="config-page"></app-route>
         <app-route path="/contacts/" element="contacts-page"></app-route>
+        <app-route path="/loader" element="user-loader"></app-route>
 
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>

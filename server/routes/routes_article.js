@@ -3,6 +3,9 @@ var express = require('express');
 var router = express.Router();
 var articleManager = require('../manager/manager_article');
 
+var ensureAuth = require('../middleware/sec').ensureAuthenticated;
+var ensureOwner = require('../middleware/sec').ensureOwner;
+
 function worker(io) {
   //habra que meter aqui los emit de socket.IO
 
@@ -12,8 +15,8 @@ function worker(io) {
   // router.get('/article/:articleId', getArticle);
   router.get('/article/:userId', getUserArticles);
   router.get('/articles/:id', getArticlesAll);
-  router.put('/article/:articleId', setArticle);
-  router.delete('/article/:articleId', delArticle);
+  router.put('/article/:articleId',ensureAuth,ensureOwner, setArticle);
+  router.delete('/article/:articleId',ensureAuth,ensureOwner, delArticle);
 
   function createArticle(req, res) {
     var Article={
@@ -139,6 +142,7 @@ function worker(io) {
     var skip = req.param('id');
     console.log(skip);
     articleManager.getArticlesAll(function(err, result){
+      //Permisos de vision regulados rsul=[]
       res.json(result);
     }, skip);
   }

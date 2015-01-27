@@ -10,6 +10,10 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html" >
 
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/form-field.html">
 
@@ -170,6 +174,10 @@
             ></form-field>
           </core-card>
           <core-card id="rightform" center-justified vertical layout>
+            <core-card>
+              <core-item id="signin" label="Sign In" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="account-circle"></core-item>
+              <core-item id="signout" src="{{photoUrl}}" label="Sign Out" on-click="{{fireLogout}}"  hidden?="{{!logged}}"></core-item>
+            </core-card>
             <form-field
               id="name"
               label="Name"
@@ -213,6 +221,21 @@
   Polymer({
     ready: function() {
       this.addEventListener('blur', this.validateAll);
+    },
+    fireLogin: function() {
+      this.fire('login');
+    },
+    fireLogout: function() {
+      this.fire('logout');
+    },
+    loggedChanged: function() {
+      if (this.logged) {
+        getProfile().done(function(user) {
+          this.photoUrl = user._json.picture;
+        }.bind(this)).fail(function() {
+          this.photoUrl = '';
+        }.bind(this));
+      }
     },
     checkPassword: function(){
       if (this.$.password2.$.input.value) {

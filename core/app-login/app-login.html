@@ -1,0 +1,89 @@
+<polymer-element name="app-login">
+  <template>
+
+  </template>
+  <script>
+  (function() {
+    var authWindow = null;
+    function authorize() {
+      var deferred = $.Deferred();
+
+      if (authWindow) {
+        return deferred.reject({
+          type: 'login_already_started',
+          error: 'Waiting until login processis completed'
+        });
+      }
+
+      var authUrl = 'auth/login';
+
+      //Open the login page.
+      authWindow = window.open(authUrl, '_blank', 'location=no,toolbar=no');
+      var checkConnect = setInterval(function() {
+        if (!authWindow || !authWindow.closed) {
+          return;
+        }
+        clearInterval(checkConnect);
+        authWindow = null;
+        checkResponse();
+      }, 100);
+
+      function checkResponse() {
+
+        var hash = window.location.hash;
+        window.location.hash = '';
+
+        var token = /[#?;,]token=([^;,]+)/.exec(hash);
+        var error = /[#?;,]error=([^;,]+)/.exec(hash);
+
+        if (error || !token) {
+          //The user denied access to the app
+          return deferred.reject({
+            type: 'user_denied_access',
+            error: error ? erro[1] : 'no access token'
+          });
+        }
+
+        var data = {};
+        if (token) {
+          data.token = token[1];
+        }
+
+        return deferred.resolve(data);
+
+      }
+
+      return deferred.promise();
+    }
+
+    Polymer({
+      logged: false,
+      ready: function() {
+        this.logged = Boolean(localStorage.token);
+        if (this.logged) {
+          socket.connect(localStorage.token);
+        }
+      },
+      login: function() {
+        authorize().done(function(data) {
+          localStorage.token = data.token;
+          this.logged = true;
+          socket.connect(data.token);
+          showMsg('logged');
+        }.bind(this)).fail(function() {
+          delete localStorage.token;
+          this.logged = false;
+        }.bind(this));
+      },
+      logout: function() {
+        delete localStorage.token;
+        this.logged = false;
+        if (socket) {
+          socket.disconnect();
+        }
+        document.location.reload();
+      }
+    });
+  }());
+</script>
+</polymer-element>
