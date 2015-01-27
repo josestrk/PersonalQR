@@ -150,27 +150,6 @@
           <core-card id="core_logo" vertical layout wrap center-justified center>
             <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
           </core-card>
-          <!--<core-card id="leftform" center center-justified wrap vertical layout>
-            <core-tooltip id="usermsg" label="" position="top" tabindex="-1">
-              <paper-input
-                label="User name"
-                willvalidate
-                id="username"
-                on-blur="{{validateLeftForm}}"
-                layout vertical
-              ></paper-input>
-            </core-tooltip>
-            <core-tooltip id="emailmsg" label="" position="bottom" tabindex="-1">
-              <paper-input
-                label="Email address"
-                willvalidate
-                error="Email not allowed"
-                id="email"
-                on-blur="{{validateLeftForm}}"
-                layout vertical
-              ></paper-input>
-            </core-tooltip>
-          </core-card>-->
           <core-card id="leftform" center-justified vertical layout>
             <form-field
               id="username"
@@ -214,12 +193,12 @@
               icon="lock"
               errorMsg="Must be the same password"
               on-blur="{{checkPassword}}"
-              regexp=""
             ></form-field>
             <form-field
               id="bdate"
               label="Birth date"
               icon="redeem"
+              on-keydown="{{keydown}}"
               errorMsg="Fill in a valid date.(dd-mm-yy)"
               regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
             ></form-field>
@@ -261,15 +240,29 @@
         fields.push(rightfields[field]);
       }
       var isValid = true;
+      var that = this;
+
       Array.prototype.forEach.call(fields, function(field) {
-        if (field.$.input.pattern && !field.$.input.validity.valid) {
+        /* A field is not valid if:
+         * 1) The data introduced is incorrect (mainly because there is a non-empty pattern and the data does not fit it)... OR
+         * 2) The data introduced is already in the database.
+         */
+
+        if ((field.$.input.pattern && !field.$.input.validity.valid) || field.error.inDB) {
           isValid = false;
         }
       });
+
+      console.log(isValid);
       if (isValid) {
-        this.$.send.style.visibility = "visible";
+        that.$.send.style.visibility = "visible";
       } else {
-        this.$.send.style.visibility = "hidden";
+        that.$.send.style.visibility = "hidden";
+      }
+    },
+    keydown: function(event, detail, sender) {
+      if(event.keyCode === 13) {
+        this.validateAll();
       }
     },
     startProgress:function(){

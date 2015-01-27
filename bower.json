@@ -21,7 +21,8 @@
     "app-router": "2.0.2",
     "jquery": "2.1.1",
     "webcomponentsjs": "~0.5.1",
-    "pushstate-anchor": "~0.3.0"
+    "pushstate-anchor": "~0.3.0",
+    "Hover": "~2.0.0"
   },
   "devDependencies": {
     "app-router": "2.0.2",
