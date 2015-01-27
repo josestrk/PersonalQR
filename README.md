@@ -8,7 +8,7 @@ It will be a secure way to share your personal information, accessible and user 
 ####User demo:
 ```
 User: personalqr
-Pass: manager
+Pass: Manager01
 ```
 
 USE
