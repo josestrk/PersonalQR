@@ -43,7 +43,12 @@
       template {display: none !important;}
     </style>
         <app-login id="login"></app-login>
-        <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
+<!--
+      <div id="block" style="width: 100%; height: 500px;" data-vide-bg="../video/ocean" data-vide-options="position: 0% 50%"></div>
+      <script>window.jQuery</script>
+<script src="../lib/vide/jquery.vide.min.js"></script>
+-->
+      <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
             <section layout vertical center-center>
                         <slider-page></slider-page>
             </section>
@@ -67,14 +72,6 @@
   </template>
 
     <script>
-//        (function(){
-//        $(document).ready(function () {
-//        $(document.body).vide("../video/ocean"); // Non declarative initialization
-//            var instance = $(document.body).data("vide"); // Get instance
-//            var video = instance.getVideoObject(); // Get video object
-//            instance.destroy(); // Destroy instance
-//        });
-//        }());
         Polymer({
             ready: function() {
                 this.pages = [
