@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../bower_components/core-input/core-input.html">
 <link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/social-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
@@ -45,7 +46,7 @@
         outline: none;
         display: none;
       }
-      #leftform {
+      #delegated_form {
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 3px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         margin: auto auto auto 10px;
@@ -54,16 +55,16 @@
         opacity: 0.9;
         background-color: rgb(255, 255, 255);
       }
-      #leftform.green {
+      #delegated_form.green {
         box-shadow: rgb(137, 191, 79) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #leftform.yellow {
+      #delegated_form.yellow {
         box-shadow: rgb(255, 193, 7) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #leftform.red {
+      #delegated_form.red {
         box-shadow: rgb(255, 0, 0) 0px 10px 80px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px
       }
-      #rightform {
+      #signin_form {
         width: 300px;
         height: auto;
         border-radius: 8px;
@@ -92,13 +93,13 @@
       }
 
       @media(max-width:320px){
-        #leftform {
+        #delegated_form {
           width: 190px;
         }
       }
 
       @media(max-width:450px){
-        #leftform {
+        #delegated_form {
           position: absolute;
           top: 10px;
           bottom: 0px;
@@ -115,7 +116,7 @@
           left: 15px;
           width: 70px;
         }
-        #rightform {
+        #signin_form {
           position: absolute;
           left: 0px;
           top: 182px;
@@ -137,10 +138,10 @@
         #core_card1 {
           background-size: 100% 450px;
         }
-        #leftform {
+        #delegated_form {
           margin-top: 150px;
         }
-        #rightform {
+        #signin_form {
           margin: 10px auto;
         }
       }
@@ -154,7 +155,11 @@
           <core-card id="core_logo" vertical layout wrap center-justified center>
             <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
           </core-card>
-          <core-card id="leftform" center-justified vertical layout>
+          <core-card id="delegated_form" center-justified vertical layout>
+            <core-item id="signin" label="Sign in with Google" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-gplus"></core-item>
+            <core-item id="signout" src="{{photoUrl}}" label="Sign Out" on-click="{{fireLogout}}"  hidden?="{{!logged}}"></core-item>
+          </core-card>
+          <core-card id="signin_form" center-justified vertical layout>
             <form-field
               id="username"
               label="Username"
@@ -172,15 +177,9 @@
               checkInDB="true"
               regexp="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}"
             ></form-field>
-          </core-card>
-          <core-card id="rightform" center-justified vertical layout>
-            <core-card>
-              <core-item id="signin" label="Sign In" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="account-circle"></core-item>
-              <core-item id="signout" src="{{photoUrl}}" label="Sign Out" on-click="{{fireLogout}}"  hidden?="{{!logged}}"></core-item>
-            </core-card>
             <form-field
               id="name"
-              label="Name"
+              label="Your name"
               icon="account-circle"
               errorMsg="Please write a name"
               regexp=".{3,}"
@@ -253,15 +252,7 @@
       }
     },
     validateAll: function() {
-      var leftfields = Array.prototype.slice.call(this.$.leftform.querySelectorAll('form-field'));
-      var rightfields = Array.prototype.slice.call(this.$.rightform.querySelectorAll('form-field'));
-      var fields = [];
-      for (field in leftfields) {
-        fields.push(leftfields[field]);
-      }
-      for (field in rightfields) {
-        fields.push(rightfields[field]);
-      }
+      var fields = Array.prototype.slice.call(this.$.signin_form.querySelectorAll('form-field'));
       var isValid = true;
       var that = this;
 
