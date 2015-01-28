@@ -43,7 +43,7 @@
       template {display: none !important;}
     </style>
         <app-login id="login"></app-login>
-        <core-animated-pages id="core_card" on-login="{{handleLogin}}" on-logout="{{handleLogout}}"  layout vertical end-justified center transitions="slide-from-right">
+        <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
             <section layout vertical center-center>
                         <slider-page></slider-page>
             </section>
@@ -81,9 +81,6 @@
             },
             handleLogin: function(event, detail) {
               this.$.login.login();
-            },
-            handleLogout: function(event, detail) {
-              this.$.login.logout();
             }
         });
     </script>

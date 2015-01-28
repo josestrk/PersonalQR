@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+
+<polymer-element name="social-signs">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
+      }
+      #delegated_form {
+        margin-top: 150px;
+      }
+      #signin_form {
+        margin: 10px auto;
+      }
+    </style>
+
+    <core-card id="delegated_form" center-justified vertical layout>
+      <div style="background:red">
+          <core-item id="signin" label="Sign in with Google" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-gplus"></core-item>
+      </div>
+      <div>
+          <core-item id="signin" label="Sign in with Facebook" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-facebook"></core-item>
+      </div>
+    </core-card>
+  </template>
+
+  <script>
+  Polymer({
+    ready: function() {
+      this.addEventListener('blur', this.validateAll);
+    },
+    fireLogin: function() {
+      this.fire('login');
+    },
+  });
+  </script>
+</polymer-element>

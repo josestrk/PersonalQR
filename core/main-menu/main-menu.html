@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../bower_components/core-a11y-keys/core-a11y-keys.html">
-<link href="../../bower_components/core-dropdown/core-dropdown.html" rel="import">
+<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
 
 <link rel="stylesheet" href="style.css">
 <link rel="import" href="../search-banner/search-banner.html">
@@ -54,9 +54,10 @@
             }
         </style>
 
+        <app-login id="login"></app-login>
         <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
-        <my-core-scaffold id="scaffold">
+        <my-core-scaffold id="scaffold" on-logout="{{handleLogout}}">
             <nav>
                 <core-card id="core_card" layout vertical>
                     <search-banner horizontal layout center-justified center></search-banner>
@@ -72,7 +73,7 @@
                     </template>
                 </core-menu>
                 <core-card id="core_card_f" vertical layout end-justified end>
-                    <a  href="/"><core-icon-button icon="settings-power" id="paper_icon_button" ></core-icon-button></a>
+                    <a  href="/"><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}" hidden?="{{!login.logged}}"></core-icon-button></a>
                 </core-card>
             </nav>
 
@@ -121,9 +122,10 @@
                     //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
                     loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
-
+                    this.login=this.$.login;
                     //Encontrado por internet...
                     var scaffold = this.$.scaffold;
+
                     addEventListener('polymer-ready', function() {
                       scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
                         // $(window).height()
@@ -142,6 +144,9 @@
 
                       });
                     });
+                },
+                handleLogout: function(event, detail) {
+                  this.$.login.logout();
                 },
                 keyHandler: function (e, detail, sender) {
                     var pages = this.$.pages;

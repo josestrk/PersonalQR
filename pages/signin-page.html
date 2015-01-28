@@ -17,6 +17,7 @@
 
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/form-field.html">
+<link rel="import" href="social-signs.html">
 
 <polymer-element name="signin-page">
   <template>
@@ -138,9 +139,8 @@
           <core-card id="core_logo" vertical layout wrap center-justified center>
             <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
           </core-card>
-          <core-card id="delegated_form" center-justified vertical layout>
-            <core-item id="signin" label="Sign in with Google" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-gplus"></core-item>
-            <core-item id="signout" src="{{photoUrl}}" label="Sign Out" on-click="{{fireLogout}}"  hidden?="{{!logged}}"></core-item>
+          <core-card id="signin_form" center-justified vertical layout>
+            <social-signs></social-signs>
           </core-card>
           <core-card id="signin_form" center-justified vertical layout>
             <form-field
