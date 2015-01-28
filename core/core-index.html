@@ -67,13 +67,14 @@
   </template>
 
     <script>
-        (function(){
-        $(document).ready(function () {
-        $(document.body).vide("../video/ocean"); // Non declarative initialization
-            var instance = $(document.body).data("vide"); // Get instance
-            var video = instance.getVideoObject(); // Get video object
-            instance.destroy(); // Destroy instance
-        });
+//        (function(){
+//        $(document).ready(function () {
+//        $(document.body).vide("../video/ocean"); // Non declarative initialization
+//            var instance = $(document.body).data("vide"); // Get instance
+//            var video = instance.getVideoObject(); // Get video object
+//            instance.destroy(); // Destroy instance
+//        });
+//        }());
         Polymer({
             ready: function() {
                 this.pages = [
@@ -90,6 +91,6 @@
               this.$.login.login();
             }
         });
-        }());
+        
     </script>
 </polymer-element>
