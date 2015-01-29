@@ -60,9 +60,9 @@
       logged: false,
       ready: function() {
         this.logged = Boolean(localStorage.token);
-        if (this.logged) {
-          socket.connect(localStorage.token);
-        }
+//        if (this.logged) {
+//          socket.connect(localStorage.token);
+//        }
       },
       login: function() {
         authorize().done(function(data) {

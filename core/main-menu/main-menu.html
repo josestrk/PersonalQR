@@ -33,28 +33,28 @@
         <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
         <my-core-scaffold id="scaffold" on-logout="{{handleLogout}}">
-            <nav>
+            <nav layout vertical style="height:100%">
                 
-                <core-card id="core_card" layout vertical>
+                <core-menu>
                     <search-banner horizontal layout center-justified center></search-banner>
                     <template if="{{imenu!=''}}">
                     <id-card layout vertical center center-justified>
-                        <img  class="img" id='{{name}}' src="{{ login.photoUrl }}" />
+                        <img  class="img" id='{{name}}' src="{{ this.photoUrl }}" />
                         <h2>{{ username == undefined ? 'Anonimus' : username }}</h2>
                         <p>{{ follower > 0 ? follower : 0 }} followers • {{ following > 0 ? following : 0 }} following</p>
                     </id-card>
                     </template>
-                </core-card>
+                </core-menu>
                 
-                <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
+                <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
                     <template repeat="{{page in pages}}">
                         <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}"><a href="{{page.hash}}"></a></core-item>
                     </template>
                 </core-menu>
                 
-                <core-card hidden?="{{!login.logged}}" id="core_card_f" vertical layout end-justified end>
-                    <a  href="/"><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
-                </core-card>
+                <core-menu hidden?="{{!login.logged}}">
+                    <a  href="/" ><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
+                </core-menu>
             </nav>
 
             <core-toolbar tool flex>

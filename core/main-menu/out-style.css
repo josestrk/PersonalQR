@@ -27,10 +27,6 @@
     #paper_icon_button {
     margin: auto 0px 0px;
     }
-
-    #core_card_f {
-        color:white;
-    }
     
     @media all and (max-width: 1024px){
         core-animated-pages {
