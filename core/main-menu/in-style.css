@@ -1,0 +1,40 @@
+core-menu {
+    color: #FFF;
+    margin: 0px 0px auto 0px;
+    padding: 10px;
+    font-size: 20px;
+}
+core-menu > core-item {
+    transition: all 300ms ease-in-out;
+    padding: 15px 0px;
+}
+
+.core-selected {
+    background: #777;
+}
+#pages{
+    display: block;
+    width: 100%;
+    position: relative;
+    height: 100%;
+}
+.dropdown {
+    padding: 12px;
+}
+#paper_icon_button{
+    top: 40px;
+    color:#FFF;
+    padding: 10px
+}
+.right{
+  position: absolute;
+  left:95%;
+}
+#core_card_f{
+    position: relative;
+    margin-bottom: 0px;
+}
+id-card .img{
+    width: 70px;
+    height: 70px;
+}

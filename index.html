@@ -64,12 +64,14 @@
 
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>
-    <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');
-    $(document).ready(function () {
-        $(document.body).vide("video/ocean").resize(); 
-        var instance = $(document.body).data("vide").resize();
-        debugger
-    });
+    <script>
+        window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');
+        $(document).ready(function () {
+            if(localStorage.token!=undefined)
+                document.querySelector('app-router').go('/wall/');
+            else
+                $(document.body).vide("video/ocean").resize();
+        });
     </script>
     
 </body>

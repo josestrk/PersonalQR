@@ -42,10 +42,13 @@
       }
       template {display: none !important;}
     </style>
-        <app-login id="login"></app-login>
+    
+      <app-login id="login"></app-login>
+      
       <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
+            
             <section layout vertical center-center>
-                        <slider-page></slider-page>
+                <slider-page></slider-page>
             </section>
             <section layout vertical center-center>
                 <signin-page></signin-page>
@@ -56,7 +59,7 @@
               </core-card>
             </section>
 
-        </core-animated-pages>
+       </core-animated-pages>
         <paper-tabs selectedindex="1" id="paper_tabs" vertical layout wrap end>
         <template repeat="{{page in pages}}">
             <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}">
@@ -65,8 +68,12 @@
         </template>
         </paper-tabs>
   </template>
+    
     <script src="../lib/vide/jquery.vide.min.js"></script>
     <script>
+        if(localStorage.token!=undefined){
+            window.location.hash='/wall/';
+        }
         Polymer({
             ready: function() {
                 this.pages = [
