@@ -43,12 +43,6 @@
       template {display: none !important;}
     </style>
         <app-login id="login"></app-login>
-        <div id="block" style="width: 100%; height: 100%;" data-vide-bg="lib/video/ocean" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
-<!--
-      <div id="block" style="width: 100%; height: 500px;" data-vide-bg="../video/ocean" data-vide-options="position: 0% 50%"></div>
-      <script>window.jQuery</script>
-<script src="../lib/vide/jquery.vide.min.js"></script>
--->
       <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
             <section layout vertical center-center>
                         <slider-page></slider-page>
@@ -71,7 +65,7 @@
         </template>
         </paper-tabs>
   </template>
-
+    <script src="../lib/vide/jquery.vide.min.js"></script>
     <script>
         Polymer({
             ready: function() {

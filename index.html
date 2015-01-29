@@ -35,14 +35,12 @@
     <link rel="import" href="core/core-user/core-user.html">
     <link rel="import" href="core/core-index.html">
     <link rel="import" href="core/main-menu/main-menu.html">
-    <link rel="import" href="pages/user-loader.html">
     <link rel="import" href="pages/wall-page.html">
     <link rel="import" href="pages/myp-page.html">
     <link rel="import" href="pages/editor-page.html">
     <link rel="import" href="pages/config-page/config-page.html">
     <link rel="import" href="pages/contacts-page.html">
     <link rel="import" href="pages/person-card.html">
-
     <link rel="import" href="core/app-login/app-login.html">
 
   <title>PersonalQr</title>
@@ -51,22 +49,28 @@
 <body unresolved fullbleed>
     <core-user id="user"></core-user>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
-
+    
     <app-router core-animated-pages transitions="slide-from-right">
-        <app-route path="/" element="core-index"></app-route>
+        <app-route path="/" element="core-index">
+            <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
+        </app-route>
         <app-route path="/wall/" element="wall-page"></app-route>
         <app-route path="/profile/" element="myp-page"></app-route>
         <app-route path="/pqr/" element="person-card"></app-route>
         <app-route path="/editor/" element="editor-page"></app-route>
         <app-route path="/settings/" element="config-page"></app-route>
         <app-route path="/contacts/" element="contacts-page"></app-route>
-        <app-route path="/loader" element="user-loader"></app-route>
+        <app-route path="/loader" import="pages/user-loader.html"></app-route>
 
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>
-
-
-    <script>window.jQuery || document.write('<script src="../bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
-    <script src="lib/vide/jquery.vide.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');
+    $(document).ready(function () {
+        $(document.body).vide("video/ocean").resize(); 
+        var instance = $(document.body).data("vide").resize();
+        debugger
+    });
+    </script>
+    
 </body>
 </html>
