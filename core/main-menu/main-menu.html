@@ -25,16 +25,16 @@
 
 <polymer-element name="main-menu" attributes="imenu, iduser, logged">
     <template>
-        
+
         <link rel="stylesheet" href="in-style.css">
-        
+
         <app-login id="login"></app-login>
-        
+
         <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
         <my-core-scaffold id="scaffold" on-logout="{{handleLogout}}">
             <nav>
-                
+
                 <core-card id="core_card" layout vertical>
                     <search-banner horizontal layout center-justified center></search-banner>
                     <template if="{{imenu!=''}}">
@@ -45,13 +45,13 @@
                     </id-card>
                     </template>
                 </core-card>
-                
+
                 <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
                     <template repeat="{{page in pages}}">
                         <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}"><a href="{{page.hash}}"></a></core-item>
                     </template>
                 </core-menu>
-                
+
                 <core-card hidden?="{{!login.logged}}" id="core_card_f" vertical layout end-justified end>
                     <a  href="/"><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
                 </core-card>
@@ -59,10 +59,10 @@
 
             <core-toolbar tool flex>
                 <content select=".title"></content>
-                
-                <!-- Hacer un IF pra comp si tenemos sessión si no NOTIFI -> se transformará para direccionar a logear --> 
+
+                <!-- Hacer un IF pra comp si tenemos sessión si no NOTIFI -> se transformará para direccionar a logear -->
                 <content select=".notifi"></content>
-                
+
                 <template if="{{login.logged}}">
                     <core-qr></core-qr>
                     <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
@@ -71,14 +71,14 @@
                     </template>
                 </template>
             </core-toolbar>
-            
+
             <content select="#list"></content>
             <content select=".container"><core-card></core-card></content>
             <content></content>
-            
+
         </my-core-scaffold>
     </template>
-    
+
     <script>
         // var progress = document.querySelector('paper-progress');
         // var repeat, maxRepeat = 1, animating = false;
@@ -107,7 +107,7 @@
         // addEventListener('polymer-ready', function() {
         //   startProgress();
         // });
-        
+
         (function () {
             function loadMenu() {
               var _id=this.iduser;
@@ -129,7 +129,7 @@
                 });
                 keys.keys += ' ' + keysToAdd;
             }
-            
+
             Polymer({
                 domReady: function () {
                     //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
@@ -138,9 +138,10 @@
                     //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
                     loadMenu.bind(this)();
                     addKeysToNumbers.bind(this)();
-                    
+
                     this.login=this.$.login;
-                    
+                    this.logueado();
+
                     //Encontrado por internet...
                     var scaffold = this.$.scaffold;
                     addEventListener('polymer-ready', function() {
@@ -162,7 +163,7 @@
                 handleLogout: function(event, detail) {
                   this.$.login.logout();
                 },
-                loggedChanged: function() {
+                logueado: function() {
                     if (this.logged) {
                         getProfile().done(function(user) {
                             this.photoUrl = user._json.picture;

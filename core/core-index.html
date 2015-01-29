@@ -42,11 +42,11 @@
       }
       template {display: none !important;}
     </style>
-    
+
       <app-login id="login"></app-login>
-      
+
       <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
-            
+
             <section layout vertical center-center>
                 <slider-page></slider-page>
             </section>
@@ -68,9 +68,10 @@
         </template>
         </paper-tabs>
   </template>
-    
+
     <script src="../lib/vide/jquery.vide.min.js"></script>
     <script>
+    debugger
         if(localStorage.token!=undefined){
             window.location.hash='/wall/';
         }
@@ -90,6 +91,6 @@
               this.$.login.login();
             }
         });
-        
+
     </script>
 </polymer-element>
