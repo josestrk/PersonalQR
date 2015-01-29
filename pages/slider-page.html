@@ -4,6 +4,9 @@
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../bower_components/core-pages/core-pages.html">
+<link rel="import" href="../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/image-icons.html">
 
 <polymer-element name="slider-page">
 
@@ -59,13 +62,6 @@
             background-size: 100% 100%;
         }
         
-        #paper_tabs_up {
-            height: 30px;
-            width: 100%;
-            color: rgb(255, 255, 255);
-            box-shadow: rgba(200, 200, 200, 0.2) 0px 3px 2px;
-            background-color: rgba(7, 18, 14,0.5);
-        }
         @media all and (max-width: 420px) {
           #core_card1 {
             width: 100%;
@@ -101,18 +97,32 @@
           }
         }
         
-       #paper_tabs_up paper-tab::shadow #ink {
-          color: #ff4081;
+        #paper_tabs_up {
+            height: 35px;
+            width: 100%;
+            box-shadow: rgba(200, 200, 200, 0.25) 0px 3px 2px;
+            background-color: rgba(7, 18, 14,0.5);
+        }
+        paper-tabs paper-tab > a {
+            text-decoration: none;
+            color: rgba(250, 250, 250, 1.098039);
+        }
+        paper-tabs paper-tab::shadow #ink {
+          color: rgb(137, 191, 79);
         }
 
     </style>
-    <paper-tabs selectedindex="0" id="paper_tabs_up" vertical layout rigth>
+      
+    <paper-tabs selectedindex="0"  id="paper_tabs_up" vertical layout center-center link>
     <template repeat="{{info in infos}}">
-    <paper-tab id="ink" on-click="{{clickedpaper}}">
-    {{info.name}}
+    <paper-tab>
+        <a href="{{info.link}}" horizontal center-center layout>
+            <core-icon icon="{{info.icon}}"></core-icon>{{info.name}}
+        </a>
     </paper-tab>
     </template>
     </paper-tabs>
+      
     <core-card vertical layout  center-justified>
                 <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
                     <template repeat="{{page in pages}}" >
@@ -144,15 +154,15 @@
             {content: ' Todos tus deportes, eventos en vivo,... ',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
         ];
         this.infos = [
-            {name:'Info',id:'paper_tab',content:'<p></p>'},
-            {name:'Legal',id:'paper_tab', content:'<paper-dialog id="dia" backdrop transition="core-transition-bottom">meme</paper-dialog>'},
-            {name:'Git',id:'paper_tab', content:'<a href="github.com/personalqr" horizontal center-center layout>Git</a>'}
+            {name:'Info',id:'paper_tab',icon:'help',link:'/#/wall/?id=info'},
+            {name:'Legal',id:'paper_tab',icon:'social:school', link:'/#/wall/?id=legal'},
+            {name:'Git',id:'paper_tab',icon:'social:post-github', link:'https://github.com/josestrk/PersonalQR'}
         ];
 
         var animatedPages = this.$.pages;
 
 
-        this.route = this.route || DEFAULT_ROUTE; // Select initial route.
+        this.route = this.$.route || DEFAULT_ROUTE; // Select initial route.
      }
 
      Polymer({
@@ -166,6 +176,9 @@
             return;
           }
           e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
+        },
+        clickedpaper: function(info){
+            window.location.hash=info;
         }
       });
     }());

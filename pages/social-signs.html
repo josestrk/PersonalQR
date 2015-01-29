@@ -14,15 +14,18 @@
       }
       #signin {
         margin: 10px auto;
+        padding: 9px 50px;
+        border-radius: 6px;
+        color: white;
       }
     </style>
 
     <core-card id="delegated_form" center-justified vertical layout>
-      <div style="background:red">
-          <core-item id="signin" label="Sign in with Google" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-gplus"></core-item>
+      <div>
+          <core-item id="signin" label="Sign in with Google" on-click="{{fireLogin}}" hidden?="{{logged}}" style="background: #DC4A38;" icon="social:post-gplus"></core-item>
       </div>
       <div>
-          <core-item id="signin" label="Sign in with Facebook" on-click="{{fireLogin}}" hidden?="{{logged}}" icon="social:post-facebook"></core-item>
+          <core-item id="signin" label="Sign in with Facebook" on-click="{{fireLogin}}" hidden?="{{logged}}" style="background: #3B5998;" icon="social:post-facebook"></core-item>
       </div>
     </core-card>
   </template>
