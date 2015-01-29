@@ -140,6 +140,7 @@
 
                     this.login=this.$.login;
                     this.logueado();
+                    this.$.login.logged = Boolean(localStorage.token);
 
                     //Encontrado por internet...
                     var scaffold = this.$.scaffold;
