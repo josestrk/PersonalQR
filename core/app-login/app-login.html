@@ -31,7 +31,7 @@
       function checkResponse() {
 
         var hash = window.location.hash;
-        window.location.hash = '';
+        window.location.hash = '/wall/';
 
         var token = /[#?;,]token=([^;,]+)/.exec(hash);
         var error = /[#?;,]error=([^;,]+)/.exec(hash);

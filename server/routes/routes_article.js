@@ -134,6 +134,7 @@ function worker(io) {
 
   function getUserArticles(req, res) {
     articleManager.getUserArticles(req.param('userId'), function(err, result){
+        result["date"]=getDateTime()-result["date"];
       res.json(result);
     });
   }
