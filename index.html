@@ -8,7 +8,6 @@
 
   <script src="bower_components/webcomponentsjs/webcomponents.js" type="text/javascript"></script>
   <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-  <script src="lib/vide/jquery.min.js" type="text/javascript"></script>
   <script src="bower_components/socket.io-client/socket.io.js"></script>
 	<script>
 
@@ -52,6 +51,7 @@
 <body unresolved fullbleed>
     <core-user id="user"></core-user>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
+
     <app-router core-animated-pages transitions="slide-from-right">
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall/" element="wall-page"></app-route>
@@ -65,5 +65,8 @@
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>
 
+
+    <script>window.jQuery || document.write('<script src="../bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
+    <script src="lib/vide/jquery.vide.min.js"></script>
 </body>
 </html>

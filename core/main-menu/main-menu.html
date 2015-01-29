@@ -111,33 +111,33 @@
     </template>
     
     <script>
-        var progress = document.querySelector('paper-progress');
-        var repeat, maxRepeat = 1, animating = false;
+        // var progress = document.querySelector('paper-progress');
+        // var repeat, maxRepeat = 1, animating = false;
 
-        function nextProgress() {
-          animating = true;
-          if (progress.value < progress.max) {
-            progress.value += (progress.step || 1);
-          } else {
-            if (++repeat >= maxRepeat) {
-              animating = true;
-              return;
-            }
-            progress.value = progress.min;
-          }
-          progress.async(nextProgress);
-        }
+        // function nextProgress() {
+        //   animating = true;
+        //   if (progress.value < progress.max) {
+        //     progress.value += (progress.step || 1);
+        //   } else {
+        //     if (++repeat >= maxRepeat) {
+        //       animating = true;
+        //       return;
+        //     }
+        //     progress.value = progress.min;
+        //   }
+        //   progress.async(nextProgress);
+        // }
 
-        function startProgress() {
-          repeat = 0;
-          progress.value = progress.min;
-          if (!animating) {
-            nextProgress();
-          }
-        }
-        addEventListener('polymer-ready', function() {
-          startProgress();
-        });
+        // function startProgress() {
+        //   repeat = 0;
+        //   progress.value = progress.min;
+        //   if (!animating) {
+        //     nextProgress();
+        //   }
+        // }
+        // addEventListener('polymer-ready', function() {
+        //   startProgress();
+        // });
         
         (function () {
             function loadMenu() {
