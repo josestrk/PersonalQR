@@ -40,8 +40,8 @@
                     <template if="{{imenu!=''}}">
                     <id-card layout vertical center center-justified>
                         <img  class="img" id='{{name}}' src="{{ this.photoUrl }}" />
-                        <h2>{{ username == undefined ? 'Anonimus' : username }}</h2>
-                        <p>{{ follower > 0 ? follower : 0 }} followers • {{ following > 0 ? following : 0 }} following</p>
+                        <h2>{{ username == undefined ? 'Anonymous' : username }}</h2>
+                        <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
                     </id-card>
                     </template>
                 </core-menu>
