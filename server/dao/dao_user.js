@@ -39,7 +39,20 @@ function setUser(userId, update, callback) {
 	col.findAndModify(query, sort, update, {new: true}, callback);
 }
 
-function validateUser(mail, password, callback) {
+function validateUserByName(username, password, callback) {
+	var where={};
+	where["username"]=username;
+	where["password"]=password;
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err+':', []);
+		}
+		cursor.toArray(callback);
+	});
+}
+
+function validateUserByEmail(mail, password, callback) {
 	var where={};
 	where["mail"]=mail;
 	where["password"]=password;
@@ -83,7 +96,8 @@ col.bind({
 	delUsers: delUsers,
 	delUser: delUser,
 	setUser: setUser,
-	validateUser: validateUser,
+	validateUserByName: validateUserByName,
+	validateUserByEmail: validateUserByEmail,
 	verifyUsername: verifyUsername,
 	verifyEmail: verifyEmail
 });

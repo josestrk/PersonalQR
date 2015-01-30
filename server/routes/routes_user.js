@@ -12,7 +12,8 @@ function worker(io) {
   router.post('/user',  createUser);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
-  router.get('/validateuser', validateUser);
+  router.get('/validateUser', validateUserByName);
+  router.get('/validateUser', validateUserByEmail);
   router.get('/verifyUsername', verifyUsername);
   router.get('/verifyEmail', verifyEmail);
   router.put('/user/:userId', ensureAuth,ensureOwner, setUser);
@@ -23,30 +24,30 @@ function worker(io) {
     var User={
     };
     if(req.body.username!==undefined){
-       User["username"]=req.body.username;
-     }else{
-       User["username"]="";
-     }
+      User["username"]=req.body.username;
+    } else {
+      User["username"]="";
+    }
     if(req.body.name!==undefined){
-       User["name"]=req.body.name;
-     }else{
-       User["name"]="";
-     }
+      User["name"]=req.body.name;
+    } else {
+      User["name"]="";
+    }
     if(req.body.mail!==undefined){
-       User["mail"]=req.body.mail;
-     }else{
-       User["mail"]="";
-     }
+      User["mail"]=req.body.mail;
+    } else {
+      User["mail"]="";
+    }
     if(req.body.password!==undefined){
-       User["password"]=req.body.password;
-     }else{
-       User["password"]="";
-     }
+      User["password"]=req.body.password;
+    } else {
+      User["password"]="";
+    }
     if(req.body.bdate!==undefined){
-       User["bdate"]=req.body.bdate;
-     }else{
-       User["bdate"]="";
-     }
+      User["bdate"]=req.body.bdate;
+    } else {
+      User["bdate"]="";
+    }
 
     userManager.createUser(User,function(err, result){
       res.json(result);
@@ -74,16 +75,35 @@ function worker(io) {
     });
   }
 
-  function validateUser(req, res, next){
-    if(req.query.mail!==undefined && req.query.password!==undefined){
-      userManager.validateUser(req.query.mail, req.query.password, function(err, result){
-        if(result[0] !== undefined){
+  function validateUserByName(req, res, next){
+    if (req.query.username !== undefined && req.query.password !== undefined) {
+      userManager.validateUserByName(req.query.mail, req.query.password, function(err, result){
+        if (result[0] !== undefined) {
           io.alexEmit('userconnected', result);
           res.json(result);
-        }else{
-          if(err !== null){
+        } else {
+          if (err !== null) {
             next(new Error(err));
-          }else{
+          } else {
+            next(new Error('Username or password incorrect:'));
+          }
+        }
+      });
+    }else{
+      next(new Error('There was no data provided:'));
+    }
+  }
+  
+  function validateUserByEmail(req, res, next){
+    if (req.query.mail !== undefined && req.query.password !== undefined) {
+      userManager.validateUserByEmail(req.query.mail, req.query.password, function(err, result){
+        if (result[0] !== undefined) {
+          io.alexEmit('userconnected', result);
+          res.json(result);
+        } else {
+          if (err !== null) {
+            next(new Error(err));
+          } else {
             next(new Error('Mail or password incorrect:'));
           }
         }
@@ -138,27 +158,27 @@ function worker(io) {
       }
     };
 
-    if(req.body.username!==undefined){
-       User.$set["username"]=req.body.username;
-     }
-    if(req.body.name!==undefined){
-       User.$set["name"]=req.body.name;
-     }
-    if(req.body.mail!==undefined){
-       User.$set["mail"]=req.body.mail;
-     }
-    if(req.body.password!==undefined){
-       User.$set["password"]=req.body.password;
-     }
-    if(req.body.bdate!==undefined){
-       User.$set["bdate"]=req.body.bdate;
-     }
+    if(req.body.username !== undefined){
+      User.$set["username"] = req.body.username;
+    }
+    if(req.body.name !== undefined){
+      User.$set["name"] = req.body.name;
+    }
+    if(req.body.mail !== undefined){
+      User.$set["mail"] = req.body.mail;
+    }
+    if(req.body.password !== undefined){
+      User.$set["password"] = req.body.password;
+    }
+    if(req.body.bdate !== undefined){
+      User.$set["bdate"] = req.body.bdate;
+    }
 
     userManager.setUser(userId, User, function(err, result){
       if(result === null){
         res.status(401).send(err);
       }else{
-          res.json(result);
+        res.json(result);
       }
     });
   }

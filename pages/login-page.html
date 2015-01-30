@@ -52,11 +52,11 @@
         opacity: 1;
         margin: 5px;
       }
-      #email_field {
+      #user_field {
         width: 80%;
         height: 30px;
       }
-      #email_field::shadow #decorator{
+      #user_field::shadow #decorator{
         padding: 0px;
       }
       #password_field {
@@ -66,7 +66,7 @@
       #password_field::shadow #decorator{
         padding: 0px;
       }
-      #email_icon {
+      #user_icon {
         width: 25px;
         height: 25px;
         margin: auto;
@@ -134,17 +134,18 @@
       <core-card id="core_card" vertical layout wrap center-justified center><img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;"></core-card>
       <core-card id="core_card_block" center wrap vertical layout center-justified>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
-          <core-icon icon="mail" id="email_icon" center-justified horizontal layout wrap center></core-icon>
-          <paper-input label="Email Address" id="email_field" layout vertical></paper-input>
+          <core-icon icon="account-circle" id="user_icon" center-justified horizontal layout wrap center></core-icon>
+          <paper-input-decorator id="user_field" label="Username or email address">
+            <input id="user_input" is="core-input" name="user" value="{{user}}">
+          </paper-input-decorator>
         </core-card>
         <core-card id="core_card_input" horizontal layout wrap center-justified>
           <core-icon icon="lock" id="password_icon" center-justified horizontal layout wrap center></core-icon>
           <paper-input-decorator id="password_field" label="Enter your password">
-            <input id="password_field" is="core-input" name="password" type="password" value="{{password}}"/>
+            <input id="password_input" is="core-input" name="password" type="password" value="{{password}}"/>
           </paper-input-decorator>
           <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{logged}}" ></paper-fab>
         </core-card>
-
       </core-card>
     </core-card>
   </template>
@@ -157,7 +158,7 @@
       },
       mailcheck: function(){
         var string = arguments[0];
-        if(string.match(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/) !== null){
+        if (string.match(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/) !== null) {
           return true;
         }else{
           return false;
@@ -165,24 +166,30 @@
       },
       passcheck: function(){
         var string = arguments[0];
-        if(string.match(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/) !== null){
+        if (string.match(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,16})$/) !== null) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
       check: function(){
-        if(this.$.email_field.value === "" || this.$.password_field.value === "") {
+        if (this.$.user_input.value === "" || this.$.password_input.value === "") {
           this.$.core_card_main.className="yellow";
-        } else if (this.mailcheck(this.$.email_field.value) && this.passcheck(this.$.password_field.value)){
+        } else if (this.mailcheck(this.$.user_input.value) && this.passcheck(this.$.password_input.value)){
           this.$.core_card_main.className="green";
         } else {
           this.$.core_card_main.className="red";
         }
       },
       logged: function() {
-        var ajaxhandler = this.$.ajaxhandler;
-        ajaxhandler.get(this.$.email_field.value, this.$.password_field.value);
+        var ajaxhandler = this.$.ajaxhandler,
+          user = this.$.user_input.value,
+          password = this.$.password_input.value;
+        if (user.match(/@/) !== null) {
+          ajaxhandler.getUserByEmail(user, password);
+        } else {
+          ajaxhandler.getUserByName(user, password);
+        }
       },
       keydown: function(event, detail, sender) {
         if(event.keyCode === 13) {
