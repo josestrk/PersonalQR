@@ -33,7 +33,8 @@
 
 <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'>
   <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
-    <core-item><search-banner horizontal layout center-justified center></search-banner></core-item>
+    <nav><search-banner horizontal layout center-justified center></search-banner>
+    </nav>
     <nav flex>
       <core-menu>
         <template if="{{login.logged}}">
@@ -44,7 +45,7 @@
         </id-card>
         </template>
       </core-menu>
-       <core-menu flex valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
+       <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
          <template repeat="{{page in pages}}">
          <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
          <a href="{{page.hash}}"></a>
