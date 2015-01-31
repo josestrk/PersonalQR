@@ -93,7 +93,7 @@ function worker(io) {
       next(new Error('There was no data provided:'));
     }
   }
-  
+
   function validateUserByEmail(req, res, next){
     if (req.query.mail !== undefined && req.query.password !== undefined) {
       userManager.validateUserByEmail(req.query.mail, req.query.password, function(err, result){
