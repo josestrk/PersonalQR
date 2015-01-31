@@ -12,11 +12,11 @@
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="../../bower_components/core-a11y-keys/core-a11y-keys.html">
 <link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
+<link rel="import" href="../../bower_components/core-scaffold/core-scaffold.html">
 
 <link rel="import" href="../search-banner/search-banner.html">
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-artc/core-artc.html">
-<link rel="import" href="../core-scaffold/core-scaffold.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
 <link rel="import" href="../core-qr/core-qr.html">
 <link rel="import" href="../core-add/core-add.html">
@@ -24,189 +24,172 @@
 <link rel="stylesheet" href="out-style.css">
 
 <polymer-element name="main-menu" attributes="imenu, iduser, logged">
-    <template>
+<template>
 
-        <link rel="stylesheet" href="in-style.css">
+<link rel="stylesheet" href="in-style.css">
 
-        <app-login id="login"></app-login>
+<app-login id="login"></app-login>
+<core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
 
-        <core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
+<core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'>
+  <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
+    <core-item><search-banner horizontal layout center-justified center></search-banner></core-item>
+    <nav flex>
+      <core-menu>
+        <template if="{{login.logged}}">
+        <id-card layout vertical center center-justified>
+            <img  class="img" id='{{name}}' src="{{ this.photoUrl }}" />
+            <h2>{{ username == undefined ? 'Anonymous' : username }}</h2>
+            <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
+        </id-card>
+        </template>
+      </core-menu>
+       <core-menu flex valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}">
+         <template repeat="{{page in pages}}">
+         <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
+         <a href="{{page.hash}}"></a>
+         </core-item>
+         </template>
+       </core-menu>
+       <core-menu hidden?="{{!login.logged}}">
+         <a  href="/" ><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
+       </core-menu>
+    </nav>
+  </core-header-panel>
+    
+    <core-toolbar tool flex>
+        <content select=".title"></content>
+        <content select=".notifi"></content>
 
-        <my-core-scaffold id="scaffold" on-logout="{{handleLogout}}">
-            <nav layout vertical style="height:100%">
+        <template if="{{login.logged}}">
+            <core-qr></core-qr>
+            <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
+            <template if="{{imenu=='Settings'}}">
+              <core-add class="right"></core-add>
+            </template>
+        </template>
+<!--        <core-icon-button class='right' id="menuButton" icon="more-vert" on-tap="{{togglePanel}}"></core-icon-button>-->
+    </core-toolbar>
+    
+    <content select="#list"></content>
+    <content select=".container"><core-card></core-card></content>
+    <content></content>
+</core-scaffold>
+</template>
 
-                <core-menu>
-                    <search-banner horizontal layout center-justified center></search-banner>
-                    <template if="{{imenu!=''}}">
-                    <id-card layout vertical center center-justified>
-                        <img  class="img" id='{{name}}' src="{{ this.photoUrl }}" />
-                        <h2>{{ username == undefined ? 'Anonymous' : username }}</h2>
-                        <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
-                    </id-card>
-                    </template>
-                </core-menu>
+<script>
+    // var progress = document.querySelector('paper-progress');
+    // var repeat, maxRepeat = 1, animating = false;
 
-                <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
-                    <template repeat="{{page in pages}}">
-                        <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}"><a href="{{page.hash}}"></a></core-item>
-                    </template>
-                </core-menu>
-                <core-menu hidden?="{{!login.logged}}">
-                    <a  href="/" ><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
-                </core-menu>
-            </nav>
+    // function nextProgress() {
+    //   animating = true;
+    //   if (progress.value < progress.max) {
+    //     progress.value += (progress.step || 1);
+    //   } else {
+    //     if (++repeat >= maxRepeat) {
+    //       animating = true;
+    //       return;
+    //     }
+    //     progress.value = progress.min;
+    //   }
+    //   progress.async(nextProgress);
+    // }
 
-            <core-toolbar tool flex>
-                <content select=".title"></content>
+    // function startProgress() {
+    //   repeat = 0;
+    //   progress.value = progress.min;
+    //   if (!animating) {
+    //     nextProgress();
+    //   }
+    // }
+    // addEventListener('polymer-ready', function() {
+    //   startProgress();
+    // });
 
-                <!-- Hacer un IF pra comp si tenemos sessión si no NOTIFI -> se transformará para direccionar a logear -->
-                <content select=".notifi"></content>
+    (function () {
+        function loadMenu() {
+          var _id=this.iduser;
+          this.pages = [
+              {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
+              {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
+              {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
+              {name: 'Settings', logo: 'lock', hash: '/#/settings/?id='+_id},
+              {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
+          ];
+        }
 
-                <template if="{{login.logged}}">
-                    <core-qr></core-qr>
-                    <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
-                    <template if="{{imenu=='Settings'}}">
-                      <core-add class="right"></core-add>
-                    </template>
-                </template>
-            </core-toolbar>
+        Polymer({
+            domReady: function () {
+                //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
+                //this.name=document.getElementById('user').datos.name === undefined ? '' : document.getElementById('user').datos.name ;
+                //this.follower= document.getElementById('user').datos.followers === undefined ? 0 : document.getElementById('user').datos.followers ;
+                //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
+                loadMenu.bind(this)();
 
-            <content select="#list"></content>
-            <content select=".container"><core-card></core-card></content>
-            <content></content>
-
-        </my-core-scaffold>
-    </template>
-
-    <script>
-        // var progress = document.querySelector('paper-progress');
-        // var repeat, maxRepeat = 1, animating = false;
-
-        // function nextProgress() {
-        //   animating = true;
-        //   if (progress.value < progress.max) {
-        //     progress.value += (progress.step || 1);
-        //   } else {
-        //     if (++repeat >= maxRepeat) {
-        //       animating = true;
-        //       return;
-        //     }
-        //     progress.value = progress.min;
-        //   }
-        //   progress.async(nextProgress);
-        // }
-
-        // function startProgress() {
-        //   repeat = 0;
-        //   progress.value = progress.min;
-        //   if (!animating) {
-        //     nextProgress();
-        //   }
-        // }
-        // addEventListener('polymer-ready', function() {
-        //   startProgress();
-        // });
-
-        (function () {
-            function loadMenu() {
-              var _id=this.iduser;
-              this.pages = [
-                  {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
-                  {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
-                  {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
-                  {name: 'Settings', logo: 'lock', hash: '/#/settings/?id='+_id},
-                  {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
-              ];
-            }
-
-            function addKeysToNumbers() {
-                var keys = this.$.keys;
-                var keysToAdd = Array.apply(null, this.pages).map(function (x, i) {
-                    return i + 1;
-                }).reduce(function (x, y) {
-                    return x + ' ' + y;
-                });
-                keys.keys += ' ' + keysToAdd;
-            }
-
-            Polymer({
-                domReady: function () {
-                    //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
-                    //this.name=document.getElementById('user').datos.name === undefined ? '' : document.getElementById('user').datos.name ;
-                    //this.follower= document.getElementById('user').datos.followers === undefined ? 0 : document.getElementById('user').datos.followers ;
-                    //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
-                    loadMenu.bind(this)();
-                    addKeysToNumbers.bind(this)();
-
-                    this.login=this.$.login;
-                    this.logueado();
-                    this.$.login.logged = Boolean(localStorage.token);
-
-                    //Encontrado por internet...
-                    var scaffold = this.$.scaffold;
-                    addEventListener('polymer-ready', function() {
-                      scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
-                        var scroller = e.detail.target;
-                        scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
-                        console.log(scroller.scrollTop);
-
-                        var a  =  scroller.scrollTop  ;
-                        var b  =  scroller.scrollHeight - scroller.clientHeight  ;
-                        var c  =  a / b  ;
-                        var that = this;
-                        if(c*100 >85){
-                          this.fire('endofpage');
-                        }
-                      });
-                    });
-                },
-                handleLogout: function(event, detail) {
-                  this.$.login.logout();
-                },
-                logueado: function() {
-                    if (this.logged) {
-                        getProfile().done(function(user) {
-                            this.photoUrl = user._json.picture;
-                        }.bind(this)).fail(function() {
-                            this.photoUrl = '';
-                        }.bind(this));
-                    }
-                },
-                keyHandler: function (e, detail, sender) {
-                    var pages = this.$.pages;
-
-                    var num = parseInt(detail.key);
-                    if (!isNaN(num) && num <= this.pages.length) {
-                        pages.selectIndex(num - 1);
-                        return;
-                    }
-
-                    switch (detail.key) {
-                        case 'left':
-                        case 'up':
-                            pages.selectPrevious();
-                            break;
-                        case 'right':
-                        case 'down':
-                            pages.selectNext();
-                            break;
-                        case 'space':
-                            detail.ctrl ? pages.selectPrevious() : pages.selectNext();
-                            break;
-                    }
-                },
-                menuItemSelected: function (e, detail, sender) {
-                    if (detail.isSelected) {
-                        this.$.scaffold.closeDrawer();
-                    }
-                },
-                personalcall: function(){
-                    window.location.hash="/pqr/?id="+this.iduser;
-                },
-                showAdd: function (e, detail, sender){
-                  return document.URL.split('/').indexOf('settings');
+                this.login=this.$.login;
+                this.logueado();
+                this.$.login.logged = Boolean(localStorage.token);
+                
+//                this.scaffold= this.$.scaffold;
+//                
+//                addEventListener('polymer-ready', function() {
+//                  scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
+//                    var scroller = e.detail.target;
+//                    scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
+//                    console.log(scroller.scrollTop);
+//
+//                    var a  =  scroller.scrollTop  ;
+//                    var b  =  scroller.scrollHeight - scroller.clientHeight  ;
+//                    var c  =  a / b  ;
+//                    var that = this;
+//                    if(c*100 >85){
+//                      this.fire('endofpage');
+//                    }
+//                  });
+//                });
+            },
+            handleLogout: function(event, detail) {
+              this.$.login.logout();
+            },
+            logueado: function() {
+                if (this.logged) {
+                    getProfile().done(function(user) {
+                        this.photoUrl = user._json.picture;
+                    }.bind(this)).fail(function() {
+                        this.photoUrl = '';
+                    }.bind(this));
                 }
-            });
-        }());
-    </script>
+            },
+            keyHandler: function (e, detail, sender) {
+                var pages = this.$.pages;
+
+                var num = parseInt(detail.key);
+                if (!isNaN(num) && num <= this.pages.length) {
+                    pages.selectIndex(num - 1);
+                    return;
+                }
+
+                switch (detail.key) {
+                    case 'left':
+                    case 'up':
+                        pages.selectPrevious();
+                        break;
+                    case 'right':
+                    case 'down':
+                        pages.selectNext();
+                        break;
+                    case 'space':
+                        detail.ctrl ? pages.selectPrevious() : pages.selectNext();
+                        break;
+                }
+            },
+            personalcall: function(){
+                window.location.hash="/pqr/?id="+this.iduser;
+            },
+            showAdd: function (e, detail, sender){
+              return document.URL.split('/').indexOf('settings');
+            }
+        });
+    }());
+</script>
 </polymer-element>
