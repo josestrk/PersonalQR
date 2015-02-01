@@ -10,6 +10,7 @@ function worker(io) {
 
   //users
   router.post('/user',  createUser);
+	router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
   router.get('/validateUser', validateUserByName);
@@ -18,6 +19,7 @@ function worker(io) {
   router.get('/verifyEmail', verifyEmail);
   router.put('/user/:userId', ensureAuth,ensureOwner, setUser);
   router.delete('/user/:userId', ensureAuth,ensureOwner, delUser);
+
 
   //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
   function createUser(req, res) {
@@ -52,6 +54,10 @@ function worker(io) {
     userManager.createUser(User,function(err, result){
       res.json(result);
     });
+  }
+
+  function getProfile(req, res) {
+    res.json(req.user);
   }
 
   function getUser(req, res) {

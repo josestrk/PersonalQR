@@ -34,6 +34,7 @@ function ensureAuthenticated(req, res, next) {
 			return res.send(401);
 		}
 		req.user = decode.profile;
+		req.globalIdOfUser = decode.id;
 		req.token = token;
 		next(null);
 	});

@@ -35,14 +35,14 @@
     <nav><search-banner horizontal layout center-justified center></search-banner>
     </nav>
     <nav flex>
-    <template if="{{login.logged}}">
       <core-menu>
         <id-card layout vertical center center-justified>
-            <img  class="img" id='{{name}}' src="{{  }}" />
-            <h2>{{ username == undefined ? 'Anonymous' : username }}</h2>
+            <img  class="img" id='photo' src="{{ this.photoUrl }}" />
+            <h2 id="name"></h2>
             <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
         </id-card>
       </core-menu>
+    <template if="{{login.logged}}">
        <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
          <template repeat="{{page in pages}}">
          <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
@@ -56,7 +56,7 @@
        </core-menu>
     </nav>
   </core-header-panel>
-    
+
     <core-toolbar tool flex>
         <content select=".title"></content>
         <content select=".notifi"></content>
@@ -69,10 +69,10 @@
             </template>
         </template>
     </core-toolbar>
-    
-    
+
+
     <paper-progress id="progress"></paper-progress>
-    
+
     <content select="#list"></content>
     <content select=".container"><core-card></core-card></content>
     <content></content>
@@ -92,7 +92,20 @@
               {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
           ];
         }
-        
+
+        function doAjax(options, success, error) {
+          options.dataType = 'json';
+          options.contentType = 'application/json; charset=UTF-8';
+          options.success = success;
+          options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+          options.beforeSend = function(xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+          };
+
+          $.ajax(options);
+        }
+
         Polymer({
             domReady: function () {
                 //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
@@ -104,11 +117,13 @@
                 this.login=this.$.login;
                 this.logueado();
                 this.$.login.logged = Boolean(localStorage.token);
-                
+
+                this.rellenarProfile();
+
                 this.progress = this.$.progress;
                 this.startProgress();
 //                this.scaffold= this.$.scaffold;
-//                
+//
 //                addEventListener('polymer-ready', function() {
 //                  scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
 //                    var scroller = e.detail.target;
@@ -124,6 +139,20 @@
 //                    }
 //                  });
 //                });
+            },
+            rellenarProfile : function (){
+              doAjax({
+                type: 'GET',
+                url: 'routes_user/profile',
+              },function(result) {
+                this.$.photo.src = result.picture;
+                this.$.name.innerHTML = result.name;
+              }.bind(this),
+              function(xhr, err, desc){
+                var errorToast = document.querySelector('#errorToast');
+                errorToast.text = xhr.responseText.split(':')[1];
+                errorToast.show();
+              });
             },
             startProgress: function(){
               if (!animating) {
