@@ -6,7 +6,6 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icons/image-icons.html">
-<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
@@ -36,14 +35,13 @@
     <nav><search-banner horizontal layout center-justified center></search-banner>
     </nav>
     <nav flex>
+    <template if="{{login.logged}}">
       <core-menu>
-        <template if="{{login.logged}}">
         <id-card layout vertical center center-justified>
-            <img  class="img" id='{{name}}' src="{{ this.photoUrl }}" />
+            <img  class="img" id='{{name}}' src="{{  }}" />
             <h2>{{ username == undefined ? 'Anonymous' : username }}</h2>
             <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
         </id-card>
-        </template>
       </core-menu>
        <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
          <template repeat="{{page in pages}}">
@@ -52,6 +50,7 @@
          </core-item>
          </template>
        </core-menu>
+    </template>
        <core-menu hidden?="{{!login.logged}}">
          <a  href="/" ><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
        </core-menu>
@@ -69,8 +68,10 @@
               <core-add class="right"></core-add>
             </template>
         </template>
-<!--        <core-icon-button class='right' id="menuButton" icon="more-vert" on-tap="{{togglePanel}}"></core-icon-button>-->
     </core-toolbar>
+    
+    
+    <paper-progress id="progress"></paper-progress>
     
     <content select="#list"></content>
     <content select=".container"><core-card></core-card></content>
@@ -79,35 +80,8 @@
 </template>
 
 <script>
-    // var progress = document.querySelector('paper-progress');
-    // var repeat, maxRepeat = 1, animating = false;
-
-    // function nextProgress() {
-    //   animating = true;
-    //   if (progress.value < progress.max) {
-    //     progress.value += (progress.step || 1);
-    //   } else {
-    //     if (++repeat >= maxRepeat) {
-    //       animating = true;
-    //       return;
-    //     }
-    //     progress.value = progress.min;
-    //   }
-    //   progress.async(nextProgress);
-    // }
-
-    // function startProgress() {
-    //   repeat = 0;
-    //   progress.value = progress.min;
-    //   if (!animating) {
-    //     nextProgress();
-    //   }
-    // }
-    // addEventListener('polymer-ready', function() {
-    //   startProgress();
-    // });
-
     (function () {
+        animating = false;
         function loadMenu() {
           var _id=this.iduser;
           this.pages = [
@@ -118,7 +92,7 @@
               {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
           ];
         }
-
+        
         Polymer({
             domReady: function () {
                 //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
@@ -131,6 +105,8 @@
                 this.logueado();
                 this.$.login.logged = Boolean(localStorage.token);
                 
+                this.progress = this.$.progress;
+                this.startProgress();
 //                this.scaffold= this.$.scaffold;
 //                
 //                addEventListener('polymer-ready', function() {
@@ -148,6 +124,12 @@
 //                    }
 //                  });
 //                });
+            },
+            startProgress: function(){
+              if (!animating) {
+                this.progress.value += 1;
+                this.async(this.startProgress);
+              }
             },
             handleLogout: function(event, detail) {
               this.$.login.logout();

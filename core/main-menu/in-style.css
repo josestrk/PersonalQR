@@ -12,6 +12,15 @@ id-card .img{
     width: 70px;
     height: 70px;
 }
+paper-progress{
+    width: 100%;
+    display: block;
+    padding: 0px;
+    height: 6px;
+}
+paper-progress::shadow #activeProgress {
+  background-color: #0F9DDF;
+}
 .core-selected {
     background: #777;
     margin: auto -21px;
