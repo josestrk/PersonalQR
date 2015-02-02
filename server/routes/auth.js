@@ -12,29 +12,28 @@ var daoUser = require('../dao/dao_user');
 
 function worker(io) {
 
-	/* ROUTES */
+/* ROUTES */
+	/*GOOGLE*/
 	router.get('/login', passportLogin());
-	router.get('/loginfb', passportLoginFb());
 	router.get('/oauth2callback', passportCallback(), oauth2Callback);
 	router.post('/rt', refreshToken);
-	/* END ROUTES */
+	/*FACEBOOK*/
+	router.get('/loginfb', passportLoginFb());
+	router.get('/oauth2callbackfb', passportCallbackFb(), oauth2CallbackFb);
+	router.post('/rtfb', refreshTokenFb);
+/* END ROUTES */
 
 	return router;
 }
 
+//-------------------------------------------------
+//------------------  GOOGLE ----------------------
+//-------------------------------------------------
+
 function passportLogin() {
-	return passport.authenticate('google', {
-		session: false,
-		scope: config.scopes,
-		accessType: 'offline'});
+	return passport.authenticate('google', {session: false,scope: config.scopes,accessType: 'offline'});
 }
 
-function passportLoginFb() {
-	return passport.authenticate('facebook', {
-		session: false,
-		scope: config.scopes,
-		accessType: 'offline'});
-}
 
 function passportCallback() {
 	return passport.authenticate('google', {session: false, failureRedirect: '/auth/login'});
@@ -92,15 +91,13 @@ passport.use(new GoogleStrategy({
 	clientSecret: config.client_secret,
 	callbackURL: config.callback_url
 }, function(accessToken, refreshToken, profile, done) {
-	console.log('---auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
-	console.log(profile._json);
+	console.log('[GOOGLE] auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
 
 	//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 
 	function insert(){
 			daoUser.createUser(profile._json, function(err, res){
 			if(!err){
-			console.log('---auth.js');
 			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 			}
 		});
@@ -110,7 +107,6 @@ passport.use(new GoogleStrategy({
 		if(err){
 			insert();
 		}else{
-			console.log(res);
 			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 		}
 	});
@@ -118,15 +114,94 @@ passport.use(new GoogleStrategy({
 }
 ));
 
+//-------------------------------------------------
+//-----------------  FACEBOOK----------------------
+//-------------------------------------------------
+
+function passportLoginFb() {
+	return passport.authenticate('facebook', {session: false,scope: config.scopes,accessType: 'offline'});
+}
+
+function passportCallbackFb() {
+	return passport.authenticate('facebook', {session: false, failureRedirect: '/auth/loginfb'});
+}
+
+function oauth2CallbackFb(req, res) {
+	debug('Received oauth2callbackFb');
+	console.log(req.user);
+	var token = jwt.sign(req.user, jwtSecret);
+	var url = '/#/loader?token=' + token;
+
+	res.redirect(url);
+}
+
+function refreshTokenFb(req, res) {
+	var rt = req.query.rt;
+
+	if (!rt) {
+		throw new Error('No valid token found');
+	} else {
+		//http://graph.facebook.com/endpoint?key=value&access_token=app_id|app_secret
+		request(
+						{
+							url: 'http://graph.facebook.com',
+							form: {
+								client_id: config.client_id,
+								client_secret: config.client_secret,
+								grant_type: 'refresh_token',
+								refresh_token: rt
+							},
+							method: 'POST',
+							json: true
+						},
+		function(err, r, body) {
+
+			if (err) {
+				return res.status(500).send("Got error: " + e.message);
+			}
+
+			if (body.error) {
+				return res.status(500).send(body.error + ": " + body.error_description);
+			}
+
+			res.json({access_token: body.access_token, refresh_token: rt});
+
+
+		});
+	}
+}
+
+//
+//
+// Register Google Strategy in Passport
+//
 // passport.use(new FacebookStrategy({
 // 	clientID: config.client_id,
 // 	clientSecret: config.client_secret,
 // 	callbackURL: config.callback_url
 // }, function(accessToken, refreshToken, profile, done) {
-// 	console.log('passport use');
-// 	console.log('New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id);
-// 	console.log(profile);
-// 	done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
+// 	console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id);
+// 	console.log(profile._json);
+
+// 	//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
+
+// 	function insert(){
+// 			daoUser.createUser(profile._json, function(err, res){
+// 			if(!err){
+// 			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+// 			}
+// 		});
+// 	}
+
+// 	daoUser.verifyEmail(profile._json.email, function(err, res){
+// 		if(err){
+// 			insert();
+// 		}else{
+// 			console.log(res);
+// 			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+// 		}
+// 	});
+
 // }
 // ));
 
