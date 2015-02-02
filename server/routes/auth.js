@@ -8,6 +8,7 @@ var jwtSecret = require('../util/config').jwtSecret;
 var debug = require('debug')('pqr');
 var request = require('request');
 var jwt = require('jsonwebtoken');
+var daoUser = require('../dao/dao_user');
 
 function worker(io) {
 
@@ -41,6 +42,7 @@ function passportCallback() {
 
 function oauth2Callback(req, res) {
 	debug('Received oauth2callback');
+	console.log(req.user);
 	var token = jwt.sign(req.user, jwtSecret);
 	var url = '/#/loader?token=' + token;
 
@@ -90,10 +92,29 @@ passport.use(new GoogleStrategy({
 	clientSecret: config.client_secret,
 	callbackURL: config.callback_url
 }, function(accessToken, refreshToken, profile, done) {
-	console.log('passport use');
-	console.log('New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id);
-	console.log(profile);
-	done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
+	console.log('---auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
+	console.log(profile._json);
+
+	//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
+
+	function insert(){
+			daoUser.createUser(profile._json, function(err, res){
+			if(!err){
+			console.log('---auth.js');
+			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+			}
+		});
+	}
+
+	daoUser.verifyEmail(profile._json.email, function(err, res){
+		if(err){
+			insert();
+		}else{
+			console.log(res);
+			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+		}
+	});
+
 }
 ));
 

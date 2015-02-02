@@ -10,11 +10,12 @@ function worker(io) {
   //habra que meter aqui los emit de socket.IO
 
   //articles
-  router.post('/article', createArticle);
-  router.post('/editarticle', editArticle);
+  router.post('/article', ensureAuth, createArticle);
+  router.post('/editarticle', ensureAuth, ensureOwner, editArticle);
   // router.get('/article/:articleId', getArticle);
   router.get('/article/:userId', getUserArticles);
   router.get('/articles/:id', getArticlesAll);
+  //creo que ha quedado deprecated
   router.put('/article/:articleId',ensureAuth,ensureOwner, setArticle);
   router.delete('/article/:articleId',ensureAuth,ensureOwner, delArticle);
 
@@ -141,7 +142,6 @@ function worker(io) {
 
   function getArticlesAll(req, res) {
     var skip = req.param('id');
-    console.log(skip);
     articleManager.getArticlesAll(function(err, result){
       //Permisos de vision regulados rsul=[]
       res.json(result);

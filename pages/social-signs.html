@@ -14,6 +14,7 @@
       }
       #signin {
         margin: 10px auto;
+/*        padding: 9px 50px;*/
         border-radius: 6px;
         color: white;
         width: 100%;
@@ -25,21 +26,15 @@
         padding: 2px;
         margin: 0px 10px 0px 0px;
       }
-      core-item {
-        margin: 3px;
+      paper-button {
         border-radius: 4px;
         color: rgb(240, 240, 240);
         cursor: pointer;
-        -webkit-user-select: none; /* Chrome/Safari */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* IE10+ */
-        /* Rules below not implemented in browsers yet */
-        -o-user-select: none;
-        user-select: none;
+        margin: 5px;
+        text-transform: inherit;
       }
-      core-item:hover {
-        opacity: 0.8;
-        color: rgb(255, 255, 255);
+      core-icon{
+          margin: 0 8px 0 0;
       }
     </style>
 
@@ -54,6 +49,8 @@
             <core-icon icon="social:post-facebook"></core-icon>Sign in with Facebook
           </paper-button>
       </div>
+ <!--      <paper-button id="google_signin" on-click="{{fireLogin}}" hidden?="{{logged}}" style="background: #DC4A38;"><core-icon src="../img/google.png"></core-icon>Sign in with Google</paper-button>
+      <paper-button id="facebook_signin" on-click="{{fireLogin}}" hidden?="{{logged}}" style="background: #3B5998;"><core-icon src="../img/facebook.png"></core-icon>Sign in with Facebook</paper-button> -->
     </core-card>
   </template>
 

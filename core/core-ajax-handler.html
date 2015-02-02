@@ -47,6 +47,11 @@
         options.contentType = options.contentType || 'application/json; charset=UTF-8';
         options.success = success;
         options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+        options.beforeSend = function(xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+        };
+
         $.ajax(options);
       }
 
@@ -116,14 +121,33 @@
 
       refresh();
       Polymer('core-ajax-handler', {
-        get : function(mail, password){
+        getUserByName: function(username, password){
           var data={
-            mail:mail,
+            username: username,
             password: password
           };
           doAjax({
             type: 'GET',
-            url: 'routes_user/validateuser',
+            url: 'routes_user/validateUserByName',
+            data: data
+          },function(result) {
+            document.getElementById('user').data(result);
+            window.location.hash="/wall/?id="+result[0]._id;
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        getUserByEmail: function(mail, password){
+          var data={
+            mail: mail,
+            password: password
+          };
+          doAjax({
+            type: 'GET',
+            url: 'routes_user/validateUserByEmail',
             data: data
           },function(result) {
             document.getElementById('user').data(result);

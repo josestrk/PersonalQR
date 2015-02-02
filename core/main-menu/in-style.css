@@ -1,7 +1,7 @@
 nav{
     color: white;
     margin: 0px 0px auto 0px;
-    padding: 10px;
+    padding: 5px;
     font-size: 20px;
 }
 core-menu > core-item {
@@ -12,10 +12,19 @@ id-card .img{
     width: 70px;
     height: 70px;
 }
+paper-progress{
+    width: 100%;
+    display: block;
+    padding: 0px;
+    height: 6px;
+}
+paper-progress::shadow #activeProgress {
+  background-color: #0F9DDF;
+}
 .core-selected {
     background: #777;
-    margin: 12px -21px;
-    padding: 21px;
+    margin: auto -21px;
+    padding: 15px;
 }
 #pages{
     display: block;

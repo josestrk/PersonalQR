@@ -4,7 +4,7 @@
 <link rel="import" href="../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../bower_components/core-input/core-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
-<!-- <link rel="import" href="../lib/paper-input-decorator/paper-input-decorator.html"> -->
+<link rel="import" href="../bower_components/paper-input/paper-input-decorator.html">
 <link rel="import" href="../bower_components/core-tooltip/core-tooltip.html">
 
 <link rel="import" href="../core/core-ajax-handler.html">
@@ -64,6 +64,14 @@
       margin-left: 47px;
       font-size: 10px;
       color: rgb(192, 0, 0);
+      
+      cursor: default;
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+      /* Rules below not implemented in browsers yet */
+      -o-user-select: none;
+      user-select: none;
     }
 
     .nodisplay {

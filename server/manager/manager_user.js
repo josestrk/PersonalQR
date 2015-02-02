@@ -59,11 +59,18 @@ function setUser(userId, data, callback) {//in case any error with data, then no
 	daoUser.setUser(userId, data, callback);
 }
 
-function validateUser(mail, password, callback) {
+function validateUserByName(username, password, callback) {
+	if(username==='' || password ===''){
+		return callback("There was no data provided:", []);
+	}
+	daoUser.validateUserByName(username, password, callback);
+}
+
+function validateUserByEmail(mail, password, callback) {
 	if(mail==='' || password ===''){
 		return callback("There was no data provided:", []);
 	}
-	daoUser.validateUser(mail, password, callback);
+	daoUser.validateUserByEmail(mail, password, callback);
 }
 
 function verifyUsername(username, callback){
@@ -86,7 +93,8 @@ module.exports = {
 	getUsersAll: getUsersAll,
 	delUser: delUser,
 	setUser: setUser,
-	validateUser: validateUser,
+	validateUserByName: validateUserByName,
+	validateUserByEmail: validateUserByEmail,
 	verifyUsername: verifyUsername,
 	verifyEmail: verifyEmail
 };

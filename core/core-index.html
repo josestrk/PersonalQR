@@ -21,17 +21,15 @@
       }
       #core_card {
         width: 100%;
-        height: 95%;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
+        min-height: 95%;
+        border-radius: 2px;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         /*background-image: url(http://makeonweb.es/josestrk/img/big/bg-6.jpg);*/
         background-size: 100% 100%;
       }
       #paper_tabs {
         height: 5%;
+        min-height: 30px;
         width: 100%;
         color: rgb(255, 255, 255);
         box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 2px;
@@ -46,27 +44,23 @@
       <app-login id="login"></app-login>
 
       <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
-
-            <section layout vertical center-center>
-                <slider-page></slider-page>
-            </section>
-            <section layout vertical center-center>
-                <signin-page></signin-page>
-            </section>
-            <section layout vertical center-center>
-              <core-card vertical layout  center-justified>
-                <login-page></login-page>
-              </core-card>
-            </section>
-
-       </core-animated-pages>
-        <paper-tabs selectedindex="1" id="paper_tabs" vertical layout wrap end>
+        <section layout vertical center-center>
+          <slider-page></slider-page>
+        </section>
+        <section layout vertical center-center>
+          <signin-page></signin-page>
+        </section>
+        <section layout vertical center-center>
+          <login-page></login-page>
+        </section>
+      </core-animated-pages>
+      <paper-tabs selectedindex="1" id="paper_tabs" vertical layout wrap end>
         <template repeat="{{page in pages}}">
             <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}">
               {{page.name}}
             </paper-tab>
         </template>
-        </paper-tabs>
+      </paper-tabs>
   </template>
 
     <script src="../lib/vide/jquery.vide.min.js"></script>
