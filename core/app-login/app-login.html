@@ -7,7 +7,11 @@
     var authWindow = null;
     function checkResponse() {
       var hash = window.location.hash;
-
+        
+      if( localStorage.token != undefined ){
+        window.location.hash = '/wall/';
+      }
+    
       var token = /[#?;,]token=([^;,]+)/.exec(hash);
       var error = /[#?;,]error=([^;,]+)/.exec(hash);
 
@@ -23,7 +27,7 @@
       if (token) {
         data.token = token[1];
       }
-
+        
       return deferred.resolve(data);
     }
     function authorize($entity) {
@@ -48,10 +52,6 @@
         authWindow = null;
         checkResponse();
       }, 100);
-
-      if( localStorage.token != undefined ){
-        window.location.hash = '/wall/';
-      }
 
       return deferred.promise();
     }

@@ -1,10 +1,18 @@
 {
   "name": "PersonalQR",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Quick way to share personal information",
   "main": "index.html",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "img":"img",
+    "video": "video",
+    "pages": "pages",
+    "core": "core",
+    "sever": "server",
+    "node_modules": "node_modules",
+    "js": "js",
+    "bower_components": "bower_components"
   },
   "dependencies": {
     "jsonwebtoken": "^3.2.2",
@@ -12,7 +20,10 @@
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
     "request": "^2.51.0",
-    "webcomponents.js": "^0.5.1-1"
+    "webcomponents.js": "^0.5.1-1",
+    "mongoskin": "~1.4.4",
+    "serve-favicon": "^2.1.6",
+    "socket.io": "^1.2.1"
   },
   "devDependencies": {
     "body-parser": "^1.9.2",
@@ -25,10 +36,7 @@
     "grunt-connect": "^0.2.0",
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "mocha": "^1.21.5",
-    "mongoskin": "~1.4.4",
-    "serve-favicon": "^2.1.6",
-    "socket.io": "^1.2.1"
+    "mocha": "^1.21.5"
   },
   "scripts": {
     "test": "mocha",
@@ -57,7 +65,7 @@
     "Work"
   ],
   "author": "josestrk",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/josestrk/PersonalQR/issues"
   },

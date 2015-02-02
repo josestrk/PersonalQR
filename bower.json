@@ -1,6 +1,6 @@
 {
   "name": "PersonalQR",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "homepage": "https://github.com/josestrk/PersonalQR",
   "authors": [
     "Josestrk <josenass22@gmail.com>",
@@ -16,17 +16,16 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer",
-    "core-elements": "Polymer/core-elements",
-    "paper-elements": "Polymer/paper-elements",
     "app-router": "2.0.2",
     "jquery": "2.1.1",
     "webcomponentsjs": "~0.5.1",
     "pushstate-anchor": "~0.3.0",
-    "Hover": "~2.0.0"
-  },
-  "devDependencies": {
     "app-router": "2.0.2",
     "socket.io-client": "~1.2.1"
+  },
+  "devDependencies": {
+    "polymer": "Polymer/polymer",
+    "core-elements": "Polymer/core-elements",
+    "paper-elements": "Polymer/paper-elements",
   }
 }
