@@ -122,7 +122,6 @@ function worker(io) {
 	}
 
 	function oauth2CallbackFb(req, res) {
-		console.log(req.user.email);
 		var token = jwt.sign(req.user, jwtSecret);
 		var url = '/#/loader?token=' + token;
 

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/josestrk/PersonalQR",
   "authors": [
+    "Josestrk <josenass22@gmail.com>",
     "Alevale <alexvales111@gmail.com>"
   ],
   "main": "index.html",
