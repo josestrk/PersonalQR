@@ -13,7 +13,7 @@ function ensureAuthenticated(req, res, next) {
 
 	if (!reqAuth) {
 		console.log('No authorization header found');
-		res.send(401); // Unauthorized
+		res.sendStatus(401); // Unauthorized
 		return;
 	}
 
@@ -22,7 +22,7 @@ function ensureAuthenticated(req, res, next) {
 
 	if (!token) {
 		console.log('No authorization token found');
-		res.send(401); // Unauthorized
+		res.sendStatus(401); // Unauthorized
 		return;
 	}
 
@@ -31,7 +31,7 @@ function ensureAuthenticated(req, res, next) {
 
 		if (err) {
 			console.log('Decode token error: ' + err);
-			return res.send(401);
+			return res.sendStatus(401);
 		}
 		req.user = decode.profile;
 		req.globalIdOfUser = decode.id;
@@ -85,7 +85,7 @@ function ensureIdFromToken(req, res, next) {
 	jwt.verify(token, jwtSecret, function(err, decode) {
 		if (err) {
 			console.log('Decode token error: ' + err);
-			return res.send(401);
+			return res.sendStatus(401);
 		}
 		req.user = decode.profile;
 		req.token = token;

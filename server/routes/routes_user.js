@@ -13,8 +13,8 @@ function worker(io) {
 	router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
-  router.get('/validateUser', validateUserByName);
-  router.get('/validateUser', validateUserByEmail);
+  router.get('/validateUserByName', validateUserByName);
+  router.get('/validateUserByEmail', validateUserByEmail);
   router.get('/verifyUsername', verifyUsername);
   router.get('/verifyEmail', verifyEmail);
   router.put('/user/:userId', ensureAuth,ensureOwner, setUser);
@@ -83,7 +83,7 @@ function worker(io) {
 
   function validateUserByName(req, res, next){
     if (req.query.username !== undefined && req.query.password !== undefined) {
-      userManager.validateUserByName(req.query.mail, req.query.password, function(err, result){
+      userManager.validateUserByName(req.query.username, req.query.password, function(err, result){
         if (result[0] !== undefined) {
           io.alexEmit('userconnected', result);
           res.json(result);
