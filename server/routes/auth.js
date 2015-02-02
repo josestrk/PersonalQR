@@ -182,10 +182,10 @@ function worker(io) {
 			});
 		}
 		daoUser.verifyEmail(profile._json.email, function(err, res){
-			if(!err=='err'){
+			if(err=='err'){
 				insert();
 			}else{
-
+				
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 			}
 		});
