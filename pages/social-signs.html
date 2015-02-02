@@ -50,7 +50,7 @@
           </paper-button>
       </div>
       <div>
-          <paper-button id="signin" class="hover" on-click="{{fireLogin}}" hidden?="{{login.logged}}" style="background: #3B5998;">
+          <paper-button id="signin" class="hover" on-click="{{fireLoginFb}}" hidden?="{{loginfb.logged}}" style="background: #3B5998;">
             <core-icon icon="social:post-facebook"></core-icon>Sign in with Facebook
           </paper-button>
       </div>
@@ -63,8 +63,11 @@
       this.addEventListener('blur', this.validateAll);
     },
     fireLogin: function() {
-      this.fire('login');
+      this.fire('login', 'g');
     },
+    fireLoginFb: function() {
+      this.fire('login', 'fb');
+    }
   });
   </script>
 </polymer-element>

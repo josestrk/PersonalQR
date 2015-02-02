@@ -84,7 +84,10 @@
               sender.id=="paper_tab1" ? this.$.core_card.selected=2 : console.log();
             },
             handleLogin: function(event, detail) {
-              this.$.login.login();
+              if(detail=='g')
+                this.$.login.login();
+              else
+                this.$.login.loginfb();
             }
         });
 

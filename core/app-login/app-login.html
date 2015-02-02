@@ -5,7 +5,7 @@
   <script>
   (function() {
     var authWindow = null;
-    function authorize() {
+    function authorize($entity) {
       var deferred = $.Deferred();
 
       if (authWindow) {
@@ -15,7 +15,7 @@
         });
       }
 
-      var authUrl = 'auth/login';
+      var authUrl = 'auth/'+$entity;
 
       //Open the login page.
       authWindow = window.open(authUrl, '_blank', 'location=no,toolbar=no');
@@ -65,7 +65,18 @@
 //        }
       },
       login: function() {
-        authorize().done(function(data) {
+        authorize('login').done(function(data) {
+          localStorage.token = data.token;
+          this.logged = true;
+          socket.connect(data.token);
+          showMsg('logged');
+        }.bind(this)).fail(function() {
+          delete localStorage.token;
+          this.logged = false;
+        }.bind(this));
+      },
+      loginfb: function() {
+        authorize('loginfb').done(function(data) {
           localStorage.token = data.token;
           this.logged = true;
           socket.connect(data.token);

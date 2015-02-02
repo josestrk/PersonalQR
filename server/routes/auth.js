@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').OAuth2Strategy;
 var config = require('../util/config').ids.google;
 var jwtSecret = require('../util/config').jwtSecret;
 var debug = require('debug')('pqr');
@@ -12,6 +13,7 @@ function worker(io) {
 
 	/* ROUTES */
 	router.get('/login', passportLogin());
+	router.get('/loginfb', passportLoginFb());
 	router.get('/oauth2callback', passportCallback(), oauth2Callback);
 	router.post('/rt', refreshToken);
 	/* END ROUTES */
@@ -21,6 +23,13 @@ function worker(io) {
 
 function passportLogin() {
 	return passport.authenticate('google', {
+		session: false,
+		scope: config.scopes,
+		accessType: 'offline'});
+}
+
+function passportLoginFb() {
+	return passport.authenticate('facebook', {
 		session: false,
 		scope: config.scopes,
 		accessType: 'offline'});
@@ -87,5 +96,17 @@ passport.use(new GoogleStrategy({
 	done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
 }
 ));
+
+// passport.use(new FacebookStrategy({
+// 	clientID: config.client_id,
+// 	clientSecret: config.client_secret,
+// 	callbackURL: config.callback_url
+// }, function(accessToken, refreshToken, profile, done) {
+// 	console.log('passport use');
+// 	console.log('New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id);
+// 	console.log(profile);
+// 	done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
+// }
+// ));
 
 module.exports = worker;
