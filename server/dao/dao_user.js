@@ -83,8 +83,9 @@ function verifyEmail(email, callback) {
 
 	this.find(where, function(err, cursor) {
 		if (err) {
-			return callback(err+':', []);
+			return callback('err');
 		}
+		
 		cursor.toArray(callback);
 	});
 }

@@ -26,7 +26,7 @@ config = {
 			facebook: {
 				client_id:'845795205477907',
 				client_secret: '12b9578e81997d0fa063ad50692ccf9b',
-				callback_url: 'http://localhost:9005/auth/fb2back',
+				callback_url: 'http://localhost:9005/auth/oauth2callbackfb',
 				scopes: ['public_profile', 'email']
 			}
 		},
