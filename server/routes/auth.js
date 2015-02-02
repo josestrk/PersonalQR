@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var confgg = require('../util/config').ids.google;
 var FacebookStrategy = require('passport-facebook').OAuth2Strategy;
-var config = require('../util/config').ids.google;
+var conffb = require('../util/config').ids.facebook;
 var jwtSecret = require('../util/config').jwtSecret;
 var debug = require('debug')('pqr');
 var request = require('request');
@@ -31,7 +32,7 @@ function worker(io) {
 //-------------------------------------------------
 
 function passportLogin() {
-	return passport.authenticate('google', {session: false,scope: config.scopes,accessType: 'offline'});
+	return passport.authenticate('google', {session: false,scope: confgg.scopes,accessType: 'offline'});
 }
 
 
@@ -58,8 +59,8 @@ function refreshToken(req, res) {
 						{
 							url: 'https://accounts.google.com/o/oauth2/token',
 							form: {
-								client_id: config.client_id,
-								client_secret: config.client_secret,
+								client_id: confgg.client_id,
+								client_secret: confgg.client_secret,
 								grant_type: 'refresh_token',
 								refresh_token: rt
 							},
@@ -82,19 +83,18 @@ function refreshToken(req, res) {
 		});
 	}
 }
-//
-//
+
+
 // Register Google Strategy in Passport
-//
+
 passport.use(new GoogleStrategy({
-	clientID: config.client_id,
-	clientSecret: config.client_secret,
-	callbackURL: config.callback_url
+	clientID: confgg.client_id,
+	clientSecret: confgg.client_secret,
+	callbackURL: confgg.callback_url
 }, function(accessToken, refreshToken, profile, done) {
 	console.log('[GOOGLE] auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
 
 	//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
-
 	function insert(){
 			daoUser.createUser(profile._json, function(err, res){
 			if(!err){
@@ -104,7 +104,7 @@ passport.use(new GoogleStrategy({
 	}
 
 	daoUser.verifyEmail(profile._json.email, function(err, res){
-		if(err){
+		if(!err){
 			insert();
 		}else{
 			done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
@@ -119,7 +119,7 @@ passport.use(new GoogleStrategy({
 //-------------------------------------------------
 
 function passportLoginFb() {
-	return passport.authenticate('facebook', {session: false,scope: config.scopes,accessType: 'offline'});
+	return passport.authenticate('facebook', {session: false,scope: conffb.scopes,accessType: 'offline'});
 }
 
 function passportCallbackFb() {
@@ -146,8 +146,8 @@ function refreshTokenFb(req, res) {
 						{
 							url: 'http://graph.facebook.com',
 							form: {
-								client_id: config.client_id,
-								client_secret: config.client_secret,
+								client_id: conffb.client_id,
+								client_secret: conffb.client_secret,
 								grant_type: 'refresh_token',
 								refresh_token: rt
 							},
@@ -171,14 +171,13 @@ function refreshTokenFb(req, res) {
 	}
 }
 
-//
-//
-// Register Google Strategy in Passport
-//
+
+//Register Facebook Strategy in Passport
+
 // passport.use(new FacebookStrategy({
-// 	clientID: config.client_id,
-// 	clientSecret: config.client_secret,
-// 	callbackURL: config.callback_url
+// 	clientID: conffb.client_id,
+// 	clientSecret: conffb.client_secret,
+// 	callbackURL: conffb.callback_url
 // }, function(accessToken, refreshToken, profile, done) {
 // 	console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id);
 // 	console.log(profile._json);
