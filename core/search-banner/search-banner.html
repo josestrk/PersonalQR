@@ -59,7 +59,7 @@
         }
         function search(data){
             $(this.$.q).typeahead({
-                minLength: 3,
+                minLength: 1,
                 order: "asc",
                 group: true,
                 hint: true,
@@ -90,7 +90,7 @@
             var that=this;
             ajaxhandler.showTopics(datos, function(result){
               var data = {
-                topics: ['eluno']
+                topics: ['elementos']
               };
               for(var i = 0; i < result.length; i++){
                 data.topics.push(result[i].name);

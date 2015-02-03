@@ -100,8 +100,10 @@ function worker(io) {
 
 		daoUser.verifyEmail(profile._json.email, function(err, res){
 			if(!err){
+                console.log("No Existe creado perfil para :"+profile._json.email);
 				insert();
 			}else{
+                console.log("Ya existe el mail:"+profile._json.email);
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 			}
 		});
@@ -122,7 +124,6 @@ function worker(io) {
 	}
 
 	function oauth2CallbackFb(req, res) {
-		console.log(req.user.email);
 		var token = jwt.sign(req.user, jwtSecret);
 		var url = '/#/loader?token=' + token;
 
@@ -173,7 +174,7 @@ function worker(io) {
 		callbackURL: conffb.callback_url
 	  }, function(accessToken, refreshToken, profile, done) {
 		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken);
-	    //el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
+	    //done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
@@ -182,10 +183,11 @@ function worker(io) {
 			});
 		}
 		daoUser.verifyEmail(profile._json.email, function(err, res){
-			if(err=='err'){
+			if(!err){
+                console.log("No Existe creado perfil para :"+profile._json.email);
 				insert();
 			}else{
-				
+                console.log("Ya existe el mail:"+profile._json.email);
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 			}
 		});

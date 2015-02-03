@@ -80,12 +80,10 @@ function verifyUsername(username, callback) {
 function verifyEmail(email, callback) {
 	var where={};
 	where["mail"]=email;
-
 	this.find(where, function(err, cursor) {
 		if (err) {
-			return callback('err');
+			return callback(err+':', []);
 		}
-		
 		cursor.toArray(callback);
 	});
 }
