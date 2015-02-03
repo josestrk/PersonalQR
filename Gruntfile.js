@@ -3,17 +3,17 @@ module.exports = function(grunt) {
 
       grunt.initConfig({
 //		Import package manifest
-        pkg: grunt.file.readJSON("package.json"),
+      pkg: grunt.file.readJSON("package.json"),
 
-        connect: {
+      connect: {
 		    server: {
-			port: conf_port
+			        port: 9001
 		    }
-		},
+		  },
 
-        shell: {
+      shell: {
 			runLocalServer: {
-				command: 'set DEBUG=personalqr* node server/server'
+				command: 'DEBUG=personalqr* node server/server'
 			},
 			runLocalServerWin32: {
 				command: [
