@@ -9,6 +9,9 @@
 <polymer-element name="login-page">
   <template>
     <style>
+      :host {
+        font-family: HelveticaNeueCyrLight, Helvetica, Arial, sans-serif;
+      }
       #paper_progress {
         width: 100%;
         background-color: rgb(169, 252, 78);
@@ -65,13 +68,37 @@
         height: 25px;
         margin: auto;
       }
+      
+      paper-toggle-button {
+        margin-top: 15px;
+      }
+      
+      paper-toggle-button::shadow [checked] .toggle {
+        background-color: rgb(137, 191, 79);
+      }
+      
+      paper-toggle-button::shadow [checked] .toggle-ink {
+        color: rgb(137, 191, 79);
+      }
+      
+      input::-webkit-input-placeholder,
+      .gray-text {
+        color: #999;
+      }
+      
+      #arrow {
+        background-color: rgb(137, 191, 79);
+        display: block;
+        margin: -5px auto auto auto;
+      }
+      
       @media(max-width:450px){
         #core_card_main{
           position: absolute;
           top: 0px;
           bottom: 0px;
           left: 0px;
-          margin: 0px 0px 0px 0px;
+          margin: 0px;
           width: 100%;
           height: 100%;
         }
@@ -86,7 +113,7 @@
           top: 0px;
           bottom: 0px;
           left: 0px;
-          margin: 0px 0px 0px 0px;
+          margin: 0px;
           width: 100%;
           height: 100%;
         }
@@ -133,14 +160,14 @@
           <paper-input-decorator class="field" id="password_field" label="Enter your password">
             <input id="password_input" is="core-input" name="password" type="password" value="{{password}}"/>
           </paper-input-decorator>
-          <paper-fab icon="arrow-forward" style="background: rgb(137, 191, 79);margin-top: 25px;" title="submit" on-click="{{logged}}" ></paper-fab>
         </core-card>
         <core-card class="item" horizontal layout>
           <paper-toggle-button></paper-toggle-button>
-          <paper-item>Remember me</paper-item>
+          <paper-item class="field gray-text" style="left: 2px;">Remember me</paper-item>
         </core-card>
       </core-card>
     </core-card>
+    <paper-fab id="arrow" icon="arrow-forward" title="submit" on-click="{{logged}}" ></paper-fab>
   </template>
 
   <script>
