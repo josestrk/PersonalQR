@@ -70,7 +70,7 @@ function validateUserByEmail(email, password, callback) {
 	if(email==='' || password ===''){
 		return callback("There was no data provided:", []);
 	}
-	daoUser.validateUserByEmail(mail, password, callback);
+	daoUser.validateUserByEmail(email, password, callback);
 }
 
 function verifyUsername(username, callback){

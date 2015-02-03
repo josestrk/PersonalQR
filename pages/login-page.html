@@ -162,7 +162,7 @@
           </paper-input-decorator>
         </core-card>
         <core-card class="item" horizontal layout>
-          <paper-toggle-button></paper-toggle-button>
+          <paper-toggle-button id="remember" checked></paper-toggle-button>
           <paper-item class="field gray-text" style="left: 2px;">Remember me</paper-item>
         </core-card>
       </core-card>
@@ -204,11 +204,19 @@
       logged: function() {
         var ajaxhandler = this.$.ajaxhandler,
           user = this.$.user_input.value,
-          password = this.$.password_input.value;
+          password = this.$.password_input.value,
+          rememberMe = this.$.remember.checked;
+        
+        /* Los paper-toggle-button funcionan como los checkbox, de forma que
+         * se puede alternar que esté o no esté el atributo checked */
+        if (rememberMe) {
+          console.log('checked');
+        }
+        
         if (user.match(/@/) !== null) {
-          ajaxhandler.getUserByEmail(user, password);
+          ajaxhandler.getUserByEmail(user, password, rememberMe);
         } else {
-          ajaxhandler.getUserByName(user, password);
+          ajaxhandler.getUserByName(user, password, rememberMe);
         }
       },
       keydown: function(event, detail, sender) {

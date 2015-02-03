@@ -121,7 +121,7 @@
 
       refresh();
       Polymer('core-ajax-handler', {
-        getUserByName: function(username, password){
+        getUserByName: function(username, password, rememberMe){
           var data={
             username: username,
             password: password
@@ -133,6 +133,9 @@
           },function(result) {
             document.getElementById('user').data(result);
             window.location.hash="/wall/?id="+result[0]._id;
+            if (rememberMe) {
+              this.createCookie();
+            }
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
@@ -140,7 +143,7 @@
             errorToast.show();
           });
         },
-        getUserByEmail: function(mail, password){
+        getUserByEmail: function(mail, password, rememberMe){
           var data={
             mail: mail,
             password: password
@@ -152,6 +155,9 @@
           },function(result) {
             document.getElementById('user').data(result);
             window.location.hash="/wall/?id="+result[0]._id;
+            if (rememberMe) {
+              this.createCookie();
+            }
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
@@ -159,7 +165,19 @@
             errorToast.show();
           });
         },
-        create : function(datos){
+        createCookie: function(){
+          doAjax({
+            type: 'POST',
+            url: 'routes_user/cookie',
+          },function(result) {
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        create: function(datos){
           doAjax({
             type: 'POST',
             url: 'routes_user/user',
@@ -174,7 +192,7 @@
             errorToast.show();
           });
         },
-        sendArticle : function(datos){
+        sendArticle: function(datos){
           doAjax({
             type: 'POST',
             url: 'routes_article/article',
@@ -184,11 +202,11 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = "Could not connect to server";
+            errorToast.text = 'Could not connect to server';
             errorToast.show();
           });
         },
-        editArticle : function(that, datos){
+        editArticle: function(that, datos){
           doAjax({
             type: 'POST',
             url: 'routes_article/editarticle',
@@ -204,11 +222,11 @@
           }.bind(that),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = "Could not connect to server";
+            errorToast.text = 'Could not connect to server';
             errorToast.show();
           });
         },
-        setUser : function(id, datos){
+        setUser: function(id, datos){
           doAjax({
             type: 'PUT',
             url: 'routes_user/user/'+id,
@@ -222,7 +240,7 @@
             errorToast.show();
           });
         },
-        getArticles : function(id,callback){
+        getArticles: function(id,callback){
           doAjax({
             type: 'GET',
             url: 'routes_article/article/'+id,
@@ -231,12 +249,12 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = 'Error could not load';
+            errorToast.text = 'Error: could not load';
             errorToast.show();
             callback(false);
           });
         },
-        getAllArticles : function(skip, callback){
+        getAllArticles: function(skip, callback){
           doAjax({
             type: 'GET',
             url: 'routes_article/articles/'+skip,
@@ -249,11 +267,11 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = "Could not connect to server";
+            errorToast.text = 'Could not connect to server';
             errorToast.show();
           });
         },
-        deleteArticles : function(id,callback){
+        deleteArticles: function(id,callback){
           doAjax({
             type: 'DELETE',
             url: 'routes_article/article/'+id,
@@ -263,12 +281,16 @@
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             //puesto que no se que pasa xq no consigue ajax identificar que la respuesta ha sido de estado 200 como "buena" la hacemos a mano...
-            xhr.status === 200 ? errorToast.text = 'The Article was succesfully deleted': errorToast.text = 'Error, could not delete this article, refresh the page and try it later.';
+            if (xhr.status === 200) {
+              errorToast.text = 'The article was succesfully deleted';
+            } else {
+              errorToast.text = 'Error, could not delete this article, refresh the page and try it later.';
+            }
             errorToast.show();
             callback(false);
           });
         },
-        verifyUsername : function(datos, that, callback){
+        verifyUsername: function(datos, that, callback){
           var data={
             username: datos
           };
@@ -284,7 +306,7 @@
             }
           );
         },
-        verifyEmail : function(datos, that, callback){
+        verifyEmail: function(datos, that, callback){
           var data={
             email: datos
           };
