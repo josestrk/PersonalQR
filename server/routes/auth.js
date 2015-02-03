@@ -100,7 +100,7 @@ function worker(io) {
 		}
 
 		daoUser.verifyEmail(profile._json.email, function(err, res){
-			if(!err){
+			if(!res[0]){
                 console.log("No Existe perfil para :"+profile._json.email);
 				insert();
 			}else{
@@ -185,11 +185,11 @@ function worker(io) {
 			});
 		}
 		daoUser.verifyEmail(profile._json.email, function(err, res){
-			if(!err){
-                console.log("No Existe perfil para :"+profile._json.email);
+			if(!res[0]){
+								console.log("No Existe perfil para :"+profile._json.email);
 				insert();
 			}else{
-                console.log("Ya existe el mail:"+profile._json.email);
+								console.log("Ya existe el mail:"+profile._json.email);
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 			}
 		});
