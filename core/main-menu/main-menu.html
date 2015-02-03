@@ -52,7 +52,7 @@
        </core-menu>
     </template>
        <core-menu hidden?="{{!login.logged}}">
-         <a  href="/" ><core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button></a>
+         <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
        </core-menu>
     </nav>
   </core-header-panel>
@@ -62,7 +62,7 @@
         <content select=".notifi"></content>
 
         <template if="{{login.logged}}">
-            <core-qr></core-qr>
+            <core-qr id="{{id}}"></core-qr>
             <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
             <template if="{{imenu=='Settings'}}">
               <core-add class="right"></core-add>
@@ -162,6 +162,7 @@
             },
             handleLogout: function(event, detail) {
               this.$.login.logout();
+              document.querySelector('app-router').go('/');
             },
             logueado: function() {
                 if (this.logged) {

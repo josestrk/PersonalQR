@@ -30,6 +30,7 @@
       }, 100);
       function checkResponse() {
         var hash = window.location.hash;
+        document.getElementsByTagName("video")[0].remove();
         window.location.hash = '/wall/';//redirect to wall
 
         var token = /[#?;,]token=([^;,]+)/.exec(hash);
@@ -52,6 +53,12 @@
       }
 
       return deferred.promise();
+    }
+
+    function showMsg(txt){
+      var errorToast = document.querySelector('#errorToast');
+      errorToast.text = txt;
+      errorToast.show();
     }
 
     Polymer({

@@ -26,6 +26,6 @@
   "devDependencies": {
     "polymer": "Polymer/polymer",
     "core-elements": "Polymer/core-elements",
-    "paper-elements": "Polymer/paper-elements",
+    "paper-elements": "Polymer/paper-elements"
   }
 }

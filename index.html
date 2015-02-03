@@ -25,7 +25,7 @@
 
 
 	</script>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <link href='style/OpenSans-Regular.ttf' rel='import' type='application/x-font-ttf'>
 
     <link rel="import" href="bower_components/paper-toast/paper-toast.html">
     <link rel="import" href="bower_components/app-router/app-router.html">
@@ -50,10 +50,11 @@
     <core-user id="user"></core-user>
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
 
+
+    <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
+
     <app-router core-animated-pages transitions="slide-from-right">
-        <app-route path="/home" element="core-index">
-            <template if='!localStorage.token'><div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div></template>
-        </app-route>
+        <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall/" element="wall-page"></app-route>
         <app-route path="/profile/" element="myp-page"></app-route>
         <app-route path="/pqr/" element="person-card"></app-route>
@@ -64,17 +65,17 @@
 
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>
+    <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');</script>
     <script>
         $(document).ready(function () {
-            if(localStorage.token==undefined){
-              window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');
-              document.querySelector('app-router').go('/home');
+            if( localStorage.token == undefined ){
               $(document.body).vide("video/ocean").resize();
-              console.log("La Hola...");
             }else{
-                window.location.hash = '/wall/';//redirect to wall
+              document.querySelector('app-router').go('/wall/');//redirect to wall
             }
         });
+
+        /*Hay que pensar forma de volver de los botones legal e info*/
     </script>
 </body>
 </html>
