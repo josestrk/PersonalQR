@@ -36,9 +36,9 @@ function worker(io) {
       User["name"]="";
     }
     if(req.body.mail!==undefined){
-      User["mail"]=req.body.mail;
+      User["email"]=req.body.mail;
     } else {
-      User["mail"]="";
+      User["email"]="";
     }
     if(req.body.password!==undefined){
       User["password"]=req.body.password;
@@ -110,7 +110,7 @@ function worker(io) {
           if (err !== null) {
             next(new Error(err));
           } else {
-            next(new Error('Mail or password incorrect:'));
+            next(new Error('Email or password incorrect:'));
           }
         }
       });
@@ -171,7 +171,7 @@ function worker(io) {
       User.$set["name"] = req.body.name;
     }
     if(req.body.mail !== undefined){
-      User.$set["mail"] = req.body.mail;
+      User.$set["email"] = req.body.mail;
     }
     if(req.body.password !== undefined){
       User.$set["password"] = req.body.password;

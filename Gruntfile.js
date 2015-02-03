@@ -1,10 +1,10 @@
 var conf_port=9001;
-module.exports = function(grunt) {    
+module.exports = function(grunt) {
 
       grunt.initConfig({
 //		Import package manifest
         pkg: grunt.file.readJSON("package.json"),
-        
+
         connect: {
 		    server: {
 			port: conf_port
@@ -25,15 +25,15 @@ module.exports = function(grunt) {
                     './mongod.exe '
 				].join('&&')
 			}
-//			, 
+//			,
 //          dredd: {
 //				command: 'CONFIG=dredd dredd ./server/api/apiary/apiary.apib http://localhost:'+conf_port;
 //			}
-		},  
-          
+		},
+
         jshint: {
 			server: {
-				src: ['Gruntfile.js', 
+				src: ['Gruntfile.js',
                         'server/dao/**/*.js',
                         'server/manager/**/*.js',
                         'server/middleware/**/*.js',
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
           } //my_target
         },//uglify
         imagemin: {
- 
+
             main: {
 
               files: [{
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
             }
         },//imagemin
         browserSync: {
- 
+
           dev: {
             bsFiles: {
               src : [
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
           } //dev
         }, // browserSync
         watch: {
- 
+
           scripts: {
             files: ['**/*.js'],
             tasks: ['uglify'],
@@ -126,17 +126,17 @@ module.exports = function(grunt) {
             }
           } //scripts
 //        , images: {
-// 
+//
 //            files: ['_/img/*.{png,jpg,gif}'],
 //            tasks: ['imagemin'],
 //            options: {
 //              spawn: false,
 //            }
-//          }//images  
+//          }//images
         } //watch
 
       });
-        
+
 
     grunt.loadNpmTasks('grunt-contrib-watch'); //control modificates in live
     grunt.loadNpmTasks('grunt-contrib-uglify');//minificar js
@@ -147,11 +147,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-newer');// check changes
     grunt.loadNpmTasks('grunt-browser-sync'); // nav-syncronizated
 	grunt.loadNpmTasks('grunt-connect');
-    
+
     grunt.log.writeln('Start PersonalQR:');
 
     //TYPES RUN
-	grunt.registerTask('default',['jshint:client', 'jshint:server', 'shell: runLocalServer','watch']);
+    grunt.registerTask('connect',['connect']);
+	  grunt.registerTask('default',['jshint:client', 'jshint:server', 'shell: runLocalServer','watch']);
     grunt.registerTask('win',['jshint:client', 'jshint:server', 'shell:runLocalServerWin32','watch']);
     grunt.registerTask('run', function() {
 		(process.platform === "win32") ? grunt.task.run('shell: runLocalServerWin32') : grunt.task.run('shell: runLocalServer')
@@ -159,7 +160,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('sync', ['browserSync' , 'watch']);
     //symplificator
     grunt.registerTask('minifi', ['imagenmin', 'uglify' , 'cssmin', 'htmlmin', 'newer' , 'watch']);
-    
+
     grunt.log.writeln('Readdy... http://localhost:9001');
 };
-

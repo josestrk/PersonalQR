@@ -35,7 +35,7 @@ function setUser(userId, data, callback) {//in case any error with data, then no
 						return callback("Error, bad "+key , null);
 					}
 					break;
-				case 'mail':
+				case 'email':
 					var res = data[setted][key].match(/[\w*\s+]*/)[0];
 					if (data[setted][key] !== res) {
 						return callback("Error, bad "+key , null);
@@ -66,8 +66,8 @@ function validateUserByName(username, password, callback) {
 	daoUser.validateUserByName(username, password, callback);
 }
 
-function validateUserByEmail(mail, password, callback) {
-	if(mail==='' || password ===''){
+function validateUserByEmail(email, password, callback) {
+	if(email==='' || password ===''){
 		return callback("There was no data provided:", []);
 	}
 	daoUser.validateUserByEmail(mail, password, callback);

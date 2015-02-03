@@ -93,6 +93,7 @@ function worker(io) {
 		function insert(){
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
+				console.log("Creo usuario para "+res[0].email);
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
@@ -100,7 +101,7 @@ function worker(io) {
 
 		daoUser.verifyEmail(profile._json.email, function(err, res){
 			if(!err){
-                console.log("No Existe creado perfil para :"+profile._json.email);
+                console.log("No Existe perfil para :"+profile._json.email);
 				insert();
 			}else{
                 console.log("Ya existe el mail:"+profile._json.email);
@@ -172,19 +173,20 @@ function worker(io) {
 		clientID: conffb.client_id,
 		clientSecret: conffb.client_secret,
 		callbackURL: conffb.callback_url
-	  }, function(accessToken, refreshToken, profile, done) {
-		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken);
+	  }, function(accessToken, refreshTokenFb, profile, done) {
+		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshTokenFb);
 	    //done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
-				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+					console.log("Creo usuario");
+					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
 		}
 		daoUser.verifyEmail(profile._json.email, function(err, res){
 			if(!err){
-                console.log("No Existe creado perfil para :"+profile._json.email);
+                console.log("No Existe perfil para :"+profile._json.email);
 				insert();
 			}else{
                 console.log("Ya existe el mail:"+profile._json.email);

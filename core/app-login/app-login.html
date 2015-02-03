@@ -5,31 +5,7 @@
   <script>
   (function() {
     var authWindow = null;
-    function checkResponse() {
-      var hash = window.location.hash;
-        
-      if( localStorage.token != undefined ){
-        window.location.hash = '/wall/';
-      }
-    
-      var token = /[#?;,]token=([^;,]+)/.exec(hash);
-      var error = /[#?;,]error=([^;,]+)/.exec(hash);
 
-      if (error || !token) {
-        //The user denied access to the app
-        return deferred.reject({
-          type: 'user_denied_access',
-          error: error ? erro[1] : 'no access token'
-        });
-      }
-
-      var data = {};
-      if (token) {
-        data.token = token[1];
-      }
-        
-      return deferred.resolve(data);
-    }
     function authorize($entity) {
       var deferred = $.Deferred();
 
@@ -52,6 +28,28 @@
         authWindow = null;
         checkResponse();
       }, 100);
+      function checkResponse() {
+        var hash = window.location.hash;
+        window.location.hash = '/wall/';//redirect to wall
+
+        var token = /[#?;,]token=([^;,]+)/.exec(hash);
+        var error = /[#?;,]error=([^;,]+)/.exec(hash);
+
+        if (error || !token) {
+          //The user denied access to the app
+          return deferred.reject({
+            type: 'user_denied_access',
+            error: error ? erro[1] : 'no access token'
+          });
+        }
+
+        var data = {};
+        if (token) {
+          data.token = token[1];
+        }
+
+        return deferred.resolve(data);
+      }
 
       return deferred.promise();
     }
@@ -60,9 +58,9 @@
       logged: false,
       ready: function() {
         this.logged = Boolean(localStorage.token);
-//        if (this.logged) {
-//          socket.connect(localStorage.token);
-//        }
+         if (this.logged) {
+           socket.connect(localStorage.token);
+         }
       },
       login: function() {
         authorize('login').done(function(data) {
