@@ -1,8 +1,6 @@
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../core-ajax-handler.html">
-<script src="jquery.typeahead.js" type="text/javascript"></script>
-
 <polymer-element name="search-banner">
   <template>
     <style>
@@ -37,100 +35,45 @@
   <core-icon icon="search" id="core_icon1"></core-icon>
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
   </template>
+  <script src="typeahead.bundle.js" type="text/javascript"></script>
   <script>
     (function () {
-        var base='/topics';
+        function initializetopics(){
 
-        function defaultAjaxErrorHandler(xhr, err, desc) {
-            console.log(xhr, err, desc);
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.response;
-            errorToast.show();
-        }
-        function doAjax(options, success, error) {
-            options.type = options.type || 'GET';
-            options.url = base + (options.url || '');
-            options.dataType = options.dataType || 'json';
-            options.contentType = options.contentType || 'application/json; charset=UTF-8';
-            options.success = success;
-            options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-            debugger
-            $.ajax(options);
-        }
-        function search(data){
-            $(this.$.q).typeahead({
-                minLength: 1,
-                order: "asc",
-                group: true,
-                hint: true,
-                list: false,
-                backdrop: false,
-                source: {
-                    topics: {
-                        data: data.topics
-                    }
-                }
-            });
+          var topics = new Bloodhound({
+              datumTokenizer: function (datum) {
+                  return Bloodhound.tokenizers.whitespace(datum.value);
+              },
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              remote: {
+                  url: 'routes_topic/topic?letter=%QUERY',
+                  filter: function (topics) {
+                      // Map the remote source JSON array to a JavaScript object array
+                      return $.map(topics, function (topic) {
+                          return {
+                              value: topic.name
+                          };
+                      });
+                  }
+              }
+          });
+
+          function search(){
+              $(this.$.q).typeahead(null, {
+                  displayKey: 'value',
+                  source: topics.ttAdapter()
+              });
+          }
+
+          topics.initialize();
+          search.bind(this)();
         }
 
-        //funcionalidad para buscar en funcion de las letras y no recuperar nada...
         Polymer('search-banner', {
-          ready: function () {
-            var that = this;
-            this.$.q.onkeyup = function(event){
-              console.log('Has introducido '+String.fromCharCode(event.charCode));
-              console.log('Todos tus textos -> '+this.$.q.value+String.fromCharCode(event.charCode));
-              if(this.$.q.value.length>0){
-                this.arrayofTopics(this.$.q.value+String.fromCharCode(event.charCode));
-              }
-            }.bind(that);
-          },
-          arrayofTopics: function(datos){
-            var ajaxhandler = this.$.ajaxhandler;
-            var that=this;
-            ajaxhandler.showTopics(datos, function(result){
-              var data = {
-                topics: ['elementos']
-              };
-              for(var i = 0; i < result.length; i++){
-                data.topics.push(result[i].name);
-              }
-              search.bind(this)(data);
-              if(datos.length<=1){
-                this.blur();
-              }
-            }.bind(that));
-          },
-          // debug: function(){
-          //   debugger
-          //   on-keypress="{{debug}}";
-          // }
+            domReady: function () {
+              initializetopics.bind(this)();
+            }
         });
-      }());
-
-    // Polymer('search-banner', {
-    //     ready: function () {
-    //       this.$.q.onkeypress = function(event){
-    //         console.log('Has introducido '+String.fromCharCode(event.charCode));
-    //         console.log('Todos tus textos -> '+this.value+String.fromCharCode(event.charCode));
-    //       };
-    //       this.arrayofTopics('al');
-    //       //this.arrayofTopics(this.$.q.onkeypress());
-    //     },
-    //     arrayofTopics: function(datos){
-    //       var ajaxhandler = this.$.ajaxhandler;
-    //       var that=this;
-    //       ajaxhandler.showTopics(datos, function(result){
-    //         var data = {
-    //           topics: ['eluno']
-    //         };
-    //         for(var i = 0; i < result.length; i++){
-    //           data.topics.push(result[i].name);
-    //         }
-    //         search.bind(this)(data);
-    //       }.bind(that));
-    //     }
-    //   });
-    // }());
+    }());
   </script>
 </polymer-element>
