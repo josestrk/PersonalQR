@@ -1,7 +1,7 @@
 PersonalQR
 ==========
 
-This application has the purpose of letting users share personal information to other users by sending a QR code.
+This web application is intended to show users’ profiles through QR codes. Profiles are customized by the own users, who decide which data they want to disclose and to whom.
 
 It will be a secure way to share your personal information, accessible and user friendly.
 
@@ -26,8 +26,8 @@ Contributors
 -------------
 
 * [josestrk](https://github.com/josestrk)
-* [dgstranz](https://github.com/dgstranz)
 * [alevale](https://github.com/alevale)
+* [dgstranz](https://github.com/dgstranz)
 
 Version
 -------
@@ -46,13 +46,13 @@ PersonalQR uses a number of open-source projects to work properly:
 
 Install
 -------
-####User demo:
 ```
 Install node (last version)
 npm install
 bower install
 start mongodb service
-node server/server.js or grunt
+grunt
+[if you start in windows open new cmd and start: grunt mongo]
 ```
 License
 -------

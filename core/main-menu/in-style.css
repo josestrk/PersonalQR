@@ -8,10 +8,6 @@ core-menu > core-item {
     transition: all 300ms ease-in-out;
     padding: 15px 0px;
 }
-id-card .img{
-    width: 70px;
-    height: 70px;
-}
 paper-progress{
     width: 100%;
     display: block;

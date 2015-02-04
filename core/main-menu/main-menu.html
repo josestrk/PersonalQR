@@ -37,9 +37,10 @@
     <nav flex>
       <core-menu>
         <id-card layout vertical center center-justified>
-            <img  class="img" id='photo' src="{{ this.photoUrl }}" />
-            <h2 id="name"></h2>
-            <p>{{ follower > 0 ? follower : 0 }} follower{{follower === 1 ? '' : 's'}} • {{ following > 0 ? following : 0 }} following</p>
+            <img class="img" id='photo' src="{{ this.photoUrl }}"/>
+            <user-name id="name"></user-name>
+            <user-account id="email"></user-account>
+            <span class="follower">{{ follower > 0 ? follower : 0 }} Followers </span><span class="following"> {{ following > 0 ? following : 0 }} Following | {{ post > 0 ? post : 0 }} Post</span>
         </id-card>
       </core-menu>
     <template if="{{login.logged}}">
@@ -108,10 +109,6 @@
 
         Polymer({
             domReady: function () {
-                //this.username= (document.getElementById('user').datos.username === undefined) ? 'User' : document.getElementById('user').datos.username ;
-                //this.name=document.getElementById('user').datos.name === undefined ? '' : document.getElementById('user').datos.name ;
-                //this.follower= document.getElementById('user').datos.followers === undefined ? 0 : document.getElementById('user').datos.followers ;
-                //this.following= document.getElementById('user').datos.following === undefined ? 0 : document.getElementById('user').datos.following ;
                 loadMenu.bind(this)();
 
                 this.login=this.$.login;
@@ -147,6 +144,7 @@
               },function(result) {
                 this.$.photo.src = result.picture;
                 this.$.name.innerHTML = result.name;
+                this.$.email.innerHTML = result.email;
               }.bind(this),
               function(xhr, err, desc){
                 var errorToast = document.querySelector('#errorToast');

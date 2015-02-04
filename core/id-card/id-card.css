@@ -1,0 +1,105 @@
+:host {
+    display: inline-block;
+    width: 100%;
+}
+
+.user {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    background-color: #2E353C;
+    text-align: center;
+    color:white;
+    font-size: 1.2rem;
+    font-weight: 200;
+    transition: background 1000ms ease-out;
+}
+
+.user dl,
+.user dd {
+  margin: 0;
+}
+
+.user dt {
+  display: none;
+}
+
+.user-data {
+  background-size: 25px;
+  background: #666;  
+  height: 90px;
+  border-bottom:0;
+}
+polyfill-next-selector { content: '.user-data h2'; }
+.user-data ::content h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+polyfill-next-selector { content: '.user-data img'; }
+.user-data ::content img {
+    margin: 20px 0 10px;
+    border-radius: 100%;
+    border: 4px solid white;
+    display:  block;
+    height: 120px;
+    width: 120px;
+    border: 3px solid #fff;
+    vertical-align: middle;
+    background-color: #fff;
+    display: block;
+}
+
+user-name,
+user-account {
+  margin: 5px 0;
+}
+
+user-name {
+  font-size: 24px;
+}
+user-account {
+  font-size: 16px;
+  color: #999;
+  margin: 5px 0;
+}
+
+.user-stats {
+  border-top: 1px groove #999;
+  position: relative;
+  top: 155px;
+}
+
+.user-stats dd {
+  padding: 10px 20px;
+}
+
+.user-repos,
+.user-following,
+.user-followers {
+  display: inline-block;
+  font-size: 22px;
+  color: #999;
+}
+
+.user-repos:after,
+.user-following:after,
+.user-followers:after {
+  content: attr(data-stats);
+  text-transform: uppercase;
+  display: block;
+  font-size: 11px;
+  color: #666;
+  font-weight: normal;
+  line-height: 1.7em;
+}
+
+.spinner {
+  background: url('../lib/webcomponent/spinner.gif') no-repeat center center;
+}
+
+a.user-github-url,
+a.user-repos-url,
+a.user-followers-url {
+    text-decoration: none;
+}

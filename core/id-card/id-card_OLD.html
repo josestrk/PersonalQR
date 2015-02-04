@@ -1,0 +1,38 @@
+<polymer-element name="id-card">
+  <template>
+    <style>
+    :host {
+        width: 100%;
+        height: 175px;
+        margin: 10px 0px;
+        color:white;
+        font-size: 1.2rem;
+        font-weight: 300;
+    }
+    polyfill-next-selector { content: '.card-header h2'; }
+    .card-header ::content h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 300;
+    }
+    polyfill-next-selector { content: '.card-header img'; }
+    .card-header ::content img {
+        border-radius: 50%;
+        margin: 10px;
+    }
+    </style>
+
+    <div class="card-header" layout horizontal center>
+
+      <content select="img"></content>
+      <content select="h2"></content>
+
+    </div>
+
+    <content></content>   
+  </template>
+  <script>
+  Polymer({
+  });
+  </script>
+</polymer-element>

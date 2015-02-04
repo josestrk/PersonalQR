@@ -17,13 +17,12 @@ grunt.initConfig({
   	runLocalServerWin32: {
   		command: [
   			'set DEBUG=personalqr*',
-  			'node server/server'
-  		].join('&&'),
-              command: [
-  			'cd C:/Program Files/MongoDB 2.6 Standard/bin/',
-        '.\\mongod.exe '
+        'node server/server',
   		].join('&&')
-  	}
+  	},
+    runMongo: {
+      command: 'start C:/"Program Files/MongoDB 2.6 Standard/bin/mongod.exe"'
+    }
   },//shell
   jshint: {
   	server: {
@@ -119,8 +118,10 @@ grunt.initConfig({
   grunt.log.writeln('Start PersonalQR:');
 
   //TYPES RUN
-  grunt.registerTask('default', function() {(process.platform === "win32") ? grunt.task.run('shell:runLocalServerWin32') : grunt.task.run('shell:runLocalServer')});
+  grunt.registerTask('default',function() {(process.platform === "win32") ? grunt.task.run('shell:runLocalServerWin32') : grunt.task.run('shell:runLocalServer')});
+  grunt.registerTask('mongo',function() {(process.platform === "win32") ? grunt.task.run('shell:runMongo') : grunt.log.writeln('MongoOK')});
+    grunt.registerTask('win',['shell:runMongo','shell:runLocalServerWin32']);
   grunt.registerTask('check',['jshint:client', 'jshint:server', 'shell:runLocalServer']);
-  grunt.registerTask('win',['jshint:client', 'jshint:server', 'shell:runLocalServerWin32']);
+  grunt.registerTask('wintest',['jshint:client', 'jshint:server', 'shell:runLocalServerWin32']);
 	grunt.registerTask('sync', ['browserSync']);
 };

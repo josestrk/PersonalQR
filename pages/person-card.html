@@ -8,9 +8,10 @@
     <style>
         .card{
             background: #666;
+            color: white;
             margin: auto;
             padding: 10px;
-            height: 200px;
+            height: 300px;
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         }
         .rrss{
@@ -26,8 +27,9 @@
             <core-card  class="card" layout vertical center center-justified>
                 <id-card layout vertical center center-justified>
                 <img width="150" height="150" class="img" id='{{name}}' src="../../img/avatar-01.svg" />
-                <h2>{{ username == undefined ? 'Anonimus' : username }}</h2>
-                <p>{{ follower > 0 ? follower : 0 }} Followers | {{ following > 0 ? following : 0 }} Following | {{ post > 0 ? post : 0 }} Post</p>
+                <user-name>{{ username == undefined ? 'Anonimus' : username }}</user-name>
+                <user-account></user-account>
+                    <span class="follower">{{ follower > 0 ? follower : 0 }} Followers </span><span class="following"> {{ following > 0 ? following : 0 }} Following | {{ post > 0 ? post : 0 }} Post</span>
                 </id-card>
             </core-card>
             <core-card class="rrss"></core-card>
@@ -39,6 +41,7 @@
     (function () {
         Polymer({
             ready: function(){
+                debugger
               var that=this;
               var ajaxhandler = this.$.ajaxhandler;
               ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
