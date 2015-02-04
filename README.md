@@ -31,8 +31,7 @@ Contributors
 
 Version
 -------
-
-*1.0*
+*0.1.0*
 
 Dependencies
 ----
@@ -41,20 +40,22 @@ PersonalQR uses a number of open-source projects to work properly:
 
 * [node.js] - a runtime environment for server-side use
 * [jQuery] - a JavaScript library designed to simplify the client-side scripting of HTML
-* [PHP] - a server-side scripting language. We will use Php 5.3.
-* [MySQL] - a relational database management system
-* [Bower] - a client dependencies manager to run polymer complements, [Install](https://www.polymer-project.org/docs/start/getting-the-code.html)
+* [MongoDB] - NoSQL database
+* [Bower] - a client dependencies to develop and produce
+* [NPM] - dependencies to develop
 
-How to run
-----------
-
-* npm install
-* npm install grunt-cli
-* bower install
-
+Install
+-------
+####User demo:
+```
+Install node (last version)
+npm install
+bower install
+start mongodb service
+node server/server.js or grunt
+```
 License
 -------
-
-MIT
+MIT - (LICENSE.md)
 
 **Free Software**
