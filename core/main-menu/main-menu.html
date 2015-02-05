@@ -7,11 +7,11 @@
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icons/image-icons.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
-<!--<link rel="import" href="../../bower_components/core-a11y-keys/core-a11y-keys.html">-->
-<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
 <link rel="import" href="../../bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
+<!--<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">-->
+<!--<link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">-->
+<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
 <link rel="import" href="../search-banner/search-banner.html">
 <link rel="import" href="../id-card/id-card.html">
@@ -23,173 +23,174 @@
 <link rel="stylesheet" href="out-style.css">
 
 <polymer-element name="main-menu" attributes="imenu, iduser, logged, progress">
-<template>
+  <template>
+    <link rel="stylesheet" href="in-style.css">
 
-<link rel="stylesheet" href="in-style.css">
+    <style>   
+      #scroller {
+        margin-top: 4px;
+        border: 1px solid red;
+        overflow: auto;
+      }
+    </style>
 
-<app-login id="login"></app-login>
-<!--<core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>-->
+    <app-login id="login"></app-login>
 
-<core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'>
-  <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
-    <nav><search-banner horizontal layout center-justified center></search-banner>
-    </nav>
-    <nav flex>
-      <id-card layout vertical center center-justified>
-        <img class="img" id='photo' src="{{ this.photoUrl }}"/>
-        <user-name id="name"></user-name>
-        <user-account id="email"></user-account>
-        <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
-      </id-card>
-      <template if="{{login.logged}}">
-       <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
-         <template repeat="{{page in pages}}">
-         <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
-         <a href="{{page.hash}}"></a>
-         </core-item>
-         </template>
-       </core-menu>
-    </template>
-      <core-menu hidden?="{{!login.logged}}">
-         <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
-       </core-menu>
-    </nav>
-  </core-header-panel>
+    <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'>
+      <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
+        <nav><search-banner horizontal layout center-justified center></search-banner>
+        </nav>
+        <nav flex>
+          <id-card layout vertical center center-justified>
+            <img class="img" id='photo' src="{{ this.photoUrl }}"/>
+            <user-name id="name"></user-name>
+            <user-account id="email"></user-account>
+            <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
+          </id-card>
+          <template if="{{login.logged}}">
+            <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
+              <template repeat="{{page in pages}}">
+                <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
+                  <a href="{{page.hash}}"></a>
+                </core-item>
+              </template>
+            </core-menu>
+          </template>
+          <core-menu hidden?="{{!login.logged}}">
+            <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
+          </core-menu>
+        </nav>
+      </core-header-panel>
 
-  <core-toolbar tool flex>
+      <core-toolbar tool flex>
         <content select=".title"></content>
         <template if="{{login.logged}}">
-            <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
-            <core-qr id="{{id}}"></core-qr>
-            <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
-            <template if="{{imenu=='Settings'}}">
-              <core-add class="right"></core-add>
-            </template>
+          <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
+          <core-qr id="{{id}}"></core-qr>
+          <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
+          <template if="{{imenu=='Settings'}}">
+            <core-add class="right"></core-add>
+          </template>
         </template>
-  </core-toolbar>
+      </core-toolbar>
 
-  <content select="#progress"></content>
-  <core-scroll-threshold id="threshold" on-lower-trigger="{{loadMore}}" lowerTriggered="500">
-    <!--    lowerThreshold="500" lowerTriggered="{{spinnerShouldShow}}"-->
-    <content select="#list"></content>
-    <content select=".container"><core-card></core-card></content>
-    <content></content>
-    <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
-  </core-scroll-threshold>
-</core-scaffold>
-</template>
+      <content select="#progress"></content>
+      <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="1000" on-lower-trigger="{{loadScroll}}" fit></core-scroll-threshold>
+      <div id="scroller" fit>
+        <content select="#list"></content>
+        <content select=".container"><core-card></core-card></content>
+        <content></content>
+        <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+      </div>
+    </core-scaffold>
+  </template>
 
-<script>
+  <script>
     (function () {
-        animating = false;
-        function loadMenu() {
-          var _id=this.iduser;
-          this.pages = [
-              {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
-              {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
-              {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
-              {name: 'Settings', logo: 'lock', hash: '/#/settings/?id='+_id},
-              {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
-          ];
+      var animating = false;
+      function loadMenu() {
+        var _id=this.iduser;
+        this.pages = [
+          {name: 'Wall', logo: 'info', hash: '/#/wall/?id='+_id},
+          {name: 'My profile', logo: 'social:person', hash: '/#/profile/?id='+_id},
+          {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/?id='+_id},
+          {name: 'Settings', logo: 'lock', hash: '/#/settings/?id='+_id},
+          {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/?id='+_id}
+        ];
+      }
+
+      function doAjax(options, success, error) {
+        options.dataType = 'json';
+        options.contentType = 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+        options.beforeSend = function(xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+        };
+
+        $.ajax(options);
+      }
+
+      Polymer({
+        domReady: function () {
+          loadMenu.bind(this)();
+
+          this.login=this.$.login;
+          this.logueado();
+          this.$.login.logged = Boolean(localStorage.token);
+
+          this.rellenarProfile();
+
+          if( this.progress != undefined )
+            this.startProgress();
+          //                this.scaffold= this.$.scaffold;
+          //
+          //                addEventListener('polymer-ready', function() {
+          //                  scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
+          //                    var scroller = e.detail.target;
+          //                    scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
+          //                    console.log(scroller.scrollTop);
+          //
+          //                    var a  =  scroller.scrollTop  ;
+          //                    var b  =  scroller.scrollHeight - scroller.clientHeight  ;
+          //                    var c  =  a / b  ;
+          //                    var that = this;
+          //                    if(c*100 >85){
+          //                      
+          //                    }
+          //                  });
+          //                });
+        },
+        rellenarProfile : function (){
+          doAjax({
+            type: 'GET',
+            url: 'routes_user/profile',
+          },function( result ) {
+            this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
+            this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
+            this.$.email.innerHTML = result.email ? result.email : "" ;
+            this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
+            this.$.following.innerHTML = result.following ? result.following : "0" ;
+            this.$.numpost.innerHTML = result.post ? result.post : "0" ;
+          }.bind(this),
+                 function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        startProgress: function(){
+          if ( !animating ) {
+            this.progress.value += 1;
+            this.async(this.startProgress);
+          }
+        },
+        handleLogout: function(event, detail) {
+          this.$.login.logout();
+          document.querySelector('app-router').go('/');
+        },
+        logueado: function() {
+          if ( this.logged ) {
+            getProfile().done(function(user) {
+              this.photoUrl = user._json.picture;
+            }.bind(this)).fail(function() {
+              this.photoUrl = '';
+            }.bind(this));
+          }
+        },
+        personalcall: function(){
+          window.location.hash = "/pqr/?id="+this.iduser;
+        },
+        showAdd: function (e, detail, sender){
+          document.querySelector('app-router').go('/settings');
+        },
+        loadScroll: function() {
+          setTimeout(function() {
+            this.fire('endofpage');
+          }, 1000);
         }
-
-        function doAjax(options, success, error) {
-          options.dataType = 'json';
-          options.contentType = 'application/json; charset=UTF-8';
-          options.success = success;
-          options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-
-          options.beforeSend = function(xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
-          };
-
-          $.ajax(options);
-        }
-
-        Polymer({
-            domReady: function () {
-                loadMenu.bind(this)();
-
-                this.login=this.$.login;
-                this.logueado();
-                this.$.login.logged = Boolean(localStorage.token);
-
-                this.rellenarProfile();
-              
-                if( this.progress != undefined )
-                  this.startProgress();
-//                this.scaffold= this.$.scaffold;
-//
-//                addEventListener('polymer-ready', function() {
-//                  scaffold.$.drawerPanel.querySelector('core-header-panel').addEventListener('scroll', function(e) {
-//                    var scroller = e.detail.target;
-//                    scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
-//                    console.log(scroller.scrollTop);
-//
-//                    var a  =  scroller.scrollTop  ;
-//                    var b  =  scroller.scrollHeight - scroller.clientHeight  ;
-//                    var c  =  a / b  ;
-//                    var that = this;
-//                    if(c*100 >85){
-//                      
-//                    }
-//                  });
-//                });
-            },
-            rellenarProfile : function (){
-              doAjax({
-                type: 'GET',
-                url: 'routes_user/profile',
-              },function( result ) {
-                this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-                this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
-                this.$.email.innerHTML = result.email ? result.email : "" ;
-                this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
-                this.$.following.innerHTML = result.following ? result.following : "0" ;
-                this.$.numpost.innerHTML = result.post ? result.post : "0" ;
-              }.bind(this),
-              function(xhr, err, desc){
-                var errorToast = document.querySelector('#errorToast');
-                errorToast.text = xhr.responseText.split(':')[1];
-                errorToast.show();
-              });
-            },
-            startProgress: function(){
-              if ( !animating ) {
-                this.progress.value += 1;
-                this.async(this.startProgress);
-              }
-            },
-            handleLogout: function(event, detail) {
-              this.$.login.logout();
-              document.querySelector('app-router').go('/');
-            },
-            logueado: function() {
-                if ( this.logged ) {
-                    getProfile().done(function(user) {
-                        this.photoUrl = user._json.picture;
-                    }.bind(this)).fail(function() {
-                        this.photoUrl = '';
-                    }.bind(this));
-                }
-            },
-            personalcall: function(){
-                window.location.hash = "/pqr/?id="+this.iduser;
-            },
-            showAdd: function (e, detail, sender){
-              document.querySelector('app-router').go('/settings');
-            },
-            loadInfo: function (){
-              setTimeout(function() {
-                for ( var i = n; i < n+3; i++ ) {
-                  this.fire('endofpage');
-                }
-                n = i;
-                scope.$.threshold.clearLower();
-              }, 1000);
-            },
-          
-        });
+      });
     }());
-</script>
+  </script>
 </polymer-element>
