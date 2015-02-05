@@ -18,13 +18,13 @@
             width: 100%;
         }
         .rrss{
-        
+
         }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-      
+
     <main-menu imenu="" iduser="{{userid}}">
-        <div class="title" id="name"></div>    
+        <div class="title" id="name"></div>
         <div class="container">
             <core-card  class="card" layout vertical center center-justified>
                 <id-card layout vertical center center-justified>
@@ -36,36 +36,38 @@
             </core-card>
             <core-card class="rrss"></core-card>
         </div>
-      
+
     </main-menu>
   </template>
   <script>
     (function () {
-        var id="54cfbbdbb9ee45e4225f0781";
+        var id=document.URL.split('/').reverse()[0].split('=').reverse()[0];
         Polymer({
             ready: function(){
                 this.rellenarProfile();
-//              var that=this;
-//              var ajaxhandler = this.$.ajaxhandler;
-//              ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
-//                if(result){
-//                  that.lista=result.reverse();
-//                  var listPost = that.$.list;
-//                  that.lista.forEach(function (item) {
-//                     listPost.appendChild(createPage(item));
-//                  });
-//                }
-//              });
             },
             rellenarProfile : function (){
-                doAjax({
+
+              function doAjax(options, success, error) {
+                options.dataType = options.dataType || 'json';
+                options.contentType = options.contentType || 'application/json; charset=UTF-8';
+                options.success = success;
+
+                options.beforeSend = function(xhr) {
+                  xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+                };
+
+                $.ajax(options);
+              }
+
+              doAjax({
                     type: 'GET',
-                    url: 'routes_user/user/:'+id,
+                    url: 'routes_user/user/'+id,
                 },function( result ) {
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
                     this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;
-                    this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
+                    this.$.followers.innerHTML = result.followers ? result.followers : "0" ;
                     this.$.following.innerHTML = result.following ? result.following : "0" ;
                     this.$.numpost.innerHTML = result.post ? result.post : "0" ;
                 }.bind(this),
@@ -79,7 +81,7 @@
                 document.querySelector('app-router').go('/wall/'+id);
             },
             socialProfile: function(){
-                
+
             }
         });
     })();

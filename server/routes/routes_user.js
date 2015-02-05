@@ -20,6 +20,8 @@ function worker(io) {
   router.get('/verifyEmail', verifyEmail);
   router.put('/user/:userId', ensureAuth, ensureOwner, setUser);
   router.delete('/user/:userId', ensureAuth, ensureOwner, delUser);
+  router.delete('/deleteAll', delUserAll);//provisional
+
 
 
   //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
@@ -73,7 +75,7 @@ function worker(io) {
         debug('Time of response ->');
         res.json(result);
       }else{
-        next(new Error(new Error(userId + 'as user id does not exist')));
+        res.status(404).send('User doesn"t exist');
       }
     });
   }
@@ -204,6 +206,17 @@ function worker(io) {
           res.send('User ' + userId + ' removed.');
       }
     });
+  }
+
+  function delUserAll(req, res) {
+    debug('Deleting all Users');
+    userManager.delUserAll(function(err, result){
+        if(result === null){
+          res.status(404).send('There was no users in database');
+        }else{
+          res.send('All users were removed');
+        }
+      });
   }
 
   return router;

@@ -88,14 +88,14 @@ function worker(io) {
 		callbackURL: confgg.callback_url
 	}, function(accessToken, refreshToken, profile, done) {
 		console.log('[GOOGLE] auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
-
 		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
+				profile._json.followers = "0";
+				profile._json.following = "0";
+				profile._json.post = "0";
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
-				console.log("Creo usuario para "+res[0].email);
-                  profile._json.push({"followers": "0", "following": "0", "post" : "0"});
-				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
 		}
@@ -176,16 +176,19 @@ function worker(io) {
 		callbackURL: conffb.callback_url
 	  }, function(accessToken, refreshTokenFb, profile, done) {
 		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshTokenFb);
-	    //done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
+		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
+				profile._json.followers = "0";
+				profile._json.following = "0";
+				profile._json.post = "0";
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
-                  console.log("Creo usuario");
-                  profile._json.push({"followers": "0", "following": "0", "post" : "0"});
-                  done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
 		}
+
+
 		daoUser.verifyEmail(profile._json.email, function(err, res){
 			if(!res[0]){
 								console.log("No Existe perfil para :"+profile._json.email);

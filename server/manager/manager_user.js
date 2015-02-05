@@ -1,8 +1,8 @@
 var daoUser = require('../dao/dao_user');
 
 function createUser(data, callback) {
-	data["followers"]=0;
-	data["following"]=0;
+	data["followers"]=[];
+	data["following"]=[];
 	daoUser.createUser(data, callback);
 }
 
@@ -16,6 +16,10 @@ function delUser(userId, callback) {
 
 function getUsersAll(callback) {
 	daoUser.getUsersAll(callback);
+}
+
+function delUserAll(callback) {
+	daoUser.delUserAll(callback);
 }
 
 function setUser(userId, data, callback) {//in case any error with data, then nothing putted in db
@@ -96,5 +100,6 @@ module.exports = {
 	validateUserByName: validateUserByName,
 	validateUserByEmail: validateUserByEmail,
 	verifyUsername: verifyUsername,
-	verifyEmail: verifyEmail
+	verifyEmail: verifyEmail,
+	delUserAll:delUserAll
 };

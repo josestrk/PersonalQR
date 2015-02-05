@@ -19,7 +19,8 @@ function getUsersAll(callback) {
 	});
 }
 
-function delUsers(callback) {
+
+function delUserAll(callback) {
 	this.remove({}, callback);
 }
 
@@ -92,7 +93,7 @@ col.bind({
 	createUser: createUser,
 	getUser: getUser,
 	getUsersAll: getUsersAll,
-	delUsers: delUsers,
+	delUserAll: delUserAll,
 	delUser: delUser,
 	setUser: setUser,
 	validateUserByName: validateUserByName,
