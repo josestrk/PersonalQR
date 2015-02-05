@@ -1,9 +1,9 @@
 
 <polymer-element name="id-card">
 <template>
-    <link rel="stylesheet" href="id-card.css">
-    <div class="user">
-    <dl class="user-data">
+  <link rel="stylesheet" href="id-card.css">
+  <div class="user">
+    <dl class="user-data" >
     <dt>Avatar:</dt>
         <content select=".img"></content>
     <dt>Name</dt>
@@ -12,18 +12,20 @@
     </dl>
 
     <dl class="user-stats">
-     <content></content> 
-     <dt>Followers</dt>
-        <a class="followers"><content select=".followers"><dd data-stats="followers"></dd></content></a>
-      <dt>Following</dt>
-        <a class="following"><content select=".following"><dd data-stats="following"></dd></content></a>
-      <dt>Post</dt>
-        <content select=".posts"><dd data-stats="posts"></dd></content>  
+      <dd class="followers" data-stats="Followers" on-click="{{followers}}"><content select="#followers"></content></dd>
+      <dd class="following" data-stats="Following" on-click="{{following}}"><content select="#following"></content></dd>
+      <dd class="numpost" data-stats="Posts"><content select="#numpost"></content></dd>  
     </dl>
     </div>
 </template>
   <script>
   Polymer({
+    followers:function(){
+      document.querySelector('app-router').go('/contacts/');
+    },
+    following:function(){
+      document.querySelector('app-router').go('/contacts/');
+    }
   });
   </script>
 </polymer-element>

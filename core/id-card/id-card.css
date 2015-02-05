@@ -1,23 +1,24 @@
 :host {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 .user {
-    height: 300px;
-    overflow: hidden;
-    position: relative;
-    background-color: #2E353C;
-    text-align: center;
-    color:white;
-    font-size: 1.2rem;
-    font-weight: 200;
-    transition: background 1000ms ease-out;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  background-color: #2E353C;
+  text-align: center;
+  color:white;
+  font-size: 1.2rem;
+  font-weight: 200;
+  transition: background 1000ms ease-out;
 }
 
 .user dl,
 .user dd {
   margin: 0;
+  padding: 5px 10px;
 }
 
 .user dt {
@@ -27,32 +28,27 @@
 .user-data {
   background-size: 25px;
   background: #666;  
-  height: 90px;
-  border-bottom:0;
-}
-polyfill-next-selector { content: '.user-data h2'; }
-.user-data ::content h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 300;
+  height: 60px;
+  border-bottom: 4px groove white;
 }
 polyfill-next-selector { content: '.user-data img'; }
 .user-data ::content img {
-    margin: 20px 0 10px;
-    border-radius: 100%;
-    border: 4px solid white;
-    display:  block;
-    height: 120px;
-    width: 120px;
-    border: 3px solid #fff;
-    vertical-align: middle;
-    background-color: #fff;
-    display: block;
+  border-radius: 100%;
+  border: 4px solid white;
+  height: 120px;
+  width: 120px;
+  margin: 0px auto 20px;
+  background-color: #fff;
+  display: block;
 }
 
-user-name,
+user-name{
+  margin: 5px 0;
+}
+
 user-account {
   margin: 5px 0;
+  color: #999;
 }
 
 user-name {
@@ -67,39 +63,35 @@ user-account {
 .user-stats {
   border-top: 1px groove #999;
   position: relative;
-  top: 155px;
+  top: 150px;
+  padding: 10px;
 }
 
-.user-stats dd {
-  padding: 10px 20px;
-}
-
-.user-repos,
-.user-following,
-.user-followers {
+.numpost,
+.following,
+.followers {
   display: inline-block;
   font-size: 22px;
   color: #999;
+  cursor: pointer;
 }
 
-.user-repos:after,
-.user-following:after,
-.user-followers:after {
+.followers:after,
+.following:after,
+.numpost:after {
   content: attr(data-stats);
-  text-transform: uppercase;
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   color: #666;
   font-weight: normal;
   line-height: 1.7em;
+  font-variant: small-caps;
 }
 
 .spinner {
   background: url('../lib/webcomponent/spinner.gif') no-repeat center center;
 }
 
-a.user-github-url,
-a.user-repos-url,
-a.user-followers-url {
-    text-decoration: none;
+a {
+  text-decoration: none;
 }

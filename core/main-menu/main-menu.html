@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/slide-from-right.html">
-<link rel="import" href="../../bower_components/core-a11y-keys/core-a11y-keys.html">
+<!--<link rel="import" href="../../bower_components/core-a11y-keys/core-a11y-keys.html">-->
 <link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
 <link rel="import" href="../../bower_components/core-scaffold/core-scaffold.html">
 
@@ -22,28 +22,26 @@
 
 <link rel="stylesheet" href="out-style.css">
 
-<polymer-element name="main-menu" attributes="imenu, iduser, logged">
+<polymer-element name="main-menu" attributes="imenu, iduser, logged, progress">
 <template>
 
 <link rel="stylesheet" href="in-style.css">
 
 <app-login id="login"></app-login>
-<core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>
+<!--<core-a11y-keys id="keys" target="{{parentElement}}" keys="shift+up shift+down shift+left shift+right shift+space ctrl+shift+space" on-keys-pressed="{{keyHandler}}"></core-a11y-keys>-->
 
 <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'>
   <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
     <nav><search-banner horizontal layout center-justified center></search-banner>
     </nav>
     <nav flex>
-      <core-menu>
-        <id-card layout vertical center center-justified>
-            <img class="img" id='photo' src="{{ this.photoUrl }}"/>
-            <user-name id="name"></user-name>
-            <user-account id="email"></user-account>
-            <span class="follower">{{ follower > 0 ? follower : 0 }} Followers </span><span class="following"> {{ following > 0 ? following : 0 }} Following | {{ post > 0 ? post : 0 }} Post</span>
-        </id-card>
-      </core-menu>
-    <template if="{{login.logged}}">
+      <id-card layout vertical center center-justified>
+        <img class="img" id='photo' src="{{ this.photoUrl }}"/>
+        <user-name id="name"></user-name>
+        <user-account id="email"></user-account>
+        <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
+      </id-card>
+      <template if="{{login.logged}}">
        <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
          <template repeat="{{page in pages}}">
          <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
@@ -52,31 +50,32 @@
          </template>
        </core-menu>
     </template>
-       <core-menu hidden?="{{!login.logged}}">
+      <core-menu hidden?="{{!login.logged}}">
          <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
        </core-menu>
     </nav>
   </core-header-panel>
 
-    <core-toolbar tool flex>
+  <core-toolbar tool flex>
         <content select=".title"></content>
-        <content select=".notifi"></content>
-
         <template if="{{login.logged}}">
+            <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
             <core-qr id="{{id}}"></core-qr>
             <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
             <template if="{{imenu=='Settings'}}">
               <core-add class="right"></core-add>
             </template>
         </template>
-    </core-toolbar>
+  </core-toolbar>
 
-
-    <paper-progress id="progress"></paper-progress>
-
+  <content select="#progress"></content>
+  <core-scroll-threshold id="threshold" on-lower-trigger="{{loadMore}}" lowerTriggered="500">
+    <!--    lowerThreshold="500" lowerTriggered="{{spinnerShouldShow}}"-->
     <content select="#list"></content>
     <content select=".container"><core-card></core-card></content>
     <content></content>
+    <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+  </core-scroll-threshold>
 </core-scaffold>
 </template>
 
@@ -116,9 +115,9 @@
                 this.$.login.logged = Boolean(localStorage.token);
 
                 this.rellenarProfile();
-
-                this.progress = this.$.progress;
-                this.startProgress();
+              
+                if( this.progress != undefined )
+                  this.startProgress();
 //                this.scaffold= this.$.scaffold;
 //
 //                addEventListener('polymer-ready', function() {
@@ -132,7 +131,7 @@
 //                    var c  =  a / b  ;
 //                    var that = this;
 //                    if(c*100 >85){
-//                      this.fire('endofpage');
+//                      
 //                    }
 //                  });
 //                });
@@ -141,10 +140,13 @@
               doAjax({
                 type: 'GET',
                 url: 'routes_user/profile',
-              },function(result) {
-                this.$.photo.src = result.picture;
-                this.$.name.innerHTML = result.name;
-                this.$.email.innerHTML = result.email;
+              },function( result ) {
+                this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
+                this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
+                this.$.email.innerHTML = result.email ? result.email : "" ;
+                this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
+                this.$.following.innerHTML = result.following ? result.following : "0" ;
+                this.$.numpost.innerHTML = result.post ? result.post : "0" ;
               }.bind(this),
               function(xhr, err, desc){
                 var errorToast = document.querySelector('#errorToast');
@@ -153,7 +155,7 @@
               });
             },
             startProgress: function(){
-              if (!animating) {
+              if ( !animating ) {
                 this.progress.value += 1;
                 this.async(this.startProgress);
               }
@@ -163,7 +165,7 @@
               document.querySelector('app-router').go('/');
             },
             logueado: function() {
-                if (this.logged) {
+                if ( this.logged ) {
                     getProfile().done(function(user) {
                         this.photoUrl = user._json.picture;
                     }.bind(this)).fail(function() {
@@ -171,35 +173,22 @@
                     }.bind(this));
                 }
             },
-            keyHandler: function (e, detail, sender) {
-                var pages = this.$.pages;
-
-                var num = parseInt(detail.key);
-                if (!isNaN(num) && num <= this.pages.length) {
-                    pages.selectIndex(num - 1);
-                    return;
-                }
-
-                switch (detail.key) {
-                    case 'left':
-                    case 'up':
-                        pages.selectPrevious();
-                        break;
-                    case 'right':
-                    case 'down':
-                        pages.selectNext();
-                        break;
-                    case 'space':
-                        detail.ctrl ? pages.selectPrevious() : pages.selectNext();
-                        break;
-                }
-            },
             personalcall: function(){
-                window.location.hash="/pqr/?id="+this.iduser;
+                window.location.hash = "/pqr/?id="+this.iduser;
             },
             showAdd: function (e, detail, sender){
-              return document.URL.split('/').indexOf('settings');
-            }
+              document.querySelector('app-router').go('/settings');
+            },
+            loadInfo: function (){
+              setTimeout(function() {
+                for ( var i = n; i < n+3; i++ ) {
+                  this.fire('endofpage');
+                }
+                n = i;
+                scope.$.threshold.clearLower();
+              }, 1000);
+            },
+          
         });
     }());
 </script>

@@ -4,13 +4,12 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="My profile" iduser="{{id}}">
-        <div class="title">My profile</div>
-        <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
-        <div id="list">
+    <main-menu imenu="My profile" iduser="{{id}}" progress="{{$.progress}}">
+      <div class="title">My profile</div>
+      <paper-progress id="progress"></paper-progress>
+      <div id="list">
         <template repeat="{{item in lista}}"></template>
-        </div>
-        <core-card><core-icon icon="load"></core-icon></core-card>
+      </div>
     </main-menu>
   </template>
 

@@ -14,6 +14,9 @@
             height: 300px;
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         }
+        id-card{
+            width: 100%;
+        }
         .rrss{
         
         }
@@ -21,15 +24,14 @@
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
       
     <main-menu imenu="" iduser="{{userid}}">
-        <div class="title">Name USER</div>    
-        <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
+        <div class="title" id="name"></div>    
         <div class="container">
             <core-card  class="card" layout vertical center center-justified>
                 <id-card layout vertical center center-justified>
-                <img width="150" height="150" class="img" id='{{name}}' src="../../img/avatar-01.svg" />
-                <user-name>{{ username == undefined ? 'Anonimus' : username }}</user-name>
-                <user-account></user-account>
-                    <span class="follower">{{ follower > 0 ? follower : 0 }} Followers </span><span class="following"> {{ following > 0 ? following : 0 }} Following | {{ post > 0 ? post : 0 }} Post</span>
+                    <img class="img" id='photo' src="{{ this.photoUrl }}"/>
+                    <user-name id="name"></user-name>
+                    <user-account id="email"></user-account>
+                    <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
                 </id-card>
             </core-card>
             <core-card class="rrss"></core-card>
@@ -39,20 +41,45 @@
   </template>
   <script>
     (function () {
+        var id="54cfbbdbb9ee45e4225f0781";
         Polymer({
             ready: function(){
-                debugger
-              var that=this;
-              var ajaxhandler = this.$.ajaxhandler;
-              ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
-                if(result){
-                  that.lista=result.reverse();
-                  var listPost = that.$.list;
-                  that.lista.forEach(function (item) {
-                     listPost.appendChild(createPage(item));
-                  });
-                }
-              });
+                this.rellenarProfile();
+//              var that=this;
+//              var ajaxhandler = this.$.ajaxhandler;
+//              ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
+//                if(result){
+//                  that.lista=result.reverse();
+//                  var listPost = that.$.list;
+//                  that.lista.forEach(function (item) {
+//                     listPost.appendChild(createPage(item));
+//                  });
+//                }
+//              });
+            },
+            rellenarProfile : function (){
+                doAjax({
+                    type: 'GET',
+                    url: 'routes_user/user/:'+id,
+                },function( result ) {
+                    this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
+                    this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
+                    this.$.email.innerHTML = result.email ? result.email : "" ;
+                    this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
+                    this.$.following.innerHTML = result.following ? result.following : "0" ;
+                    this.$.numpost.innerHTML = result.post ? result.post : "0" ;
+                }.bind(this),
+                       function(xhr, err, desc){
+                    var errorToast = document.querySelector('#errorToast');
+                    errorToast.text = xhr.responseText.split(':')[1];
+                    errorToast.show();
+                });
+            },
+            articlesProfile:function(){
+                document.querySelector('app-router').go('/wall/'+id);
+            },
+            socialProfile: function(){
+                
             }
         });
     })();

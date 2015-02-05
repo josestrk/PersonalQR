@@ -8,14 +8,14 @@ core-menu > core-item {
     transition: all 300ms ease-in-out;
     padding: 15px 0px;
 }
-paper-progress{
+::content paper-progress{
     width: 100%;
     display: block;
     padding: 0px;
-    height: 6px;
+    height: 4px;
 }
-paper-progress::shadow #activeProgress {
-  background-color: #0F9DDF;
+::content paper-progress::shadow #activeProgress {
+    background-color: #0F9DDF;
 }
 .core-selected {
     background: #777;

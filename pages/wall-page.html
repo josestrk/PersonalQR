@@ -5,12 +5,12 @@
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" id="wall" iduser="{{id}}" logged="{{login.logged}}" on-endofpage="{{debug}}">
-        <div class="title">Wall</div>
-        <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
-        <div id="list">
-          <template repeat="{{item in lista}}"></template>
-        </div>
+    <main-menu imenu="Wall" id="wall" iduser="{{id}}" logged="{{login.logged}}" progress="{{$.progress}}" on-endofpage="{{debug}}">
+      <div class="title">Wall</div>
+      <paper-progress id="progress"></paper-progress>
+      <div id="list">
+        <template repeat="{{item in lista}}"></template>
+      </div>
     </main-menu>
   </template>
 

@@ -13,13 +13,12 @@
         margin-top:20px;
       }
     </style>
-    <main-menu iMenu="Contacts" iduser="{{id}}">
-        <div class="title">Contacts</div>
-        <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
-        <div id="list">
+    <main-menu iMenu="Contacts" iduser="{{id}}" progress="{{$.progress}}">
+      <div class="title">Contacts</div>
+      <paper-progress id="progress"></paper-progress>
+      <div id="list">
         <template repeat="{{item in lista}}"></template>
-        </div>
-        <core-card><core-icon icon="load"></core-icon></core-card>
+      </div>
     </main-menu>
   </template>
 

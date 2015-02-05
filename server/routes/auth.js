@@ -94,6 +94,7 @@ function worker(io) {
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
 				console.log("Creo usuario para "+res[0].email);
+                  profile._json.push({"followers": "0", "following": "0", "post" : "0"});
 				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
@@ -179,8 +180,9 @@ function worker(io) {
 		function insert(){
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
-					console.log("Creo usuario");
-					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+                  console.log("Creo usuario");
+                  profile._json.push({"followers": "0", "following": "0", "post" : "0"});
+                  done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
 				}
 			});
 		}
