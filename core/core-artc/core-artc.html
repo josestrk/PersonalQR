@@ -52,7 +52,7 @@
             </core-drawer-panel>
           </core-toolbar>
         <div id="section" class="noheight">
-          <div class="cont">{{content}}</div>
+          <div id="content" class="cont"></div>
         </div>
         </core-header-panel>
 
@@ -153,6 +153,11 @@
             domReady: function () {
                 loadPost.bind(this);
                 this.showDelete() ? this.show='true' : this.show='';
+
+                /* TODO: sanitize this content and strip away
+                 * unsafe HTML and any JS
+                */
+                this.$.content.innerHTML = this.content;
 
                 var Arrcomentarios = [[user='pepe',coment='mwerthyjkcvbnm,'],[user='pepe2',coment='mwerthyjkcvbnm,2']]
                 //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
