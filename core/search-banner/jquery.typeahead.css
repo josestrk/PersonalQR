@@ -453,3 +453,6 @@ input {
     top: 2.8em;
 }
 
+suggestions:hover{
+    background: #03a9f4;
+}

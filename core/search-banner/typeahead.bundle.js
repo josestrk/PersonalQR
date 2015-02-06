@@ -760,9 +760,18 @@
             dropdown: {
                 position: "absolute",
                 top: "100%",
-                left: "0",
+                width: "100%",
+                left: "0px",
                 zIndex: "100",
-                display: "none"
+                display: "none",
+                marginTop: "5px",
+                boxShadow: "inset 2px -4px 8px #888888",
+                borderColor: '#666',
+                borderStyle: 'solid',
+                borderWidth: '0 1px 1px',
+                borderRadius: '0 0 5px 5px',
+                padding: '3px 13px',
+                backgroundColor: "rgb(245, 245, 245)"
             },
             suggestions: {
                 display: "block"
