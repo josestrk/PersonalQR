@@ -121,7 +121,7 @@
 
       refresh();
       Polymer('core-ajax-handler', {
-        getUserByName: function(username, password, rememberMe){
+        getUserByName: function(username, password){
           var data={
             username: username,
             password: password
@@ -133,9 +133,6 @@
           },function(result) {
             document.getElementById('user').data(result);
             window.location.hash="/wall/?id="+result[0]._id;
-            if (rememberMe) {
-              this.createCookie();
-            }
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
@@ -143,7 +140,7 @@
             errorToast.show();
           });
         },
-        getUserByEmail: function(mail, password, rememberMe){
+        getUserByEmail: function(mail, password){
           var data={
             mail: mail,
             password: password
@@ -155,21 +152,6 @@
           },function(result) {
             document.getElementById('user').data(result);
             window.location.hash="/wall/?id="+result[0]._id;
-            if (rememberMe) {
-              this.createCookie();
-            }
-          }.bind(this),
-          function(xhr, err, desc){
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = xhr.responseText.split(':')[1];
-            errorToast.show();
-          });
-        },
-        createCookie: function(){
-          doAjax({
-            type: 'POST',
-            url: 'routes_user/cookie',
-          },function(result) {
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');

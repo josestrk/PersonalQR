@@ -210,13 +210,13 @@
         /* Los paper-toggle-button funcionan como los checkbox, de forma que
          * se puede alternar que esté o no esté el atributo checked */
         if (rememberMe) {
-          console.log('checked');
+          console.log('The "remember me" button is checked');
         }
         
         if (user.match(/@/) !== null) {
-          ajaxhandler.getUserByEmail(user, password, rememberMe);
+          ajaxhandler.getUserByEmail(user, password);
         } else {
-          ajaxhandler.getUserByName(user, password, rememberMe);
+          ajaxhandler.getUserByName(user, password);
         }
       },
       keydown: function(event, detail, sender) {
