@@ -53,7 +53,7 @@
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
     <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
 
-    <app-router core-animated-pages transitions="slide-from-right">
+    <app-router core-animated-pages mode="hash" transitions="slide-from-right">
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall/" element="wall-page"></app-route>
         <app-route path="/profile/" element="myp-page"></app-route>
@@ -67,13 +67,15 @@
     </app-router>
     <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');</script>
     <script>
-        $(document).ready(function () {
             if( localStorage.token == undefined ){
-              $(document.body).vide("video/ocean").resize();
+              $(document).ready(function () {
+                $(document.body).vide("video/ocean").resize();
+              });
             }else{
-              document.querySelector('app-router').go('/wall/');
+              if(window.location.hash === ''){
+                document.querySelector('app-router').go('/wall/');
+              }
             }
-        });
 
         /*Hay que pensar forma de volver de los botones legal e info*/
     </script>

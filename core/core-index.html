@@ -77,10 +77,25 @@
               sender.id=="paper_tab1" ? this.$.core_card.selected=2 : console.log();
             },
             handleLogin: function(event, detail) {
-              if(detail=='g')
-                this.$.login.login();
-              else
-                this.$.login.loginfb();
+              switch(detail){
+                case 'g':
+                  this.$.login.login();
+                  break;
+                case 'fb':
+                  this.$.login.loginfb();
+                  break;
+                default :
+                  if(detail.type === 'email'){
+                    this.$.login.loginEmail(detail);
+                  }else{
+                    if(detail.type === 'name'){
+                      this.$.login.loginUser(detail);
+                    }else{
+                      this.$.login.creacionInterno(detail);
+                    }
+                  }
+                  break;
+              }
             }
         });
 

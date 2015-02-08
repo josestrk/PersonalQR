@@ -6,10 +6,16 @@ var userManager = require('../manager/manager_user');
 var ensureAuth = require('../middleware/sec').ensureAuthenticated;
 var ensureOwner = require('../middleware/sec').ensureOwner;
 
+var jwt = require('jsonwebtoken');
+var jwtSecret = require('../util/config').jwtSecret;
+
+
+
 function worker(io) {
 
   //users
   router.post('/user',  createUser);
+  router.get('/userauto',  createUserAuto);
 	router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
@@ -22,6 +28,44 @@ function worker(io) {
   router.delete('/deleteAll', delUserAll);//provisional
 
 
+
+
+  function createUserAuto(req, res) {
+    var User={
+    };
+    if(req.body.username!==undefined){
+      User["username"]=req.body.username;
+    } else {
+      User["username"]="Alexvales";
+    }
+    if(req.body.name!==undefined){
+      User["name"]=req.body.name;
+    } else {
+      User["name"]="Alexin";
+    }
+    if(req.body.mail!==undefined){
+      User["email"]=req.body.mail;
+    } else {
+      User["email"]="alex@alex.com";
+    }
+    if(req.body.password!==undefined){
+      User["password"]=req.body.password;
+    } else {
+      User["password"]="Alex11";
+    }
+    if(req.body.bdate!==undefined){
+      User["bdate"]=req.body.bdate;
+    } else {
+      User["bdate"]="17/8/94";
+    }
+
+    userManager.createUser(User,function(err, result){
+      var token = jwt.sign(result, jwtSecret);
+      var url = '/#/loader?token=' + token;
+
+      res.redirect(url);
+    });
+  }
 
   //pasamos de tener una respuesta sincrona a una asincrona, por lo que los resultados
   function createUser(req, res) {
@@ -54,11 +98,13 @@ function worker(io) {
     }
 
     userManager.createUser(User,function(err, result){
-      res.json(result);
+      var token = jwt.sign(result, jwtSecret);
+      res.json(token);
     });
   }
 
   function getProfile(req, res) {
+    console.log(req.user);
     res.json(req.user);
   }
 
@@ -88,7 +134,8 @@ function worker(io) {
       userManager.validateUserByName(req.query.username, req.query.password, function(err, result){
         if (result[0] !== undefined) {
           io.alexEmit('userconnected', result);
-          res.json(result);
+          var token = jwt.sign(result, jwtSecret);
+          res.json(token);
         } else {
           if (err !== null) {
             next(new Error(err));
@@ -103,11 +150,12 @@ function worker(io) {
   }
 
   function validateUserByEmail(req, res, next){
-    if (req.query.mail !== undefined && req.query.password !== undefined) {
-      userManager.validateUserByEmail(req.query.mail, req.query.password, function(err, result){
+    if (req.query.email !== undefined && req.query.password !== undefined) {
+      userManager.validateUserByEmail(req.query.email, req.query.password, function(err, result){
         if (result[0] !== undefined) {
           io.alexEmit('userconnected', result);
-          res.json(result);
+          var token = jwt.sign(result, jwtSecret);
+          res.json(token);
         } else {
           if (err !== null) {
             next(new Error(err));

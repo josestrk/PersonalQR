@@ -28,6 +28,7 @@
         authWindow = null;
         checkResponse();
       }, 100);
+
       function checkResponse() {
         var hash = window.location.hash;
         document.getElementsByTagName("video")[0].remove();
@@ -52,8 +53,93 @@
         return deferred.resolve(data);
       }
 
+
       return deferred.promise();
     }
+
+
+    function doAjax(options, success, error) {
+      options.type = options.type || 'GET';
+      options.url = options.url ;
+      options.dataType = options.dataType || 'json';
+      options.contentType = options.contentType || 'application/json; charset=UTF-8';
+      options.success = success;
+      options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+      $.ajax(options);
+    }
+
+    function globalCheck(token) {
+      document.getElementsByTagName("video")[0].remove();
+      window.location.hash = '/wall/';//redirect to wall
+
+      localStorage.setItem('token', token);
+      socket.connect(localStorage.token);
+      this.logged = true;
+
+    }
+
+
+    function interno(nombreUser) {
+      function ajaxpersonal(options, success, error) {
+        options.type = 'POST';
+        options.url = 'routes_user/user' ;
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+        options.data= nombreUser;
+        $.ajax(options);
+      }
+
+      var authUrl = ajaxpersonal({},function(result) {
+        globalCheck.bind(this)(result);
+      }.bind(this),
+      function(xhr, err, desc){
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = 'Fallo al introducir los datos de Usuario';
+        errorToast.show();
+        this.logged = false;
+      }.bind(this));
+
+    }
+
+
+    function emailogin(nombreUser) {
+      var authUrl = doAjax({
+        type: 'GET',
+        url: 'routes_user/validateUserByEmail',
+        data: nombreUser
+      },function(result) {
+        globalCheck.bind(this)(result);
+      }.bind(this),
+      function(xhr, err, desc){
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = 'Fallo al introducir los datos de Usuario';
+        errorToast.show();
+        this.logged = false;
+      }.bind(this));
+
+    }
+
+    function usrlogin(nombreUser) {
+
+      var authUrl = doAjax({
+        type: 'GET',
+        url: 'routes_user/validateUserByName',
+        data: nombreUser
+      },function(result) {
+        globalCheck.bind(this)(result);
+      }.bind(this),
+      function(xhr, err, desc){
+        var errorToast = document.querySelector('#errorToast');
+        errorToast.text = 'Fallo al introducir los datos de Usuario';
+        errorToast.show();
+        this.logged = false;
+      }.bind(this));
+
+    }
+
 
     function showMsg(txt){
       var errorToast = document.querySelector('#errorToast');
@@ -90,6 +176,18 @@
           delete localStorage.token;
           this.logged = false;
         }.bind(this));
+      },
+      creacionInterno: function(nombreUser) {
+        interno.bind(this)(nombreUser);
+        showMsg('logged');
+      },
+      loginEmail: function(nombreUser) {
+        emailogin.bind(this)(nombreUser);
+        showMsg('logged');
+      },
+      loginUser: function(nombreUser) {
+        usrlogin.bind(this)(nombreUser);
+        showMsg('logged');
       },
       logout: function() {
         delete localStorage.token;

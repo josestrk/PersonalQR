@@ -121,44 +121,6 @@
 
       refresh();
       Polymer('core-ajax-handler', {
-        getUserByName: function(username, password){
-          var data={
-            username: username,
-            password: password
-          };
-          doAjax({
-            type: 'GET',
-            url: 'routes_user/validateUserByName',
-            data: data
-          },function(result) {
-            document.getElementById('user').data(result);
-            window.location.hash="/wall/?id="+result[0]._id;
-          }.bind(this),
-          function(xhr, err, desc){
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = xhr.responseText.split(':')[1];
-            errorToast.show();
-          });
-        },
-        getUserByEmail: function(mail, password){
-          var data={
-            mail: mail,
-            password: password
-          };
-          doAjax({
-            type: 'GET',
-            url: 'routes_user/validateUserByEmail',
-            data: data
-          },function(result) {
-            document.getElementById('user').data(result);
-            window.location.hash="/wall/?id="+result[0]._id;
-          }.bind(this),
-          function(xhr, err, desc){
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = xhr.responseText.split(':')[1];
-            errorToast.show();
-          });
-        },
         create: function(datos){
           doAjax({
             type: 'POST',

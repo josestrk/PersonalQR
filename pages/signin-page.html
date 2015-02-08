@@ -248,7 +248,7 @@
           isValid = false;
         }
       });
-        
+
       if (isValid) {
         that.$.send.style.visibility = "visible";
       } else {
@@ -266,10 +266,14 @@
         name: this.$.name.$.field.input.value,
         mail: this.$.email.$.field.input.value,
         bdate: this.$.bdate.$.field.input.value,
-        password: this.$.password.$.field.input.value
+        password: this.$.password.$.field.input.value,
       }
-      var ajaxhandler = this.$.ajaxhandler;
-      ajaxhandler.create(JSON.stringify(datos));
+      datos.type = "create";
+      console.log('sing-pg');
+      console.log(datos);
+      this.fire('login', JSON.stringify(datos));
+      // var ajaxhandler = this.$.ajaxhandler;
+      // ajaxhandler.create(JSON.stringify(datos));
     }
   });
   </script>

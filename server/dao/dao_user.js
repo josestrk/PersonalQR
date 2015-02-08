@@ -55,9 +55,9 @@ function validateUserByName(username, password, callback) {
 
 function validateUserByEmail(mail, password, callback) {
 	var where={};
-	where["mail"]=mail;
+	where["email"]=mail;
 	where["password"]=password;
-
+	
 	this.find(where, function(err, cursor) {
 		if (err) {
 			return callback(err+':', []);

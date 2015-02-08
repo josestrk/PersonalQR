@@ -33,8 +33,11 @@ function ensureAuthenticated(req, res, next) {
 			console.log('Decode token error: ' + err);
 			return res.sendStatus(401);
 		}
+
 		req.user = decode.profile;
+		(req.user === undefined) ? req.user = decode[0]: debug('Nada');
 		req.globalIdOfUser = decode.id;
+		(req.globalIdOfUser === undefined) ? req.globalIdOfUser = decode[0]._id: debug('Nada');
 		req.token = token;
 		next(null);
 	});

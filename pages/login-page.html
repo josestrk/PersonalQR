@@ -68,30 +68,30 @@
         height: 25px;
         margin: auto;
       }
-      
+
       paper-toggle-button {
         margin-top: 15px;
       }
-      
+
       paper-toggle-button::shadow [checked] .toggle {
         background-color: rgb(137, 191, 79);
       }
-      
+
       paper-toggle-button::shadow [checked] .toggle-ink {
         color: rgb(137, 191, 79);
       }
-      
+
       input::-webkit-input-placeholder,
       .gray-text {
         color: #999;
       }
-      
+
       #arrow {
         background-color: rgb(137, 191, 79);
         display: block;
         margin: -5px auto auto auto;
       }
-      
+
       @media(max-width:450px){
         #core_card_main{
           position: absolute;
@@ -202,21 +202,28 @@
         }
       },
       logged: function() {
-        var ajaxhandler = this.$.ajaxhandler,
-          user = this.$.user_input.value,
-          password = this.$.password_input.value,
-          rememberMe = this.$.remember.checked;
-        
+        var ajaxhandler = this.$.ajaxhandler;
+        var rememberMe = this.$.remember.checked;
+        var aux = this.$.user_input.value;
+
+        var datos={
+          password: this.$.password_input.value,
+        }
+
         /* Los paper-toggle-button funcionan como los checkbox, de forma que
          * se puede alternar que esté o no esté el atributo checked */
         if (rememberMe) {
           console.log('The "remember me" button is checked');
         }
-        
-        if (user.match(/@/) !== null) {
-          ajaxhandler.getUserByEmail(user, password);
+
+        if (aux.match(/@/) !== null) {
+          datos.email= aux;
+          datos.type="email";
+          this.fire('login', datos);
         } else {
-          ajaxhandler.getUserByName(user, password);
+          datos.username= aux;
+          datos.type="name";
+          this.fire('login', datos);
         }
       },
       keydown: function(event, detail, sender) {
