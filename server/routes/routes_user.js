@@ -207,7 +207,7 @@ function worker(io) {
 
   function setUser(req, res) {
     console.log(req.body);
-    var userId = req.param('userId');
+    var userId = (req.globalIdOfUser!==undefined) ? req.globalIdOfUser : req.param('userId');
 
     var User={
       $set:{
@@ -240,7 +240,7 @@ function worker(io) {
   }
 
   function delUser(req, res) {
-    var userId = req.param('userId');
+    var userId = req.globalIdOfUser;
 
     userManager.delUser(userId, function(err, result){
       if(result === null){

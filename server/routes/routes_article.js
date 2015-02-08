@@ -13,7 +13,7 @@ function worker(io) {
   router.post('/article', ensureAuth, createArticle);
   router.post('/editarticle', ensureAuth, ensureOwner, editArticle);
   // router.get('/article/:articleId', getArticle);
-  router.get('/article/:userId', getUserArticles);
+  router.get('/article', ensureAuth, getUserArticles);
   router.get('/articles/:id', getArticlesAll);
   //creo que ha quedado deprecated
   router.put('/article/:articleId',ensureAuth,ensureOwner, setArticle);
@@ -22,23 +22,12 @@ function worker(io) {
   function createArticle(req, res) {
     var Article={
     };
-    //controladores de acceso
-    if(req.body.iduser!==undefined){
-        Article["iduser"]=req.body.iduser;
-      }else{
-      //esto no se deberia permitir pero... de momento lo dejamos..
-        Article["iduser"]="";
-    }
-    if(req.body.title!==undefined){
-        Article["title"]=req.body.title;
-      }else{
-        Article["title"]="";
-    }
-    if(req.body.content!==undefined){
-        Article["content"]=req.body.content;
-      }else{
-        Article["content"]="";
-    }
+    Article["iduser"]= req.globalIdOfUser;
+
+    Article["title"]= (req.body.title!==undefined) ? Article["title"]=req.body.title :  Article["title"]="";
+
+    Article["content"]= (req.body.content!==undefined)?  Article["content"]=req.body.content : Article["content"]="";
+
     Article["topic"]=getTopics(req.body.content);
     Article["date"]=getDateTime();
     Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
@@ -134,8 +123,8 @@ function worker(io) {
   // }
 
   function getUserArticles(req, res) {
-    articleManager.getUserArticles(req.param('userId'), function(err, result){
-        result["date"]=getDateTime()-result["date"];
+    articleManager.getUserArticles(req.globalIdOfUser, function(err, result){
+        // result["date"]=getDateTime()-result["date"];
       res.json(result);
     });
   }
@@ -143,7 +132,6 @@ function worker(io) {
   function getArticlesAll(req, res) {
     var skip = req.param('id');
     articleManager.getArticlesAll(function(err, result){
-      //Permisos de vision regulados rsul=[]
       res.json(result);
     }, skip);
   }
@@ -186,6 +174,7 @@ function worker(io) {
   }
 
   function delArticle(req, res) {
+    //implementar como resultado de un callback pidiendo si es al que le pertenecen los archivos
     var articleId = req.param('articleId');
 
     articleManager.delArticle(articleId, function(err, result){
