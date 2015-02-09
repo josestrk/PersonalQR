@@ -45,31 +45,16 @@
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
 
-            // Load HTML sanitizer
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = '../lib/sanitize/lib/sanitize.js';
-            script.onload = function () {
-              console.log('cargado');
-              var sanitizer = function() {
-                return new Sanitize();
+            ajaxhandler.getAllArticles(sk,function (result){
+              if(result){
+                that.lista=result;
+                var listPost = that.$.list;
+                that.lista.forEach(function (item) {
+                  listPost.appendChild(createPage(item));
+                });
               }
-
-              // Load articles
-              ajaxhandler.getAllArticles(sk,function (result){
-                if(result){
-                  that.lista=result;
-                  var listPost = that.$.list;
-                  that.lista.forEach(function (item) {
-                    debugger
-                    console.log(sanitizer.clean_node(item));
-                    listPost.appendChild(createPage(item));
-                  });
-                }
-              });
-              this.skip++;
-            };
-            document.head.appendChild(script);
+            });
+            this.skip++;
           },
           debug: function(){
             var that=this;

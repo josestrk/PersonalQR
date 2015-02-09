@@ -58,7 +58,7 @@
       function refresh() {
         doAjax({
           type: 'GET',
-          url: 'routes_article/articles/0',
+          url: 'routes_article/articles/0'
         },function(result) {
           static.articles = result;
           addListeners(static);
@@ -187,7 +187,7 @@
         getArticles: function(id,callback){
           doAjax({
             type: 'GET',
-            url: 'routes_article/article/'+id,
+            url: 'routes_article/article/'+id
           },function(result) {
             callback(result);
           }.bind(this),
@@ -201,7 +201,7 @@
         getAllArticles: function(skip, callback){
           doAjax({
             type: 'GET',
-            url: 'routes_article/articles/'+skip,
+            url: 'routes_article/articles/'+skip
           },function(result) {
             if(result[0] == null){
               callback(result, 'fin');
@@ -218,7 +218,7 @@
         deleteArticles: function(id,callback){
           doAjax({
             type: 'DELETE',
-            url: 'routes_article/article/'+id,
+            url: 'routes_article/article/'+id
           },function(result) {
             callback(result);
           }.bind(this),
@@ -268,7 +268,7 @@
         showTopics: function(datos, callback) {
           doAjax({
             type: 'GET',
-            url: 'routes_topic/topic?letter='+datos,
+            url: 'routes_topic/topic?letter='+datos
           },function(result) {
             console.log(result);
             callback(result);

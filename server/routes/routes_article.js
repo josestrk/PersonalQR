@@ -6,6 +6,8 @@ var articleManager = require('../manager/manager_article');
 var ensureAuth = require('../middleware/sec').ensureAuthenticated;
 var ensureOwner = require('../middleware/sec').ensureOwner;
 
+var sanitizeHtml = require('sanitize-html');
+
 function worker(io) {
   //habra que meter aqui los emit de socket.IO
 
@@ -16,17 +18,18 @@ function worker(io) {
   router.get('/article', ensureAuth, getUserArticles);
   router.get('/articles/:id', getArticlesAll);
   //creo que ha quedado deprecated
-  router.put('/article/:articleId',ensureAuth,ensureOwner, setArticle);
-  router.delete('/article/:articleId',ensureAuth,ensureOwner, delArticle);
+  router.put('/article/:articleId', ensureAuth, ensureOwner, setArticle);
+  router.delete('/article/:articleId', ensureAuth, ensureOwner, delArticle);
 
   function createArticle(req, res) {
     var Article={
     };
     Article["iduser"]= req.globalIdOfUser;
 
-    Article["title"]= (req.body.title!==undefined) ? Article["title"]=req.body.title :  Article["title"]="";
+    Article["title"]= (req.body.title!==undefined) ? req.body.title : "";
 
-    Article["content"]= (req.body.content!==undefined)?  Article["content"]=req.body.content : Article["content"]="";
+    debugger
+    Article["content"]= (req.body.content!==undefined)? sanitizeHtml(req.body.content, {allowedTags: []}) : "";
 
     Article["topic"]=getTopics(req.body.content);
     Article["date"]=getDateTime();
@@ -97,8 +100,8 @@ function worker(io) {
   }
 
   function getTopics(content){
-    var a=content;
-    var res=[];
+    var a = content;
+    var res = [];
     a = a.split('#');
 
     for(i in a){
