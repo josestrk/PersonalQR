@@ -1,6 +1,5 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 
-
 <polymer-element name="wall-page" attributes="userid">
   <template>
     <link type="text/css" rel="stylesheet" href="../core/lister.css">
@@ -29,15 +28,15 @@
           section.setAttribute('coments', item.coments);
 
 
-        var div = document.createElement('core-card');
+          var div = document.createElement('core-card');
 
-        div.setAttribute('css', 'article');
-        div.setAttribute('layout', '');
-        div.setAttribute('vertical', '');
+          div.setAttribute('css', 'article');
+          div.setAttribute('layout', '');
+          div.setAttribute('vertical', '');
 
-        div.appendChild(section);
+          div.appendChild(section);
 
-        return div;
+          return div;
         }
 
         Polymer({
@@ -45,16 +44,32 @@
             var that=this;
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
-            ajaxhandler.getAllArticles(sk,function (result){
-              if(result){
-                that.lista=result;
-                var listPost = that.$.list;
-                that.lista.forEach(function (item) {
-                   listPost.appendChild(createPage(item));
-                });
+
+            // Load HTML sanitizer
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = '../lib/sanitize/lib/sanitize.js';
+            script.onload = function () {
+              console.log('cargado');
+              var sanitizer = function() {
+                return new Sanitize();
               }
-            });
-            this.skip++;
+
+              // Load articles
+              ajaxhandler.getAllArticles(sk,function (result){
+                if(result){
+                  that.lista=result;
+                  var listPost = that.$.list;
+                  that.lista.forEach(function (item) {
+                    debugger
+                    console.log(sanitizer.clean_node(item));
+                    listPost.appendChild(createPage(item));
+                  });
+                }
+              });
+              this.skip++;
+            };
+            document.head.appendChild(script);
           },
           debug: function(){
             var that=this;
@@ -76,10 +91,10 @@
             }
             this.skip++;
           },
-            skip: 0,
-            status : ''
-          });
-        })();
+          skip: 0,
+          status : ''
+        });
+      })();
   </script>
 
 </polymer-element>
