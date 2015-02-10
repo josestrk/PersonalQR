@@ -1,4 +1,5 @@
 <link rel="import" href="../core/core-ajax-handler.html">
+<link rel="import" href="../core/core-list/core-list.html">
 
 <polymer-element name="wall-page" attributes="userid">
   <template>
@@ -7,9 +8,7 @@
     <main-menu imenu="Wall" id="wall" iduser="{{id}}" logged="{{login.logged}}" progress="{{$.progress}}" on-endofpage="{{debug}}">
       <div class="title">Wall</div>
       <paper-progress id="progress"></paper-progress>
-      <div id="list">
-        <template repeat="{{item in lista}}"></template>
-      </div>
+      <core-list id="list" lista="{{list}}"></core-list>
     </main-menu>
   </template>
 
@@ -47,11 +46,11 @@
 
             ajaxhandler.getAllArticles(sk,function (result){
               if(result){
-                that.lista=result;
-                var listPost = that.$.list;
-                that.lista.forEach(function (item) {
-                  listPost.appendChild(createPage(item));
-                });
+                that.list=result;
+//                var listPost = that.$.list;
+//                that.lista.forEach(function (item) {
+//                  listPost.appendChild(createPage(item));
+//                });
               }
             });
             this.skip++;
