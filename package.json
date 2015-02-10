@@ -16,14 +16,15 @@
   },
   "dependencies": {
     "jsonwebtoken": "^3.2.2",
+    "mongoskin": "~1.4.4",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
     "request": "^2.51.0",
-    "webcomponents.js": "^0.5.1-1",
-    "mongoskin": "~1.4.4",
+    "sanitize-html": "^1.5.3",
     "serve-favicon": "^2.1.6",
-    "socket.io": "^1.2.1"
+    "socket.io": "^1.2.1",
+    "webcomponents.js": "^0.5.1-1"
   },
   "devDependencies": {
     "body-parser": "^1.9.2",

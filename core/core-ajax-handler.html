@@ -121,28 +121,28 @@
 
       refresh();
       Polymer('core-ajax-handler', {
-        create: function(datos){
-          doAjax({
-            type: 'POST',
-            url: 'routes_user/user',
-            data: datos
-          },function(result) {
-            document.getElementById('user').data(result);
-            window.location.hash="/profile/?id="+result[0]._id;
-          }.bind(this),
-          function(xhr, err, desc){
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = xhr.responseText.split(':')[1];
-            errorToast.show();
-          });
-        },
+        // create: function(datos){
+        //   doAjax({
+        //     type: 'POST',
+        //     url: 'routes_user/user',
+        //     data: datos
+        //   },function(result) {
+        //     document.getElementById('user').data(result);
+        //     window.location.hash="/profile/?id="+result[0]._id;
+        //   }.bind(this),
+        //   function(xhr, err, desc){
+        //     var errorToast = document.querySelector('#errorToast');
+        //     errorToast.text = xhr.responseText.split(':')[1];
+        //     errorToast.show();
+        //   });
+        // },
         sendArticle: function(datos){
           doAjax({
             type: 'POST',
             url: 'routes_article/article',
             data: datos
           },function(result) {
-            window.location.hash="/profile/?id="+result[0].iduser;
+            window.location.hash="/profile/";
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
@@ -156,14 +156,16 @@
             url: 'routes_article/editarticle',
             data: datos
           },function(result) {
-            this.setAttribute('htitle', result[0].title);
-            this.setAttribute('content', result[0].content);
-            this.setAttribute('date', result[0].date);
-            this.setAttribute('bgimg', result[0].bgimg);
-            this.setAttribute('owner', result[0].iduser);
-            this.setAttribute('idart', result[0]._id);
-            this.setAttribute('coments', result[0].coments);
-          }.bind(that),
+            window.location.hash="/profile/";
+          },
+            // this.setAttribute('htitle', result[0].title);
+            // this.setAttribute('content', result[0].content);
+            // this.setAttribute('date', result[0].date);
+            // this.setAttribute('bgimg', result[0].bgimg);
+            // this.setAttribute('owner', result[0].iduser);
+            // this.setAttribute('idart', result[0]._id);
+            // this.setAttribute('coments', result[0].coments);
+          //.bind(that),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = 'Could not connect to server';
