@@ -60,16 +60,16 @@
 
   </style>
 
-  <core-animated-pages valueattr="hash" id="imgselect" selected="{{route}}" value='{{selectval}}' transitions="slide-from-right" vertical layout wrap center center-justified  on-tap="{{cyclePages}}">
+  <core-animated-pages valueattr="hash" id="imgselect" selected="{{route}}" value='{{selectval}}' transitions="slide-from-right" vertical layout wrap center center-justified on-tap="{{cyclePages}}">
     <template repeat="{{page in pages}}" >
       <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
         {{page.content}}
       </section>
     </template>
   </core-animated-pages>
-  <paper-radio-group valueattr="hash" selected="{{route}}" value='{{selectval}}'  selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
+  <paper-radio-group valueattr="hash" selected="{{route}}" value='{{selectval}}'  selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center tabindex="0">
     <template repeat="{{page in pages}}">
-      <paper-radio-button hash="{{page.hash}}"  value={{page.value}}></paper-radio-button>
+      <paper-radio-button hash="{{page.hash}}" value={{page.value}} tabindex="-1"></paper-radio-button>
     </template>
   </paper-radio-group>
 
@@ -82,21 +82,21 @@
       var DEFAULT_ROUTE = '1';
 
       this.pages = [
-      {value:'1' ,image:'http://makeonweb.es/josestrk/img/small/bg-1.jpg', hash: '1'},
-      {value:'2' ,image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '2'},
-      {value:'3' ,image:'http://makeonweb.es/josestrk/img/small/bg-3.jpg', hash: '3'},
-      {value:'4' ,image:'http://makeonweb.es/josestrk/img/small/bg-4.jpg', hash: '4'},
-      {value:'5' ,image:'http://makeonweb.es/josestrk/img/small/bg-5.jpg', hash: '5'},
-      {value:'6' ,image:'http://makeonweb.es/josestrk/img/small/bg-6.jpg', hash: '6'},
-      {value:'7' ,image:'http://makeonweb.es/josestrk/img/small/bg-7.jpg', hash: '7'},
-      {value:'8' ,image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '8'}
+        {value:'1', image:'http://makeonweb.es/josestrk/img/small/bg-1.jpg', hash: '1'},
+        {value:'2', image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '2'},
+        {value:'3', image:'http://makeonweb.es/josestrk/img/small/bg-3.jpg', hash: '3'},
+        {value:'4', image:'http://makeonweb.es/josestrk/img/small/bg-4.jpg', hash: '4'},
+        {value:'5', image:'http://makeonweb.es/josestrk/img/small/bg-5.jpg', hash: '5'},
+        {value:'6', image:'http://makeonweb.es/josestrk/img/small/bg-6.jpg', hash: '6'},
+        {value:'7', image:'http://makeonweb.es/josestrk/img/small/bg-7.jpg', hash: '7'},
+        {value:'8', image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '8'}
       ];
 
       var animatedPages = this.$.pages;
 
 
       this.route = this.route || DEFAULT_ROUTE; // Select initial route.
-      this.selectval=this.route ||  '2';
+      this.selectval = this.route || '2';
     }
 
     Polymer({
@@ -104,12 +104,12 @@
         loadPages.bind(this)();
         //addKeysToNumbers.bind(this)();
       },
-      cyclePages: function (e, detail, sender) {
+      cyclePages: function (event, detail, sender) {
         // Click clicks should navigate and not cycle pages.
-        if (e.path[0].localName === 'a') {
+        if (event.path[0].localName === 'a') {
           return;
         }
-        e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
+        event.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
       }
     });
   }());
