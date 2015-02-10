@@ -1,81 +1,66 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/core-list/core-list.html">
+<link rel="import" href="../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
-<polymer-element name="wall-page" attributes="userid">
+
+<polymer-element name="wall-page">
   <template>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="Wall" id="wall" iduser="{{id}}" logged="{{login.logged}}" progress="{{$.progress}}" on-endofpage=""> 
-<!--      {{debug}}-->
+    
+    <main-menu imenu="Wall" id="wall" logged="{{login.logged}}" progress="{{$.progress}}" on-endofpage="{{debug}}">
       <div class="title">Wall</div>
       <paper-progress id="progress"></paper-progress>
+      <core-scroll-threshold id="threshold" scrollTarget="{{$.list}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
       <core-list id="list" lista="{{lista}}"></core-list>
+      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
     </main-menu>
+    
   </template>
 
   <script>
     (function () {
-        Polymer({
-          ready: function(){
-            var lister,that=this;
+      Polymer({
+        ready: function(){
+            var lista=[];  
+            var that=this;
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
+          
             ajaxhandler.getAllArticles(sk,function (result){
               if(result){
                 that.lista=result;
-//                var listPost = that.$.list;
-//                that.lista.forEach(function (item) {
-//                  listPost.appendChild(createPage(item));
-//                });
+                that.fire('resultado-recuperado',result);
               }
             });
             this.skip++;
-          },
-//          debug: function(){
-//            var that=this;
-//            var ajaxhandler = this.$.ajaxhandler;
-//            var sk= this.skip;
-//            if(this.status!=='fin'){
-//              ajaxhandler.getAllArticles(sk,function (result, status){
-//                if(status==='fin'){
-//                  that.status='fin';
-//                }
-//                if(result){
-//                  that.lista=result;
-//                  var listPost = that.$.list;
-//                  that.lista.forEach(function (item) {
-//                     listPost.appendChild(createPage(item));
-//                  });
-//                }
-//              });
-//            }
-//            this.skip++;
-//          },
-          skip: 0,
-          status : ''
+         },
+         debug: function(){
+            var that=this;
+            var ajaxhandler = this.$.ajaxhandler;
+            var sk= this.skip;
+            if(this.status!=='fin'){
+              ajaxhandler.getAllArticles(sk,function (result, status){
+                if(status==='fin'){
+                  that.status='fin';
+                }
+                if(result){
+                  that.lista=result;
+                }
+              });
+            }
+            this.skip++;
+         },
+         loadMore: function() {
+          /* make AJAX load call here using core-ajax, etc. */
+          console.log("LANZ LA MOVIDA");
+          setTimeout(function() {
+            this.fire('endofpage');
+            this.$.threshold.clearLower();
+          }, 1000);
+         },
+         skip: 0,
+         status : ''
         });
-//        function createPage(item) {
-//          var section = document.createElement('core-artc');
-//          section.setAttribute('layout', '');
-//          section.setAttribute('vertical', '');
-//          section.setAttribute('htitle', item.title);
-//          section.setAttribute('content', item.content);
-//          section.setAttribute('date', item.date);
-//          section.setAttribute('bgimg', item.bgimg);
-//          section.setAttribute('owner', item.iduser);
-//          section.setAttribute('idart', item._id);
-//          section.setAttribute('coments', item.coments);
-//
-//
-//          var div = document.createElement('core-card');
-//
-//          div.setAttribute('css', 'article');
-//          div.setAttribute('layout', '');
-//          div.setAttribute('vertical', '');
-//
-//          div.appendChild(section);
-//
-//          return div;
-//        }
       })();
   </script>
 

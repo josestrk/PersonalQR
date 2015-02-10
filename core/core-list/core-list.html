@@ -1,17 +1,14 @@
 <link rel="import" href="../core-artc/core-artc.html">
-<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
+<!--<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">-->
 
 <polymer-element name="core-list" attributes="lista">
 
   <template>
     <style>
-        #lister{
-/*            position: absolute;*/
+      #lister{
             width: 80%;
             margin: 20px auto;
-            height: auto;
-            border: 1px solid red;
-            overflow: auto;
+            height: 500px;
         }
         @media(max-width:721px){
           #lister{
@@ -20,15 +17,25 @@
         }
 
     </style>
+<!--    <core-scroll-threshold id="threshold" scrollTarget="{{$.lister}}" lowerTriggered="{{loadScroll}}"></core-scroll-threshold>-->
+<!--    <core-scroll-threshold id="threshold" scrollTarget="{{$lister}}" lowerThreshold="100" on-lower-trigger="{{loadScroll}}" fit></core-scroll-threshold>-->
     
-      <core-scroll-threshold id="threshold" scrollTarget="{{$.lister}}" lowerTriggered="{{loadScroll}}"></core-scroll-threshold>
-        <div id="lister" fit>
-            <template repeat="{{item in lista}}"></template>
-            <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
-        </div>
+  <div id="lister"><template repeat="{{item in lista}}"></template></div>
+<!--  <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>-->
+    
   </template>
 
   <script>
+//    addEventListener('template-bound', function(e) {
+//        var scope = e.target;
+//        console.log("lanzo envento");
+//          scope.loadScroll = function() {
+//          setTimeout(function() {
+//          this.fire('endofpage');
+//          scope.$.threshold.clearLower();
+//        }, 1000);
+//      };
+//    });
     (function () {
       function createPage(item) {
           var section = document.createElement('core-artc');
@@ -54,38 +61,22 @@
           return div;
       }
       Polymer({
-        skip: 0,
-        status : '',
-        domready: function(){
-          var sk= this.skip;
-          this.skip++;
-          debugger
-          this.lista.forEach(function (item) {
-            this.$.lister.appendChild(createPage(item)); 
+        domReady:function(){
+          var that=this;
+          addEventListener('resultado-recuperado',function(rescue){
+            var list=rescue.detail;
+            list.forEach(function (item) {
+              that.$.lister.appendChild(createPage(item)); 
+            });
           });
-        },
-        debug: function(){
-          var sk= this.skip;
-          if(this.status!=='fin'){
-              if(status==='fin'){
-                this.status='fin';
-              }
-              if(lista){
-                var listPost = this.$.lister;
-                this.lista.forEach(function (item) {
-                  listPost.appendChild(createPage(item));
-                });
-              }
-          }
-          this.skip++;
-        },
-        loadScroll: function() {
-          console.log("LANZ LA MOVIDA");
-          setTimeout(function() {
-            debug;
-            scope.$.threshold.clearLower();
-          }, 1000);
         }
+//      , loadScroll: function() {
+//          console.log("LANZ LA MOVIDA");
+//          setTimeout(function() {
+//            this.fire('endofpage');
+//            scope.$.threshold.clearLower();
+//          }, 1000);
+//        }
       });
     })();
 
