@@ -30,7 +30,7 @@
 
   <script>
     (function () {
-        function createPage(item) {
+      function createPage(item) {
           var section = document.createElement('core-artc');
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
@@ -52,23 +52,41 @@
           div.appendChild(section);
 
           return div;
-        }
-        
-        Polymer({
-            domReady: function () {
+      }
+      Polymer({
+        skip: 0,
+        status : '',
+        domready: function(){
+          var sk= this.skip;
+          this.skip++;
+          debugger
+          this.lista.forEach(function (item) {
+            this.$.lister.appendChild(createPage(item)); 
+          });
+        },
+        debug: function(){
+          var sk= this.skip;
+          if(this.status!=='fin'){
+              if(status==='fin'){
+                this.status='fin';
+              }
+              if(lista){
                 var listPost = this.$.lister;
                 this.lista.forEach(function (item) {
-                 listPost.appendChild(createPage(item));
+                  listPost.appendChild(createPage(item));
                 });
-            },       
-            loadScroll: function() {
-                console.log("LANZ LA MOVIDA");
-              setTimeout(function() {
-                this.fire('endofpage');
-                scope.$.threshold.clearLower();
-              }, 1000);
-            }
-        });
+              }
+          }
+          this.skip++;
+        },
+        loadScroll: function() {
+          console.log("LANZ LA MOVIDA");
+          setTimeout(function() {
+            debug;
+            scope.$.threshold.clearLower();
+          }, 1000);
+        }
+      });
     })();
 
   </script>
