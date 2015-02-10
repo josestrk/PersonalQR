@@ -24,16 +24,23 @@ function worker(io) {
   function createArticle(req, res) {
     var Article={
     };
-    Article["iduser"]= req.globalIdOfUser;
+    Article["iduser"] = req.globalIdOfUser;
 
-    Article["title"]= (req.body.title!==undefined) ? req.body.title : "";
+    if (req.body.title !== undefined) {
+      Article["title"] = sanitizeHtml(req.body.title, {allowedTags: []});
+    } else {
+      Article["title"] = '';
+    }
 
-    debugger
-    Article["content"]= (req.body.content!==undefined)? sanitizeHtml(req.body.content, {allowedTags: []}) : "";
+    if (req.body.content !== undefined) {
+      Article["content"] = sanitizeHtml(req.body.content);
+    } else {
+      Article["content"] = '';
+    }
 
-    Article["topic"]=getTopics(req.body.content);
-    Article["date"]=getDateTime();
-    Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
+    Article["topic"] = getTopics(req.body.content);
+    Article["date"] = getDateTime();
+    Article["bgimg"] = "http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
 
 
     articleManager.createArticle(Article, function(err, result){
