@@ -1,93 +1,30 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/core-list/core-list.html">
-<link rel="import" href="../bower_components/core-scroll-threshold/core-scroll-threshold.html">
-<link rel="import" href="not-found.html">
 
 <polymer-element name="wall-page">
   <template>
+    
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    
-    <style>
-      #scroller {
-        padding: 20px 15%;
-        overflow: auto;
-        margin-top: 4px;
-      }
-    </style>
-    
-    <main-menu imenu="Wall" id="wall" logged="{{login.logged}}" progress="{{$.progress}}">
+    <main-menu imenu="Wall" logged="{{login.logged}}" progress="{{$.progress}}">
       <div class="title">Wall</div>
-      <paper-progress id="progress"></paper-progress>
-      
-      <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
-      
-      <div id="scroller" fit>
-        <div id="list"></div>
-        <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
-      </div> 
-<!--      <core-list id="list"></core-list>-->
-<!--      <not-found></not-found>-->
+      <paper-progress id="progress"></paper-progress>    
+      <core-list></core-list>
     </main-menu>
     
   </template>
 
   <script>
     (function () {
-      function createPage(item) {
-        var section = document.createElement('core-artc');
-        section.setAttribute('layout', '');
-        section.setAttribute('vertical', '');
-        section.setAttribute('htitle', item.title);
-        section.setAttribute('content', item.content);
-        section.setAttribute('date', item.date);
-        section.setAttribute('bgimg', item.bgimg);
-        section.setAttribute('owner', item.iduser);
-        section.setAttribute('idart', item._id);
-        section.setAttribute('coments', item.coments);
-        return section;
-      }
       Polymer({
         ready: function(){
-          var that=this;
-          var lister=["***ONE***"];
           var ajaxhandler = this.$.ajaxhandler;
-          var sk= this.skip;
-            
-          ajaxhandler.getAllArticles(sk,function (result){
-            if(result){
-              that.fire('sender-list',result);
-            }
-          });
-          addEventListener('sender-list',function(rescue){
-            var list=rescue.detail;
-            list.forEach(function (item) {
-              that.$.list.appendChild(createPage(item)); 
-            }.bind(that));
-          });
-          this.skip++;
-        },
-        loadMore: function(){
-            var that=this;
-            var ajaxhandler = this.$.ajaxhandler;
-            var sk= this.skip;
-            if(this.status!=='fin'){
-              ajaxhandler.getAllArticles(sk,function (result, status){
-                if(status==='fin'){
-                  that.status='fin';
-                }
-                if(result){
-                  result.forEach(function (item) {
-                    that.$.list.appendChild(createPage(item)); 
-                  }.bind(that));
-                }
-              }.bind(that));
-            }
-            this.skip++;
-           this.$.threshold.clearLower();
-         },
-         skip: 0
+          ajaxhandler.getAllArticles(0,function (result){
+            if(result)
+              this.asyncFire('core-signal', {name: "sender-list", data:result});
+          }.bind(this));
+        }
       });
-      }());
+    })();
   </script>
 
 </polymer-element>

@@ -20,13 +20,13 @@
 
 <link rel="stylesheet" href="out-style.css">
 
-<polymer-element name="main-menu" attributes="imenu, iduser, logged, progress">
+<polymer-element name="main-menu" attributes="imenu, logged, progress">
   <template>
     <link rel="stylesheet" href="in-style.css">
 
     <app-login id="login"></app-login>
       
-    <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}">
+    <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
         </nav>
@@ -52,7 +52,7 @@
         </nav>
       </core-header-panel>
 
-      <core-toolbar tool flex>
+      <core-toolbar id="header" tool flex>
         <content select=".title"></content>
         <template if="{{login.logged}}">
           <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
@@ -104,11 +104,20 @@
           this.login=this.$.login;
           this.logueado();
           this.$.login.logged = Boolean(localStorage.token);
-
           this.rellenarProfile();
 
           if( this.progress != undefined )
             this.startProgress();
+          
+          this.$.header.addEventListener('scroll', function(e) {
+            var scroller = e.detail.target;
+            if(scroller.scrollTop === 0){
+              this.lastElementChild.className = "noheight";
+            }else{
+              this.lastElementChild.className = "moreheight";
+              this.firstElementChild.className = "animate";
+            }
+          });
         },
         rellenarProfile : function (){
           doAjax({
@@ -138,22 +147,15 @@
         },
         logueado: function() {
           if ( ! localStorage.token ) {
-            this.$.idcard.style.display="none";
+            this.$.idcard.style.display = "none";
           }
         },
         personalcall: function(){
-          window.location.hash = "/pqr/?id="+this.iduser;
+          window.location.hash = "/pqr/?id=" + this.iduser;
         },
         showAdd: function (e, detail, sender){
           document.querySelector('app-router').go('/settings');
-        },
-        scrollHandler: function (e, detail, sender){
-            var scroller = e.detail.target;
-            scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
-//            this.fire('endofpage');
-        },
-         skip: 0,
-         status : ''
+        }
         });
     }());
   </script>
