@@ -25,11 +25,6 @@
         <div id="list"></div>
         <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
       </div> 
-<!--
-<template repeat="{{it in list}}">
-<core-card class="article" layout vertical>{{it}}</div>
-</template>
--->
 <!--      <core-list id="list"></core-list>-->
 <!--      <not-found></not-found>-->
     </main-menu>
@@ -49,7 +44,6 @@
         section.setAttribute('owner', item.iduser);
         section.setAttribute('idart', item._id);
         section.setAttribute('coments', item.coments);
-        
         return section;
       }
       Polymer({
@@ -71,9 +65,8 @@
             }.bind(that));
           });
           this.skip++;
-         },
-         loadMore: function(){
-           console.log('*******');
+        },
+        loadMore: function(){
             var that=this;
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
@@ -83,12 +76,16 @@
                   that.status='fin';
                 }
                 if(result){
-                  that.$.list.appendChild(createPage(result[0]));
+                  result.forEach(function (item) {
+                    that.$.list.appendChild(createPage(item)); 
+                  }.bind(that));
                 }
               }.bind(that));
             }
             this.skip++;
-         }
+           this.$.threshold.clearLower();
+         },
+         skip: 0
       });
       }());
   </script>
