@@ -26,8 +26,7 @@
 
     <app-login id="login"></app-login>
       
-    <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px'> 
-<!--        on-scroll="{{scrollHandler}}">-->
+    <core-scaffold on-logout="{{handleLogout}}" rightDrawer scroller mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
         </nav>
@@ -149,10 +148,8 @@
           document.querySelector('app-router').go('/settings');
         },
         scrollHandler: function (e, detail, sender){
-            console.log("aqui cambias -> "e.detail.target.scrollTop);
-//            var scroller = e.detail.target;
-//                        scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
-//            this.fire('endofpage');
+            var scroller = e.detail.target;
+            scroller.scrollTop !== 0 ? this.firstElementChild.className="animate": console.log(scroller.scrollTop);
         },
          skip: 0,
          status : ''

@@ -10,18 +10,29 @@ grunt.initConfig({
 	        port: 9001
     }
   },//connect
+//  open: {
+//    target: 'http://localhost:9005', // target url to open
+//    appName: 'open', // name of the app that opens, ie: open, start, xdg-open
+//    callback: function() {} // called when the app has opened
+//  },//open browser
   shell: {
   	runLocalServer: {
   		command: 'DEBUG=pqr* node server/server'
   	},
   	runLocalServerWin32: {
   		command: [
-  			'set DEBUG=personalqr*',
+  		'set DEBUG=personalqr*',
+        'net start mongodb',
         'node server/server',
   		].join('&&')
   	},
-    runMongo: {
-      command: 'start C:/"Program Files/MongoDB 2.6 Standard/bin/mongod.exe"'
+    statMongo: {
+      command: [
+        'MD C:\Mongod',
+        'MD C:\Mongod\log',
+        'echo logpath=C:\Mongod\log\mongod.log > C:\Mongod\mongod.cfg',
+        'start "C:/Program Files/MongoDB 2.6 Standard/bin/mongod.exe --config C:\Mongod\mongod.cfg --install'
+      ].join('&&')
     }
   },//shell
   jshint: {
@@ -89,6 +100,7 @@ grunt.initConfig({
 
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-connect');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-vulcanize'); // enpaquetador
   grunt.loadNpmTasks('grunt-contrib-jshint'); //ortografi check
   grunt.loadNpmTasks('grunt-browser-sync'); // nav-syncronizated
@@ -119,9 +131,8 @@ grunt.initConfig({
 
   //TYPES RUN
   grunt.registerTask('default',function() {(process.platform === "win32") ? grunt.task.run('shell:runLocalServerWin32') : grunt.task.run('shell:runLocalServer')});
-  grunt.registerTask('mongo',function() {(process.platform === "win32") ? grunt.task.run('shell:runMongo') : grunt.log.writeln('MongoOK')});
-    grunt.registerTask('win',['shell:runMongo','shell:runLocalServerWin32']);
+  grunt.registerTask('mongo',function() {(process.platform === "win32") ? grunt.task.run('shell:startMongo') : grunt.log.writeln('MongoOK')});
   grunt.registerTask('check',['jshint:client', 'jshint:server', 'shell:runLocalServer']);
-  grunt.registerTask('wintest',['jshint:client', 'jshint:server', 'shell:runLocalServerWin32']);
-	grunt.registerTask('sync', ['browserSync']);
+  grunt.registerTask('wcheck',['jshint:client', 'jshint:server', 'shell:runLocalServerWin32']);
+  grunt.registerTask('sync', ['browserSync']);
 };

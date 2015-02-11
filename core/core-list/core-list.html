@@ -16,7 +16,7 @@
         }
     </style>
       
-  <div id="list"></div>   
+  <div id="lister"></div>   
 <!--      <template repeat="{{item in listarticles}}"></template>-->
   </template>
 
@@ -36,7 +36,6 @@
 
 
           var div = document.createElement('core-card');
-
           div.setAttribute('css', 'article');
           div.setAttribute('layout', '');
           div.setAttribute('vertical', '');
@@ -48,12 +47,11 @@
       Polymer({
         domReady:function(){
           var that=this;
-          var listarticles=[];
-          addEventListener('resultado-recuperado',function(rescue){
+          addEventListener('sender-list',function(rescue){
             var list=rescue.detail;
             list.forEach(function (item) {
               //that.listarticles.push(createPage(item)); 
-              that.$.list.appendChild(createPage(item)); 
+              that.$.lister.appendChild(createPage(item)); 
             });
           });
         }

@@ -14,9 +14,11 @@
   <script src="bower_components/socket.io-client/socket.io.js"></script>
 
   <!-- We need these for Hallo (the editor) -->
+<!--
   <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
   <script src="bower_components/rangy-official/rangy-core.js"></script>
   <script src="bower_components/hallo/dist/hallo.js"></script>
+-->
 
 	<script>
 		var socket = io.connect(':9005/', {
@@ -51,7 +53,7 @@
 </head>
 
 <body unresolved fullbleed>
-    <core-user id="user"></core-user>
+<!--    <core-user id="user"></core-user>-->
     <paper-toast id="errorToast" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
     
     <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>

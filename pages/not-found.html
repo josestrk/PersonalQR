@@ -2,9 +2,7 @@
   <template>
   <style>
     #scroller {
-/*      height: 300px;*/
-/*      border: 1px solid red;*/
-      padding: 20px;
+      padding: 20px 15%;
       overflow: auto;
       margin-top: 4px;
     }
@@ -37,7 +35,6 @@
             }
       },
       loadMore: function() {
-          console.log("****");
       setTimeout(function() {
         for (var i=n; i<n+3; i++) {
           this.data.push(i);
