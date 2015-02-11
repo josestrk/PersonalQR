@@ -12,8 +12,13 @@
   <script src="bower_components/webcomponentsjs/webcomponents.js" type="text/javascript"></script>
   <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
   <script src="bower_components/socket.io-client/socket.io.js"></script>
-	<script>
 
+  <!-- We need these for Hallo (the editor) -->
+  <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+  <script src="bower_components/rangy-official/rangy-core.js"></script>
+  <script src="bower_components/hallo/dist/hallo.js"></script>
+
+	<script>
 		var socket = io.connect(':9005/', {
 			timeout: Infinity
 		});
@@ -24,26 +29,23 @@
 
 		socket.on('disconnect', function() {
 		});
-
-
-
 	</script>
 
-    <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-    <link rel="import" href="bower_components/app-router/app-router.html">
-    <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
-    <link rel="import" href="bower_components/core-transition/core-transition.html">
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/app-router/app-router.html">
+  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-transition/core-transition.html">
 
-    <link rel="import" href="core/core-user/core-user.html">
-    <link rel="import" href="core/core-index.html">
-    <link rel="import" href="core/main-menu/main-menu.html">
-    <link rel="import" href="pages/wall-page.html">
-    <link rel="import" href="pages/myp-page.html">
-    <link rel="import" href="pages/edit-page.html">
-    <link rel="import" href="pages/config-page/config-page.html">
-    <link rel="import" href="pages/contacts-page.html">
-    <link rel="import" href="pages/person-card.html">
-    <link rel="import" href="core/app-login/app-login.html">
+  <link rel="import" href="core/core-user/core-user.html">
+  <link rel="import" href="core/core-index.html">
+  <link rel="import" href="core/main-menu/main-menu.html">
+  <link rel="import" href="pages/wall-page.html">
+  <link rel="import" href="pages/myp-page.html">
+  <link rel="import" href="pages/edit-page.html">
+  <link rel="import" href="pages/config-page/config-page.html">
+  <link rel="import" href="pages/contacts-page.html">
+  <link rel="import" href="pages/person-card.html">
+  <link rel="import" href="core/app-login/app-login.html">
 
   <title>PersonalQr</title>
 </head>

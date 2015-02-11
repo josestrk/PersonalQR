@@ -61,7 +61,11 @@
         <core-card id="core_card" layout vertical>
           <input id="title" placeholder="Choose a title" is="core-input">
           <core-editor-img id="editor" vertical layout center-justified></core-editor-img>
-          <textarea id="content" rows="20" placeholder="Write here the content of the article" maxlength="8000" aria-invalid="false"></textarea>
+
+          <button id="enable">Enable</button>
+          <button id="disable">Disable</button>
+
+          <div id="content" rows="20" placeholder="Write here the content of the article" maxlength="8000" aria-invalid="false"></div>
           <!-- <core-editor-text id="input2"></core-editor-text> -->
           <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
         </core-card>
@@ -73,11 +77,53 @@
   <script>
   (function () {
     Polymer({
+      domReady: function() {
+        var enable = this.$.enable;
+        var disable = this.$.disable;
+        var content = this.$.content;
+
+        jQuery(enable).button().click(function() {
+
+          jQuery(content).hallo({
+            plugins: {
+              'halloformat': {},
+              'halloheadings': {},
+              'hallojustify': {},
+              'hallolists': {},
+              //'hallolink': {},
+              'halloreundo': {}
+            },
+            editable: true,
+            placeholder: 'Hello World placeholder'
+          });
+          jQuery(content).bind('hallomodified', function(event, data) {
+            console.log("Editables modified");
+          });
+          jQuery(content).bind('halloselected', function(event, data) {
+            console.log("Selection made");
+          });
+          jQuery(content).bind('hallounselected', function(event, data) {
+            console.log("Selection removed");
+          });
+          jQuery(content).bind('hallorestored', function(event, data) {
+            console.log("restored");
+          });
+        });
+        jQuery(disable).button().click(function() {
+          jQuery(content).hallo({editable: false});
+        });
+        jQuery(content).bind('hellodeactivated', function() {
+            alert("foobar");
+          $(this).hallo({editable:false});
+        });
+      },
       sendArticle: function(){
+        debugger
+        console.log(this.$.content.value);
         var datos={
           iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
           title: this.$.title.value,
-          content: this.$.content.value,
+          content: this.$.content.innerHTML,
           bgimg: this.$.editor.$.imgselect.selected
         }
         var ajaxhandler = this.$.ajaxhandler;

@@ -22,20 +22,20 @@ function worker(io) {
   router.delete('/article/:articleId', ensureAuth, ensureOwner, delArticle);
 
   function createArticle(req, res) {
-    var Article={
-    };
+    var Article = {};
+
     Article["iduser"] = req.globalIdOfUser;
 
     if (req.body.title !== undefined) {
       Article["title"] = sanitizeHtml(req.body.title, {allowedTags: []});
     } else {
-      Article["title"] = '';
+      Article["title"] = "";
     }
 
     if (req.body.content !== undefined) {
       Article["content"] = sanitizeHtml(req.body.content);
     } else {
-      Article["content"] = '';
+      Article["content"] = "";
     }
 
     Article["topic"] = getTopics(req.body.content);
@@ -50,28 +50,37 @@ function worker(io) {
   }
 
   function editArticle(req, res) {
-    var Article={
-    };
+    var Article = {};
+    
     //controladores de acceso
-    if(req.body.iduser!==undefined){
-      Article["iduser"]=req.body.iduser;
-    }else{
+    if (req.body.iduser !== undefined){
+      Article["iduser"] = req.body.iduser;
+    } else {
       //esto no se deberia permitir pero... de momento lo dejamos..
-      Article["iduser"]="";
+      Article["iduser"] = "";
     }
-    if(req.body.title!==undefined){
-      Article["title"]=req.body.title;
-    }else{
-      Article["title"]="";
+
+    if(req.body.title !== undefined){
+      Article["title"] = sanitizeHtml(req.body.title, {allowedTags: []});
+    } else {
+      Article["title"] = "";
     }
-    if(req.body.content!==undefined){
-      Article["content"]=req.body.content;
-    }else{
-      Article["content"]="";
+
+    if(req.body.content !== undefined){
+      Article["content"] = sanitizeHtml(req.body.content);
+    } else {
+      Article["content"] = "";
     }
-    Article["topic"]=getTopics(req.body.content);
-    Article["date"]=getDateTime();
-    req.body.bgimg!==undefined ? Article["bgimg"]=req.body.bgimg: Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-1.jpg";
+    
+    Article["topic"] = getTopics(req.body.content);
+    Article["date"] = getDateTime();
+
+    if (req.body.bgimg!==undefined) {
+      Article["bgimg"]=req.body.bgimg
+    } else {
+      Article["bgimg"]="http://makeonweb.es/josestrk/img/small/bg-1.jpg";
+    }
+    
     Article["_id"]=req.body._id;
 
     articleManager.editArticle(Article, function(err, result){
@@ -80,30 +89,30 @@ function worker(io) {
   }
 
   function getDateTime() {
-      var now     = new Date();
-      var year    = now.getFullYear();
-      var month   = now.getMonth()+1;
-      var day     = now.getDate();
-      var hour    = now.getHours();
-      var minute  = now.getMinutes();
-      var second  = now.getSeconds();
-      if(month.toString().length == 1) {
-          var month = '0'+month;
-      }
-      if(day.toString().length == 1) {
-          var day = '0'+day;
-      }
-      if(hour.toString().length == 1) {
-          var hour = '0'+hour;
-      }
-      if(minute.toString().length == 1) {
-          var minute = '0'+minute;
-      }
-      if(second.toString().length == 1) {
-          var second = '0'+second;
-      }
-      var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
-       return dateTime;
+    var now     = new Date();
+    var year    = now.getFullYear();
+    var month   = now.getMonth()+1;
+    var day     = now.getDate();
+    var hour    = now.getHours();
+    var minute  = now.getMinutes();
+    var second  = now.getSeconds();
+    if(month.toString().length == 1) {
+      var month = '0'+month;
+    }
+    if(day.toString().length == 1) {
+      var day = '0'+day;
+    }
+    if(hour.toString().length == 1) {
+      var hour = '0'+hour;
+    }
+    if(minute.toString().length == 1) {
+      var minute = '0'+minute;
+    }
+    if(second.toString().length == 1) {
+      var second = '0'+second;
+    }
+    var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+    return dateTime;
   }
 
   function getTopics(content){
@@ -134,7 +143,7 @@ function worker(io) {
 
   function getUserArticles(req, res) {
     articleManager.getUserArticles(req.globalIdOfUser, function(err, result){
-        // result["date"]=getDateTime()-result["date"];
+      // result["date"]=getDateTime()-result["date"];
       res.json(result);
     });
   }
@@ -155,22 +164,22 @@ function worker(io) {
     };
 
     if(req.body.authorId!==undefined){
-       Article.$set["authorId"]=req.body.authorId;
+      Article.$set["authorId"]=req.body.authorId;
     }
     if(req.body.title!==undefined){
-       Article.$set["title"]=req.body.title;
+      Article.$set["title"]=req.body.title;
     }
     if(req.body.content!==undefined){
-       Article.$set["content"]=req.body.content;
+      Article.$set["content"]=req.body.content;
     }
     if(req.body.tags!==undefined){
-       Article.$set["tags"]=req.body.tags;
+      Article.$set["tags"]=req.body.tags;
     }
     if(req.body.topics!==undefined){
-       Article.$set["topics"]=req.body.topics;
+      Article.$set["topics"]=req.body.topics;
     }
     if(req.body.date!==undefined){
-       Article.$set["date"]=req.body.date;
+      Article.$set["date"]=req.body.date;
     }
 
 
