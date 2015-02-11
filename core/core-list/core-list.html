@@ -1,29 +1,37 @@
 <link rel="import" href="../core-artc/core-artc.html">
+<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
 <polymer-element name="core-list">
 
   <template>
     <style>
-        #list{
+      #list{
             width: 80%;
             margin: 20px auto;
             height: 500px;
-        }
-        @media(max-width:721px){
+      }
+      #scroller {
+        padding: 20px 15%;
+        overflow: auto;
+        margin-top: 4px;
+      }
+      @media(max-width:721px){
           #list{
             width: 95%;
           }
-        }
+      }
     </style>
-      
-  <div id="lister"></div>   
+    <div id="scroller" fit>
+      <div id="list"></div> 
+      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+    </div>   
 <!--      <template repeat="{{item in listarticles}}"></template>-->
   </template>
 
   <script>
     (function () {
       function createPage(item) {
-          var section = document.createElement('core-artc');
+        var section = document.createElement('core-artc');
           section.setAttribute('layout', '');
           section.setAttribute('vertical', '');
           section.setAttribute('htitle', item.title);
@@ -33,16 +41,12 @@
           section.setAttribute('owner', item.iduser);
           section.setAttribute('idart', item._id);
           section.setAttribute('coments', item.coments);
-
-
-          var div = document.createElement('core-card');
+        var div = document.createElement('core-card');
           div.setAttribute('css', 'article');
           div.setAttribute('layout', '');
           div.setAttribute('vertical', '');
-
           div.appendChild(section);
-
-          return div;
+        return div;
       }
       Polymer({
         domReady:function(){
@@ -51,9 +55,15 @@
             var list=rescue.detail;
             list.forEach(function (item) {
               //that.listarticles.push(createPage(item)); 
-              that.$.lister.appendChild(createPage(item)); 
+              that.$.list.appendChild(createPage(item)); 
             });
           });
+        },
+        loadMore: function() {
+          setTimeout(function() {
+            this.fire('endofpage');
+            this.$.threshold.clearLower();
+          }.bind(this), 1000);
         }
       });
     })();

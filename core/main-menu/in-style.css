@@ -40,9 +40,3 @@ core-menu > core-item {
   position: absolute;
   left:95%;
 }
-
-#scroller {
-    padding: 20px 15%;
-    overflow: auto;
-    margin-top: 4px;
-}

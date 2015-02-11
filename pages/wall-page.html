@@ -7,6 +7,14 @@
   <template>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     
+    <style>
+      #scroller {
+        padding: 20px 15%;
+        overflow: auto;
+        margin-top: 4px;
+      }
+    </style>
+    
     <main-menu imenu="Wall" id="wall" logged="{{login.logged}}" progress="{{$.progress}}">
       <div class="title">Wall</div>
       <paper-progress id="progress"></paper-progress>
@@ -14,11 +22,14 @@
       <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
       
       <div id="scroller" fit>
-        <template repeat="{{it in list}}">
-          <core-card class="article" layout vertical>{{it}}</div>
-        </template>
+        <div id="list"></div>
         <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
       </div> 
+<!--
+<template repeat="{{it in list}}">
+<core-card class="article" layout vertical>{{it}}</div>
+</template>
+-->
 <!--      <core-list id="list"></core-list>-->
 <!--      <not-found></not-found>-->
     </main-menu>
@@ -56,14 +67,13 @@
           addEventListener('sender-list',function(rescue){
             var list=rescue.detail;
             list.forEach(function (item) {
-              //that.listarticles.push(createPage(item)); 
-              debugger
-              this.lister.push(createPage(item));
-            }.bind(this));
+              that.$.list.appendChild(createPage(item)); 
+            }.bind(that));
           });
           this.skip++;
          },
          loadMore: function(){
+           console.log('*******');
             var that=this;
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
@@ -73,9 +83,9 @@
                   that.status='fin';
                 }
                 if(result){
-                  that.lista.push(result[0]);
+                  that.$.list.appendChild(createPage(result[0]));
                 }
-              });
+              }.bind(that));
             }
             this.skip++;
          }
