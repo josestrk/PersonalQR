@@ -1,13 +1,51 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../core/main-menu/main-menu.html">
-
-<polymer-element name="not-found" noscript>
+<polymer-element name="not-found">
   <template>
-    <main-menu>
-      <div class="title">Not Found</div>
-      <div style="height:100%;width:100%;"  horizontal layout center-justified center one flex>
-      <h2>404 Not Found</h2>
-      </div>
-    </main-menu>
+  <style>
+    #scroller {
+/*      height: 300px;*/
+/*      border: 1px solid red;*/
+      padding: 20px;
+      overflow: auto;
+      margin-top: 4px;
+    }
+    .thing {
+      padding: 10px;
+      margin: 10px;
+      background: lightblue;
+      border-radius: 10px;
+      font-size: 2em;
+    }
+  </style>
+      
+        <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
+      <div id="scroller" fit>
+        <template repeat="{{i in data}}">
+          <div class="thing">{{i}}</div>
+        </template>
+        <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+      </div> 
   </template>
+     <script>
+      
+    var n;    
+  Polymer({
+      
+      ready: function() {
+            this.data = [];
+            for (n=0; n<15; n++) {
+              this.data.push(n);
+            }
+      },
+      loadMore: function() {
+          console.log("****");
+      setTimeout(function() {
+        for (var i=n; i<n+3; i++) {
+          this.data.push(i);
+        }
+        n = i;
+        this.$.threshold.clearLower();
+      }.bind(this), 1000);
+    }
+  });
+    </script>
 </polymer-element>

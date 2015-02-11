@@ -1,41 +1,26 @@
 <link rel="import" href="../core-artc/core-artc.html">
-<!--<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">-->
 
-<polymer-element name="core-list" attributes="lista">
+<polymer-element name="core-list">
 
   <template>
     <style>
-      #lister{
+        #list{
             width: 80%;
             margin: 20px auto;
             height: 500px;
         }
         @media(max-width:721px){
-          #lister{
+          #list{
             width: 95%;
           }
         }
-
     </style>
-<!--    <core-scroll-threshold id="threshold" scrollTarget="{{$.lister}}" lowerTriggered="{{loadScroll}}"></core-scroll-threshold>-->
-<!--    <core-scroll-threshold id="threshold" scrollTarget="{{$lister}}" lowerThreshold="100" on-lower-trigger="{{loadScroll}}" fit></core-scroll-threshold>-->
-    
-  <div id="lister"><template repeat="{{item in lista}}"></template></div>
-<!--  <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>-->
-    
+      
+  <div id="list"></div>   
+<!--      <template repeat="{{item in listarticles}}"></template>-->
   </template>
 
   <script>
-//    addEventListener('template-bound', function(e) {
-//        var scope = e.target;
-//        console.log("lanzo envento");
-//          scope.loadScroll = function() {
-//          setTimeout(function() {
-//          this.fire('endofpage');
-//          scope.$.threshold.clearLower();
-//        }, 1000);
-//      };
-//    });
     (function () {
       function createPage(item) {
           var section = document.createElement('core-artc');
@@ -63,23 +48,17 @@
       Polymer({
         domReady:function(){
           var that=this;
+          var listarticles=[];
           addEventListener('resultado-recuperado',function(rescue){
             var list=rescue.detail;
             list.forEach(function (item) {
-              that.$.lister.appendChild(createPage(item)); 
+              //that.listarticles.push(createPage(item)); 
+              that.$.list.appendChild(createPage(item)); 
             });
           });
         }
-//      , loadScroll: function() {
-//          console.log("LANZ LA MOVIDA");
-//          setTimeout(function() {
-//            this.fire('endofpage');
-//            scope.$.threshold.clearLower();
-//          }, 1000);
-//        }
       });
     })();
-
   </script>
 
 </polymer-element>

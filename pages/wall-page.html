@@ -1,7 +1,6 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/core-list/core-list.html">
-<link rel="import" href="../bower_components/core-scroll-threshold/core-scroll-threshold.html">
-
+<link rel="import" href="not-found.html">
 
 <polymer-element name="wall-page">
   <template>
@@ -10,9 +9,8 @@
     <main-menu imenu="Wall" id="wall" logged="{{login.logged}}" progress="{{$.progress}}" on-endofpage="{{debug}}">
       <div class="title">Wall</div>
       <paper-progress id="progress"></paper-progress>
-      <core-scroll-threshold id="threshold" scrollTarget="{{$.list}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
-      <core-list id="list" lista="{{lista}}"></core-list>
-      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+<!--      <core-list id="list" fit></core-list>-->
+      <not-found></not-found>
     </main-menu>
     
   </template>
@@ -20,15 +18,13 @@
   <script>
     (function () {
       Polymer({
-        ready: function(){
-            var lista=[];  
+        domReady: function(){
             var that=this;
             var ajaxhandler = this.$.ajaxhandler;
             var sk= this.skip;
-          
+            
             ajaxhandler.getAllArticles(sk,function (result){
               if(result){
-                that.lista=result;
                 that.fire('resultado-recuperado',result);
               }
             });
@@ -44,24 +40,14 @@
                   that.status='fin';
                 }
                 if(result){
-                  that.lista=result;
+                  that.lista.push(result[0]);
                 }
               });
             }
             this.skip++;
-         },
-         loadMore: function() {
-          /* make AJAX load call here using core-ajax, etc. */
-          console.log("LANZ LA MOVIDA");
-          setTimeout(function() {
-            this.fire('endofpage');
-            this.$.threshold.clearLower();
-          }, 1000);
-         },
-         skip: 0,
-         status : ''
-        });
-      })();
+         }
+      });
+      }());
   </script>
 
 </polymer-element>

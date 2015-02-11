@@ -35,7 +35,6 @@ Version
 
 Dependencies
 ----
-
 PersonalQR uses a number of open-source projects to work properly:
 
 * [node.js] - a runtime environment for server-side use
