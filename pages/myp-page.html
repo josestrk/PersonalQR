@@ -1,57 +1,54 @@
 <link rel="import" href="../core/core-ajax-handler.html">
+<link rel="import" href="../core/core-list/core-list.html">
 
 <polymer-element name="myp-page" attributes="userid">
   <template>
-    <link type="text/css" rel="stylesheet" href="../core/lister.css">
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu imenu="My profile" iduser="{{id}}" progress="{{$.progress}}">
+    
+    <main-menu imenu="My profile" progress="{{$.progress}}" on-endofpage="{{debug}}">
       <div class="title">My profile</div>
       <paper-progress id="progress"></paper-progress>
+      <core-list id="list" lista="{{lista}}"></core-list>
       <div id="list">
         <template repeat="{{item in lista}}"></template>
       </div>
     </main-menu>
+    
   </template>
 
   <script>
     (function () {
-        function createPage(item) {
-          var section = document.createElement('core-artc');
-          section.setAttribute('layout', '');
-          section.setAttribute('vertical', '');
-          section.setAttribute('htitle', item.title);
-          section.setAttribute('content', item.content);
-          section.setAttribute('date', item.date);
-          section.setAttribute('bgimg', item.bgimg);
-          section.setAttribute('owner', item.iduser);
-          section.setAttribute('idart', item._id);
-          section.setAttribute('coments', item.coments);
-
-        var div = document.createElement('core-card');
-        div.setAttribute('list','userid');
-        div.setAttribute('layout', '');
-        div.setAttribute('vertical', '');
-
-        div.appendChild(section);
-
-        return div;
-        }
-
         Polymer({
-            ready: function(){
-              var that=this;
-              var ajaxhandler = this.$.ajaxhandler;
-              ajaxhandler.getArticles(document.URL.split('/').reverse()[0].split('=').reverse()[0],function (result){
+          ready: function(){
+            var _id=document.URL.split('/').reverse()[0].split('=').reverse()[0];
+            var that=this;
+            var ajaxhandler = this.$.ajaxhandler;
+            var sk= this.skip;
+            ajaxhandler.getArticles(_id,function (result){
+              if(result){
+                that.lista=result.reverse();
+              }
+            });
+          },
+          debug: function(){
+            var that=this;
+            var ajaxhandler = this.$.ajaxhandler;
+            var sk= this.skip;
+            if(this.status!=='fin'){
+              //getArticles()
+              ajaxhandler.getAllArticles(sk,function (result, status){
+                if(status==='fin'){
+                  that.status='fin';
+                }
                 if(result){
-                  that.lista=result.reverse();
-                  var listPost = that.$.list;
-                  that.lista.forEach(function (item) {
-                     listPost.appendChild(createPage(item));
-                  });
+                  that.lista=result;
                 }
               });
-
             }
+            this.skip++;
+          },
+          skip: 0,
+          status : ''
         });
     })();
   </script>
