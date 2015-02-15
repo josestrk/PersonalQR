@@ -109,7 +109,7 @@ function worker(io) {
   }
 
   function getUser(req, res) {
-    var userId = req.param('userId');
+    var userId = req.params['userId'];
     debug('Showing user ' + userId);
     userManager.getUser(userId, function(err, result){
       if(result){
@@ -207,7 +207,7 @@ function worker(io) {
 
   function setUser(req, res) {
     console.log(req.body);
-    var userId = (req.globalIdOfUser!==undefined) ? req.globalIdOfUser : req.param('userId');
+    var userId = (req.globalIdOfUser!==undefined) ? req.globalIdOfUser : req.params['userId'];
 
     var User={
       $set:{

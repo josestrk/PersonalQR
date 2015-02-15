@@ -21,7 +21,7 @@ function worker(io) {
   }
 
   function getTopic(req, res) {
-    var topicId = req.param('topicId');
+    var topicId = req.params['topicId'];
     topicManager.getTopic(topicId, function(err, result){
       if(result){
         res.json(result);
@@ -33,14 +33,14 @@ function worker(io) {
 
 //como no vamos a recibir todos los los topics, vamos a recibirlos en funcion de la primeras letras
   function getTopicsByLetter(req, res) {
-    var letter = req.param('letter');
+    var letter = req.params['letter'];
     topicManager.getTopicsByLetter(letter, function(err, result){
       res.json(result);
     });
   }
 
   function setTopic(req, res) {
-    var topicId = req.param('topicId');
+    var topicId = req.params['topicId'];
 
     var Topic={
       "name" : req.body.name
@@ -56,7 +56,7 @@ function worker(io) {
   }
 
   function delTopic(req, res) {
-    var topicId = req.param('topicId');
+    var topicId = req.params['topicId'];
 
     topicManager.delTopic(topicId, function(err, result){
       if(result === null){

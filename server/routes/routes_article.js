@@ -131,7 +131,7 @@ function worker(io) {
 
 
   // function getArticle(req, res) {
-  //   var articleId = req.param('articleId');
+  //   var articleId = req.params['articleId'];
   //   articleManager.getArticle(articleId, function(err, result){
   //     if(result){
   //       res.json(result);
@@ -149,14 +149,14 @@ function worker(io) {
   }
 
   function getArticlesAll(req, res) {
-    var skip = req.param('id');
+    var skip = req.params['id'];
     articleManager.getArticlesAll(function(err, result){
       res.json(result);
     }, skip);
   }
 
   function setArticle(req, res) {
-    var articleId = req.param('articleId');
+    var articleId = req.params['articleId'];
 
     var Article={
       $set:{
@@ -194,7 +194,7 @@ function worker(io) {
 
   function delArticle(req, res) {
     //implementar como resultado de un callback pidiendo si es al que le pertenecen los archivos
-    var articleId = req.param('articleId');
+    var articleId = req.params['articleId'];
 
     articleManager.delArticle(articleId, function(err, result){
       if(result === 0){
