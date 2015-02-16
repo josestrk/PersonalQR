@@ -90,9 +90,9 @@ function worker(io) {
 		console.log('[GOOGLE] auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
 		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
-				profile._json.followers = "0";
-				profile._json.following = "0";
-				profile._json.post = "0";
+				profile._json.followers = [];
+				profile._json.following = [];
+				profile._json.post = [];
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
 					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
@@ -178,10 +178,10 @@ function worker(io) {
 		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshTokenFb);
 		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
-                profile._json.picture = "http://graph.facebook.com/"+profile._json.id+"/picture?height=300&type=normal&width=300"
-				profile._json.followers = "0";
-				profile._json.following = "0";
-				profile._json.post = "0";
+        profile._json.picture = "http://graph.facebook.com/"+profile._json.id+"/picture?height=300&type=normal&width=300"
+				profile._json.followers = [];
+				profile._json.following = [];
+				profile._json.post = [];
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
 					done(null, {accessToken: accessToken, refreshToken: refreshTokenFb, profile: profile._json, id: res[0]._id});

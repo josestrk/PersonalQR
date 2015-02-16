@@ -11,14 +11,24 @@
             color: white;
             margin: auto;
             padding: 10px;
-            height: 300px;
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
         }
         id-card{
             width: 100%;
         }
-        .rrss{
-
+        #follow{
+          -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          padding: 11px;
+          background: #4592BD;
+        }
+        #unfollow{
+          -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+          padding: 11px;
+          background: #4532BD;
         }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
@@ -33,6 +43,8 @@
                     <user-account id="email"></user-account>
                     <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
                 </id-card>
+                  <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
+                  <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
             </core-card>
             <core-card class="rrss"></core-card>
         </div>
@@ -41,25 +53,30 @@
   </template>
   <script>
     (function () {
-        var id=document.URL.split('/').reverse()[0].split('=').reverse()[0];
+
+        function doAjax(options, success, error) {
+          options.dataType = options.dataType || 'json';
+          options.contentType = options.contentType || 'application/json; charset=UTF-8';
+          options.success = success;
+
+          options.beforeSend = function(xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+          };
+
+          $.ajax(options);
+        }
+
         Polymer({
-            ready: function(){
+            domReady: function(){
                 this.rellenarProfile();
             },
+            setfollow : function () {
+              document.getElementById('user').datos.following.indexOf(id) === -1 ? this.$.unfollow.style.display = 'none' : this.$.follow.style.display = 'none';
+            },
             rellenarProfile : function (){
+              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
 
-              function doAjax(options, success, error) {
-                options.dataType = options.dataType || 'json';
-                options.contentType = options.contentType || 'application/json; charset=UTF-8';
-                options.success = success;
-
-                options.beforeSend = function(xhr) {
-                  xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
-                };
-
-                $.ajax(options);
-              }
-
+              if (id !== '500') {
               doAjax({
                     type: 'GET',
                     url: 'routes_user/user/'+id,
@@ -67,21 +84,89 @@
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
                     this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;
-                    this.$.followers.innerHTML = result.followers ? result.followers : "0" ;
-                    this.$.following.innerHTML = result.following ? result.following : "0" ;
-                    this.$.numpost.innerHTML = result.post ? result.post : "0" ;
+                    this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
+                    this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+                    this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
+                    if (document.getElementById('user').datos._id !== result._id){
+                      this.setfollow();
+                    }else{
+                      this.$.unfollow.style.display = 'none';
+                      this.$.follow.style.display = 'none';
+                    }
                 }.bind(this),
-                       function(xhr, err, desc){
+                function(xhr, err, desc){
                     var errorToast = document.querySelector('#errorToast');
-                    errorToast.text = xhr.responseText.split(':')[1];
+                    errorToast.text = 'The user '+id+' do not exist';
                     errorToast.show();
                 });
+              }else{
+                var errorToast = document.querySelector('#errorToast');
+                errorToast.text = 'Error retrieving data, verify your code';
+                errorToast.show();
+              }
             },
             articlesProfile:function(){
                 document.querySelector('app-router').go('/wall/'+id);
             },
             socialProfile: function(){
 
+            },
+            changebutton: function () {
+              if(this.$.follow.style.display == 'none'){
+                 this.$.follow.style.display = 'inherit';
+                 this.$.unfollow.style.display = 'none';
+               }else{
+                if(this.$.unfollow.style.display == 'none'){
+                  this.$.unfollow.style.display = 'inherit';
+                  this.$.follow.style.display = 'none' ;
+                }
+               }
+            },
+            follow : function () {
+              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+              var dato = JSON.stringify({toFollow: id});
+              if (id !== '500') {
+              doAjax({
+                    type: 'POST',
+                    url: 'routes_user/follow/',
+                    data: dato
+                },function( result ) {
+                  this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
+                  this.changebutton();
+                }.bind(this),
+                function(xhr, err, desc){
+                    var errorToast = document.querySelector('#errorToast');
+                    errorToast.text = 'You are not logged.';
+                    errorToast.show();
+                });
+              }else{
+                var errorToast = document.querySelector('#errorToast');
+                errorToast.text = 'Error, not a valid id found.';
+                errorToast.show();
+              }
+            },
+            unfollow : function () {
+              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+              var dato = JSON.stringify({toUnFollow: id});
+              if (id !== '500') {
+              doAjax({
+                    type: 'POST',
+                    url: 'routes_user/unfollow/',
+                    data: dato
+                },function( result ) {
+                  this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
+                  this.changebutton();
+                }.bind(this),
+                function(xhr, err, desc){
+                    var errorToast = document.querySelector('#errorToast');
+                    errorToast.text = 'You are not logged.';
+                    errorToast.show();
+                });
+              }else{
+                var errorToast = document.querySelector('#errorToast');
+                errorToast.text = 'Error, not a valid id found.';
+                errorToast.show();
+              }
             }
         });
     })();
