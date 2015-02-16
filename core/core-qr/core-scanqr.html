@@ -1,0 +1,31 @@
+<link rel="import" href="qr-reader.html">
+
+<polymer-element name="core-scanqr">
+
+    <template>
+        <main-menu iMenu="scan" progress="{{$.progress}}">
+            <div class="title">SCAN</div>
+            <div flex class="middle">
+            <qr-reader onRead="App.ctrl.onRead"></qr-reader>
+            </div>
+        </main-menu>
+    </template>
+
+    <script>
+        (function () {
+            window.App = {
+                ctrl: {
+                    onRead: function (value) {
+                        alert(value);
+                    }
+                }
+            }
+            Polymer({
+                toggleScanlog: function() {
+                    this.$.scan.toggle();
+                }
+            });
+        })();
+    </script>
+
+</polymer-element>

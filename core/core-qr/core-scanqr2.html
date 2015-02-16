@@ -1,0 +1,31 @@
+<link rel="import" href="qr-reader.html">
+
+<polymer-element name="core-scanqr">
+    <template>
+
+        <div flex class="middle">
+
+            <core-icon-button class="core-dropdown-trigger" icon="my-icons:scan" on-click="{{toggleScanlog}}">
+            </core-icon-button>
+
+            <paper-dialog id="scan" backdrop transition="core-transition-top">
+                <qr-reader onRead="App.ctrl.onRead"></qr-reader>
+            </paper-dialog>
+
+        </div>
+    </template>
+    <script>
+        window.App = {
+            ctrl: {
+                onRead: function (value) {
+                    alert(value);
+                }
+            }
+        }
+        Polymer({
+            toggleScanlog: function() {
+                this.$.scan.toggle();
+            }
+        });
+    </script>
+</polymer-element>

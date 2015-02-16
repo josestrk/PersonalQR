@@ -1,17 +1,17 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-scaffold/core-scaffold.html">
-<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
-<link rel="import" href="../../bower_components/core-menu/core-menu.html">
-<link rel="import" href="../../bower_components/core-item/core-item.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-icons/image-icons.html">
+<link  rel="import" href="../../bower_components/core-icons/social-icons.html">
+<link  rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+<link  rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link  rel="import" href="../../bower_components/paper-dialog/paper-dialog-transition.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/core-scaffold/core-scaffold.html">
-<link rel="import" href="../../bower_components/core-dropdown/core-dropdown.html">
 <link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
 <link rel="import" href="../search-banner/search-banner.html">
+<link rel="import" href="../core-myicon/core-myicon.html">
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-artc/core-artc.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
@@ -25,7 +25,11 @@
     <link rel="stylesheet" href="in-style.css">
 
     <app-login id="login"></app-login>
-      
+    
+    <core-iconset id="my-icons" src="../core-myicon/myicons.png" width="96" iconSize="24"
+                  icons="scan qr logo">
+    </core-iconset>
+    
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
@@ -57,18 +61,20 @@
         <template if="{{login.logged}}">
           <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
           <core-qr id="{{id}}"></core-qr>
+          <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"></core-icon-button>
           <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
           <template if="{{imenu=='Settings'}}">
             <core-add class="right"></core-add>
           </template>
         </template>
-        <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
-
       </core-toolbar>
       
       <content select="#progress"></content>
       <content select=".container"><core-card></core-card></content>
+      <content select="#list"></content>
       <content></content>
+      
+      <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
         
     </core-scaffold>
   </template>
@@ -78,11 +84,11 @@
       function loadMenu() {
         var _id=this.iduser;
         this.pages = [
-          {name: 'Wall', logo: 'info', hash: '/#/wall/'},
-          {name: 'My profile', logo: 'social:person', hash: '/#/profile/'},
-          {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor/'},
-          {name: 'Settings', logo: 'lock', hash: '/#/settings/'},
-          {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/'}
+          {name: 'Wall', logo: 'info', hash: '/#/wall'},
+          {name: 'My profile', logo: 'social:person', hash: '/#/profile'},
+          {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
+          {name: 'Settings', logo: 'lock', hash: '/#/settings'},
+          {name: 'Contacts', logo: 'social:people', hash: '/#/contacts'}
         ];
       }
 
@@ -122,6 +128,9 @@
         },
         reloadbar: function(){
            this.progress.value=0;
+        },
+        scanQR: function(){
+          document.querySelector('app-router').go('/scan');
         },
         handleLogout: function(event, detail) {
           this.$.login.logout();

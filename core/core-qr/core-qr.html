@@ -1,9 +1,3 @@
-<link href="../../bower_components/core-icon/core-icon.html" rel="import">
-<link href="../../bower_components/core-icons/core-icons.html" rel="import">
-<link href="../../bower_components/core-icons/social-icons.html" rel="import">
-<link href="../../bower_components/core-icon-button/core-icon-button.html" rel="import">
-<link href="../../bower_components/paper-dialog/paper-dialog.html" rel="import">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog-transition.html">
 <link rel="import" href="qr-code.html">
 
 <polymer-element name="core-qr">
@@ -12,11 +6,12 @@
     <link rel="stylesheet" href="qr-code.css">
 
   <div flex class="middle">
-        <core-icon-button class="core-dropdown-trigger" icon="image:blur-on" on-click="{{toggleDialog}}"></core-icon-button>
+      <core-icon-button class="core-dropdown-trigger" icon="my-icons:qr" on-click="{{toggleDialog}}">
+      </core-icon-button>
 
-        <paper-dialog id="dia" backdrop transition="core-transition-top">
-          <qr-code id="qrq"></qr-code>
-        </paper-dialog>
+      <paper-dialog id="dia" backdrop transition="core-transition-top">
+        <qr-code id="qrq"></qr-code>
+      </paper-dialog>
   </div>
 </template>
 <script src="qr.js"></script>

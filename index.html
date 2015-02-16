@@ -39,14 +39,15 @@
   <link rel="import" href="core/core-user/core-user.html">
   <link rel="import" href="core/core-index.html">
   <link rel="import" href="core/main-menu/main-menu.html">
+  <link rel="import" href="core/app-login/app-login.html">
+  <link rel="import" href="core/core-qr/core-scanqr.html">
   <link rel="import" href="pages/wall-page.html">
   <link rel="import" href="pages/myp-page.html">
+  <link rel="import" href="pages/search-page.html">
   <link rel="import" href="pages/edit-page.html">
   <link rel="import" href="pages/config-page/config-page.html">
   <link rel="import" href="pages/contacts-page.html">
   <link rel="import" href="pages/person-card.html">
-  <link rel="import" href="core/app-login/app-login.html">
-
   <title>PersonalQr</title>
 </head>
 
@@ -58,12 +59,14 @@
 
     <app-router core-animated-pages mode="hash" transitions="slide-from-right">
         <app-route path="/" element="core-index"></app-route>
-        <app-route path="/wall/" element="wall-page"></app-route>
-        <app-route path="/profile/" element="myp-page"></app-route>
+        <app-route path="/wall" element="wall-page"></app-route>
+        <app-route path="/profile" element="myp-page"></app-route>
+        <app-route path="/search" element="search-page"></app-route>
         <app-route path="/pqr/" element="person-card"></app-route>
-        <app-route path="/editor/" element="editor-page"></app-route>
-        <app-route path="/settings/" element="config-page"></app-route>
-        <app-route path="/contacts/" element="contacts-page"></app-route>
+        <app-route path="/scan" element="core-scanqr"></app-route>
+        <app-route path="/editor" element="editor-page"></app-route>
+        <app-route path="/settings" element="config-page"></app-route>
+        <app-route path="/contacts" element="contacts-page"></app-route>
         <app-route path="/loader" import="pages/user-loader.html"></app-route>
 
         <app-route path="*" import="pages/not-found.html"></app-route>
@@ -76,7 +79,7 @@
           });
         }else{
           if(window.location.hash === ''){
-            document.querySelector('app-router').go('/wall/');
+            document.querySelector('app-router').go('/wall');
           }
         }
 

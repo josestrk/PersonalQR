@@ -4,7 +4,6 @@
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../lib/qr-reader/qr-reader.html">
 
 <polymer-element name="core-index" >
 
@@ -49,17 +48,14 @@
         <section layout vertical center-center>
           <signin-page></signin-page>
         </section>
-        <section>
-            <qr-reader output></qr-reader>
-        </section>
         <section layout vertical center-center>
           <login-page></login-page>
         </section>
       </core-animated-pages>
-      <paper-tabs selectedindex="1" id="paper_tabs" vertical layout wrap end>
+      <paper-tabs selectedindex="1" id="paper_tabs" horizontal layout>
         <template repeat="{{page in pages}}">
-            <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}">
-              {{page.name}}
+          <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}" flex {{page.flex}}>
+            {{page.name}}
             </paper-tab>
         </template>
       </paper-tabs>
@@ -70,14 +66,16 @@
         Polymer({
             ready: function() {
                 this.pages = [
-                    {name:'GET STARTED',id:'paper_tab', select:'signin'},
-                    {name:'LOG IN',id:'paper_tab1'}
+                  {name:'HOME',id:'paper_tab', select:'HOME'},
+                  {name:'GET STARTED',id:'paper_tab1', select:'signin'},
+                  {name:'LOG IN',id:'paper_tab2'}
                 ];
                 this.login = this.$.login;
             },
             clickedpaper: function(event, detail, sender){
-              sender.id=="paper_tab" ? this.$.core_card.selected=1 : console.log() ;
-              sender.id=="paper_tab1" ? this.$.core_card.selected=2 : console.log();
+              sender.id=="paper_tab" ? this.$.core_card.selected=0 : console.log() ;
+              sender.id=="paper_tab1" ? this.$.core_card.selected=1 : console.log() ;
+              sender.id=="paper_tab2" ? this.$.core_card.selected=2 : console.log();
             },
             handleLogin: function(event, detail) {
               switch(detail){

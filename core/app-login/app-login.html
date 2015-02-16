@@ -32,7 +32,7 @@
       function checkResponse() {
         var hash = window.location.hash;
         document.getElementsByTagName("video")[0].remove();
-        window.location.hash = '/wall/';//redirect to wall
+        window.location.hash = '/wall';//redirect to wall
 
         var token = /[#?;,]token=([^;,]+)/.exec(hash);
         var error = /[#?;,]error=([^;,]+)/.exec(hash);
@@ -71,7 +71,7 @@
 
     function globalCheck(token) {
       document.getElementsByTagName("video")[0].remove();
-      window.location.hash = '/wall/';//redirect to wall
+      window.location.hash = '/wall';//redirect to wall
 
       localStorage.setItem('token', token);
       socket.connect(localStorage.token);
@@ -160,7 +160,7 @@
           localStorage.token = data.token;
           this.logged = true;
           socket.connect(data.token);
-          showMsg('logged');
+          showMsg('Logged with Google+');
         }.bind(this)).fail(function() {
           delete localStorage.token;
           this.logged = false;
@@ -171,7 +171,7 @@
           localStorage.token = data.token;
           this.logged = true;
           socket.connect(data.token);
-          showMsg('logged');
+          showMsg('Logged with Facebook');
         }.bind(this)).fail(function() {
           delete localStorage.token;
           this.logged = false;
@@ -179,15 +179,15 @@
       },
       creacionInterno: function(nombreUser) {
         interno.bind(this)(nombreUser);
-        showMsg('logged');
+        showMsg('Logged');
       },
       loginEmail: function(nombreUser) {
         emailogin.bind(this)(nombreUser);
-        showMsg('logged');
+        showMsg('Logged');
       },
       loginUser: function(nombreUser) {
         usrlogin.bind(this)(nombreUser);
-        showMsg('logged');
+        showMsg('Logged');
       },
       logout: function() {
         delete localStorage.token;
