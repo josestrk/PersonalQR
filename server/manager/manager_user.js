@@ -1,8 +1,26 @@
 var daoUser = require('../dao/dao_user');
 
+
+function followUser(ourUser, extUser, callback){
+		daoUser.followUser(ourUser, extUser, callback);
+}
+
+function unfollowUser(ourUser, extUser, callback){
+		daoUser.unfollowUser(ourUser, extUser, callback);
+}
+
+function addfollower(extUser, ourUser, callback){
+		daoUser.addfollower(extUser, ourUser, callback);
+}
+
+function deletefollower(extUser, ourUser, callback){
+		daoUser.deletefollower(extUser, ourUser, callback);
+}
+
 function createUser(data, callback) {
 	data["followers"]=[];
 	data["following"]=[];
+	data["posts"]=[];
 	daoUser.createUser(data, callback);
 }
 
@@ -101,5 +119,9 @@ module.exports = {
 	validateUserByEmail: validateUserByEmail,
 	verifyUsername: verifyUsername,
 	verifyEmail: verifyEmail,
-	delUserAll:delUserAll
+	delUserAll:delUserAll,
+	followUser : followUser,
+	unfollowUser : unfollowUser,
+	addfollower : addfollower,
+	deletefollower : deletefollower
 };

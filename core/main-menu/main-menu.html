@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="in-style.css">
 
     <app-login id="login"></app-login>
-      
+
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
@@ -51,7 +51,7 @@
           </core-menu>
         </nav>
       </core-header-panel>
-        
+
       <core-toolbar tool flex>
         <content select=".title"></content>
         <template if="{{login.logged}}">
@@ -65,11 +65,11 @@
         <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
 
       </core-toolbar>
-      
+
       <content select="#progress"></content>
       <content select=".container"><core-card></core-card></content>
       <content></content>
-        
+
     </core-scaffold>
   </template>
 
@@ -85,33 +85,30 @@
           {name: 'Contacts', logo: 'social:people', hash: '/#/contacts/'}
         ];
       }
-
       function doAjax(options, success, error) {
         options.dataType = 'json';
         options.contentType = 'application/json; charset=UTF-8';
         options.success = success;
         options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-
         options.beforeSend = function(xhr) {
           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
         };
-
         $.ajax(options);
       }
-
       Polymer({
         domReady: function () {
           loadMenu.bind(this)();
           this.login=this.$.login;
           this.logueado();
           this.$.login.logged = Boolean(localStorage.token);
-          this.rellenarProfile();
-
+          if (localStorage.token !== undefined) {
+            this.rellenarProfile();
+          }
           if( this.progress != undefined )
             this.startProgress();
         },
         personalcall: function(){
-          window.location.hash = "/pqr/?id=" + this.iduser;
+          window.location.hash = "/pqr/?id=" + this.idOfLoggedUser;
         },
         showAdd: function (e, detail, sender){
           document.querySelector('app-router').go('/settings');
@@ -132,6 +129,7 @@
             this.$.idcard.style.display = "none";
           }
         },
+        idOfLoggedUser : true,
         rellenarProfile : function (){
           doAjax({
             type: 'GET',
@@ -140,9 +138,10 @@
             this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
             this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
             this.$.email.innerHTML = result.email ? result.email : "" ;
-            this.$.followers.innerHTML = (result.followers) ? result.followers : "0" ;
-            this.$.following.innerHTML = result.following ? result.following : "0" ;
-            this.$.numpost.innerHTML = result.post ? result.post : "0" ;
+            this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
+            this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+            this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
+            this.idOfLoggedUser = result._id;
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
