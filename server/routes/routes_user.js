@@ -15,8 +15,7 @@ function worker(io) {
 
   //users
   router.post('/user',  createUser);
-  router.get('/userauto',  createUserAuto);
-	router.get('/profile', ensureAuth, getProfile);
+  router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
   router.get('/validateUserByName', validateUserByName);
@@ -27,43 +26,34 @@ function worker(io) {
   router.delete('/user/:userId', ensureAuth, ensureOwner, delUser);
   router.delete('/deleteAll', delUserAll);//provisional
 
+  router.post('/follow',  ensureAuth, followUser);
+  router.post('/unfollow',  ensureAuth, unfollowUser);
 
 
+  function followUser(req, res){
+    var ourUser = req.globalIdOfUser;
+    var extUser = req.body.toFollow;
 
-  function createUserAuto(req, res) {
-    var User={
-    };
-    if(req.body.username!==undefined){
-      User["username"]=req.body.username;
-    } else {
-      User["username"]="Alexvales";
-    }
-    if(req.body.name!==undefined){
-      User["name"]=req.body.name;
-    } else {
-      User["name"]="Alexin";
-    }
-    if(req.body.mail!==undefined){
-      User["email"]=req.body.mail;
-    } else {
-      User["email"]="alex@alex.com";
-    }
-    if(req.body.password!==undefined){
-      User["password"]=req.body.password;
-    } else {
-      User["password"]="Alex11";
-    }
-    if(req.body.bdate!==undefined){
-      User["bdate"]=req.body.bdate;
-    } else {
-      User["bdate"]="17/8/94";
-    }
 
-    userManager.createUser(User,function(err, result){
-      var token = jwt.sign(result, jwtSecret);
-      var url = '/#/loader?token=' + token;
+    userManager.followUser(ourUser, extUser,function(err, result){
+      userManager.addfollower(extUser, ourUser,function(err, result){
+      //emision en vivo de que le hemos seguido
+      //io.alexEmit('articleCreated', result);
+      });
+      res.json(result);
+    });
+  }
 
-      res.redirect(url);
+  function unfollowUser(req, res){
+    var ourUser = req.globalIdOfUser;
+    var extUser = req.body.toUnFollow;
+
+    userManager.unfollowUser(ourUser, extUser,function(err, result){
+      userManager.deletefollower(extUser, ourUser,function(err, result){
+      //emision en vivo de que le hemos dejado de seguir
+      //io.alexEmit('articleCreated', result);
+      });
+      res.json(result);
     });
   }
 
@@ -104,12 +94,18 @@ function worker(io) {
   }
 
   function getProfile(req, res) {
-    console.log(req.user);
-    res.json(req.user);
+    userManager.getUser(req.globalIdOfUser, function(err, result){
+      if(result){
+        debug('Time of response ->');
+        res.json(result);
+      }else{
+        res.status(404).send('User doesn"t exist');
+      }
+    });
   }
 
   function getUser(req, res) {
-    var userId = req.params['userId'];
+    var userId = req.param('userId');
     debug('Showing user ' + userId);
     userManager.getUser(userId, function(err, result){
       if(result){
@@ -206,8 +202,7 @@ function worker(io) {
   }
 
   function setUser(req, res) {
-    console.log(req.body);
-    var userId = (req.globalIdOfUser!==undefined) ? req.globalIdOfUser : req.params['userId'];
+    var userId = (req.globalIdOfUser!==undefined) ? req.globalIdOfUser : res.status(401).send('Server internal Error');;
 
     var User={
       $set:{

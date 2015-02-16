@@ -19,6 +19,82 @@ function getUsersAll(callback) {
 	});
 }
 
+function followUser(ourUser, extUser, callback){
+	var query = {
+		_id: toObjectID(ourUser)
+	};
+
+	var update={
+		$push:{
+		}
+	};
+
+	update.$push["following"] = extUser;
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
+function unfollowUser(ourUser, extUser, callback){
+	var query = {
+		_id: toObjectID(ourUser)
+	};
+
+	var update={
+		$pull:{
+		}
+	};
+
+	update.$pull["following"] = extUser;
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
+function addfollower(extUser, ourUser, callback){
+		var query = {
+			_id: toObjectID(extUser)
+		};
+
+		var update={
+			$push:{
+			}
+		};
+
+		update.$push["followers"] = ourUser;
+
+		var sort = [
+			['_id', 1]
+		];
+
+		col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
+function deletefollower(extUser, ourUser, callback){
+		var query = {
+			_id: toObjectID(extUser)
+		};
+
+		var update={
+			$pull:{
+			}
+		};
+
+		update.$pull["followers"] = ourUser;
+
+		var sort = [
+			['_id', 1]
+		];
+
+		col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
 
 function delUserAll(callback) {
 	this.remove({}, callback);
@@ -57,7 +133,7 @@ function validateUserByEmail(mail, password, callback) {
 	var where={};
 	where["email"]=mail;
 	where["password"]=password;
-	
+
 	this.find(where, function(err, cursor) {
 		if (err) {
 			return callback(err+':', []);
@@ -99,7 +175,11 @@ col.bind({
 	validateUserByName: validateUserByName,
 	validateUserByEmail: validateUserByEmail,
 	verifyUsername: verifyUsername,
-	verifyEmail: verifyEmail
+	verifyEmail: verifyEmail,
+	followUser : followUser,
+	unfollowUser : unfollowUser,
+	addfollower : addfollower,
+	deletefollower : deletefollower
 });
 
 module.exports = col;

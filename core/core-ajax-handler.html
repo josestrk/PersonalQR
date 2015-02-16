@@ -74,27 +74,27 @@
             showMsg(msg);
           });
           //cuando se crea un score lo que hace es lanzar esta funcion y recogerla
-          socket.on('articleCreated', function(result) {
-            // Get a reference to the element in which we want to insert a new node
-            var parentElement = document.getElementsByTagName('wall-page')[0].$.list;
-            // Get a reference to the first child
-            var theFirstChild = parentElement.firstChild;
+          // socket.on('articleCreated', function(result) {
+          //   // Get a reference to the element in which we want to insert a new node
+          //   var parentElement = document.getElementsByTagName('wall-page')[0].$.list;
+          //   // Get a reference to the first child
+          //   var theFirstChild = parentElement.firstChild;
+          //
+          //   // Create a new element
+          //   var newElement = createArticle(result[0]);
+          //
+          //   // Insert the new element before the first child
+          //   parentElement.insertBefore(newElement, theFirstChild);
+          //
+          //   showMsg('A new article has been added');
+          // });
 
-            // Create a new element
-            var newElement = createArticle(result[0]);
-
-            // Insert the new element before the first child
-            parentElement.insertBefore(newElement, theFirstChild);
-
-            showMsg('A new article has been added');
-          });
-
-          socket.on('userconnected', function(result) {
-            //esto va a haber que cambiarlo para que nos coja el id de cada "wall-page y no el del user..."
-            document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="green";
-            document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.icon = "social:notifications-on";
-            showMsg('A new user has been registered!');
-          });
+          // socket.on('userconnected', function(result) {
+          //   //esto va a haber que cambiarlo para que nos coja el id de cada "wall-page y no el del user..."
+          //   document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.style.color="green";
+          //   document.getElementsByTagName("wall-page")[0].$.notifi.$.notifi.icon = "social:notifications-on";
+          //   showMsg('A new user has been registered!');
+          // });
 
           // socket.on('scoreDestroyed', function(scoreId) {
           // 	for (var i = 0; i < static.scores.length; i++) {
