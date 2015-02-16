@@ -26,7 +26,7 @@
 
     <app-login id="login"></app-login>
       
-    <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall-tall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}">
+    <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
         </nav>
@@ -62,10 +62,10 @@
             <core-add class="right"></core-add>
           </template>
         </template>
+      <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
       </core-toolbar>
       
       <content select="#progress"></content>
-      <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
       <content select=".container"><core-card></core-card></content>
       <content></content>
     </core-scaffold>
