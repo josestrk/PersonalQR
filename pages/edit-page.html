@@ -5,6 +5,8 @@
 <link rel="import" href="../core/core-editor/core-editor-img.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
+<!-- This is used to paint the Hallo buttons -->
+<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
 
 <polymer-element name="editor-page" attributes="userid">
 
@@ -82,7 +84,8 @@
         var disable = this.$.disable;
         var content = this.$.content;
 
-        jQuery(enable).button().click(function() {
+        debugger
+        jQuery(enable).click(function() {
 
           jQuery(content).hallo({
             plugins: {
@@ -109,7 +112,7 @@
             console.log("restored");
           });
         });
-        jQuery(disable).button().click(function() {
+        jQuery(disable).click(function() {
           jQuery(content).hallo({editable: false});
         });
         jQuery(content).bind('hellodeactivated', function() {
