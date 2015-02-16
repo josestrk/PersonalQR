@@ -4,7 +4,7 @@
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-
+<link rel="import" href="../lib/qr-reader/qr-reader.html">
 
 <polymer-element name="core-index" >
 
@@ -48,6 +48,9 @@
         </section>
         <section layout vertical center-center>
           <signin-page></signin-page>
+        </section>
+        <section>
+            <qr-reader output></qr-reader>
         </section>
         <section layout vertical center-center>
           <login-page></login-page>

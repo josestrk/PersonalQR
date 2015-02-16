@@ -57,4 +57,12 @@ License
 -------
 MIT - (LICENSE.md)
 
+Repositories
+------------
+* qr-reader
+* polymer
+* vide
+* github-card
+* qr-code
+
 **Free Software**

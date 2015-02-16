@@ -14,34 +14,12 @@
     }
   </style>
       
-        <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
-      <div id="scroller" fit>
-        <template repeat="{{i in data}}">
-          <div class="thing">{{i}}</div>
-        </template>
-        <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
-      </div> 
+      <h4>ERROR 404 PAGENOTFOUND</h4>
   </template>
-     <script>
-      
-    var n;    
-  Polymer({
-      
-      ready: function() {
-            this.data = [];
-            for (n=0; n<15; n++) {
-              this.data.push(n);
-            }
-      },
-      loadMore: function() {
-      setTimeout(function() {
-        for (var i=n; i<n+3; i++) {
-          this.data.push(i);
-        }
-        n = i;
-        this.$.threshold.clearLower();
-      }.bind(this), 1000);
-    }
-  });
+     <script>  
+      Polymer({
+          ready: function() {
+          }
+      });
     </script>
 </polymer-element>

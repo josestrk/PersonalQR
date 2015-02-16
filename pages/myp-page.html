@@ -17,9 +17,9 @@
     (function () {
       Polymer({
         ready: function(){
-          var _id=document.URL.split('/').reverse()[0].split('=').reverse()[0];
+          var _id=document.getElementById("user").datos._id;
           var ajaxhandler = this.$.ajaxhandler;
-          ajaxhandler.getArticles(_id,function (result){
+          ajaxhandler.getArticles( _id, function (result){
             if(result)
               this.asyncFire('core-signal', {name: "sender-list", data:result});
           }.bind(this));

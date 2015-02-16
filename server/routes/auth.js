@@ -184,7 +184,7 @@ function worker(io) {
 				profile._json.post = "0";
 				daoUser.createUser(profile._json, function(err, res){
 				if(!err){
-					done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+					done(null, {accessToken: accessToken, refreshToken: refreshTokenFb, profile: profile._json, id: res[0]._id});
 				}
 			});
 		}
@@ -192,11 +192,11 @@ function worker(io) {
 
 		daoUser.verifyEmail(profile._json.email, function(err, res){
 			if(!res[0]){
-								console.log("No Existe perfil para :"+profile._json.email);
+								debug("No Existe perfil para :"+profile._json.email);
 				insert();
 			}else{
-								console.log("Ya existe el mail:"+profile._json.email);
-				done(null, {accessToken: accessToken, refreshToken: refreshToken, profile: profile._json, id: res[0]._id});
+								debug("Ya existe el mail:"+profile._json.email);
+				done(null, {accessToken: accessToken, refreshToken: refreshTokenFb, profile: profile._json, id: res[0]._id});
 			}
 		});
 	  }

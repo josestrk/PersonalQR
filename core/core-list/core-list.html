@@ -28,7 +28,7 @@
     <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
     <div id="scroller" fit>
       <div id="list"></div>
-      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>
+<!--      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>-->
     </div> 
   </template>
 
@@ -38,7 +38,7 @@
         var section = document.createElement('core-artc');
         section.setAttribute('layout', '');
         section.setAttribute('vertical', '');
-        section.setAttribute('htitle', item.title);
+        section.setAttribute('title', item.title);
         section.setAttribute('content', item.content);
         section.setAttribute('date', item.date);
         section.setAttribute('bgimg', item.bgimg);
@@ -62,19 +62,23 @@
           var ajaxhandler = this.$.ajaxhandler;
           var sk= this.skip;
           if(this.status!=='fin'){
-            ajaxhandler.getAllArticles(sk,function (result, status){
-              if(status==='fin'){
-                that.status='fin';
-              }
-              if(result){
-                result.forEach(function (item) {
-                  that.$.list.appendChild(createPage(item)); 
+            this.fire("loader");
+            setTimeout(function() {  
+                ajaxhandler.getAllArticles(sk,function (result, status){
+                  if(status==='fin'){
+                    that.status='fin';
+                  }
+                  if(result){
+                    result.forEach(function (item) {
+                      that.$.list.appendChild(createPage(item)); 
+                    }.bind(that));
+                  }
                 }.bind(that));
-              }
-            }.bind(that));
+            },1000);
           }
           this.skip++;
-          this.$.threshold.clearLower();
+            
+//          this.$.threshold.clearLower();
         },
         skip: 0
       });
