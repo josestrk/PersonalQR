@@ -20,7 +20,8 @@
     "jquery": "2.1.1",
     "webcomponentsjs": "~0.5.1",
     "pushstate-anchor": "~0.3.0",
-    "socket.io-client": "~1.2.1"
+    "socket.io-client": "~1.2.1",
+    "hallo": "~1.1.1"
   },
   "devDependencies": {
     "polymer": "Polymer/polymer",
