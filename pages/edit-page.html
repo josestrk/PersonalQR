@@ -5,135 +5,105 @@
 <link rel="import" href="../core/core-editor/core-editor-img.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
-<!-- This is used to paint the Hallo buttons -->
+<!-- Font and scripts for Hallo editor -->
 <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+<script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+<script src="../bower_components/rangy-official/rangy-core.js"></script>
+<script src="../bower_components/hallo/dist/hallo.js"></script>
 
 <polymer-element name="editor-page" attributes="userid">
 
-  <template>
-<style>
-  :host {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
-  #core_card {
-    width: 100%;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-    left: 0px;
-    top: 0px;
-    background-color: rgb(255, 255, 255);
-  }
-  #title {
-    padding: 30px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    margin: 60px auto 0px;
-    width: 60%;
-  }
-  #content {
-    padding: 30px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius:10px;
-    margin: 30px auto 30px;
-    width: 60%;
-  }
-  #core_icon_button {
-    left: 1430px;
-    top: 500px;
-  }
-  #paper_fab {
-    left: 1520px;
-    top: 440px;
-  }
-</style>
+<template>
+  <style>
+    :host {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    #core_card {
+      width: 100%;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      border-bottom-left-radius: 2px;
+      box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      left: 0px;
+      top: 0px;
+      background-color: rgb(255, 255, 255);
+    }
+    #title, #content {
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      margin: 30px auto 30px;
+      width: 60%;
+      outline: none;
+    }
+    #title:focus, #content:focus {
+      border: 2px solid rgb(3, 169, 244);
+    }
+    #content:not(:focus) {
+      color: rgb(153, 153, 153);
+    }
+    #core_icon_button {
+      left: 1430px;
+      top: 500px;
+    }
+    #paper_fab {
+      left: 1520px;
+      top: 440px;
+    }
+  </style>
+
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
-    <main-menu iMenu="Edition Mode"  iduser="{{id}}">
-      <div class="title">Editor</div>
-      <div>
-        <core-card id="core_card" layout vertical>
-          <input id="title" placeholder="Choose a title" is="core-input">
-          <core-editor-img id="editor" vertical layout center-justified></core-editor-img>
+  <main-menu iMenu="Edition Mode" iduser="{{id}}">
+    <div class="title">Editor</div>
+    <core-card id="core_card" layout vertical>
+      <input id="title" placeholder="Choose a title" is="core-input">
+      <core-editor-img id="editor" vertical layout center-justified></core-editor-img>
 
-          <button id="enable">Enable</button>
-          <button id="disable">Disable</button>
+      <div id="content" aria-invalid="false"></div>
+      <!-- <core-editor-text id="input2"></core-editor-text> -->
+      <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
+    </core-card>
+  </main-menu>
 
-          <div id="content" rows="20" placeholder="Write here the content of the article" maxlength="8000" aria-invalid="false"></div>
-          <!-- <core-editor-text id="input2"></core-editor-text> -->
-          <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
-        </core-card>
-      </div>
-    </main-menu>
+</template>
 
-  </template>
+<script>
+(function () {
+  Polymer({
+    domReady: function() {
+      var content = this.$.content;
 
-  <script>
-  (function () {
-    Polymer({
-      domReady: function() {
-        var enable = this.$.enable;
-        var disable = this.$.disable;
-        var content = this.$.content;
-
-        debugger
-        jQuery(enable).click(function() {
-
-          jQuery(content).hallo({
-            plugins: {
-              'halloformat': {},
-              'halloheadings': {},
-              'hallojustify': {},
-              'hallolists': {},
-              //'hallolink': {},
-              'halloreundo': {}
-            },
-            editable: true,
-            placeholder: 'Hello World placeholder'
-          });
-          jQuery(content).bind('hallomodified', function(event, data) {
-            console.log("Editables modified");
-          });
-          jQuery(content).bind('halloselected', function(event, data) {
-            console.log("Selection made");
-          });
-          jQuery(content).bind('hallounselected', function(event, data) {
-            console.log("Selection removed");
-          });
-          jQuery(content).bind('hallorestored', function(event, data) {
-            console.log("restored");
-          });
-        });
-        jQuery(disable).click(function() {
-          jQuery(content).hallo({editable: false});
-        });
-        jQuery(content).bind('hellodeactivated', function() {
-            alert("foobar");
-          $(this).hallo({editable:false});
-        });
-      },
-      sendArticle: function(){
-        debugger
-        console.log(this.$.content.value);
-        var datos={
-          iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
-          title: this.$.title.value,
-          content: this.$.content.innerHTML,
-          bgimg: this.$.editor.$.imgselect.selected
-        }
-        var ajaxhandler = this.$.ajaxhandler;
-        ajaxhandler.sendArticle(JSON.stringify(datos));
+      jQuery(content).hallo({
+        plugins: {
+          'halloformat': {},
+          'halloheadings': {},
+          'hallojustify': {},
+          'hallolists': {},
+          //'hallolink': {},
+          'halloreundo': {}
+        },
+        editable: true,
+        placeholder: 'Write here the content of your article'
+      });
+    },
+    sendArticle: function(){
+      debugger
+      console.log(this.$.content.value);
+      var datos={
+        iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
+        title: this.$.title.value,
+        content: this.$.content.innerHTML,
+        bgimg: this.$.editor.$.imgselect.selected
       }
-    });
-  })();
-  </script>
+      var ajaxhandler = this.$.ajaxhandler;
+      ajaxhandler.sendArticle(JSON.stringify(datos));
+    }
+  });
+})();
+</script>
 
 </polymer-element>
