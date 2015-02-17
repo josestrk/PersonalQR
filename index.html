@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <style>
+      :host{
+          color: #555;
+          font-family: 'OpenSans-Regular','RobotoDraft', sans-serif;
+      }
       template {display: none !important;} /* injected by platform.js */
   </style>
 
@@ -54,7 +58,7 @@
 
     <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
 
-    <app-router core-animated-pages mode="hash" transitions="slide-from-right">
+    <app-router core-animated-pages mode="hash" transitions="slide-from-right" style="overflow:hidden">
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall" element="wall-page"></app-route>
         <app-route path="/profile" element="myp-page"></app-route>

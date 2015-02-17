@@ -28,7 +28,6 @@
     <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="50" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
     <div id="scroller" fit>
       <div id="list"></div>
-     <div hidden?="{{!$.threshold.lowerTriggered}}"></div>
     </div>
   </template>
 

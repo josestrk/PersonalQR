@@ -1,33 +1,69 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/polymer/layout.html">
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-input/core-input.html">
 <link rel="import" href="item-config.html">
 
 <polymer-element name="config-page">
 
   <template>
     <style>
-      .container{
+      :host{
+        color: #555;
+        font-family: 'RobotoDraft', sans-serif;
+      }
+      .list{
         width: 100%;
         position: relative;
       }
-      .icard{
-        background: #FAFAFA;
+      .block{
+        margin-bottom: 33px;
+        border-top: 1px solid #AAA;
+        border-bottom: 1px solid #AAA;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+      .icard{
+        background: #F5F5F5;
       }
       .pcard{
         background: #FFF;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+      .separator{
+        height: 20px;
+      }
+      #stat{
+        display: none;
       }
     </style>
     <main-menu iMenu="Settings">
       <div class="title">Settings</div>
       <div class="separator"></div>
       <div class="list">
-        <template repeat="{{i in ['icard','pcard','icard','pcard','icard','pcard']}}">
-          <item-config class="{{i}}" setting="Setting" info="info" icon="settings-applications"  horizontal layout>
-              <paper-toggle-button id="button" checked></paper-toggle-button>
-          </item-config>
-        </template>
+        <div class="block">
+          <template repeat="{{i in ['icard','pcard','icard','pcard','icard']}}">
+            <item-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" type="paper-toggle-button"  horizontal layout>
+              <paper-toggle-button checked></paper-toggle-button>
+            </item-config>
+          </template>
+        </div>
+        <div class="block">  
+          <template repeat="{{i in ['icard','pcard','icard']}}">
+            <item-config class="{{i}}" setting="Setting" info="info" icon="chevron-right" type="core-input"  horizontal layout>
+              <div class="input" horizontal layout>
+                <input id="input" placeholder="info" is="core-input" on-focus="{{edit}}" flex>
+                <core-icon id="clear" icon="cancel" style="width: 20px; height: 20px;" on-click="{{clear}}"></core-icon>
+                <core-icon id="stat" icon="done" style="width: 20px; height: 20px;" on-click="{{edited}}"></core-icon>
+              </div>
+            </item-config>
+          </template>
+        </div>
+        <div class="block">
+          <template repeat="{{i in ['icard','pcard','icard','pcard']}}">
+            <item-config class="{{i}}" setting="Setting" info="info" icon="verified-user" type="form-field" horizontal layout>
+              <form-field id="username" label="Username" icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}"></form-field>
+            </item-config>
+          </template>
+        </div>
       </div>
     </main-menu>
   </template>
@@ -35,6 +71,27 @@
   <script>
     Polymer({
       domReady:function(){
+        
+      },
+      clear:function(){
+        this.$.clear.style.display='none';
+        this.$.stat.icon='done';
+        this.$.stat.style.display='block';
+        this.$.input.value='';
+      },
+      edit:function(){
+        this.$.clear.style.display='none';
+        this.$.stat.icon='done';
+        this.$.stat.style.display='block';
+      },
+      edited:function(){
+        var that=this;
+        setTimeout(function() {
+        that.$.stat.icon='done-all';
+        console.log(that.$.input.value);
+        },1500);
+        this.$.stat.style.display='none';
+        this.$.clear.style.display='block';
       }
     });
 

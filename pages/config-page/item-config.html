@@ -1,45 +1,57 @@
-<polymer-element name="item-config" attributes="icon setting info">
+<polymer-element name="item-config" attributes="type icon setting info" noscript>
 
   <template>
     <style>
       .item-thumb {
         padding: 10px;
-        border-bottom: 1px solid #FCFCFC;
       }
       .item-content {
         padding: 10px 15px;
-        margin: auto;
+        border-bottom: 1px solid #AAA;
       }
       .item-message{
-        line-height: 1.4;
+        line-height: 1.2;
+        font-size: 23px;
         word-break: break-all;
         word-wrap: break-word;
       }
       .item-info {
         color: #abafb8;
-        font-size: 10px;
-        margin-top: 4px;
+        font-size: 16px;
       }
       .item-button{
-        padding: 0 10px;
-        margin: auto;
+        padding: 20px;
+        border-bottom: 1px solid #AAA;
       }
     </style>
     <div class="item-thumb"><paper-icon-button icon="{{icon}}"></paper-icon-button></div>
-    <div class="item-content" flex>
-      <div class="item-message">{{setting}}</div>
-      <div class="item-info">{{info}}</div>
-    </div>
-    <div class="item-button">
-    <content selected="#button"></content>
-    </div>
+    <template if="{{ type == 'paper-toggle-button' }}">
+      <div class="item-content" flex>
+        <div class="item-message">{{setting}}</div>
+        <div class="item-info">{{info}}</div>
+      </div>
+      <div class="item-button">
+        <content select="paper-toggle-button"></content>
+      </div>
+    </template>
+    <template if="{{ type == 'core-input' }}">
+      <div class="item-content" flex three>
+        <div class="item-message">{{setting}}</div>
+        <div class="item-info">{{info}}</div>
+      </div>
+      <div class="item-button" flex seven>
+        <content select=".input"></content>
+      </div>
+    </template>
+    <template if="{{ type == 'form-field' }}">
+      <div class="item-content" flex three>
+        <div class="item-message">{{setting}}</div>
+        <div class="item-info">{{info}}</div>
+      </div>
+      <div class="item-button" flex seven>
+        <content select="form-field"></content>
+      </div>
+    </template>
+    
   </template>
-
-  <script>
-    Polymer({
-
-    });
-
-  </script>
-
 </polymer-element>
