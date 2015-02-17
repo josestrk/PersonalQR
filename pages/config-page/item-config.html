@@ -1,0 +1,43 @@
+<polymer-element name="item-config" attributes="icon seting info">
+
+  <template>
+    <style>
+      .item-thumb {
+        -moz-box-flex: 0;
+        -webkit-box-flex: 0;
+        flex: 0 0 auto;
+        margin: 0 10px;
+      }
+      .item-content {
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        flex: 1 1 auto;
+      }
+      .item-message{
+        line-height: 1.4;
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+      .item-info {
+        color: #abafb8;
+        font-size: 10px;
+        margin-top: 4px;
+      }
+    </style>
+
+    <div class="item-thumb"><paper-icon-button icon="{{icon}}"></paper-icon-button></div>
+    <div class="item-content">
+      <div class="item-message">{{seting}}}}</div>
+      <div class="item-info">{{info}}</div>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+    });
+
+  </script>
+
+</polymer-element>

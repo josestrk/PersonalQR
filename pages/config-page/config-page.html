@@ -1,27 +1,45 @@
-<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
-<link rel="import" href="../../bower_components/core-icons/core-icons.html">
-<link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../lib/webcomponent/github-card.html">
+<link rel="import" href="item-config.html">
 
-
-<polymer-element name="config-page" attributes="userid">
+<polymer-element name="config-page">
 
   <template>
     <style>
-    .card{
-      width: 100%;
-      position: relative;
-      left:20%;
-    }
+      .container{
+        width: 100%;
+        position: relative;
+      }
+      .icard{
+        background: #DCDCDC;
+        margin: auto;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        border-bottom: 1px solid #EEE;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        padding: 18px 15px;
+      }
+      .pcard{
+        background: #FFF;
+        margin: auto;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        border-bottom: 1px solid #CCC;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        padding: 18px 15px;
+      }
     </style>
-    <main-menu iMenu="Settings" iduser="{{id}}">
-        <div class="title">Settings</div>
+    <main-menu iMenu="Settings">
+      <div class="title">Settings</div>
+      <div class="separator"></div>
       <div class="container">
-        <github-card user="Alevale" class="card"></github-card>
-        <github-card user="Josestrk" class="card"></github-card>
-        <main-index></main-index>
-        </div>
+<!--        <template repeat="{{[1,2,3,4,5]}}">-->
+<!--          <template if={{2 || 4}}> <core-card  class="pcard" layout vertical center center-justified></template>-->
+<!--          <template if={{1 || 3 || 5}}><core-card  class="icard" layout vertical center center-justified></template>-->
+          <item-config seting="seting" info="info" icon="socail:cotact"></item-config>
+        </core-card>
+      </div>
     </main-menu>
   </template>
 

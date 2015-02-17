@@ -1,9 +1,10 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../core/main-menu/main-menu.html">
 <link rel="import" href="../core/id-card/id-card.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
-<polymer-element name="person-card" attributes="userid">
+<link rel="import" href="../lib/webcomponent/github-card.html">
+<link rel="import" href="../bower_components/instagram-card/dist/instagram-card.html">
+
+<polymer-element name="person-card">
   <template>
     <style>
         .card{
@@ -46,7 +47,13 @@
                   <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
                   <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
             </core-card>
-            <core-card class="rrss"></core-card>
+            <core-card class="rrss">
+                <div id="list">
+                    <github-card user="Josestrk" class="card"></github-card>
+<!--                    <main-index></main-index>-->
+                    <instagram-card clientId=''></instagram-card>
+                </div>
+            </core-card>
         </div>
 
     </main-menu>
@@ -84,9 +91,9 @@
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
                     this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;
-                    this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
-                    this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-                    this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
+                    this.$.followers.innerHTML = result.followers.length != 1 ? result.followers.length : "0" ;
+                    this.$.following.innerHTML = result.following.length != 1 ? result.following.length : "0" ;
+                    this.$.numpost.innerHTML = result.post.length != 1 ? result.post.length : "0" ;
                     if (document.getElementById('user').datos._id !== result._id){
                       this.setfollow();
                     }else{
