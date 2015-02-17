@@ -47,6 +47,21 @@ function getUserArticles(userId, callback) {
 	});
 }
 
+function searchbytopic(topic, callback) {
+	var where={
+		topic: {}
+	};
+	where.topic=topic;
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.limit(10);
+		cursor.toArray(callback);
+	});
+}
+
 function delArticles(callback) {
 	this.remove({}, callback);
 }
@@ -67,6 +82,29 @@ function setArticle(articleId, update, callback) {
 	col.findAndModify(query, sort, update, {new: true}, callback);
 }
 
+function comment(articleId, comment, name, iduser, callback) {
+	var query = {
+		_id: toObjectID(articleId)
+	};
+
+	var update={
+		$push:{
+		}
+	};
+
+	update.$push["comments"] = {
+		com : comment,
+		user : name,
+		_id : iduser
+	};
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
 col.bind({
 	createArticle: createArticle,
 	getArticle: getArticle,
@@ -75,7 +113,8 @@ col.bind({
 	delArticles: delArticles,
 	delArticle: delArticle,
 	setArticle: setArticle,
-	editArticle: editArticle
+	editArticle: editArticle,
+	searchbytopic : searchbytopic
 });
 
 module.exports = col;

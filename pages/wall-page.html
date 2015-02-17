@@ -3,14 +3,14 @@
 
 <polymer-element name="wall-page">
   <template>
-    
+
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="Wall" logged="{{login.logged}}" progress="{{$.progress}}">
       <div class="title">Wall</div>
-      <paper-progress id="progress"></paper-progress>    
+      <paper-progress id="progress"></paper-progress>
       <core-list></core-list>
     </main-menu>
-    
+
   </template>
 
   <script>
@@ -19,8 +19,10 @@
         ready: function(){
           var ajaxhandler = this.$.ajaxhandler;
           ajaxhandler.getAllArticles(0,function (result){
-            if(result)
+            if(result){
+              //hasta aqui va bien el result de
               this.asyncFire('core-signal', {name: "sender-list", data:result});
+            }
           }.bind(this));
         }
       });
