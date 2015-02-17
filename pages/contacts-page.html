@@ -1,5 +1,5 @@
-<polymer-element name="contacts-page" attributes="userid">
-
+<link rel="import" href="../../bower_components/left-swipe-action.html">
+<polymer-element name="contacts-page">
   <template>
     <style>
       #list {
@@ -18,6 +18,15 @@
       <paper-progress id="progress"></paper-progress>
       <div id="list">
         <template repeat="{{item in lista}}"></template>
+<!--  add componente elemento de listas -->
+        <left-swipe-action>
+          <div style="height: 120px;">
+            <div>Title</div>
+            <div>Description</div>
+          </div>
+          <left-swipe-action-button style="background-color: #E81D62;" onclick="alert('delete')">Delete</left-swipe-action-button>
+          <left-swipe-action-button style="background-color: #9F499B; color: #fff;" onclick="alert('favorite')">Favorite</left-swipe-action-button>
+        </left-swipe-action>
       </div>
     </main-menu>
   </template>
@@ -25,34 +34,11 @@
   <script>
     (function () {
         function createPage(item) {
-          var section = document.createElement('core-artc');
-          section.setAttribute('layout', '');
-          section.setAttribute('vertical', '');
-          section.setAttribute('title', item.title);
-          section.setAttribute('time', item.time);
-          section.setAttribute('bgimg', item.bgimg);
-          section.setAttribute('info', item.info);
 
 
-        var div = document.createElement('core-card');
-        div.setAttribute('userid','list');
-        div.setAttribute('layout', '');
-        div.setAttribute('vertical', '');
-
-        div.appendChild(section);
-
-        return div;
-        }
 
         Polymer({
             domReady: function () {
-                this.lista = [
-                                 {title:'Title Post', bgimg: 'http://makeonweb.es/josestrk/img/small/bg-2.jpg', post: 'id1_idpost1', time: '1', info: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', tp: 'texto'}
-                ];
-                var listPost = this.$.list;
-                this.lista.forEach(function (item) {
-                   listPost.appendChild(createPage(item));
-                });
             }
         });
     })();

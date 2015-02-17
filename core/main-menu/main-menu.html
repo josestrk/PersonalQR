@@ -11,7 +11,6 @@
 <link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
 <link rel="import" href="../search-banner/search-banner.html">
-<link rel="import" href="../core-myicon/core-myicon.html">
 <link rel="import" href="../id-card/id-card.html">
 <link rel="import" href="../core-artc/core-artc.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
@@ -26,7 +25,7 @@
 
     <app-login id="login"></app-login>
     
-    <core-iconset id="my-icons" src="../core-myicon/myicons.png" width="96" iconSize="24" icons="scan qr logo">
+    <core-iconset id="my-icons" src="../../img/myicons.png" width="83" iconSize="25" icons="scan qr logo">
     </core-iconset>
     
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
@@ -51,6 +50,7 @@
           </template>
           <core-menu hidden?="{{!login.logged}}">
             <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
+            <core-icon icon="my-icons:logo"></core-icon>
           </core-menu>
         </nav>
       </core-header-panel>
