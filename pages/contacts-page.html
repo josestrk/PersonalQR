@@ -1,4 +1,5 @@
-<link rel="import" href="../../bower_components/left-swipe-action.html">
+<link rel="import" href="../bower_components/left-swipe-action/left-swipe-action.html">
+
 <polymer-element name="contacts-page">
   <template>
     <style>
@@ -17,26 +18,33 @@
       <div class="title">Contacts</div>
       <paper-progress id="progress"></paper-progress>
       <div id="list">
-        <template repeat="{{item in lista}}"></template>
-<!--  add componente elemento de listas -->
-        <left-swipe-action>
-          <div style="height: 120px;">
-            <div>Title</div>
-            <div>Description</div>
+        <template repeat="{{item in lista}}">
+          <div id="list_example">
+            <div class="separator"></div>
+            <h2>List example</h2>
+            <template is="auto-binding">
+             
+                <left-swipe-action shadow offset="40">
+                  <div class="list-container">
+                    <div class="list-thumb"><a href="https://twitter.com/tejitak" target="_blank"><paper-icon-button icon="social:person"></paper-icon-button></a></div>
+                    <div class="list-content">
+                      <div class="list-message">Tejitak</div>
+                      <div class="list-info">Repeated by &lt;template repeat&gt; ...</div>
+                    </div>
+                  </div>
+                  <left-swipe-action-button onclick="alert('delete')"><paper-fab icon="delete"></paper-fab></left-swipe-action-button>
+                  <left-swipe-action-button onclick="alert('star')"><paper-fab icon="star"></paper-fab></left-swipe-action-button>
+                  <left-swipe-action-button onclick="alert('schedule')"><paper-fab icon="schedule"></paper-fab></left-swipe-action-button>
+                </left-swipe-action>
+            </template>
           </div>
-          <left-swipe-action-button style="background-color: #E81D62;" onclick="alert('delete')">Delete</left-swipe-action-button>
-          <left-swipe-action-button style="background-color: #9F499B; color: #fff;" onclick="alert('favorite')">Favorite</left-swipe-action-button>
-        </left-swipe-action>
+        </template>
       </div>
     </main-menu>
   </template>
 
   <script>
     (function () {
-        function createPage(item) {};
-
-
-
         Polymer({
             domReady: function () {
             }

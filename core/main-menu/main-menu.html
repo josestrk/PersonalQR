@@ -32,13 +32,15 @@
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
         </nav>
-        <nav flex>
+        <nav>
           <id-card id="idcard" layout vertical center center-justified>
             <img class="img" id='photo' src=""/>
             <user-name id="name"></user-name>
             <user-account id="email"></user-account>
             <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
           </id-card>
+        </nav>
+        <nav flex>
           <template if="{{login.logged}}">
             <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
               <template repeat="{{page in pages}}">
@@ -69,6 +71,7 @@
       </core-toolbar>
 
       <content select="#progress"></content>
+      <content select=".separator"></content>
       <content select=".container"><core-card></core-card></content>
       <content select="#list"></content>
       <content></content>
@@ -146,9 +149,9 @@
             this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
             this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
             this.$.email.innerHTML = result.email ? result.email : "" ;
-            this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
-            this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-            this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
+            this.$.followers.innerHTML = result.followers.length != 1 ? result.followers.length : "0" ;
+            this.$.following.innerHTML = result.following.length != 1 ? result.following.length : "0" ;
+            this.$.numpost.innerHTML = result.post.length != 1 ? result.post.length : "0" ;
             this.idOfLoggedUser = result._id;
           }.bind(this),
           function(xhr, err, desc){

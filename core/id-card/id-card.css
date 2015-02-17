@@ -4,7 +4,7 @@
 }
 
 .user {
-  height: 300px;
+  height: 280px;
   overflow: hidden;
   position: relative;
   background-color: #2E353C;
@@ -18,7 +18,7 @@
 .user dl,
 .user dd {
   margin: 0;
-  padding: 5px 10px;
+  padding: 0px 6px;
 }
 
 .user dt {
