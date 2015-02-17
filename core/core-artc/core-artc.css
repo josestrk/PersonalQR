@@ -55,11 +55,12 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
   font-size:23px;
 }
 #inputcomment{
- display: none; 
+  height: 47x;
+  display: none; 
+  border-bottom: 2px solid #03a9f4;
 }
 .inputadd{
   display: inherit;
-  border-bottom: 1px solid grey;
 }
 .btn{
   display: inherit;
@@ -89,8 +90,9 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
   list-style:  none;
   visibility: hidden;
   height: 0px;
-  overflow:scroll;
+  overflow-y:scroll;
   transition: height 0.5s ease;
+  background: linear-gradient(rgb(173, 216, 230),rgb(214, 227, 231));
 }
 .comentario{
   padding: 5px 10px;
