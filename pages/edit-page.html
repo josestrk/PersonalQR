@@ -1,15 +1,9 @@
 <link rel="import" href="../bower_components/core-input/core-input.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../core/core-editor/core-editor-text.html">
 <link rel="import" href="../core/core-editor/core-editor-img.html">
+<link rel="import" href="../core/core-editor/core-editor-content.html">
 <link rel="import" href="../core/core-ajax-handler.html">
-
-<!-- Font and scripts for Hallo editor -->
-<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
-<script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
-<script src="../bower_components/rangy-official/rangy-core.js"></script>
-<script src="../bower_components/hallo/dist/hallo.js"></script>
 
 <polymer-element name="editor-page" attributes="userid">
 
@@ -23,16 +17,13 @@
     }
     #core_card {
       width: 100%;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
-      border-bottom-left-radius: 2px;
+      border-radius: 2px;
       box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
       left: 0px;
       top: 0px;
       background-color: rgb(255, 255, 255);
     }
-    #title, #content {
+    #title {
       padding: 30px;
       border-radius: 10px;
       border: 2px solid transparent;
@@ -40,19 +31,8 @@
       width: 60%;
       outline: none;
     }
-    #title:focus, #content:focus {
+    #title:focus {
       border: 2px solid rgb(3, 169, 244);
-    }
-    #content:not(:focus) {
-      color: rgb(153, 153, 153);
-    }
-    #core_icon_button {
-      left: 1430px;
-      top: 500px;
-    }
-    #paper_fab {
-      left: 1520px;
-      top: 440px;
     }
   </style>
 
@@ -62,11 +42,9 @@
     <core-card id="core_card" layout vertical>
       <input id="title" placeholder="Choose a title" is="core-input">
       <core-editor-img id="editor" vertical layout center-justified></core-editor-img>
-
-      <div id="content" aria-invalid="false"></div>
-      <!-- <core-editor-text id="input2"></core-editor-text> -->
-      <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:20px 0px 100px; "></paper-fab>
+      <core-editor-content id="content" vertical layout center-justified></core-editor-content>
     </core-card>
+    <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:200px 0px 100px; "></paper-fab>
   </main-menu>
 
 </template>
@@ -74,22 +52,6 @@
 <script>
 (function () {
   Polymer({
-    domReady: function() {
-      var content = this.$.content;
-
-      jQuery(content).hallo({
-        plugins: {
-          'halloformat': {},
-          'halloheadings': {},
-          'hallojustify': {},
-          'hallolists': {},
-          //'hallolink': {},
-          'halloreundo': {}
-        },
-        editable: true,
-        placeholder: 'Write here the content of your article'
-      });
-    },
     sendArticle: function(){
       debugger
       console.log(this.$.content.value);

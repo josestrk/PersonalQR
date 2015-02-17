@@ -1,0 +1,70 @@
+<link rel="import" href="../core-ajax-handler.html">
+
+<!-- Font and scripts for Hallo editor -->
+<link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
+<script src="../../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+<script src="../../bower_components/rangy-official/rangy-core.js"></script>
+<script src="../../bower_components/hallo/dist/hallo.js"></script>
+
+<polymer-element name="core-editor-content" attributes="userid">
+
+<template>
+  <style>
+    :host {
+      position: absolute;
+      width: 100%;
+      height: auto;
+    }
+    #content {
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      margin: 30px auto 30px;
+      width: 60%;
+      outline: none;
+    }
+    #content:focus {
+      border: 2px solid rgb(3, 169, 244);
+    }
+    #content:not(:focus) {
+      color: rgb(153, 153, 153);
+    }
+  </style>
+
+  <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
+  <core-card id="container" layout vertical>
+    <div id="content" aria-invalid="false"></div>
+  </core-card>
+
+</template>
+
+<script>
+(function () {
+  Polymer({
+    domReady: function() {
+      console.log('hola');
+      var content = this.$.content;
+
+      jQuery(content).hallo({
+        plugins: {
+          'halloformat': {},
+          'halloheadings': {},
+          'hallojustify': {},
+          'hallolists': {},
+          //'hallolink': {},
+          'halloreundo': {}
+        },
+        editable: true,
+        toolbar: 'halloToolbarFixed',
+        placeholder: 'Write here the content of your article'
+      });
+
+      jQuery(content).on('halloactivated', function() {
+        console.log("Activated");
+      });
+    }
+  });
+})();
+</script>
+
+</polymer-element>
