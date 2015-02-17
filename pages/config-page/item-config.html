@@ -1,17 +1,14 @@
-<polymer-element name="item-config" attributes="icon seting info">
+<polymer-element name="item-config" attributes="icon setting info">
 
   <template>
     <style>
       .item-thumb {
-        -moz-box-flex: 0;
-        -webkit-box-flex: 0;
-        flex: 0 0 auto;
-        margin: 0 10px;
+        padding: 10px;
+        border-bottom: 1px solid #FCFCFC;
       }
       .item-content {
-        -moz-box-flex: 1;
-        -webkit-box-flex: 1;
-        flex: 1 1 auto;
+        padding: 10px 15px;
+        margin: auto;
       }
       .item-message{
         line-height: 1.4;
@@ -23,14 +20,19 @@
         font-size: 10px;
         margin-top: 4px;
       }
+      .item-button{
+        padding: 0 10px;
+        margin: auto;
+      }
     </style>
-
     <div class="item-thumb"><paper-icon-button icon="{{icon}}"></paper-icon-button></div>
-    <div class="item-content">
-      <div class="item-message">{{seting}}}}</div>
+    <div class="item-content" flex>
+      <div class="item-message">{{setting}}</div>
       <div class="item-info">{{info}}</div>
     </div>
-
+    <div class="item-button">
+    <content selected="#button"></content>
+    </div>
   </template>
 
   <script>

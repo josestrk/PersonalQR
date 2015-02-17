@@ -25,10 +25,10 @@
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-signals on-core-signal-sender-list="{{createList}}"></core-signals>
-    <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
+    <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="250" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
     <div id="scroller" fit>
       <div id="list"></div>
-<!--      <div hidden?="{{!$.threshold.lowerTriggered}}">Please wait...</div>-->
+     <div hidden?="{{!$.threshold.lowerTriggered}}"></div>
     </div>
   </template>
 
@@ -74,11 +74,11 @@
                     }.bind(that));
                   }
                 }.bind(that));
-            },1000);
+            },500);
           }
           this.skip++;
 
-//          this.$.threshold.clearLower();
+         this.$.threshold.clearLower();
         },
         skip: 0
       });

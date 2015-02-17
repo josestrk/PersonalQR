@@ -54,8 +54,18 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
 .paper_tab-dw{
   font-size:23px;
 }
+#inputcomment{
+ display: none; 
+}
+.inputadd{
+  display: inherit;
+  border-bottom: 1px solid grey;
+}
+.btn{
+  display: inherit;
+}
 
-.coments-add{
+.comentsadd{
   height: 35px;
   color: #03a9f4;
 }

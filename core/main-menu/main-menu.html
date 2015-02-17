@@ -73,10 +73,10 @@
       <content select="#progress"></content>
       <content select=".separator"></content>
       <content select=".container"><core-card></core-card></content>
-      <content select="#list"></content>
       <content></content>
-      
       <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
+      <content select="#list"></content>
+      
         
     </core-scaffold>
   </template>
@@ -122,7 +122,7 @@
           document.querySelector('app-router').go('/settings');
         },
         startProgress: function(){
-          this.progress.value += 5;
+          this.progress.value += 3;
           this.async(this.startProgress);
         },
         reloadbar: function(){

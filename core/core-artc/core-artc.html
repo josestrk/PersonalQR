@@ -59,14 +59,21 @@
         <!-- comentarios -->
 
         <ul id="comentarios" class="comentarios">
-            <template repeat="{{comentario in Arrcomentarios}}">
-                <li class="comentario">{{comentario.user}} : {{comentario.com}}</li>
-            </template>
-          <li><paper-tabs selected="0" class="transparent-teal" selectedindex="0" id="coments-add" class="coments-add" horizontal center layout>
-          <paper-tab id="com-add" on-click="{{dialog}}" inline flex center-center horizontal layout active>
-            <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
-            <span id="txt">Add</span>
-          </paper-tab></paper-tabs></li>
+          <template repeat="{{comentario in coments}}">
+            <li class="comentario"><a href="#/pqr/?id={{comentario._id}}">{{comentario.user}}</a> : {{comentario.com}}</li>
+          </template>
+          <li>
+            <paper-tabs selected="0" class="transparent-teal" selectedindex="0" id="comentsadd" class="comentsadd" horizontal center layout>
+              <paper-tab id="com-add" on-click="{{createComment}}" inline flex center-center horizontal layout active>
+                <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
+                <span id="txt">Add</span>
+              </paper-tab>
+            </paper-tabs>
+            <div id="inputcomment" horizontal layout>
+              <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" flex>
+              <paper-fab icon="create" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
+            </div>
+          </li>
         </ul>
 
         <!-- buttons -->
@@ -150,71 +157,80 @@
             var post = this.$.core-artc;
         }
         Polymer({
-            domReady: function () {
-                loadPost.bind(this);
-                this.showDelete() ? this.show='true' : this.show='';
+          domReady: function () {
+            loadPost.bind(this);
+            this.showDelete() ? this.show='true' : this.show='';
 
-                /* TODO: sanitize this content and strip away
+            /* TODO: sanitize this content and strip away
                  * unsafe HTML and any JS
                 */
-                this.$.content.innerHTML = this.content;
+            this.$.content.innerHTML = this.content;
 
-                var Arrcomentarios = [[user='pepe',coment='mwerthyjkcvbnm,'],[user='pepe2',coment='mwerthyjkcvbnm,2']]
-                //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
-                //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
-                this.$.core_header_panel.addEventListener('scroll', function(e) {
-                    var scroller = e.detail.target;
-                    if(scroller.scrollTop === 0){
-                      this.lastElementChild.className="noheight";
-                    }else{
-                      this.lastElementChild.className="moreheight";
-                      this.firstElementChild.className="animate";
-                    }
-                  });
-            },
-            visiblecomments: function (){
-              if(this.flag){
-                this.$.comentarios.style.visibility = "visible";
-                this.$.comentarios.style.height = "160px";
-                this.flag=!this.flag;
+            var Arrcomentarios = [[user='pepe',coment='mwerthyjkcvbnm,'],[user='pepe2',coment='mwerthyjkcvbnm,2']]
+            //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
+            //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
+            this.$.core_header_panel.addEventListener('scroll', function(e) {
+              var scroller = e.detail.target;
+              if(scroller.scrollTop === 0){
+                this.lastElementChild.className="noheight";
               }else{
-                this.$.comentarios.style.visibility = "hidden";
-                this.$.comentarios.style.height = "0px";
-                this.flag=!this.flag;
+                this.lastElementChild.className="moreheight";
+                this.firstElementChild.className="animate";
               }
-            },
-            flag: true,
-            showDelete: function(){
-              return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
-            },
-            dialog: function(){
-              this.$.dia.toggle();
-            },
-            comment: function(){
-              this.$.comment.toggle();
-            },
-            edit: function(){
-              this.$.edit.toggle();
-            },
-            submit: function(){
-              var datos={
-                iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
-                title: this.$.input.value,
-                content:this.$.input2.value,
-                bgimg: this.bgimg,
-                _id: this.idart
-              }
-              var ajaxhandler = this.$.ajaxhandler;
-              ajaxhandler.editArticle(this,JSON.stringify(datos));
-              this.$.edit.toggle();
-            },
-            deletePost: function(e,d,s){
-              this.$.ajaxhandler.deleteArticles(this.idart,function(result){
-                return result;
-              });
-              this.remove();
-              this.dialog();
+            });
+          },
+          visiblecomments: function (){
+            if(this.flag){
+              this.$.comentarios.style.visibility = "visible";
+              this.$.comentarios.style.height = "160px";
+              this.flag=!this.flag;
+            }else{
+              this.$.comentarios.style.visibility = "hidden";
+              this.$.comentarios.style.height = "0px";
+              this.flag=!this.flag;
             }
+          },
+          flag: true,
+          showDelete: function(){
+            return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
+          },
+          dialog: function(){
+            this.$.dia.toggle();
+          },
+          comment: function(){
+            this.$.comment.toggle();
+          },
+          edit: function(){
+            this.$.edit.toggle();
+          },
+          submit: function(){
+            var datos={
+              iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
+              title: this.$.input.value,
+              content:this.$.input2.value,
+              bgimg: this.bgimg,
+              _id: this.idart
+            }
+            var ajaxhandler = this.$.ajaxhandler;
+            ajaxhandler.editArticle(this,JSON.stringify(datos));
+            this.$.edit.toggle();
+          },
+          deletePost: function(e,d,s){
+            this.$.ajaxhandler.deleteArticles(this.idart,function(result){
+              return result;
+            });
+            this.remove();
+            this.dialog();
+          },
+          createComment: function(){
+            this.$.comentsadd.style.display='none';
+            this.$.inputcomment.style.display='flex';
+          },
+          sendComent: function(){
+            console.log(this.$.inputadd.value);
+            this.$.inputcomment.style.display='none';
+            this.$.comentsadd.style.display='flex';
+          }
         });
     })();
   </script>

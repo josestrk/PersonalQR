@@ -17,29 +17,20 @@
     <main-menu iMenu="Contacts" iduser="{{id}}" progress="{{$.progress}}">
       <div class="title">Contacts</div>
       <paper-progress id="progress"></paper-progress>
-      <div id="list">
-        <template repeat="{{item in lista}}">
-          <div id="list_example">
-            <div class="separator"></div>
-            <h2>List example</h2>
-            <template is="auto-binding">
-             
-                <left-swipe-action shadow offset="40">
-                  <div class="list-container">
-                    <div class="list-thumb"><a href="https://twitter.com/tejitak" target="_blank"><paper-icon-button icon="social:person"></paper-icon-button></a></div>
-                    <div class="list-content">
-                      <div class="list-message">Tejitak</div>
-                      <div class="list-info">Repeated by &lt;template repeat&gt; ...</div>
-                    </div>
-                  </div>
-                  <left-swipe-action-button onclick="alert('delete')"><paper-fab icon="delete"></paper-fab></left-swipe-action-button>
-                  <left-swipe-action-button onclick="alert('star')"><paper-fab icon="star"></paper-fab></left-swipe-action-button>
-                  <left-swipe-action-button onclick="alert('schedule')"><paper-fab icon="schedule"></paper-fab></left-swipe-action-button>
-                </left-swipe-action>
-            </template>
-          </div>
+        <template repeat="{{[1,2,3,4,5]}}">
+          <left-swipe-action shadow offset="40">
+            <div class="list-container">
+              <div class="list-thumb"><paper-icon-button icon="social:person"></paper-icon-button></div>
+              <div class="list-content">
+                <div class="list-message">User</div>
+                <div class="list-info">USER INFO</div>
+              </div>
+            </div>
+            <left-swipe-action-button onclick="alert('delete')"><paper-fab icon="delete"></paper-fab></left-swipe-action-button>
+            <left-swipe-action-button onclick="alert('star')"><paper-fab icon="star"></paper-fab></left-swipe-action-button>
+            <left-swipe-action-button onclick="alert('schedule')"><paper-fab icon="schedule"></paper-fab></left-swipe-action-button>
+          </left-swipe-action>
         </template>
-      </div>
     </main-menu>
   </template>
 
