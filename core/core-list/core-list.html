@@ -38,13 +38,13 @@
         var section = document.createElement('core-artc');
         section.setAttribute('layout', '');
         section.setAttribute('vertical', '');
-        section.setAttribute('title', item.title);
+        section.setAttribute('htitle', item.title);
         section.setAttribute('content', item.content);
         section.setAttribute('date', item.date);
         section.setAttribute('bgimg', item.bgimg);
         section.setAttribute('owner', item.iduser);
         section.setAttribute('idart', item._id);
-        section.setAttribute('coments', item.coments);
+        section.setAttribute('coments', JSON.stringify(item.coments));
         return section;
       }
       Polymer({

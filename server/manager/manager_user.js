@@ -18,6 +18,9 @@ function deletefollower(extUser, ourUser, callback){
 }
 
 function createUser(data, callback) {
+	data.auth = true;
+	data.firstView=0;
+	data["socialMedia"]={};
 	data["followers"]=[];
 	data["following"]=[];
 	data["posts"]=[];

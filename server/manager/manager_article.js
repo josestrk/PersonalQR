@@ -6,6 +6,10 @@ function createArticle(article, callback) {
   daoArticle.createArticle(article, callback);
 }
 
+function comment(articleId, comment, name, iduser, callback){
+  daoArticle.comment(articleId, comment, name, iduser, callback);
+}
+
 function editArticle(article, callback) {
   // article["likes"]= "";
   // article["coments"]=[];
@@ -14,6 +18,10 @@ function editArticle(article, callback) {
 
 function getArticle(articleId, callback) {
   daoArticle.getArticle(articleId, callback);
+}
+
+function searchbytopic(topic, callback) {
+  daoArticle.searchbytopic(topic, callback);
 }
 
 function getUserArticles(userId, callback) {
@@ -69,5 +77,7 @@ module.exports = {
 	getArticlesAll: getArticlesAll,
 	delArticle: delArticle,
 	setArticle: setArticle,
-  editArticle: editArticle
+  editArticle: editArticle,
+  searchbytopic : searchbytopic,
+  comment : comment
 };

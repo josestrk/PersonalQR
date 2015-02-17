@@ -90,6 +90,9 @@ function worker(io) {
 		console.log('[GOOGLE] auth.js New accessToken: ' + accessToken + ', refreshToken: ' + refreshToken + ', user: ' + profile.id+'---auth.js');
 		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
+				profile._json.auth = true;
+				profile._json.firstView=0;
+				profile._json.socialMedia={};
 				profile._json.followers = [];
 				profile._json.following = [];
 				profile._json.post = [];
@@ -178,7 +181,10 @@ function worker(io) {
 		console.log('[FACEBOOK] New accessToken: ' + accessToken + ', refreshToken: ' + refreshTokenFb);
 		//el done envia null para saber que puede continuar la ejecucion de codigo, y envia ademas los objetos que queramos para despues usar
 		function insert(){
-        profile._json.picture = "http://graph.facebook.com/"+profile._json.id+"/picture?height=300&type=normal&width=300"
+        profile._json.picture = "http://graph.facebook.com/"+profile._json.id+"/picture?height=300&type=normal&width=300";
+				profile._json.auth = true;
+				profile._json.firstView=0;
+				profile._json.socialMedia={};
 				profile._json.followers = [];
 				profile._json.following = [];
 				profile._json.post = [];

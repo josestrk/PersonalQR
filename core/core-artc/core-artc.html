@@ -158,15 +158,13 @@
         }
         Polymer({
           domReady: function () {
+            debugger
+            this.coments = JSON.parse(this.coments);
             loadPost.bind(this);
             this.showDelete() ? this.show='true' : this.show='';
 
-            /* TODO: sanitize this content and strip away
-                 * unsafe HTML and any JS
-                */
             this.$.content.innerHTML = this.content;
 
-            var Arrcomentarios = [[user='pepe',coment='mwerthyjkcvbnm,'],[user='pepe2',coment='mwerthyjkcvbnm,2']]
             //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
             //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
             this.$.core_header_panel.addEventListener('scroll', function(e) {
