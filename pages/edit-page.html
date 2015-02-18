@@ -41,8 +41,8 @@
     <div class="title">Editor</div>
     <core-card id="core_card" layout vertical>
       <input id="title" placeholder="Choose a title" is="core-input">
-      <core-editor-img id="editor" vertical layout center-justified></core-editor-img>
-      <core-editor-content id="content" vertical layout center-justified></core-editor-content>
+      <core-editor-img id="image" vertical layout center-justified></core-editor-img>
+      <core-editor-content id="editor" vertical layout center-justified></core-editor-content>
     </core-card>
     <paper-fab icon="create" class="blue" on-click="{{sendArticle}}" role="button" tabindex="0" aria-label="create" style="overflow: visible; left: 45%; margin:200px 0px 100px; "></paper-fab>
   </main-menu>
@@ -53,12 +53,10 @@
 (function () {
   Polymer({
     sendArticle: function(){
-      debugger
-      console.log(this.$.content.value);
-      var datos={
+      var datos = {
         title: this.$.title.value,
-        content: this.$.content.innerHTML,
-        bgimg: this.$.editor.$.imgselect.selected
+        content: this.$.editor.$.content.innerHTML,
+        bgimg: this.$.image.$.imgselect.selected
       }
       var ajaxhandler = this.$.ajaxhandler;
       ajaxhandler.sendArticle(JSON.stringify(datos));
