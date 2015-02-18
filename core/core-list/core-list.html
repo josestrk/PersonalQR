@@ -47,7 +47,9 @@
         return section;
       }
       Polymer({
+        shooter : true,
         createList: function(rescue){
+          this.shooter = rescue.detail.shooter;
           var that=this;
           var sk= this.skip;
           var list=rescue.detail;
@@ -62,18 +64,16 @@
           var sk= this.skip;
           if(this.status!=='fin'){
             this.fire("loader");
-            setTimeout(function() {
-                ajaxhandler.getAllArticles(sk,function (result, status){
-                  if(status==='fin'){
-                    that.status='fin';
-                  }
-                  if(result){
-                    result.forEach(function (item) {
-                      that.$.list.appendChild(createPage(item));
-                    }.bind(that));
-                  }
+            that.shooter(sk,function (result, status){
+              if(status==='fin'){
+                that.status='fin';
+              }
+              if(result){
+                result.forEach(function (item) {
+                  that.$.list.appendChild(createPage(item));
                 }.bind(that));
-            },500);
+              }
+            }.bind(that));
           }
           this.skip++;
 

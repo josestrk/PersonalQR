@@ -3,25 +3,26 @@
 
 <polymer-element name="myp-page">
   <template>
-    
+
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="My profile" logged="{{login.logged}}" progress="{{$.progress}}">
       <div class="title">My profile</div>
       <paper-progress id="progress"></paper-progress>
       <core-list></core-list>
     </main-menu>
-    
+
   </template>
 
   <script>
     (function () {
       Polymer({
-        ready: function(){
-          var _id=document.getElementById("user").datos._id;
+        domReady: function(){
           var ajaxhandler = this.$.ajaxhandler;
-          ajaxhandler.getArticles( _id, function (result){
-            if(result)
+          ajaxhandler.getmyArticles(0, function (result){
+            if(result){
+              result.shooter= ajaxhandler.getmyArticles;
               this.asyncFire('core-signal', {name: "sender-list", data:result});
+            }
           }.bind(this));
         }
       });

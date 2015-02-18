@@ -150,6 +150,27 @@
             errorToast.show();
           });
         },
+        comment: function(Id, com){
+          var datos={
+            articleId: Id,
+            comment : com
+          };
+          datos = JSON.stringify(datos);
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/addcomment',
+            data: datos
+          },function(result) {
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Article succesfully posted';
+            errorToast.show();
+          },
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Could not connect to server';
+            errorToast.show();
+          });
+        },
         editArticle: function(that, datos){
           doAjax({
             type: 'POST',
@@ -183,6 +204,23 @@
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = xhr.responseText.split(':')[1];
+            errorToast.show();
+          });
+        },
+        getmyArticles : function(skip, callback){
+          doAjax({
+            type: 'GET',
+            url: 'routes_article/myarticles/'+skip
+          },function(result) {
+            if(result[0] == null){
+              callback(result, 'fin');
+            }else{
+              callback(result);
+            }
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Could not connect to server';
             errorToast.show();
           });
         },

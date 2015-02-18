@@ -1,7 +1,6 @@
 var jwtSecret = require('../util/config').jwtSecret;
 var debug = require('debug')('social-scoreboard-sec');
 var jwt = require('jsonwebtoken');
-var daoUser = require('../dao/dao_user');
 var daoArticle = require('../dao/dao_article');
 /**
  * Check if the token user exists, in other case FORBIDDEN
@@ -49,31 +48,16 @@ function ensureAuthenticated(req, res, next) {
  * Check if the user is the owner of the score, in other case FORBIDDEN
  */
 function ensureOwner(req, res, next) {
-	// var scoreId = req.params.scoreId;
-	// var userId = req.user.id;
-	// if (!scoreId && !userId) {
-	// 	debug('ensureOwner Invalid[' + scoreId + '] or userId[' + userId + ']');
-	// 	return res.status(500).send('Invalid user or score');
-	// }
+	var articleId = req.body._id;
+	var userId = req.globalIdOfUser;
 
-	// daoScore.getById(scoreId, function(err, score) {
-	// 	if (err) {
-	// 		debug('ensureOwner error: ' + err);
-	// 		return res.status(500).send('error');
-	// 	}
-
-	// 	if (!score) {
- //  		debug('invalid score');
-	// 		return res.status(500).send('invalid score');
-	// 	}
-
-	// 	if (!score || score.owner !== userId) {
-	// 		debug('invalid owner score[' + score.owner + ' logged user[' + userId + ']');
-	// 		return res.status(500).send('invalid owner');
-	// 	}
-
-		next(null);
-	// });
+	daoArticle.getArticle(articleId, function(err, result){
+		if(err || result[0].iduser !== userId){
+			res.status(500).send('Error, invalid id, or the article is not accesible');
+		}else{
+			next(null);
+		}
+	});
 }
 
 function ensureIdFromToken(req, res, next) {

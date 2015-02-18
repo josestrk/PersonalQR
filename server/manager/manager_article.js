@@ -1,13 +1,17 @@
 var daoArticle = require('../dao/dao_article');
 
 function createArticle(article, callback) {
-    article["likes"]= "";
+    article["likes"]= [];
     article["coments"]=[];
   daoArticle.createArticle(article, callback);
 }
 
 function comment(articleId, comment, name, iduser, callback){
   daoArticle.comment(articleId, comment, name, iduser, callback);
+}
+
+function delArticlesAll(callback){
+  daoArticle.delArticlesAll(callback);
 }
 
 function editArticle(article, callback) {
@@ -34,6 +38,10 @@ function delArticle(articleId, callback) {
 
 function getArticlesAll(callback, skip) {
   daoArticle.getArticlesAll(callback, skip);
+}
+
+function getmyarticles(skip, userId, callback) {
+  daoArticle.getmyarticles(skip, userId, callback);
 }
 
 function setArticle(articleId, data, callback){
@@ -79,5 +87,7 @@ module.exports = {
 	setArticle: setArticle,
   editArticle: editArticle,
   searchbytopic : searchbytopic,
-  comment : comment
+  comment : comment,
+  delArticlesAll : delArticlesAll,
+  getmyarticles : getmyarticles
 };

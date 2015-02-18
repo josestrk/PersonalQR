@@ -52,7 +52,7 @@
                     <github-card user="Josestrk" class="card"></github-card>
 <!--                    <main-index></main-index>   -->
                     <instagram-card clientId='josestrk'></instagram-card>
-                    
+
                 </div>
             </core-card>
         </div>
@@ -78,12 +78,11 @@
             domReady: function(){
                 this.rellenarProfile();
             },
-            setfollow : function () {
-              document.getElementById('user').datos.following.indexOf(id) === -1 ? this.$.unfollow.style.display = 'none' : this.$.follow.style.display = 'none';
+            setfollow : function (res) {
+              res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
             },
             rellenarProfile : function (){
               var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
-
               if (id !== '500') {
               doAjax({
                     type: 'GET',
@@ -92,11 +91,12 @@
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
                     this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;
-                    this.$.followers.innerHTML = result.followers.length != 1 ? result.followers.length : "0" ;
-                    this.$.following.innerHTML = result.following.length != 1 ? result.following.length : "0" ;
-                    this.$.numpost.innerHTML = result.post.length != 1 ? result.post.length : "0" ;
+                    this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
+                    this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+                    this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
+                    debugger
                     if (document.getElementById('user').datos._id !== result._id){
-                      this.setfollow();
+                      this.setfollow(result);
                     }else{
                       this.$.unfollow.style.display = 'none';
                       this.$.follow.style.display = 'none';

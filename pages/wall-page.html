@@ -20,7 +20,7 @@
           var ajaxhandler = this.$.ajaxhandler;
           ajaxhandler.getAllArticles(0,function (result){
             if(result){
-              //hasta aqui va bien el result de
+              result.shooter= ajaxhandler.getAllArticles;
               this.asyncFire('core-signal', {name: "sender-list", data:result});
             }
           }.bind(this));
