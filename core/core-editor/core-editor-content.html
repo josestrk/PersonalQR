@@ -34,9 +34,7 @@
 
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
   <core-card id="container" layout vertical>
-    <div id="container2">
-      <div id="content" aria-invalid="false"></div>
-    </div>
+    <div id="content" aria-invalid="false"></div>
   </core-card>
 
 </template>
@@ -58,15 +56,7 @@
           'halloreundo': {}
         },
         editable: true,
-        toolbar: 'halloToolbarFixed',
         placeholder: 'Write here the content of your article'
-      });
-
-      jQuery(content).on('halloactivated', function() {
-        console.log("Activated");
-        debugger
-        //jQuery(jQuery('.hallotoolbar')[0]).removeAttr('style');
-        //jQuery(jQuery('.hallotoolbar')[0]).prependTo(this);
       });
     }
   });
