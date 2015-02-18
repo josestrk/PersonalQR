@@ -1,0 +1,92 @@
+<polymer-element name="input-config" attributes="type icon setting info" extense="config-page">
+
+  <template>
+    <style>
+      .item-thumb {
+        padding: 10px;
+      }
+      .item-content {
+        padding: 10px 15px;
+        border-bottom: 1px solid #AAA;
+      }
+      .item-message{
+        line-height: 1.2;
+        font-size: 23px;
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+      .item-info {
+        color: #abafb8;
+        font-size: 16px;
+      }
+      .item-button{
+        padding: 20px;
+        border-bottom: 1px solid #AAA;
+      }
+      #stat{
+        display: none;
+        transition: opacity 1s ease-in-out;
+      }
+      #clear{
+        display: none;
+      }
+    </style>
+      
+    <div class="item-thumb">
+        <paper-icon-button icon="{{icon}}"></paper-icon-button>
+    </div>  
+    <div class="item-content" flex three>
+        <div class="item-message">{{setting}}</div>
+        <div class="item-info">{{info}}</div>
+    </div>
+    <div class="item-button" flex seven>
+        <div class="input" horizontal layout>
+        <template if="{{ type == 'core-input' }}">
+            <input id="input" placeholder="info" is="core-input" on-focus="{{edit}}" on-blur="{{edited}}" onmouseout="{{edited}}" flex>
+            <core-icon id="clear" icon="cancel" style="width: 20px; height: 20px;" on-click="{{clear}}"></core-icon>
+            <core-icon id="stat" icon="done" style="width: 20px; height: 20px;" on-click="{{clean}}"></core-icon>
+        </template>
+        <template if="{{ type == 'form-field' }}">
+           <content select='form-field'></content>
+        </template>
+        </div>
+    </div>
+    
+  </template>
+  <script>
+    Polymer({
+      domReady:function(){
+        if( this.type == 'core-input' && this.$.input.value != undefined )
+            this.$.clear.style.display='block';
+      },
+      clear:function(){
+        this.$.clear.style.display='none';
+        this.$.stat.icon='done';
+        this.$.stat.style.opacity= '1';
+        this.$.input.value='';
+        this.$.input.focus();
+      },
+      clean:function(){
+        this.$.stat.style.display='none';
+        this.$.stat.style.opacity= '1';
+        this.$.clear.style.display='block';
+      },
+      edit:function(){
+        this.$.stat.style.color= '#444';
+        this.$.stat.style.opacity= '1';  
+        this.$.clear.style.display='none';
+        this.$.stat.icon='done';
+        this.$.stat.style.display='block';
+      },
+      edited:function(){
+        if(this.$.input.value != ''){
+            this.$.stat.icon='done-all';
+            this.$.stat.style.color= 'green';
+            this.$.stat.style.opacity= '0.09';
+            console.log(this.$.input.value);
+        }
+      }
+    });
+
+  </script>
+</polymer-element>

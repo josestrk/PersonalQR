@@ -16,7 +16,7 @@
 <link rel="import" href="../bower_components/core-item/core-item.html">
 
 <link rel="import" href="../core/core-ajax-handler.html">
-<link rel="import" href="../core/form-field.html">
+<link rel="import" href="../core/core-own-signin/core-own-signin.html">
 <link rel="import" href="social-signs.html">
 
 <polymer-element name="signin-page">
@@ -142,15 +142,12 @@
           <core-card id="delegated_form" center-justified vertical layout>
             <social-signs></social-signs>
           </core-card>
+          
           <core-card id="signin_form" center-justified vertical layout>
-            <form-field
-              id="username"
-              label="Username"
-              icon="account-circle"
-              errorMsg="Please write a valid username"
-              checkInDB="true"
-              regexp=".{3,}"
-            ></form-field>
+            <core-own-sign></core-own-sign>  
+          </core-card>
+<!--
+            <form-field id="username" label="Username"  icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}" ></form-field>
             <form-field
               id="email"
               type="email"
@@ -196,6 +193,7 @@
           </core-card>
         </core-card>
     </core-card>
+-->
   </template>
 
   <script>

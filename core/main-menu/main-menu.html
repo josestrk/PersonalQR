@@ -63,7 +63,7 @@
           <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
           <core-qr id="{{id}}"></core-qr>
           <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"></core-icon-button>
-          <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalcall}}"></core-icon-button>
+          <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"></core-icon-button>
           <template if="{{imenu=='Settings'}}">
             <core-add class="right"></core-add>
           </template>
@@ -116,8 +116,8 @@
             this.startProgress();
           }
         },
-        personalcall: function(){
-          window.location.hash = "/pqr/?id=" + this.idOfLoggedUser;
+        personalCall: function(){
+          document.querySelector('app-router').go('/pqr/?id=' + this.idOfLoggedUser);
         },
         showAdd: function (e, detail, sender){
           document.querySelector('app-router').go('/settings');
