@@ -37,7 +37,7 @@
             <img class="img" id='photo' src=""/>
             <user-name id="name"></user-name>
             <user-account id="email"></user-account>
-            <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
+            <span id="followers"> </span><span id="following"></span>
           </id-card>
         </nav>
         <nav flex>
@@ -152,12 +152,11 @@
             this.$.email.innerHTML = result.email ? result.email : "" ;
             this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
             this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-            this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
             this.idOfLoggedUser = result._id;
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = "Fallo al obtener el perfil de usuario";
+            errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Fallo al obtener el perfil de usuario";
             errorToast.show();
           });
         }

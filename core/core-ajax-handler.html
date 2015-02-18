@@ -5,7 +5,6 @@
     (function() {
       var base = '/';
       function defaultAjaxErrorHandler(xhr, err, desc) {
-        console.log(xhr);
         var errorToast = document.querySelector('#errorToast');
         errorToast.text = '[' +xhr.status + '] ' + desc + ': ' + xhr.responseText.split(':')[1];
         errorToast.show();
@@ -310,7 +309,6 @@
             type: 'GET',
             url: 'routes_topic/topic?letter='+datos
           },function(result) {
-            console.log(result);
             callback(result);
           }.bind(this),
           function(xhr, err, desc){

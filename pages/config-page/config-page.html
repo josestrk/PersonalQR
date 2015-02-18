@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../img/social-icons.html">
 <link rel="import" href="input-config.html">
 <link rel="import" href="pt-config.html">
 
@@ -37,37 +38,39 @@
       <div class="separator"></div>
       <div class="list">
         <div class="block">
-          <template repeat="{{i in ['icard','pcard','icard','pcard','icard']}}">
-            <pt-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" horizontal layout>
+          <template repeat="{{i in ['icard','pcard','icard']}}">
+              <pt-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" horizontal layout>
               <paper-toggle-button checked></paper-toggle-button>
             </pt-config>
           </template>
         </div>
         <div class="block">  
-          <template repeat="{{i in ['icard','pcard','icard']}}">
-            <input-config class="{{i}}" setting="Setting" info="info" icon="chevron-right" type="core-input"  horizontal layout></input-config>
+          <template repeat="{{i in pages}}">
+            <input-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" horizontal layout></input-config>
           </template>
         </div>
         <div class="block">
-            <input-config class="icard" setting="Setting" info="info" icon="verified-user" type="form-field" horizontal layout>
-              <form-field id="username" label="Username" icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}"></form-field>
-            </input-config>
-            <input-config class="icard" setting="Setting" info="info" icon="verified-user" type="form-field" horizontal layout>
-              <form-field id="username" label="Username" icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}"></form-field>
-            </input-config>
-            <input-config class="icard" setting="Setting" info="info" icon="verified-user" type="form-field" horizontal layout>
-              <form-field id="username" label="Username" icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}"></form-field>
-            </input-config>
-          </template>
+            <div>Cambios de perfil como en el inicio</div>
         </div>
       </div>
     </main-menu>
   </template>
 
   <script>
-    Polymer({
-    });
-
+  (function(){      
+     Polymer({
+        ready: function() {
+            this.pages = [
+              {class:'icard', setting:"Facebook", info:"Your personal facebook link", icon:"social:post-facebook", value:""},
+              {class:'pcard', setting:"Twittwer", info:"Your personal twitter link", icon:"social:post-twitter", value:""},
+              {class:'icard', setting:"GitHub", info:"Your github", icon:"social:post-github", value:""},
+              {class:'pcard', setting:"Instagram", info:"Your Instagram", icon:"social:post-instagram", value:""},
+              {class:'icard', setting:"Google+", info:"Your profile g+", icon:"social:post-gplus", value:""},
+              {class:'pcard', setting:"Youtube", info:"Your youtube", icon:"social:post-youtube", value:""},
+            ];
+        }
+      });
+    }());
   </script>
 
 </polymer-element>

@@ -1,4 +1,4 @@
-<polymer-element name="input-config" attributes="type icon setting info" extense="config-page">
+<polymer-element name="input-config" attributes="icon setting info value" extense="config-page">
 
   <template>
     <style>
@@ -42,12 +42,9 @@
     <div class="item-button" flex seven>
         <div class="input" horizontal layout>
         <template if="{{ type == 'core-input' }}">
-            <input id="input" placeholder="info" is="core-input" on-focus="{{edit}}" on-blur="{{edited}}" onmouseout="{{edited}}" flex>
-            <core-icon id="clear" icon="cancel" style="width: 20px; height: 20px;" on-click="{{clear}}"></core-icon>
+            <input id="input" placeholder="info" is="core-input" on-focus="{{edit}}" on-blur="{{endedit}}" value="{{value}}" flex>
+            <core-icon id="clear" icon="clear" style="width: 20px; height: 20px;" on-click="{{clear}}"></core-icon>
             <core-icon id="stat" icon="done" style="width: 20px; height: 20px;" on-click="{{clean}}"></core-icon>
-        </template>
-        <template if="{{ type == 'form-field' }}">
-           <content select='form-field'></content>
         </template>
         </div>
     </div>
@@ -56,7 +53,7 @@
   <script>
     Polymer({
       domReady:function(){
-        if( this.type == 'core-input' && this.$.input.value != undefined )
+        if (this.$.input.value != '' )
             this.$.clear.style.display='block';
       },
       clear:function(){
@@ -78,12 +75,14 @@
         this.$.stat.icon='done';
         this.$.stat.style.display='block';
       },
-      edited:function(){
-        if(this.$.input.value != ''){
+      endedit:function(){
+        if ( this.$.input.value != '' ){
             this.$.stat.icon='done-all';
             this.$.stat.style.color= 'green';
             this.$.stat.style.opacity= '0.09';
             console.log(this.$.input.value);
+        }else{
+            this.$.stat.style.opacity= '0.00';
         }
       }
     });

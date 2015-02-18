@@ -42,7 +42,7 @@
                     <img class="img" id='photo' src="{{ this.photoUrl }}"/>
                     <user-name id="name"></user-name>
                     <user-account id="email"></user-account>
-                    <span id="followers"> </span><span id="following"> </span><span id="numpost"></span>
+                    <span id="followers"> </span><span id="following"> </span>
                 </id-card>
                   <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
                   <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
@@ -93,8 +93,6 @@
                     this.$.email.innerHTML = result.email ? result.email : "" ;
                     this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
                     this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-                    this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
-                    debugger
                     if (document.getElementById('user').datos._id !== result._id){
                       this.setfollow(result);
                     }else{
