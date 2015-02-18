@@ -27,15 +27,16 @@
 		socket.on('disconnect', function() {
 		});
 	</script>
-    
+
   <link href='style/OpenSans-Regular.ttf' rel='import' type='application/x-font-ttf'>
   <link rel="import" href="bower_components/font-roboto/roboto.html" >
-  
+
   <link rel="import" href="bower_components/polymer/polymer.html">
   <link rel="import" href="bower_components/app-router/app-router.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   <link rel="import" href="bower_components/core-transition/core-transition.html">
   <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-signals/core-signals.html">
 
   <link rel="import" href="core/core-user/core-user.html">
   <link rel="import" href="core/core-index.html">
@@ -49,6 +50,7 @@
   <link rel="import" href="pages/config-page/config-page.html">
   <link rel="import" href="pages/contacts-page.html">
   <link rel="import" href="pages/person-card.html">
+
   <title>PersonalQr</title>
 </head>
 
@@ -62,7 +64,7 @@
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall" element="wall-page"></app-route>
         <app-route path="/profile" element="myp-page"></app-route>
-        <app-route path="/search" element="search-page"></app-route>
+        <app-route path="/search/" element="search-page"></app-route>
         <app-route path="/pqr/" element="person-card"></app-route>
         <app-route path="/scan" element="core-scanqr"></app-route>
         <app-route path="/editor" element="editor-page"></app-route>

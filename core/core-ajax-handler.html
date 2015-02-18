@@ -254,6 +254,22 @@
             errorToast.show();
           });
         },
+        searchbytopic: function(topic,callback){
+          var datos={topic: topic}
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/searchbytopic',
+            data : JSON.stringify(datos)
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error, no topics for this query';
+            errorToast.show();
+            callback(false);
+          });
+        },
         deleteArticles: function(id,callback){
           doAjax({
             type: 'DELETE',

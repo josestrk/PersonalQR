@@ -76,6 +76,7 @@
       localStorage.setItem('token', token);
       socket.connect(localStorage.token);
       this.logged = true;
+      this.fire('tokenchanged');
 
     }
 
@@ -158,6 +159,7 @@
       login: function() {
         authorize('login').done(function(data) {
           localStorage.token = data.token;
+          this.fire('tokenchanged');
           this.logged = true;
           socket.connect(data.token);
           showMsg('Logged with Google+');
@@ -169,6 +171,7 @@
       loginfb: function() {
         authorize('loginfb').done(function(data) {
           localStorage.token = data.token;
+          this.fire('tokenchanged');
           this.logged = true;
           socket.connect(data.token);
           showMsg('Logged with Facebook');
@@ -195,7 +198,6 @@
         if (socket) {
           socket.disconnect();
         }
-        document.location.reload();
       }
     });
   }());

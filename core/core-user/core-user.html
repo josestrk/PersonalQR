@@ -4,7 +4,6 @@
 <template>
   <style>
   </style>
-  <core-signals  on-core-signal-userLoged="{{getUser}}"></core-signals>
 </template>
 
 <script>
@@ -16,8 +15,9 @@
         if(localStorage.token !== undefined){
           this.getUser();
         }
-        addEventListener('userLoged', function(e) {
-          this.getUser();
+        var that = this;
+        addEventListener('tokenchanged', function(e) {
+          that.getUser();
         });
       },
       data:function(objeto){
@@ -39,7 +39,6 @@
 
           $.ajax(options);
         }
-
         doAjax({
           type: 'GET',
           url: 'routes_user/profile',

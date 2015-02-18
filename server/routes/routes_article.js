@@ -80,7 +80,7 @@ function worker(io) {
 
 
   function searchbytopic(req, res) {
-    var topic =  req.body.topic;
+    var topic =  req.body.topic.toLowerCase();
     debug('Search of this topic -> ' + topic);
     articleManager.searchbytopic(topic, function(err, result){
       if(result){
@@ -111,7 +111,7 @@ function worker(io) {
 
     debug('Id -> ' + sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}));
 
-    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}));
+    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}).toLowerCase());
     Article["date"] = getDateTime();
     Article["bgimg"] = "http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
 
@@ -140,7 +140,7 @@ function worker(io) {
       Article["content"] = "";
     }
 
-    Article["topic"] = getTopics(sanitizeHtml(req.body.content));
+    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}).toLowerCase());
     Article["date"] = getDateTime();
 
     if (req.body.bgimg!==undefined) {

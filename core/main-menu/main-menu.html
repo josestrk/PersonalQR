@@ -135,6 +135,7 @@
         handleLogout: function(event, detail) {
           this.$.login.logout();
           document.querySelector('app-router').go('/');
+          document.location.reload();
         },
         logueado: function() {
           if ( ! localStorage.token ) {

@@ -1,14 +1,18 @@
 <link rel="import" href="../core/core-ajax-handler.html">
 <link rel="import" href="../core/core-list/core-list.html">
 
-<polymer-element name="search-page">
+<polymer-element name="search-page" atributtes="topic">
   <template>
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="Search" logged="{{login.logged}}" progress="{{$.progress}}">
-      <div class="title">Search</div>
+      <div class="title">Search: #{{topic}}</div>
       <paper-progress id="progress"></paper-progress>
       <core-list id="list"></core-list>
+      <template if="{{check}}">
+        <div class="separator"></div>
+        <div class="container">There are no post to this Topic, #{{topic}}</div>
+      </template>
     </main-menu>
 
   </template>
@@ -16,14 +20,17 @@
   <script>
     (function () {
       Polymer({
-        ready: function(){
-          var _id=document.getElementById("user").datos._id;
+        domReady: function(){
           var ajaxhandler = this.$.ajaxhandler;
-          ajaxhandler.getArticles( _id, function (result){
+          ajaxhandler.searchbytopic( this.topic, function (result){
+            if(result[0] === undefined){
+              this.check = true;
+            }
             if(result)
               this.asyncFire('core-signal', {name: "sender-list", data:result});
           }.bind(this));
-        }
+        },
+        check : false
       });
     })();
   </script>

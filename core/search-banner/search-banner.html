@@ -28,7 +28,7 @@
   <div class="typeahead-container">
     <div class="typeahead-field">
       <span class="typeahead-query">
-        <input id="q" name="q" type="search" placeholder="Search" autocomplete="off">
+        <input id="q" name="q" type="search" placeholder="Search Topic" on-keydown="{{lookenter}}" autocomplete="off">
       </span>
     </div>
   </div>
@@ -41,21 +41,21 @@
         function initializetopics(){
 
           var topics = new Bloodhound({
-              datumTokenizer: function (datum) {
-                  return Bloodhound.tokenizers.whitespace(datum.value);
-              },
-              queryTokenizer: Bloodhound.tokenizers.whitespace,
-              remote: {
-                  url: 'routes_topic/topic?letter=%QUERY',
-                  filter: function (topics) {
-                      // Map the remote source JSON array to a JavaScript object array
-                      return $.map(topics, function (topic) {
-                          return {
-                              value: topic.name
-                          };
-                      });
-                  }
+            datumTokenizer: function (datum) {
+                return Bloodhound.tokenizers.whitespace(datum.value);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+              url: 'routes_topic/topic?letter=%QUERY',
+              filter: function (topics) {
+                // Map the remote source JSON array to a JavaScript object array
+                return $.map(topics, function (topic) {
+                    return {
+                        value: topic.name
+                    };
+                });
               }
+            }
           });
 
           function search(){
@@ -72,6 +72,11 @@
         Polymer('search-banner', {
             domReady: function () {
               initializetopics.bind(this)();
+            },
+            lookenter : function(e, d, s){
+              if(e.keyCode === 13){
+                document.querySelector('app-router').go('/search/?topic='+s.value);
+              }
             }
         });
     }());

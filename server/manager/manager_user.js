@@ -23,7 +23,6 @@ function createUser(data, callback) {
 	data["socialMedia"]={};
 	data["followers"]=[];
 	data["following"]=[];
-	data["posts"]=[];
 	daoUser.createUser(data, callback);
 }
 

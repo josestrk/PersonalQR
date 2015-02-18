@@ -1,10 +1,20 @@
 var daoArticle = require('../dao/dao_article');
+var daoTopic = require('../dao/dao_topic');
 
 function createArticle(article, callback) {
-    article["likes"]= [];
-    article["coments"]=[];
+  article["likes"]= [];
+  article["coments"]=[];
   daoArticle.createArticle(article, callback);
+  createtopic();
 }
+
+function createtopic(){
+    daoTopic.createTopic(JSON.stringify('pruebas!!'), function(err, res){
+      console.log('introudicdo')
+      console.log(res);
+    });
+}
+
 
 function comment(articleId, comment, name, iduser, callback){
   daoArticle.comment(articleId, comment, name, iduser, callback);
@@ -15,9 +25,9 @@ function delArticlesAll(callback){
 }
 
 function editArticle(article, callback) {
-  // article["likes"]= "";
-  // article["coments"]=[];
   daoArticle.editArticle(article, callback);
+  daoTopic.createTopic(article.topic, function(err, res){
+  });
 }
 
 function getArticle(articleId, callback) {
