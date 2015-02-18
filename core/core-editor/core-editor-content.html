@@ -34,7 +34,9 @@
 
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
   <core-card id="container" layout vertical>
-    <div id="content" aria-invalid="false"></div>
+    <div id="container2">
+      <div id="content" aria-invalid="false"></div>
+    </div>
   </core-card>
 
 </template>
@@ -44,6 +46,7 @@
   Polymer({
     domReady: function() {
       var content = this.$.content;
+      var toolbox = this.$.toolbox;
 
       jQuery(content).hallo({
         plugins: {
@@ -61,6 +64,9 @@
 
       jQuery(content).on('halloactivated', function() {
         console.log("Activated");
+        debugger
+        //jQuery(jQuery('.hallotoolbar')[0]).removeAttr('style');
+        //jQuery(jQuery('.hallotoolbar')[0]).prependTo(this);
       });
     }
   });
