@@ -11,8 +11,19 @@
         font-size: 20px;
     }
     core-menu > core-item {
-        transition: all 300ms ease-in-out;
         padding: 13px 0px;
+    }
+    @media(max-height:720px){
+      #idcard{
+        display:none;
+      }
+      core-menu > core-item {
+        font-size:15px;
+        padding: 5px 0px;
+      }
+      .search{
+        height:50px;
+      }
     }
     .dropdown {
         padding: 12px 0px;
@@ -44,12 +55,11 @@
       left:95%;
     }
   </style>
-  <app-login id="login"></app-login>
 
-    <nav><search-banner horizontal layout center-justified center></search-banner>
+    <nav><search-banner class="search" horizontal layout center-justified center></search-banner>
     </nav>
     <nav>
-      <id-card id="idcard" layout vertical center center-justified>
+      <id-card id="idcard" vertical layout center center-justified>
         <img class="img" id='photo' src=""/>
         <user-name id="name"></user-name>
         <user-account id="email"></user-account>
@@ -70,12 +80,15 @@
             </template>
           </template>
       </core-menu>
+    </nav>
+    <nav>
       <core-menu>
         <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
         <core-icon icon="my-icons:logo"></core-icon>
       </core-menu>
       </template>
     </nav>
+    <app-login id="login"></app-login>
     </template>
 
     <script>
