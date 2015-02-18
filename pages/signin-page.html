@@ -142,65 +142,15 @@
           <core-card id="delegated_form" center-justified vertical layout>
             <social-signs></social-signs>
           </core-card>
-          
           <core-card id="signin_form" center-justified vertical layout>
             <core-own-sign></core-own-sign>  
           </core-card>
-<!--
-            <form-field id="username" label="Username"  icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}" ></form-field>
-            <form-field
-              id="email"
-              type="email"
-              label="E-mail address"
-              icon="mail"
-              errorMsg="Should be a valid email address"
-              checkInDB="true"
-              regexp="[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}"
-            ></form-field>
-            <form-field
-              id="name"
-              label="Your name"
-              icon="account-circle"
-              errorMsg="Please write a name"
-              regexp=".{3,}"
-            ></form-field>
-            <form-field
-              id="password"
-              type="password"
-              label="Choose password"
-              icon="lock"
-              errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
-              on-blur="{{checkPassword}}"
-              regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
-            ></form-field>
-            <form-field
-              id="password2"
-              type="password"
-              label="Re-enter password"
-              icon="lock"
-              errorMsg="Must be the same password"
-              on-blur="{{checkPassword}}"
-            ></form-field>
-            <form-field
-              id="bdate"
-              label="Birth date"
-              icon="redeem"
-              on-keydown="{{keydown}}"
-              errorMsg="Fill in a valid date.(dd-mm-yy)"
-              regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
-            ></form-field>
-            <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
-          </core-card>
-        </core-card>
+      </core-card>
     </core-card>
--->
   </template>
 
   <script>
   Polymer({
-    ready: function() {
-      this.addEventListener('blur', this.validateAll);
-    },
     fireLogin: function() {
       this.fire('login');
     },
@@ -214,48 +164,6 @@
         }.bind(this)).fail(function() {
           this.photoUrl = '';
         }.bind(this));
-      }
-    },
-    checkPassword: function(){
-      if (this.$.password2.$.input.value) {
-        if (this.$.password.$.input.value === this.$.password2.$.input.value) {
-          this.$.password2.$.icon.className = "green";
-          this.$.password2.error.visible = false;
-          return true;
-        } else {
-          this.$.password2.$.icon.className = "red";
-          this.$.password2.error.visible = true;
-          return false;
-        }
-      } else {
-        this.$.password2.$.icon.className = "";
-      }
-    },
-    validateAll: function() {
-      var fields = Array.prototype.slice.call(this.$.signin_form.querySelectorAll('form-field'));
-      var isValid = true;
-      var that = this;
-
-      Array.prototype.forEach.call(fields, function(field) {
-        /* A field is not valid if:
-         * 1) The data introduced is incorrect (mainly because there is a non-empty pattern and the data does not fit it)... OR
-         * 2) The data introduced is already in the database.
-         */
-
-        if ((field.$.input.pattern && !field.$.input.validity.valid) || field.error.inDB) {
-          isValid = false;
-        }
-      });
-
-      if (isValid) {
-        that.$.send.style.visibility = "visible";
-      } else {
-        that.$.send.style.visibility = "hidden";
-      }
-    },
-    keydown: function(event, detail, sender) {
-      if(event.keyCode === 13) {
-        this.validateAll();
       }
     },
     startProgress:function(){
