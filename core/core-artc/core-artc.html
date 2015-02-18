@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/core-field/core-field.html">
 <link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/hero-transition.html">
 <link rel="import" href="../../bower_components/core-animated-pages/transitions/cross-fade.html">
@@ -30,7 +31,7 @@
               <div drawer>
                 <paper-tabs id="paper_manager" class="transparent-teal" vertical center layout>
                     <paper-tab on-click="{{dialog}}" id="paper_tab-dw" inline flex center-center horizontal layout>
-                  	   <core-icon icon="delete" id="manage-ico"></core-icon>
+                       <core-icon icon="delete" id="manage-ico"></core-icon>
                        <span id="txt">Delete</span>
                      </paper-tab>
                      <paper-tab on-click="{{edit}}" id="paper_tab-dw" inline flex center-center horizontal layout>
@@ -70,7 +71,7 @@
             </paper-tabs>
             <div id="inputcomment" horizontal layout>
               <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" flex>
-              <paper-fab icon="create" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
+              <paper-fab icon="send" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
             </div>
           </li>
         </ul>
@@ -86,10 +87,10 @@
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
-          <paper-tab on-click="{{dialog}}" id="paper_tab3" inline flex center-center horizontal layout>
-                     <core-icon icon="face-unlock" id="core_icon_button2"></core-icon>
-                     <span id="txt">Share</span>
-          </paper-tab>
+          <core-icon-button id="paper_tab3" disabled inline flex center-center horizontal layout style="opacity:0.2">
+                     <core-icon icon="perm-data-setting" id="core_icon_button2"></core-icon>
+                     <span id="txt">Settings</span>
+          </core-icon-button>
         </paper-tabs>
     </core-card>
 
@@ -157,7 +158,6 @@
         }
         Polymer({
           domReady: function () {
-            debugger
             this.coments = JSON.parse(this.coments);
             loadPost.bind(this);
             this.showDelete() ? this.show='true' : this.show='';
@@ -189,7 +189,7 @@
           },
           flag: true,
           showDelete: function(){
-            return document.URL.split('/').reverse()[0].split('=').reverse()[0] == this.owner;
+            return document.getElementById('user').datos._id == this.owner;
           },
           dialog: function(){
             this.$.dia.toggle();
@@ -202,7 +202,6 @@
           },
           submit: function(){
             var datos={
-              iduser: document.URL.split('/').reverse()[0].split('=').reverse()[0],
               title: this.$.input.value,
               content:this.$.input2.value,
               bgimg: this.bgimg,
@@ -225,6 +224,15 @@
           },
           sendComent: function(){
             console.log(this.$.inputadd.value);
+            var ajaxhandler = this.$.ajaxhandler;
+
+            var articleId =  this.idart;
+            var comment =  this.$.inputadd.value;
+
+            ajaxhandler.comment(articleId, comment);
+
+            this.coments.push({com : comment, user : document.getElementById('user').datos.name , _id : document.getElementById('user').datos._id });
+
             this.$.inputcomment.style.display='none';
             this.$.comentsadd.style.display='flex';
           }

@@ -22,8 +22,8 @@ function worker(io) {
   router.get('/validateUserByEmail', validateUserByEmail);
   router.get('/verifyUsername', verifyUsername);
   router.get('/verifyEmail', verifyEmail);
-  router.put('/user/:userId', ensureAuth, ensureOwner, setUser);
-  router.delete('/user/:userId', ensureAuth, ensureOwner, delUser);
+  router.put('/user/:userId', ensureAuth, setUser);
+  router.delete('/user/:userId', ensureAuth, delUser);
   router.delete('/deleteAll', delUserAll);//provisional
 
   router.post('/follow',  ensureAuth, followUser);

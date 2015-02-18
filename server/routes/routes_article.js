@@ -15,15 +15,29 @@ function worker(io) {
   router.post('/article', ensureAuth, createArticle);
   router.post('/editarticle', ensureAuth, ensureOwner, editArticle);
   // router.get('/article/:articleId', getArticle);
-  router.get('/article', ensureAuth, getUserArticles);
+  router.get('/article/:userId', getArticles);
+  router.get('/myarticles/:id', ensureAuth, getUserArticles);
   router.get('/articles/:id', getArticlesAll);
   //creo que ha quedado deprecated
   router.put('/article/:articleId', ensureAuth, ensureOwner, setArticle);
   router.delete('/article/:articleId', ensureAuth, ensureOwner, delArticle);
+  router.delete('/deleteall/', delArticlesAll);
 
   router.post('/searchbytopic', searchbytopic);
   router.post('/addcomment', ensureAuth, comment);
 
+
+
+  function delArticlesAll(req, res) {
+    debug('Deleting all articles');
+    articleManager.delArticlesAll(function(err, result){
+        if(result === null){
+          res.status(404).send('There was no articles in database');
+        }else{
+          res.send('All articles were removed');
+        }
+      });
+  }
 
 
   function comment(req, res) {
@@ -41,10 +55,27 @@ function worker(io) {
         debug('Time of response ->');
         res.json(result);
       }else{
-        res.status(404).send('Topic not found');
+        res.status(404).send('Not a valid article, or database error');
       }
     });
   }
+
+  // function like(req, res) {
+  //   var articleId =  req.body.articleId;
+  //   var name = req.user.name;
+  //   var iduser = req.globalIdOfUser;
+  //   debug('like from this user -> ' + name);
+  //   debug('to this artId -> ' + articleId);
+  //
+  //   articleManager.like(articleId, comment, name, iduser, function(err, result){
+  //     if(result){
+  //       debug('Time of response ->');
+  //       res.json(result);
+  //     }else{
+  //       res.status(404).send('Not a valid article, or database error');
+  //     }
+  //   });
+  // }
 
 
 
@@ -78,7 +109,9 @@ function worker(io) {
       Article["content"] = "";
     }
 
-    Article["topic"] = getTopics(sanitizeHtml(req.body.content));
+    debug('Id -> ' + sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}));
+
+    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}));
     Article["date"] = getDateTime();
     Article["bgimg"] = "http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
 
@@ -93,12 +126,7 @@ function worker(io) {
     var Article = {};
 
     //controladores de acceso
-    if (req.body.iduser !== undefined){
-      Article["iduser"] = req.body.iduser;
-    } else {
-      //esto no se deberia permitir pero... de momento lo dejamos..
-      Article["iduser"] = "";
-    }
+    Article["iduser"] = req.globalIdOfUser;
 
     if(req.body.title !== undefined){
       Article["title"] = sanitizeHtml(req.body.title, {allowedTags: []});
@@ -112,7 +140,7 @@ function worker(io) {
       Article["content"] = "";
     }
 
-    Article["topic"] = getTopics(req.body.content);
+    Article["topic"] = getTopics(sanitizeHtml(req.body.content));
     Article["date"] = getDateTime();
 
     if (req.body.bgimg!==undefined) {
@@ -181,9 +209,20 @@ function worker(io) {
   //   });
   // }
 
+  function getArticles(req, res) {
+    debug('Id -> ' + req.param('userId'));
+    articleManager.getUserArticles(req.param('userId'), function(err, result){
+      if(result[0] === undefined){
+        res.status(404).send('No articles found for this user');
+      }else{
+        res.json(result);
+      }
+    });
+  }
+
   function getUserArticles(req, res) {
-    articleManager.getUserArticles(req.globalIdOfUser, function(err, result){
-      // result["date"]=getDateTime()-result["date"];
+    var skip = req.param('id');
+    articleManager.getmyarticles(skip, req.globalIdOfUser, function(err, result){
       res.json(result);
     });
   }

@@ -24,10 +24,10 @@
     <link rel="stylesheet" href="in-style.css">
 
     <app-login id="login"></app-login>
-    
+
     <core-iconset id="my-icons" src="../../img/myicons.png" width="83" iconSize="25" icons="scan qr logo">
     </core-iconset>
-    
+
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
       <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
         <nav><search-banner horizontal layout center-justified center></search-banner>
@@ -76,8 +76,8 @@
       <content></content>
       <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
       <content select="#list"></content>
-      
-        
+
+
     </core-scaffold>
   </template>
 
@@ -112,8 +112,9 @@
           if (localStorage.token !== undefined) {
             this.rellenarProfile();
           }
-          if( this.progress != undefined )
+          if( this.progress != undefined ){
             this.startProgress();
+          }
         },
         personalcall: function(){
           window.location.hash = "/pqr/?id=" + this.idOfLoggedUser;
@@ -149,9 +150,9 @@
             this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
             this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
             this.$.email.innerHTML = result.email ? result.email : "" ;
-            this.$.followers.innerHTML = result.followers.length != 1 ? result.followers.length : "0" ;
-            this.$.following.innerHTML = result.following.length != 1 ? result.following.length : "0" ;
-            this.$.numpost.innerHTML = result.post.length != 1 ? result.post.length : "0" ;
+            this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
+            this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+            this.$.numpost.innerHTML = result.post ? result.post.length : "0" ;
             this.idOfLoggedUser = result._id;
           }.bind(this),
           function(xhr, err, desc){
