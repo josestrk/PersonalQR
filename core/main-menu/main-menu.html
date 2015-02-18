@@ -10,18 +10,33 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 
-<link rel="import" href="../search-banner/search-banner.html">
-<link rel="import" href="../id-card/id-card.html">
-<link rel="import" href="../core-artc/core-artc.html">
 <link rel="import" href="../core-notifi/core-notifi.html">
 <link rel="import" href="../core-qr/core-qr.html">
-<link rel="import" href="../core-add/core-add.html">
+<link rel="import" href="core-slider-bar.html">
 
 <link rel="stylesheet" href="out-style.css">
 
-<polymer-element name="main-menu" attributes="imenu, logged, progress">
+<polymer-element name="main-menu" attributes="imenu, progress, color">
   <template>
-    <link rel="stylesheet" href="in-style.css">
+    <style>
+    :host{
+        color: #444;
+        font-family: 'OpenSans-Regular','RobotoDraft', sans-serif;
+    }
+    ::content paper-progress{
+        width: 100%;
+        display: block;
+        padding: 0px;
+        height: 4px;
+        box-shadow: rgba(0, 0, 0, 0.598039) 0px 2px 8px, rgba(0, 0, 0, 0.398039) 0px 0px 3px;
+    }
+    ::content paper-progress::shadow #activeProgress {
+        background-color: #0F9DDF;
+    }
+    ::content .separator{
+      height: 33px;
+    }
+    </style>
 
     <app-login id="login"></app-login>
 
@@ -29,44 +44,16 @@
     </core-iconset>
 
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
-      <core-header-panel navigation flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);">
-        <nav><search-banner horizontal layout center-justified center></search-banner>
-        </nav>
-        <nav>
-          <id-card id="idcard" layout vertical center center-justified>
-            <img class="img" id='photo' src=""/>
-            <user-name id="name"></user-name>
-            <user-account id="email"></user-account>
-            <span id="followers"> </span><span id="following"></span>
-          </id-card>
-        </nav>
-        <nav flex>
-          <template if="{{login.logged}}">
-            <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
-              <template repeat="{{page in pages}}">
-                <core-item icon="{{ imenu === page.name ? page.logo+'-outline' : page.logo }}" label="{{page.name}}" active="{{ imenu === page.name}}">
-                  <a href="{{page.hash}}"></a>
-                </core-item>
-              </template>
-            </core-menu>
-          </template>
-          <core-menu hidden?="{{!login.logged}}">
-            <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
-            <core-icon icon="my-icons:logo"></core-icon>
-          </core-menu>
-        </nav>
-      </core-header-panel>
+
+      <core-slider-bar navigation imenu="{{imenu}}" color="{{color}}" flex style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);"></core-slider-bar>
 
       <core-toolbar tool flex>
         <content select=".title"></content>
-        <template if="{{login.logged}}">
+        <template if="{{logged}}">
           <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
           <core-qr id="{{id}}"></core-qr>
           <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"></core-icon-button>
           <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"></core-icon-button>
-          <template if="{{imenu=='Settings'}}">
-            <core-add class="right"></core-add>
-          </template>
         </template>
       </core-toolbar>
 
@@ -83,44 +70,19 @@
 
   <script>
     (function () {
-      function loadMenu() {
-        var _id=this.iduser;
-        this.pages = [
-          {name: 'Wall', logo: 'info', hash: '/#/wall'},
-          {name: 'My profile', logo: 'social:person', hash: '/#/profile'},
-          {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
-          {name: 'Settings', logo: 'lock', hash: '/#/settings'},
-          {name: 'Contacts', logo: 'social:people', hash: '/#/contacts'}
-        ];
-      }
-      function doAjax(options, success, error) {
-        options.dataType = 'json';
-        options.contentType = 'application/json; charset=UTF-8';
-        options.success = success;
-        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-        options.beforeSend = function(xhr) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
-        };
-        $.ajax(options);
-      }
       Polymer({
         domReady: function () {
-          loadMenu.bind(this)();
           this.login=this.$.login;
-          this.logueado();
-          this.$.login.logged = Boolean(localStorage.token);
-          if (localStorage.token !== undefined) {
-            this.rellenarProfile();
-          }
+          this.logged = Boolean(localStorage.token);
           if( this.progress != undefined ){
             this.startProgress();
           }
         },
         personalCall: function(){
-          document.querySelector('app-router').go('/pqr/?id=' + this.idOfLoggedUser);
+          document.querySelector('app-router').go('/pqr/?id=' + document.getElementById('user').datos._id);
         },
-        showAdd: function (e, detail, sender){
-          document.querySelector('app-router').go('/settings');
+        scanQR: function(){
+          document.querySelector('app-router').go('/scan');
         },
         startProgress: function(){
           this.progress.value += 3;
@@ -128,40 +90,8 @@
         },
         reloadbar: function(){
            this.progress.value=0;
-        },
-        scanQR: function(){
-          document.querySelector('app-router').go('/scan');
-        },
-        handleLogout: function(event, detail) {
-          this.$.login.logout();
-          document.querySelector('app-router').go('/');
-          document.location.reload();
-        },
-        logueado: function() {
-          if ( ! localStorage.token ) {
-            this.$.idcard.style.display = "none";
-          }
-        },
-        idOfLoggedUser : true,
-        rellenarProfile : function (){
-          doAjax({
-            type: 'GET',
-            url: 'routes_user/profile',
-          },function( result ) {
-            this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-            this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
-            this.$.email.innerHTML = result.email ? result.email : "" ;
-            this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
-            this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-            this.idOfLoggedUser = result._id;
-          }.bind(this),
-          function(xhr, err, desc){
-            var errorToast = document.querySelector('#errorToast');
-            errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Fallo al obtener el perfil de usuario";
-            errorToast.show();
-          });
         }
-        });
+      });
     }());
   </script>
 </polymer-element>

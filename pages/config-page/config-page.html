@@ -1,9 +1,8 @@
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/core-icon/core-icon.html">
-<link rel="import" href="../../bower_components/core-input/core-input.html">
+<link rel="import" href="../../core/core-config/input-config.html">
+<link rel="import" href="../../core/core-config/pt-config.html">
+<link rel="import" href="../../core/core-own-sign.html">
 <link rel="import" href="../../img/social-icons.html">
-<link rel="import" href="input-config.html">
-<link rel="import" href="pt-config.html">
+
 
 <polymer-element name="config-page">
 
@@ -29,11 +28,8 @@
       .pcard{
         background: #FFF;
       }
-      .separator{
-        height: 20px;
-      }
     </style>
-    <main-menu iMenu="Settings">
+    <main-menu iMenu="Settings" color='#455A64'>
       <div class="title">Settings</div>
       <div class="separator"></div>
       <div class="list">
@@ -44,29 +40,30 @@
             </pt-config>
           </template>
         </div>
-        <div class="block">  
+        <div class="block">
           <template repeat="{{i in pages}}">
-            <input-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" horizontal layout></input-config>
+            <input-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" value="{{i.value}}" horizontal layout>
+            </input-config>
           </template>
         </div>
         <div class="block">
-            <div>Cambios de perfil como en el inicio</div>
+          <core-own-sign></core-own-sign>
         </div>
       </div>
     </main-menu>
   </template>
 
   <script>
-  (function(){      
+  (function(){
      Polymer({
-        ready: function() {
+        domReady: function() {
             this.pages = [
               {class:'icard', setting:"Facebook", info:"Your personal facebook link", icon:"social:post-facebook", value:""},
-              {class:'pcard', setting:"Twittwer", info:"Your personal twitter link", icon:"social:post-twitter", value:""},
+              {class:'pcard', setting:"Twittwer", info:"Your personal twitter link", icon:"social:post-twitter", value:"Twitter"},
               {class:'icard', setting:"GitHub", info:"Your github", icon:"social:post-github", value:""},
               {class:'pcard', setting:"Instagram", info:"Your Instagram", icon:"social:post-instagram", value:""},
               {class:'icard', setting:"Google+", info:"Your profile g+", icon:"social:post-gplus", value:""},
-              {class:'pcard', setting:"Youtube", info:"Your youtube", icon:"social:post-youtube", value:""},
+              {class:'pcard', setting:"Youtube", info:"Your youtube", icon:"social:post-youtube", value:""}
             ];
         }
       });
