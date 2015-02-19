@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
+
+<polymer-element name="core-button" attributes="name">
+
+<template>
+  <style>
+    :host {
+      width: auto;
+      height: auto;
+      border: 1px solid rgb(192, 192, 192);
+      border-radius: 4px;
+      text-align: center;
+      padding: 2px;
+      margin: auto 2px;
+      background-color: rgb(224, 224, 224);
+      text-shadow: 10px black;
+    }
+    :host:active {
+      background-color: yellow;
+    }
+  </style>
+
+  <core-card id="button">{{name}}</core-card>
+
+</template>
+
+<script>
+(function () {
+  Polymer({
+    ready: function(){
+      this.addEventListener('click', this.change);
+    },
+    change: function() {
+      console.log('change');
+    }
+  });
+})();
+</script>
+
+</polymer-element>
