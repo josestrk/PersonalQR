@@ -62,13 +62,6 @@
         height: 70px;
         margin: auto 20px auto auto;
       }
-      #send {
-        background: rgb(137, 191, 79);
-        visibility: hidden;
-        position: relative;
-        left: 122px;
-        top: 39px;
-      }
       paper-progress::shadow #activeProgress {
         background-color: #e9f613;
       }
@@ -76,13 +69,13 @@
         margin: 0px 40px 0px 0px;
       }
 
-      @media(max-width:320px){
+      @media(max-width:320px) {
         #delegated_form {
           width: 190px;
         }
       }
 
-      @media(max-width:450px){
+      @media(max-width:450px) {
         #delegated_form {
           position: absolute;
           top: 10px;
@@ -112,9 +105,17 @@
           background-color: rgb(255, 255, 255);
           background-image: none;
         }
-        #send {
-          left: 170px;
-          top: 10px;
+      }
+
+      @media(max-width: 750px) {
+        #core_logo {
+          width: 100%;
+        }
+
+        #delegated_form, #signin_form {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
         }
       }
 
@@ -143,7 +144,7 @@
             <social-signs></social-signs>
           </core-card>
           <core-card id="signin_form" center-justified vertical layout>
-            <core-own-sign></core-own-sign>
+            <core-own-signin></core-own-signin>
           </core-card>
       </core-card>
     </core-card>
@@ -165,21 +166,6 @@
           this.photoUrl = '';
         }.bind(this));
       }
-    },
-    startProgress:function(){
-      var datos={
-        username: this.$.username.$.field.input.value,
-        name: this.$.name.$.field.input.value,
-        mail: this.$.email.$.field.input.value,
-        bdate: this.$.bdate.$.field.input.value,
-        password: this.$.password.$.field.input.value,
-      }
-      datos.type = "create";
-      console.log('sing-pg');
-      console.log(datos);
-      this.fire('login', JSON.stringify(datos));
-      // var ajaxhandler = this.$.ajaxhandler;
-      // ajaxhandler.create(JSON.stringify(datos));
     }
   });
   </script>

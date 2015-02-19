@@ -3,10 +3,30 @@
 <polymer-element name="core-own-signin">
 
 <template>
-    <style>
-    </style>
+  <style>
+    :host {
+      width: 100%;
+      height: 100%;
+    }
 
-    <form-field id="username" label="Username"  icon="account-circle" errorMsg="Please write a valid username" checkInDB="true" regexp=".{3,}" ></form-field>
+    #send {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      background-color: rgb(137, 191, 79);
+      visibility: hidden;
+    }
+  </style>
+
+  <div>
+    <form-field
+      id="username"
+      label="Username"
+      icon="account-circle"
+      errorMsg="Please write a valid username"
+      checkInDB="true"
+      regexp=".{3,}"
+    ></form-field>
     <form-field
       id="email"
       type="email"
@@ -48,46 +68,46 @@
       errorMsg="Fill in a valid date.(dd-mm-yy)"
       regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
     ></form-field>
-    <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
-
+  </div>
+  <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
 
 </template>
 
 <script>
-    Polymer({
-        ready: function() {
-            this.addEventListener('blur', this.validateAll);
-        },
-        checkPassword: function(){
-          if (this.$.password2.$.input.value) {
-            if (this.$.password.$.input.value === this.$.password2.$.input.value) {
-              this.$.password2.$.icon.className = "green";
-              this.$.password2.error.visible = false;
-              return true;
-            } else {
-              this.$.password2.$.icon.className = "red";
-              this.$.password2.error.visible = true;
-              return false;
-            }
-          } else {
-            this.$.password2.$.icon.className = "";
-          }
-        },
-        validateAll: function() {
-          var fields = Array.prototype.slice.call(this.$.signin_form.querySelectorAll('form-field'));
-          var isValid = true;
-          var that = this;
+  Polymer({
+    ready: function() {
+        this.addEventListener('blur', this.validateAll);
+    },
+    checkPassword: function(){
+      if (this.$.password2.$.input.value) {
+        if (this.$.password.$.input.value === this.$.password2.$.input.value) {
+          this.$.password2.$.icon.className = "green";
+          this.$.password2.error.visible = false;
+          return true;
+        } else {
+          this.$.password2.$.icon.className = "red";
+          this.$.password2.error.visible = true;
+          return false;
+        }
+      } else {
+        this.$.password2.$.icon.className = "";
+      }
+    },
+    validateAll: function() {
+      var fields = this.shadowRoot.getElementsByTagName('form-field');
+      var isValid = true;
+      var that = this;
 
-          Array.prototype.forEach.call(fields, function(field) {
-            /* A field is not valid if:
-             * 1) The data introduced is incorrect (mainly because there is a non-empty pattern and the data does not fit it)... OR
-             * 2) The data introduced is already in the database.
-             */
+      for(var i=0; i<fields.length; i++) {
+        /* A field is not valid if:
+         * 1) The data introduced is incorrect (mainly because there is a non-empty pattern and the data does not fit it)... OR
+         * 2) The data introduced is already in the database.
+         */
 
-        if ((field.$.input.pattern && !field.$.input.validity.valid) || field.error.inDB) {
+        if ((fields[i].$.input.pattern && !fields[i].$.input.validity.valid) || fields[i].error.inDB) {
           isValid = false;
         }
-      });
+      }
 
       if (isValid) {
         that.$.send.style.visibility = "visible";
@@ -99,8 +119,23 @@
       if(event.keyCode === 13) {
         this.validateAll();
       }
+    },
+    startProgress: function(){
+      var datos = {
+        username: this.$.username.$.field.input.value,
+        name: this.$.name.$.field.input.value,
+        mail: this.$.email.$.field.input.value,
+        bdate: this.$.bdate.$.field.input.value,
+        password: this.$.password.$.field.input.value,
+      }
+      datos.type = "create";
+      console.log('own signin');
+      console.log(datos);
+      this.fire('login', JSON.stringify(datos));
+      // var ajaxhandler = this.$.ajaxhandler;
+      // ajaxhandler.create(JSON.stringify(datos));
     }
-    });
+  });
 
 </script>
 
