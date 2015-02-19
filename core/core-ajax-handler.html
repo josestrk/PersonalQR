@@ -265,7 +265,7 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = 'Error, no topics for this query';
+            errorToast.text = 'Error: no topics for this query';
             errorToast.show();
             callback(false);
           });
@@ -283,7 +283,7 @@
             if (xhr.status === 200) {
               errorToast.text = 'The article was succesfully deleted';
             } else {
-              errorToast.text = 'Error, could not delete this article, refresh the page and try it later.';
+              errorToast.text = 'Error: could not delete this article, refresh the page and try it later.';
             }
             errorToast.show();
             callback(false);
@@ -329,7 +329,7 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = 'Error could not load topics';
+            errorToast.text = 'Error: could not load topics';
             errorToast.show();
             callback(false);
           });

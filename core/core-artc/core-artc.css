@@ -87,7 +87,7 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
   background: rgb(214, 227, 231);
   border-top: 1px solid grey;
   margin: 0;
-  list-style:  none;
+  list-style: none;
   visibility: hidden;
   height: 0px;
   overflow-y:scroll;

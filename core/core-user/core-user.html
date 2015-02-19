@@ -48,7 +48,7 @@
         }.bind(this),
         function(xhr, err, desc){
           var errorToast = document.querySelector('#errorToast');
-          errorToast.text = "Fallo al obtener el perfil de usuario";
+          errorToast.text = 'Error trying to retrieve the user\'s profile'/*Fallo al obtener el perfil de usuario"*/;
           errorToast.show();
         });
       }

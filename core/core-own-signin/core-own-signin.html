@@ -6,7 +6,7 @@
   <style>
     :host {
       width: 100%;
-      height: 100%;
+      height: auto;
     }
 
     #send {
@@ -48,7 +48,7 @@
       type="password"
       label="Choose password"
       icon="lock"
-      errorMsg="Password must contain 6 to 16 characters, of which at least one uppercase, one lowercase and one number"
+      errorMsg="Password must contain 6 to 16 characters, and it must include uppercase, lowercase and numbers"
       on-blur="{{checkPassword}}"
       regexp="^(?=.+\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{6,16}$"
     ></form-field>
@@ -65,7 +65,7 @@
       label="Birth date"
       icon="redeem"
       on-keydown="{{keydown}}"
-      errorMsg="Fill in a valid date.(dd-mm-yy)"
+      errorMsg="Fill in a valid date. (dd-mm-yy)"
       regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
     ></form-field>
   </div>
