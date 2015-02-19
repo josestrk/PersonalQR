@@ -6,6 +6,9 @@
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="Search" logged="{{login.logged}}" progress="{{$.progress}}">
+      <div class="return">
+        <core-icon-button icon="arrow-back" title="back" on-click="{{back}}"></core-icon-button>
+      </div>
       <div class="title">Search: #{{topic}}</div>
       <paper-progress id="progress"></paper-progress>
       <core-list id="list"></core-list>
@@ -29,6 +32,9 @@
             if(result)
               this.asyncFire('core-signal', {name: "sender-list", data: result});
           }.bind(this));
+        },
+        back:function(){
+          document.querySelector('app-router').go(localStorage.back);
         },
         check : false
       });
