@@ -94,7 +94,7 @@
                     url: 'routes_user/user/'+id,
                 },function( result ) {
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-                    this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
+                    this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;
                     this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
                     this.$.following.innerHTML = result.following ? result.following.length : "0" ;
@@ -107,12 +107,12 @@
                 }.bind(this),
                 function(xhr, err, desc){
                     var errorToast = document.querySelector('#errorToast');
-                    errorToast.text = 'The user '+id+' do not exist';
+                    errorToast.text = 'The user ' + id + ' does not exist';
                     errorToast.show();
                 });
               }else{
                 var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error retrieving data, verify your code';
+                errorToast.text = 'Error retrieving data, please verify your code';
                 errorToast.show();
               }
             },
@@ -150,9 +150,9 @@
                     errorToast.text = 'You are not logged.';
                     errorToast.show();
                 });
-              }else{
+              } else {
                 var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error, not a valid id found.';
+                errorToast.text = 'Error, this is not a valid ID.';
                 errorToast.show();
               }
             },
@@ -173,9 +173,9 @@
                     errorToast.text = 'You are not logged.';
                     errorToast.show();
                 });
-              }else{
+              } else {
                 var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error, not a valid id found.';
+                errorToast.text = 'Error, this is not a valid ID.';
                 errorToast.show();
               }
             }

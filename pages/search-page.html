@@ -11,7 +11,7 @@
       <core-list id="list"></core-list>
       <template if="{{check}}">
         <div class="separator"></div>
-        <div class="container">There are no post to this Topic, #{{topic}}</div>
+        <div class="container">There are no posts about the topic #{{topic}}</div>
       </template>
     </main-menu>
 
@@ -27,7 +27,7 @@
               this.check = true;
             }
             if(result)
-              this.asyncFire('core-signal', {name: "sender-list", data:result});
+              this.asyncFire('core-signal', {name: "sender-list", data: result});
           }.bind(this));
         },
         check : false

@@ -17,16 +17,17 @@
         position: relative;
       }
       .block{
+        color: #666;
+        background: #FFF;  
         margin-bottom: 33px;
         border-top: 1px solid #AAA;
         border-bottom: 1px solid #AAA;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
       }
       .icard{
-        background: #F5F5F5;
       }
       .pcard{
-        background: #FFF;
+        background: #F5F5F5;
       }
     </style>
     <main-menu iMenu="Settings" color='#455A64'>
@@ -35,7 +36,7 @@
       <div class="list">
         <div class="block">
           <template repeat="{{i in ['icard','pcard','icard']}}">
-              <pt-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" horizontal layout>
+            <pt-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" horizontal layout>
               <paper-toggle-button checked></paper-toggle-button>
             </pt-config>
           </template>
@@ -47,7 +48,7 @@
           </template>
         </div>
         <div class="block">
-          <core-own-sign></core-own-sign>
+          <core-own-signin></core-own-signin>
         </div>
       </div>
     </main-menu>
@@ -58,12 +59,12 @@
      Polymer({
         domReady: function() {
             this.pages = [
-              {class:'icard', setting:"Facebook", info:"Your personal facebook link", icon:"social:post-facebook", value:""},
-              {class:'pcard', setting:"Twittwer", info:"Your personal twitter link", icon:"social:post-twitter", value:"Twitter"},
-              {class:'icard', setting:"GitHub", info:"Your github", icon:"social:post-github", value:""},
-              {class:'pcard', setting:"Instagram", info:"Your Instagram", icon:"social:post-instagram", value:""},
-              {class:'icard', setting:"Google+", info:"Your profile g+", icon:"social:post-gplus", value:""},
-              {class:'pcard', setting:"Youtube", info:"Your youtube", icon:"social:post-youtube", value:""}
+              {class:'icard', setting:"Facebook", info:"Your personal Facebook profile", icon:"social:post-facebook", value:""},
+              {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:"Twitter"},
+              {class:'icard', setting:"GitHub", info:"Your GitHub profile", icon:"social:post-github", value:""},
+              {class:'pcard', setting:"Instagram", info:"Your Instagram profile", icon:"social:post-instagram", value:""},
+              {class:'icard', setting:"Google+", info:"Your Google+ profile", icon:"social:post-gplus", value:""},
+              {class:'pcard', setting:"YouTube", info:"Your Youtube profile", icon:"social:post-youtube", value:""}
             ];
         }
       });

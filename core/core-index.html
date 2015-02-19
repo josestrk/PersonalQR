@@ -65,42 +65,42 @@
 
     <script src="../lib/vide/jquery.vide.min.js"></script>
     <script>
-        Polymer({
-            ready: function() {
-                this.pages = [
-                  {name:'HOME',id:'paper_tab', select:'HOME'},
-                  {name:'GET STARTED',id:'paper_tab1', select:'signin'},
-                  {name:'LOG IN',id:'paper_tab2'}
-                ];
-                this.login = this.$.login;
-            },
-            clickedpaper: function(event, detail, sender){
-              sender.id=="paper_tab" ? this.$.core_card.selected=0 : console.log() ;
-              sender.id=="paper_tab1" ? this.$.core_card.selected=1 : console.log() ;
-              sender.id=="paper_tab2" ? this.$.core_card.selected=2 : console.log();
-            },
-            handleLogin: function(event, detail) {
-              switch(detail){
-                case 'g':
-                  this.$.login.login();
-                  break;
-                case 'fb':
-                  this.$.login.loginfb();
-                  break;
-                default :
-                  if(detail.type === 'email'){
-                    this.$.login.loginEmail(detail);
-                  }else{
-                    if(detail.type === 'name'){
-                      this.$.login.loginUser(detail);
-                    }else{
-                      this.$.login.creacionInterno(detail);
-                    }
-                  }
-                  break;
+      Polymer({
+        ready: function() {
+          this.pages = [
+            {name:'Home',id:'paper_tab', select:'HOME'},
+            {name:'Get started',id:'paper_tab1', select:'signin'},
+            {name:'Log in',id:'paper_tab2'}
+          ];
+          this.login = this.$.login;
+        },
+        clickedpaper: function(event, detail, sender){
+          sender.id=="paper_tab" ? this.$.core_card.selected = 0 : console.log() ;
+          sender.id=="paper_tab1" ? this.$.core_card.selected = 1 : console.log() ;
+          sender.id=="paper_tab2" ? this.$.core_card.selected = 2 : console.log();
+        },
+        handleLogin: function(event, detail) {
+          switch(detail){
+            case 'g':
+              this.$.login.login();
+              break;
+            case 'fb':
+              this.$.login.loginfb();
+              break;
+            default :
+              if(detail.type === 'email'){
+                this.$.login.loginEmail(detail);
+              }else{
+                if(detail.type === 'name'){
+                  this.$.login.loginUser(detail);
+                }else{
+                  this.$.login.creacionInterno(detail);
+                }
               }
-            }
-        });
+              break;
+          }
+        }
+      });
 
     </script>
 </polymer-element>

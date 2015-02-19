@@ -13,12 +13,12 @@
   <template>
     <style>
       #content{
-          text-align: center;
-          margin: auto;
-          font-family: "League-Gothic", Courier;
-          font-size: 20px;
-          text-transform: uppercase;
-          color: #808080;
+        text-align: center;
+        margin: auto;
+        font-family: "League-Gothic", Courier;
+        font-size: 20px;
+        text-transform: uppercase;
+        color: #808080;
       }
       #card {
         border-top-left-radius: 6px;
@@ -27,16 +27,15 @@
         border-bottom-left-radius: 6px;
         box-shadow: rgba(255, 255, 255, 50.9980392) 0px 5px 18px, rgba(255, 255, 255, 0.9980392) 0px 0px 3px;
         background-size: 100% 100%;
-        transition: opacity 0.5s ease-in;
       }
       #paper_radio_button {
         left: 1540px;
         top: 580px;
       }
       #core_card1 {
-            margin: 8%;
-            width: 400px;
-            height: 650px;
+        margin: 8%;
+        width: 400px;
+        height: 650px;
       }
 
       #core_card2 {
@@ -54,94 +53,92 @@
         font-weight: 600;
         text-align: center;
         color: dimgrey;
-       }
-        
-        
+      }
+      core-animated-pages {
+          margin: 20px;
+          width: 350px;
+          height: 500px;
+          background-size: 100% 100%;
+      }
+      
+      @media all and (max-width: 420px) {
+        #core_card1 {
+          width: 100%;
+        }
+        #core_card2 {
+          width: 85%;
+        }
+        #card{
+          width: 80%;
+          left: 10%;
+        }
+      }
 
-        core-animated-pages {
-            margin: 20px;
-            width: 350px;
-            height: 500px;
-            background-size: 100% 100%;
+      @media all and (min-width: 421px) {
+        #core_card1 {
+          width: 420px;
         }
-        
-        @media all and (max-width: 420px) {
-          #core_card1 {
-            width: 100%;
-          }
-          #core_card2 {
-            width: 85%;
-          }
-          #card{
-            width: 80%;
-            left: 10%;
-          }
-        }
+      }
 
-        @media all and (min-width: 421px) {
-          #core_card1 {
-            width: 420px;
-          }
+      @media all and (max-height: 610px) {
+        #card {
+          height: 80%;
         }
-        @media all and (max-height: 610px) {
-          #card {
-            height: 80%;
-          }
-          #paper_radio_group{
-            position: absolute;
-            top: 92%;
-            left: 40%;
-          }
+        #paper_radio_group{
+          position: absolute;
+          top: 92%;
+          left: 40%;
         }
+      }
 
-        @media all and (min-height: 611px) {
-          #core_card1 {
-            height: 520px;
-          }
+      @media all and (min-height: 611px) {
+        #core_card1 {
+          height: 520px;
         }
-        
-        #paper_tabs_up {
-            height: 35px;
-            width: 100%;
-            box-shadow: rgba(200, 200, 200, 0.25) 0px 3px 2px;
-            background-color: rgba(7, 18, 14,0.5);
-        }
-        paper-tabs paper-tab > a {
-            text-decoration: none;
-            color: rgba(250, 250, 250, 1.098039);
-        }
-        paper-tabs paper-tab::shadow #ink {
-          color: rgb(137, 191, 79);
-        }
+      }
+      
+      #paper_tabs_up {
+          height: 35px;
+          width: 100%;
+          box-shadow: rgba(200, 200, 200, 0.25) 0px 3px 2px;
+          background-color: rgba(7, 18, 14,0.5);
+      }
 
+      paper-tabs paper-tab > a {
+          text-decoration: none;
+          color: rgba(250, 250, 250, 1.098039);
+      }
+
+      paper-tabs paper-tab::shadow #ink {
+        color: rgb(137, 191, 79);
+      }
     </style>
       
     <paper-tabs selectedindex="0"  id="paper_tabs_up" vertical layout center-center link>
-    <template repeat="{{info in infos}}">
-    <paper-tab>
-        <a href="{{info.link}}" horizontal center-center layout>
+      <template repeat="{{info in infos}}">
+        <paper-tab>
+          <a href="{{info.link}}" horizontal center-center layout>
             <core-icon icon="{{info.icon}}"></core-icon>{{info.name}}
-        </a>
-    </paper-tab>
-    </template>
+          </a>
+        </paper-tab>
+      </template>
     </paper-tabs>
       
     <core-card vertical layout  center-justified>
-                <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
-                    <template repeat="{{page in pages}}" >
+      <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
+        <template repeat="{{page in pages}}" >
+          <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
+              <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
+          </section>
+        </template>
+      </core-animated-pages>
+    </core-card>
 
-                        <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
-                            <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
-                        </section>
-
-                    </template>
-                </core-animated-pages>
-      </core-card>
-                <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
-                    <template repeat="{{page in pages}}">
-                        <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
-                    </template>
-                </paper-radio-group>
+    <paper-radio-group valueattr="hash" selected="{{route}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center>
+      <template repeat="{{page in pages}}">
+        <paper-radio-button hash="{{page.hash}}"></paper-radio-button>
+      </template>
+    </paper-radio-group>
 
   </template>
 
@@ -152,18 +149,17 @@
         var DEFAULT_ROUTE = '1';
 
         this.pages = [
-            {content: "La forma mas sencilla de compartir tus datos, y a la vez la más segura. Simple, muestra tu codeQR y conecta con la comunidad ",image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '1'},
-            {content: ' Comparte con todos lo que estas haciendo',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '2'},
-            {content: ' Todos tus deportes, eventos en vivo,... ',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
+          {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community'/* 'La forma más sencilla de compartir tus datos, y a la vez la más segura. Simple, muestra tu codeQR y conecta con la comunidad ' */,image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '1'},
+          {content: 'Share whatever you want with anyone you want'/* 'Comparte con todos lo que estás haciendo',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg'*/, hash: '2'},
+          {content: 'All your sports, live events, and so on.'/* 'Todos tus deportes, eventos en vivo, ...'*/,image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
         ];
         this.infos = [
-            {name:'Info',id:'paper_tab',icon:'help',link:'/#/wall/?id=info'},
-            {name:'Legal',id:'paper_tab',icon:'social:school', link:'/#/wall/?id=legal'},
-            {name:'Git',id:'paper_tab',icon:'social:post-github', link:'https://github.com/josestrk/PersonalQR'}
+          {name:'Info',id:'paper_tab',icon:'help',link:'/#/wall/?id=info'},
+          {name:'Legal',id:'paper_tab',icon:'social:school', link:'/#/wall/?id=legal'},
+          {name:'GitHub',id:'paper_tab',icon:'social:post-github', link:'https://github.com/josestrk/PersonalQR'}
         ];
 
         var animatedPages = this.$.pages;
-
 
         this.route = this.$.route || DEFAULT_ROUTE; // Select initial route.
      }

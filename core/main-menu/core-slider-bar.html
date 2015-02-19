@@ -138,7 +138,7 @@
               url: 'routes_user/profile',
             },function( result ) {
               this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-              this.$.name.innerHTML = result.name ? result.name : "Anonimous" ;
+              this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
               this.$.email.innerHTML = result.email ? result.email : "" ;
               this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
               this.$.following.innerHTML = result.following ? result.following.length : "0" ;
@@ -146,7 +146,7 @@
             }.bind(this),
             function(xhr, err, desc){
               var errorToast = document.querySelector('#errorToast');
-              errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Fallo al obtener el perfil de usuario";
+              errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Error trying to retrieve the user's profile";
               errorToast.show();
             });
           }
