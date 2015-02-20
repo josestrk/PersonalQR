@@ -1,11 +1,6 @@
 <link rel="import" href="../core-ajax-handler.html">
-<link rel="import" href="core-button-bar.html">
-
-<!-- Font and scripts for Hallo editor -->
-<link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
-<script src="../../bower_components/jquery-ui/ui/jquery-ui.js"></script>
-<script src="../../bower_components/rangy-official/rangy-core.js"></script>
-<script src="../../bower_components/hallo/dist/hallo.js"></script>
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="core-button.html">
 
 <polymer-element name="core-editor-content" attributes="userid">
 
@@ -21,7 +16,7 @@
       padding: 30px;
       border-radius: 10px;
       border: 2px solid rgb(240, 240, 240);
-      margin: 30px auto 30px;
+      margin: 0px auto 30px;
       width: 60%;
       outline: none;
     }
@@ -31,12 +26,26 @@
     #content:not(:focus) {
       color: rgb(153, 153, 153);
     }
+    #toolbar {
+      width: 60%;
+      height: auto;
+      margin: auto;
+      vertical-align: bottom;
+      background-color: whitesmoke;
+    }
   </style>
 
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
   <core-card id="container" layout vertical>
-    <core-button-bar></core-button-bar>
-    <div id="content" aria-invalid="false"></div>
+    <core-toolbar id="toolbar">
+      <core-button name="b"></core-button>
+      <core-button name="i"></core-button>
+      <core-button name="u"></core-button>
+      <core-button name="s"></core-button>
+      <core-button name="h2"></core-button>
+      <core-button name="h3"></core-button>
+    </core-toolbar>
+    <div id="content" contenteditable="true" aria-invalid="false"></div>
   </core-card>
 
 </template>
@@ -45,21 +54,22 @@
 (function () {
   Polymer({
     domReady: function() {
+      var that = this;
       var content = this.$.content;
-      var toolbox = this.$.toolbox;
+      var buttons = this.$.toolbar.getElementsByTagName('core-button');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', this.buttonClick);
+      };
+    },
+    buttonClick: function() {
+      // Here 'this' is a core-button element
+      var content = this.parentNode.parentNode.parentNode.getElementById('content');
 
-      jQuery(content).hallo({
-        plugins: {
-          'halloformat': {},
-          'halloheadings': {},
-          'hallojustify': {},
-          'hallolists': {},
-          //'hallolink': {},
-          'halloreundo': {}
-        },
-        editable: true,
-        placeholder: 'Write here the content of your article'
-      });
+      // TODO: be able to get the *selected* text, not just the innerHTML
+      // TODO: keep the focus on the content
+      content.innerHTML = this.getOpenTag() + content.innerHTML + this.getCloseTag();
+      console.log(content.innerHTML);
+      console.log(content.innerText);
     }
   });
 })();
