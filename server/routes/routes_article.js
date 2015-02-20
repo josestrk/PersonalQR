@@ -108,9 +108,6 @@ function worker(io) {
     } else {
       Article["content"] = "";
     }
-
-    debug('Id -> ' + sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}));
-
     Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}).toLowerCase());
     Article["date"] = getDateTime();
     Article["bgimg"] = "http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
@@ -179,8 +176,17 @@ function worker(io) {
     if(second.toString().length == 1) {
       var second = '0'+second;
     }
-    var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
-    return dateTime;
+
+    return year +
+        '-' + (month) +
+        '-' + (day) +
+        'T' + (hour) +
+        ':' + (minute) +
+        ':' + (second) +
+        '-00:00';
+
+    // var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+    // return dateTime;
   }
 
   function getTopics(content){

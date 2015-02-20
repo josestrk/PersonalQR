@@ -10,6 +10,7 @@ function worker(io) {
   router.post('/topic', createTopic);
   router.put('/topic/:topicId', setTopic);
   router.delete('/topic/:topicId', delTopic);
+  router.delete('/deleteall', delallTopic);
 
   function createTopic(req, res) {
     var temporalTopic = {
@@ -63,6 +64,16 @@ function worker(io) {
           next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
       }else{
           res.send('Topic ' + topicId + ' removed.');
+      }
+    });
+  }
+
+  function delallTopic(req, res) {
+    topicManager.delallTopic(function(err, result){
+      if(result === null){
+          next(new Error(new Error('Specified ID ' + topicId + ' does not exist')));
+      }else{
+          res.send('All topics were removed.');
       }
     });
   }

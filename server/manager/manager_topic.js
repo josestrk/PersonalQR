@@ -12,6 +12,10 @@ function delTopic(topicId, callback) {
   daoTopic.delTopic(topicId, callback);
 }
 
+function delallTopic(callback) {
+  daoTopic.delallTopic(callback);
+}
+
 function getTopicsByLetter(letter, callback) {
   daoTopic.getTopicsByLetter(letter, callback);
 }
@@ -30,5 +34,6 @@ module.exports = {
 	getTopic: getTopic,
 	getTopicsByLetter: getTopicsByLetter,
 	delTopic: delTopic,
-	setTopic: setTopic
+	setTopic: setTopic,
+  delallTopic : delallTopic
 };

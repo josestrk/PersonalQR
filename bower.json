@@ -23,11 +23,16 @@
     "socket.io-client": "~1.2.1",
     "hallo": "~1.1.1",
     "left-swipe-action": "~0.1.1",
-    "instagram-card": "*"
+    "instagram-card": "*",
+    "time-elements": "~0.4.0"
   },
   "devDependencies": {
     "polymer": "Polymer/polymer",
     "core-elements": "Polymer/core-elements",
     "paper-elements": "Polymer/paper-elements"
+  },
+  "resolutions": {
+    "jquery": "2.1.1",
+    "core-component-page": "^0.5"
   }
 }
