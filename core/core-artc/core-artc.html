@@ -42,12 +42,12 @@
               </div>
               <div main>
                   <div id="div1">
-                <template if="{{show}}">
+                  <template if="{{show}}">
                     <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
                   </template>
-                     <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
+                  <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
                       {{htitle}}</div>
-                  <div id="time">{{date}}</div>
+                  <div id="time"><time is="time-ago" datetime="{{date}}"></time></div>
               </div>
             </core-drawer-panel>
           </core-toolbar>
@@ -160,7 +160,6 @@
           domReady: function () {
             this.coments = JSON.parse(this.coments);
             loadPost.bind(this);
-            this.showDelete() ? this.show='true' : this.show='';
 
             this.$.content.innerHTML = this.content;
 
@@ -175,6 +174,7 @@
                 this.firstElementChild.className="animate";
               }
             });
+            this.showDelete() ? this.show='true' : this.show='';
           },
           visiblecomments: function (){
             if(this.flag){

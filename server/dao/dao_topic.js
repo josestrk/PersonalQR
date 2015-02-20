@@ -3,11 +3,23 @@ var toObjectID = require('../util/mongodb').toObjectID;
 var col = db.bind('topics');
 
 function createTopic(topic, callback) {
-	this.insert(topic, callback);
+	if (typeof(topic) == 'object') {
+		this.insert(topic, callback);
+	}else{
+		var aux = {
+			name: topic
+		}
+		this.insert(aux, callback);
+	}
 }
 
-function getTopic(topicId, callback) {
-	this.findById(topicId, callback);
+function getTopic(topic, callback) {
+	this.find({name :topic}, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.toArray(callback);
+	});
 }
 
 function getTopicsByLetter(letter, callback) {
@@ -19,7 +31,7 @@ function getTopicsByLetter(letter, callback) {
 	});
 }
 
-function delTopics(callback) {
+function delallTopic(callback) {
 	this.remove({}, callback);
 }
 
@@ -43,9 +55,9 @@ col.bind({
 	createTopic: createTopic,
 	getTopic: getTopic,
 	getTopicsByLetter: getTopicsByLetter,
-	delTopics: delTopics,
 	delTopic: delTopic,
-	setTopic: setTopic
+	setTopic: setTopic,
+	delallTopic : delallTopic
 });
 
 module.exports = col;

@@ -1,18 +1,32 @@
+var debug = require('debug')('manager');
 var daoArticle = require('../dao/dao_article');
 var daoTopic = require('../dao/dao_topic');
+
 
 function createArticle(article, callback) {
   article["likes"]= [];
   article["coments"]=[];
   daoArticle.createArticle(article, callback);
-  createtopic();
+  createtopic(article.topic);
 }
 
-function createtopic(){
-    daoTopic.createTopic(JSON.stringify('pruebas!!'), function(err, res){
-      console.log('introudicdo')
-      console.log(res);
-    });
+function createtopic(topics){
+  var res = topics;
+  for(var i in res){
+    daoTopic.getTopic(res[i], function(err, result){
+      debug('resultado es ->'+result);
+      var aux = '';
+      for (var i in this){
+        aux += this[i];
+      }
+      if(result[0] == undefined){
+        debug('Escribiendo en bbdd->'+aux);
+        daoTopic.createTopic(aux, function(err, resu){
+          debug('escrito'+resu);
+        });
+      }
+    }.bind(res[i]));
+  }
 }
 
 
@@ -25,7 +39,7 @@ function delArticlesAll(callback){
 }
 
 function editArticle(article, callback) {
-  daoArticle.editArticle(article, callback);
+  createtopic(article.topic);
   daoTopic.createTopic(article.topic, function(err, res){
   });
 }
@@ -83,6 +97,7 @@ function setArticle(articleId, data, callback){
     return callback("Error", null);//asi se crea un error para el ajax
   }//gracias al return se interrumpe la ejecucion del codigo
   data.name = res;*/
+  createtopic(article.topic);
   console.log(data);
 
   daoArticle.setArticle(articleId, data, callback);
