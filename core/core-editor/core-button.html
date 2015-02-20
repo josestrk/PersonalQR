@@ -1,0 +1,67 @@
+<polymer-element name="core-button" attributes="name">
+
+<template>
+  <style>
+    :host {
+      border: 2px solid rgb(128, 128, 128);
+      border-radius: 4px;
+      margin: 1px !important;
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    #button {
+      width: auto;
+      height: auto;
+      background-color: rgb(192, 224, 255);
+      border-radius: 4px;
+      margin: 1px !important;
+    }
+    #inner {
+      color: black;
+      margin: 4px;
+    }
+    #button:active {
+      background-color: yellow !important;
+    }
+    .b {
+      font-weight: bold;
+    }
+    .i {
+      font-style: italic;
+    }
+    .u {
+      text-decoration: underline;
+    }
+    .s {
+      text-decoration: line-through;
+    }
+  </style>
+
+  <core-card id="button">
+    <core-card id="inner" class="{{name}}">{{name}}</core-card>
+  </core-card>
+
+</template>
+
+<script>
+(function () {
+  Polymer({
+    getOpenTag: function() {
+      return '<' + this.name + '>';
+    },
+    getCloseTag: function() {
+      return '</' + this.name + '>';
+    },
+    getAutoclosingTag: function() {
+      return '<' + this.name + '/>';
+    }
+  });
+})();
+</script>
+
+</polymer-element>

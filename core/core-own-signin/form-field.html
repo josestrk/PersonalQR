@@ -34,20 +34,11 @@
       height: 25px;
       margin-top: 20px;
       margin-right: 10px;
-      color: black;
-    }
-    #icon.green {
-      color: #22aa00;
-    }
-    #icon.yellow {
-      color: rgb(255, 193, 7);
-    }
-    #icon.red {
-      color: #cc0022;
+      transition: color 1s ease-in;
     }
 
     #field {
-      width: 80%;
+      width: 87%;
       height: 45px;
       padding: 0px;
     }
@@ -64,7 +55,7 @@
       margin-left: 47px;
       font-size: 10px;
       color: rgb(192, 0, 0);
-      
+
       cursor: default;
       -webkit-user-select: none; /* Chrome/Safari */
       -moz-user-select: none; /* Firefox */
@@ -145,11 +136,11 @@
       check: function() {
         if (this.$.input.pattern) {
           if (!this.$.input.validity.valid) {
-            this.$.icon.className = 'red';
+            this.$.icon.style.color = 'red';
             this.displayError(this.errorMsg);
             this.error.visible = true;
           } else {
-            this.$.icon.className = 'green';
+            this.$.icon.style.color = 'green';
             this.displayError('');
             this.error.visible = false;
             if (this.checkInDB) {

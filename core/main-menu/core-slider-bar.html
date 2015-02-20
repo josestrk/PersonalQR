@@ -74,9 +74,7 @@
               <core-item icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active></core-item>
             </template>
             <template if="{{imenu != page.name}}">
-              <core-item icon="{{page.logo}}" label="{{page.name}}">
-                <a href="{{page.hash}}"></a>
-              </core-item>
+              <core-item icon="{{page.logo}}" label="{{page.name}}" id="{{page.hash}}" on-click="{{changeMenu}}"></core-item>
             </template>
           </template>
       </core-menu>
@@ -106,28 +104,32 @@
       function loadMenu() {
         var _id=this.iduser;
         this.pages = [
-          {name: 'Wall', logo: 'info', hash: '/#/wall', color:''},
-          {name: 'My profile', logo: 'social:person', hash: '/#/profile'},
-          {name: 'Edition Mode', logo: 'bookmark', hash: '/#/editor'},
-          {name: 'Settings', logo: 'lock', hash: '/#/settings'},
-          {name: 'Contacts', logo: 'social:people', hash: '/#/contacts'}
+          {name: 'Wall', logo: 'info', hash: '/wall'},
+          {name: 'My profile', logo: 'social:person', hash: '/profile'},
+          {name: 'Edition Mode', logo: 'bookmark', hash: '/editor'},
+          {name: 'Settings', logo: 'lock', hash: '/settings'},
+          {name: 'Contacts', logo: 'social:people', hash: '/contacts'}
         ];
       }
         Polymer({
           domReady: function () {
             this.logged = Boolean(localStorage.token);
+            this.logedtoken();
             loadMenu.bind(this)();
             if (localStorage.token !== undefined) {
               this.rellenarProfile();
             }
+          },
+          changeMenu: function(event,detail,sender){
+            document.querySelector('app-router').go(sender.id);
           },
           handleLogout: function(event, detail) {
             this.$.login.logout();
             document.querySelector('app-router').go('/');
             document.location.reload();
           },
-          logueado: function() {
-            if ( ! localStorage.token ) {
+          logedtoken: function(){
+            if ( !localStorage.token ) {
               this.$.idcard.style.display = "none";
             }
           },

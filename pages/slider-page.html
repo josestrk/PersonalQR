@@ -60,7 +60,7 @@
           height: 500px;
           background-size: 100% 100%;
       }
-      
+
       @media all and (max-width: 420px) {
         #core_card1 {
           width: 100%;
@@ -96,7 +96,7 @@
           height: 520px;
         }
       }
-      
+
       #paper_tabs_up {
           height: 35px;
           width: 100%;
@@ -113,17 +113,15 @@
         color: rgb(137, 191, 79);
       }
     </style>
-      
+
     <paper-tabs selectedindex="0"  id="paper_tabs_up" vertical layout center-center link>
       <template repeat="{{info in infos}}">
-        <paper-tab>
-          <a href="{{info.link}}" horizontal center-center layout>
+        <paper-tab id="{{info.link}}" on-click="{{infoLoader}}">
             <core-icon icon="{{info.icon}}"></core-icon>{{info.name}}
-          </a>
         </paper-tab>
       </template>
     </paper-tabs>
-      
+
     <core-card vertical layout  center-justified>
       <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
         <template repeat="{{page in pages}}" >
@@ -149,14 +147,13 @@
         var DEFAULT_ROUTE = '1';
 
         this.pages = [
-          {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community'/* 'La forma más sencilla de compartir tus datos, y a la vez la más segura. Simple, muestra tu codeQR y conecta con la comunidad ' */,image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '1'},
-          {content: 'Share whatever you want with anyone you want'/* 'Comparte con todos lo que estás haciendo',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg'*/, hash: '2'},
-          {content: 'All your sports, live events, and so on.'/* 'Todos tus deportes, eventos en vivo, ...'*/,image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
+          {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community',image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '1'},
+          {content: 'Share whatever you want with anyone you want',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '2'},
+          {content: 'All your sports, live events, and so on.',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
         ];
         this.infos = [
-          {name:'Info',id:'paper_tab',icon:'help',link:'/#/wall/?id=info'},
-          {name:'Legal',id:'paper_tab',icon:'social:school', link:'/#/wall/?id=legal'},
-          {name:'GitHub',id:'paper_tab',icon:'social:post-github', link:'https://github.com/josestrk/PersonalQR'}
+          {name:'Info',id:'paper_tab',icon:'help',link:'/search/?topic=info'},
+          {name:'Legal',id:'paper_tab',icon:'social:school', link:'/search/?topic=legal'}
         ];
 
         var animatedPages = this.$.pages;
@@ -178,6 +175,10 @@
         },
         clickedpaper: function(info){
             window.location.hash=info;
+        },
+        infoLoader:function(e,detail,sender){
+          localStorage.back='/';
+          document.querySelector('app-router').go(sender.id);
         }
       });
     }());

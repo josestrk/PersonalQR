@@ -25,6 +25,9 @@
               display: none;
           }
       }
+      .spinner {
+        background: url('../../lib/webcomponent/spinner.gif') no-repeat center center;
+      }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-signals on-core-signal-sender-list="{{createList}}"></core-signals>
@@ -38,6 +41,7 @@
     (function () {
       function createPage(item) {
         var section = document.createElement('core-artc');
+        section.setAttribute('class', 'spinner');
         section.setAttribute('layout', '');
         section.setAttribute('vertical', '');
         section.setAttribute('htitle', item.title);

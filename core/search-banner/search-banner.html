@@ -75,6 +75,8 @@
             },
             lookenter : function(e, d, s){
               if(e.keyCode === 13){
+                localStorage.back=window.location.hash;
+                localStorage.back=localStorage.back.substr(1);
                 document.querySelector('app-router').go('/search/?topic='+s.value);
               }
             }

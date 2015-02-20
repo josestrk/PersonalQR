@@ -3,32 +3,39 @@
 <polymer-element name="contacts-page">
   <template>
     <style>
-      #list {
-        width:70%;
-        height:400px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        margin: auto;
-        background-color: rgb(255, 255, 255);
-        margin-top:20px;
+      .list-thumb {
+        padding: 10px;
+      }
+      .list-content {
+        padding: auto 15px;
+        margin:auto 15px;;
+      }
+      .list-name{
+        line-height: 1.2;
+        font-size: 23px;
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+      .img{
+        width:53px;
+        height:53px;
+        border-radius:50%;
       }
     </style>
     <main-menu iMenu="Contacts"  color='#37474F'  progress="{{$.progress}}">
       <div class="title">Contacts</div>
       <paper-progress id="progress"></paper-progress>
-        <template repeat="{{[1,2,3,4,5,6,7,8,9,10,11]}}">
-          <left-swipe-action shadow offset="40">
-            <div class="list-container">
-              <div class="list-thumb"><paper-icon-button icon="social:person"></paper-icon-button></div>
+        <template repeat="{{user in contacts}}">
+          <left-swipe-action shadow offset="100">
+            <div class="list-container" horizontal layout>
+              <div class="list-thumb"><img class="img" src="{{user.picture}}"/></div>
               <div class="list-content">
-                <div class="list-message">User</div>
-                <div class="list-info">USER INFO</div>
+                <div class="list-name">{{user.name}}</div>
               </div>
             </div>
+            <hidden id={{user.id}}></hidden>
             <left-swipe-action-button onclick="alert('delete')"><paper-fab icon="delete"></paper-fab></left-swipe-action-button>
-            <left-swipe-action-button onclick="alert('star')"><paper-fab icon="star"></paper-fab></left-swipe-action-button>
-            <left-swipe-action-button onclick="alert('schedule')"><paper-fab icon="schedule"></paper-fab></left-swipe-action-button>
+            <left-swipe-action-button onclick="alert('social:person')"><paper-fab icon="social:person"></paper-fab></left-swipe-action-button>
           </left-swipe-action>
         </template>
     </main-menu>
@@ -37,7 +44,14 @@
   <script>
     (function () {
         Polymer({
+            contacts:[{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'}],
             domReady: function () {
+              this.contacts.push({ìd:'12345678',name:'User',picture:'../img/avatar.svg'});
+              this.contacts.push({ìd:'12345679',name:'User',picture:'../img/avatar.svg'});
+              this.pullContacts();
+            },
+            pullContacts: function(){
+              this.contacts.push({ìd:'12345680',name:'User',picture:'../img/avatar.svg'});
             }
         });
     })();

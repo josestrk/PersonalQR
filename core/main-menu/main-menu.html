@@ -48,6 +48,7 @@
       <core-slider-bar navigation imenu="{{imenu}}" color="{{color}}" flex vertical layout style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);"></core-slider-bar>
 
       <core-toolbar tool flex>
+        <content select=".return"></content>
         <content select=".title"></content>
         <template if="{{logged}}">
           <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
