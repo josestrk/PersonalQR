@@ -33,7 +33,7 @@
     <core-signals on-core-signal-sender-list="{{createList}}"></core-signals>
     <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="50" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
     <div id="scroller" fit>
-      <div id="list"></div>
+      <div id="list" cross-fade></div>
     </div>
   </template>
 

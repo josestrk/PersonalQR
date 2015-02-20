@@ -1,8 +1,11 @@
 <link rel="import" href="../core/id-card/id-card.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
+<!--
 <link rel="import" href="../lib/webcomponent/github-card.html">
 <link rel="import" href="../bower_components/instagram-card/dist/instagram-card.html">
+-->
+<link rel="import" href="../bower_components/fancy-box/fancy-box.html">
 
 <polymer-element name="person-card">
   <template>
@@ -39,7 +42,7 @@
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
-    <main-menu imenu="" iduser="{{userid}}">
+    <main-menu imenu="" iduser="{{userid}}" cross-fade>
         <div class="title" id="name"></div>
         <div class="container">
             <core-card  class="card" layout vertical center center-justified>
@@ -52,13 +55,20 @@
                   <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
                   <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
             </core-card>
-            <core-card class="rrss">
-                <div id="panel">
-                    <github-card user="Josestrk" class="card"></github-card>
-                    <main-index></main-index>
-                    <!-- <instagram-card clientId='josestrk'></instagram-card> -->
+            <core-card class="panel" vertical layout center-center>
+                <section>
+                    <div id="rrss"  horizontal layout center-justified center>
+                        <fancy-box logo="fa-ra" label="Example" opt_icon_1="fa-paw" opt_icon_2="fa-tree" opt_icon_3="fa-codepen"></fancy-box>
 
-                </div>
+                        <!--
+                        <github-card user="Josestrk" class="card"></github-card>
+                        <main-index></main-index>
+                        <instagram-card clientId='josestrk'></instagram-card> -->
+                    </div>
+                </section>
+                <section>
+                    <core-list></core-list>
+                </section>
             </core-card>
         </div>
 
@@ -122,6 +132,7 @@
             socialProfile: function(){
 
             },
+            
             changebutton: function () {
               if(this.$.follow.style.display == 'none'){
                  this.$.follow.style.display = 'inherit';

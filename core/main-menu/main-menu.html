@@ -5,10 +5,13 @@
 <link rel="import" href="../../bower_components/core-icons/image-icons.html">
 <link rel="import" href="../../bower_components/core-icons/social-icons.html">
 <link rel="import" href="../../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
+
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog-transition.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
 
 <link rel="import" href="../core-notifi/core-notifi.html">
 <link rel="import" href="../core-qr/core-qr.html">
@@ -36,6 +39,9 @@
     ::content .separator{
       height: 33px;
     }
+    #scaffold{
+        overflow: hidden;
+    }
     </style>
 
     <app-login id="login"></app-login>
@@ -47,24 +53,23 @@
 
       <core-slider-bar navigation imenu="{{imenu}}" color="{{color}}" flex vertical layout style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);"></core-slider-bar>
 
-      <core-toolbar tool flex>
+      <core-toolbar tool flex cross-fade>
         <content select=".return"></content>
         <content select=".title"></content>
         <template if="{{logged}}">
-          <div class="notifi"><core-notifi id="notifi"></core-notifi></div>
-          <core-qr id="{{id}}"></core-qr>
-          <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"></core-icon-button>
-          <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"></core-icon-button>
+          <div class="notifi"><core-notifi id="notifi"><paper-ripple></paper-ripple></core-notifi></div>
+          <core-qr id="{{id}}"><paper-ripple></paper-ripple></core-qr>
+          <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"><paper-ripple></paper-ripple></core-icon-button>
+          <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"><paper-ripple class="recenteringTouch"></paper-ripple></core-icon-button>
         </template>
       </core-toolbar>
 
       <content select="#progress"></content>
       <content select=".separator"></content>
-      <content select=".container"><core-card></core-card></content>
-      <content></content>
+      <content select=".container" cross-fade></content>
+      <content cross-fade></content>
       <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
-      <content select="#list"></content>
-
+      <content select="#list" cross-fade></content>
 
     </core-scaffold>
   </template>

@@ -246,15 +246,23 @@ input {
     color:white;
     outline: 0 none;
     display: inline;
-    width: 95%;
+    width: 98%;
     margin: 0;
     padding: 5px 7px;
     vertical-align: middle;
+    transition: color 1s ease-out
+    transition: background 1s linear; 
+    transition: padding 0.5s linear; 
     border: 0px solid rgba(0, 0, 0, 0.15);
 }
 
+.typeahead-container input[type="search"]:focus {
+    padding: 8px 7px;
+    background: #EEE;
+    color:#333;
+}
+
 .typeahead-container input[type="search"] {
-    border-radius: 4px 0 0 4px;
     border-right-width: 0;
 }
 

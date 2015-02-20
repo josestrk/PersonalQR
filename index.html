@@ -19,11 +19,9 @@
 		var socket = io.connect(':9005/', {
 			timeout: Infinity
 		});
-
 		socket.on('connect', function() {
       console.log('Cliente conectado!');
 		});
-
 		socket.on('disconnect', function() {
 		});
 	</script>
@@ -34,9 +32,9 @@
   <link rel="import" href="bower_components/polymer/polymer.html">
   <link rel="import" href="bower_components/app-router/app-router.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/core-signals/core-signals.html">
   <link rel="import" href="bower_components/core-transition/core-transition.html">
   <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
-  <link rel="import" href="bower_components/core-signals/core-signals.html">
 
   <link rel="import" href="core/core-user/core-user.html">
   <link rel="import" href="core/core-index.html">
@@ -60,7 +58,8 @@
 
     <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
 
-    <app-router core-animated-pages mode="hash" transitions="slide-from-right" style="overflow:hidden">
+<!--    <app-router core-animated-pages mode="hash" transitions="slide-from-bottom">-->
+    <app-router core-animated-pages transitions="hero-transition cross-fade" mode="hash">
         <app-route path="/" element="core-index"></app-route>
         <app-route path="/wall" element="wall-page"></app-route>
         <app-route path="/profile" element="myp-page"></app-route>
@@ -71,7 +70,6 @@
         <app-route path="/settings" element="config-page"></app-route>
         <app-route path="/contacts" element="contacts-page"></app-route>
         <app-route path="/loader" import="pages/user-loader.html"></app-route>
-
         <app-route path="*" import="pages/not-found.html"></app-route>
     </app-router>
     <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');</script>

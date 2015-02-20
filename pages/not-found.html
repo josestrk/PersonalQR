@@ -1,25 +1,24 @@
-<polymer-element name="not-found">
+<polymer-element name="not-found" noscript>
   <template>
-  <style>
-    #scroller {
-      padding: 20px 15%;
-      overflow: auto;
-    }
-    .thing {
-      padding: 10px;
-      margin: 10px;
-      background: lightblue;
-      border-radius: 10px;
-      font-size: 2em;
-    }
-  </style>
-      
-      <h4>ERROR 404 PAGENOTFOUND</h4>
+    <style>
+        .panel{
+            background: #FCFCFC;
+            margin: auto;
+            padding: 10px;
+            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+        }
+    </style>
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
+
+    <main-menu imenu="" iduser="{{userid}}">
+        <div class="title" id="name"></div>
+        <div class="separator"></div>
+        <div class="container">
+            <core-card class="panel" vertical layout center-center>
+                 <h4>ERROR 404 PAGE NOTFOUND</h4>
+            </core-card>
+        </div>
+
+    </main-menu>
   </template>
-     <script>  
-      Polymer({
-          ready: function() {
-          }
-      });
-    </script>
 </polymer-element>

@@ -71,7 +71,7 @@
       <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
           <template repeat="{{page in pages}}">
             <template if="{{imenu === page.name}}">
-              <core-item icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active></core-item>
+              <core-item icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active hero-id="hero" hero ></core-item>
             </template>
             <template if="{{imenu != page.name}}">
               <core-item icon="{{page.logo}}" label="{{page.name}}" id="{{page.hash}}" on-click="{{changeMenu}}"></core-item>

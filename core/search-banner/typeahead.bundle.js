@@ -750,8 +750,7 @@
             },
             input: {
                 position: "relative",
-                verticalAlign: "top",
-                backgroundColor: "transparent"
+                verticalAlign: "top"
             },
             inputWithNoHint: {
                 position: "relative",
@@ -760,18 +759,18 @@
             dropdown: {
                 position: "absolute",
                 top: "100%",
-                width: "100%",
+                width: "99%",
                 left: "0px",
                 zIndex: "100",
                 display: "none",
-                marginTop: "5px",
-                boxShadow: "inset 2px -4px 8px #888888",
+                marginTop: "2px",
+                boxShadow: "inset 0px -4px 8px #AAA",
                 borderColor: '#666',
                 borderStyle: 'solid',
                 borderWidth: '0 1px 1px',
                 borderRadius: '0 0 5px 5px',
-                padding: '3px 13px',
-                backgroundColor: "rgb(245, 245, 245)"
+                padding: '3px 10px',
+                backgroundColor: "rgba(245, 245, 245,0.9)"
             },
             suggestions: {
                 display: "block"

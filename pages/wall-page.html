@@ -16,7 +16,7 @@
   <script>
     (function () {
       Polymer({
-        ready: function(){
+        domReady: function(){
           var ajaxhandler = this.$.ajaxhandler;
           ajaxhandler.getAllArticles(0,function (result){
             if(result){

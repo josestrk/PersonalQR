@@ -12,8 +12,8 @@ Polymer({
   ready:function(){
   }
 });
-
-opener.location.hash = window.location.hash;
+if(!localStorage.token)
+    opener.location.hash = window.location.hash;
 window.close();
 </script>
 </polymer-element>
