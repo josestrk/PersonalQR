@@ -1,0 +1,73 @@
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/core-item/core-item.html">
+<link rel="import" href="../../bower_components/core-menu/core-menu.html">
+
+<polymer-element name="menu-lt" attributes="imenu color">
+
+  <template>
+    <style>
+      core-menu > core-item {
+        padding: 13px 0px;
+      }
+      @media(max-height:720px){
+        core-menu > core-item {
+          font-size:15px;
+          padding: 5px 0px;
+        }
+      }
+      .selected {
+        background: {{color}};
+        padding: 13px 0px;
+        margin-left: -40px;
+        width:121%;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+      }
+      #pages{
+        display: block;
+        width: 100%;
+        position: relative;
+        height: 100%;
+      }
+      #paper_icon_button{
+        top: 40px;
+        color:#FFF;
+        padding: 10px
+      }
+      .selected > core-icon {
+        margin: 0 15px 0 3px;
+      }
+    </style>
+    <core-menu valueattr="id" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" vertical layout>
+      <template repeat="{{page in pages}}">
+        <template if="{{imenu === page.name}}">
+          <core-item class="selected" icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active cross-fade></core-item>
+        </template>
+        <template if="{{imenu != page.name}}">
+          <core-item icon="{{page.logo}}" label="{{page.name}}" id="{{page.hash}}" cross-fade></core-item>
+        </template>
+      </template>
+    </core-menu>
+  </template>
+
+  <script>
+    Polymer({
+      create:function(){
+      },
+      pages: [
+        {name: 'Wall', logo: 'info', hash: '/wall'},
+        {name: 'My profile', logo: 'social:person', hash: '/profile'},
+        {name: 'Edition Mode', logo: 'bookmark', hash: '/editor'},
+        {name: 'Settings', logo: 'lock', hash: '/settings'},
+        {name: 'Contacts', logo: 'social:people', hash: '/contacts'}
+      ],
+      menuItemSelected: function(event,detail,sender){
+        debugger
+        document.querySelector('app-router').go(sender.selected);
+      }
+    });
+
+  </script>
+
+</polymer-element>
