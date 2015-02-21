@@ -2,6 +2,8 @@
 <link rel="import" href="../core/core-config/pt-config.html">
 <link rel="import" href="../core/core-own-signin/core-own-signin.html">
 <link rel="import" href="../img/social-icons.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../core/core-ajax-handler.html">
 
 
 <polymer-element name="config-page">
@@ -30,14 +32,15 @@
         background: #F5F5F5;
       }
     </style>
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu iMenu="Settings" color='#455A64'>
       <div class="title">Settings</div>
       <div class="separator"></div>
       <div class="list">
         <div class="block">
-          <template repeat="{{i in ['icard','pcard','icard']}}">
-            <pt-config class="{{i}}" setting="Setting" info="info" icon="settings-applications" horizontal layout>
-              <paper-toggle-button checked></paper-toggle-button>
+          <template repeat="{{i in configbuttons}}">
+            <pt-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="settings-applications" horizontal layout>
+              <paper-toggle-button checked="{{i.value}}" on-click="{{changepost}}" disabled="{{i.disabled}}"></paper-toggle-button>
             </pt-config>
           </template>
         </div>
@@ -62,22 +65,6 @@
   (function(){
      Polymer({
         domReady: function() {
-            this.pages = [
-              {class:'icard', setting:"Facebook", info:"Your personal Facebook profile", icon:"social:post-facebook", value:""},
-              {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:""},
-              {class:'icard', setting:"GitHub", info:"Your GitHub profile", icon:"social:post-github", value:""},
-              {class:'pcard', setting:"Instagram", info:"Your Instagram profile", icon:"social:post-instagram", value:""},
-              {class:'icard', setting:"Google+", info:"Your Google+ profile", icon:"social:post-gplus", value:""},
-              {class:'pcard', setting:"YouTube", info:"Your Youtube profile", icon:"social:post-youtube", value:""}
-            ];
-
-            this.userdata = [
-              {class:'icard', setting:"Username", info:"Introduce a username to login with it", icon:"account-circle", value:""},
-              {class:'pcard', setting:"Email", info:"Your email, it can't be changed", icon:"mail", value:""},
-              {class:'icard', setting:"Name", info:"This is your public name", icon:"account-circle", value:""},
-              {class:'pcard', setting:"Password", info:"Used it to log later", icon:"lock", value:""},
-              {class:'icard', setting:"Bdate", info:"Your Birth date", icon:"redeem", value:""}
-            ];
 
             var that = this;
             this.addEventListener('getUsuario', function(res){
@@ -89,7 +76,39 @@
                   item.value = res.detail[item.setting.toLowerCase()];
                 }
               });
+              this.configbuttons[0].value = res.detail.firstview;
+              this.configbuttons[1].value = res.detail.auth;
             }.bind(that));
+        },
+        pages : [
+          {class:'icard', setting:"Facebook", info:"Your personal Facebook profile", icon:"social:post-facebook", value:""},
+          {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:""},
+          {class:'icard', setting:"GitHub", info:"Your GitHub profile", icon:"social:post-github", value:""},
+          {class:'pcard', setting:"Instagram", info:"Your Instagram profile", icon:"social:post-instagram", value:""},
+          {class:'icard', setting:"Google+", info:"Your Google+ profile", icon:"social:post-gplus", value:""},
+          {class:'pcard', setting:"YouTube", info:"Your Youtube profile", icon:"social:post-youtube", value:""}
+        ],
+        userdata : [
+          {class:'icard', setting:"Username", info:"Introduce a username to login with it", icon:"account-circle", value:""},
+          {class:'pcard', setting:"Email", info:"Your email, it can't be changed", icon:"mail", value:""},
+          {class:'icard', setting:"Name", info:"This is your public name", icon:"account-circle", value:""},
+          {class:'pcard', setting:"Password", info:"Used it to log later", icon:"lock", value:""},
+          {class:'icard', setting:"Bdate", info:"Your Birth date", icon:"redeem", value:""},
+          {class:'pcard', setting:"Picture", info:"Your picture URL", icon:"image:photo", value:""},
+        ],
+        configbuttons : [
+          {class:'icard', setting:"Posts/Followings", info:"Switch between showing your posts(if enabled), or your followings", value: 1},
+          {class:'pcard', setting:"Public", info:"Switch if your profile is public, feature temporaly disabled", value: true, disabled: true}
+        ],
+        changepost : function(e, d, s){
+          if(s.disabled == false){
+            var val = {
+              campo : 'firstview',
+              valor : !this.configbuttons[0].value
+            }
+            this.$.ajaxhandler.changedsocialmedia(JSON.stringify(val),function (result){
+            });
+          }
         }
       });
     }());

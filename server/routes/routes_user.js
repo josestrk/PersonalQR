@@ -66,6 +66,7 @@ function worker(io) {
       userManager.addfollower(extUser, ourUser,function(err, result){
         io.alexEmit('followingonemore', result);
       });
+      io.alexEmit('Ifollowing', result);
       res.json(result);
     });
   }
@@ -78,6 +79,7 @@ function worker(io) {
       userManager.deletefollower(extUser, ourUser,function(err, result){
         io.alexEmit('followingoneless', result);
       });
+      io.alexEmit('Iunfollowing', result);
       res.json(result);
     });
   }

@@ -66,6 +66,29 @@
           if (localStorage.token !== undefined) {
             this.rellenarProfile();
           }
+          var that = this;
+          //esto notifica que tengo un follower mas
+          socket.on('followingonemore', function(result) {
+            if (document.getElementById('user').datos._id === result._id){
+              this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
+            }
+          }.bind(that));
+          socket.on('followingoneless', function(result) {
+            if (document.getElementById('user').datos._id === result._id){
+              this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
+            }
+          }.bind(that));
+          //asi se que sigo a alguien mas
+          socket.on('Ifollowing', function(result) {
+            if (document.getElementById('user').datos._id === result._id){
+              this.$.following.innerHTML = parseInt(this.$.following.innerHTML)+1;
+            }
+          }.bind(that));
+          socket.on('Iunfollowing', function(result) {
+            if (document.getElementById('user').datos._id === result._id){
+              this.$.following.innerHTML = parseInt(this.$.following.innerHTML)-1;
+            }
+          }.bind(that));
         },
         handleLogout: function(event, detail) {
           this.$.login.logout();

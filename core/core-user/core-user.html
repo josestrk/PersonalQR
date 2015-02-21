@@ -12,13 +12,16 @@
 
     Polymer({
       created: function(){
-        if(localStorage.token !== undefined){
-          this.getUser();
-        }
         var that = this;
-        addEventListener('tokenchanged', function(e) {
-          that.getUser();
-        });
+
+        var checkToken = setInterval(function() {
+          if (localStorage.token !== undefined) {
+            that.getUser();
+            socket.connect(localStorage.token);
+            clearInterval(checkToken);
+          }
+        }, 100);
+
       },
       data:function(objeto){
         this.datos=objeto[0];
@@ -44,7 +47,6 @@
           url: 'routes_user/profile',
         },function( result ) {
           this.datos = result;
-          console.log(result);
         }.bind(this),
         function(xhr, err, desc){
           var errorToast = document.querySelector('#errorToast');

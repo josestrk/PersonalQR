@@ -45,6 +45,7 @@
     <main-menu imenu="" iduser="{{userid}}" cross-fade>
         <div class="title" id="name"></div>
         <div class="container">
+          <div class="chargin">
             <core-card  class="card" layout vertical center center-justified>
                 <id-card layout vertical center center-justified>
                     <img class="img" id='photo' src="{{ this.photoUrl }}"/>
@@ -55,6 +56,7 @@
                   <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
                   <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
             </core-card>
+          </div>
             <core-card class="panel" vertical layout center-center>
                 <section>
                     <div id="rrss"  horizontal layout center-justified center>
@@ -91,7 +93,30 @@
 
         Polymer({
             domReady: function(){
-                this.rellenarProfile();
+                var that = this;
+                //esto notifica que tengo un follower mas
+                socket.on('followingonemore', function(result) {
+                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                    this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
+                  }
+                }.bind(that));
+                socket.on('followingoneless', function(result) {
+                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                    this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
+                  }
+                }.bind(that));
+                //asi se que sigo a alguien mas
+                socket.on('Ifollowing', function(result) {
+                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                    this.$.following.innerHTML = parseInt(this.$.following.innerHTML)+1;
+                  }
+                }.bind(that));
+                socket.on('Iunfollowing', function(result) {
+                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                    this.$.following.innerHTML = parseInt(this.$.following.innerHTML)-1;
+                  }
+                }.bind(that));
+                setTimeout(this.rellenarProfile.bind(that), 1200);
             },
             setfollow : function (res) {
               res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
@@ -132,7 +157,7 @@
             socialProfile: function(){
 
             },
-            
+
             changebutton: function () {
               if(this.$.follow.style.display == 'none'){
                  this.$.follow.style.display = 'inherit';

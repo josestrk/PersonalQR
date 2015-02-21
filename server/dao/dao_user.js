@@ -72,7 +72,12 @@ function changedsocialmedia(id, campo, valor, callback) {
 		case "Bdate":
 			var flag =true;
 		break;
+		case "firstview":
+			var flag =true;
+		break;
 	}
+
+	console.log(valor);
 
 	if(flag){
 			update.$set[campo.toLowerCase()] = valor;
