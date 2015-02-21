@@ -1,4 +1,5 @@
 <link rel="import" href="../core/core-ajax-handler.html">
+
 <link rel="import" href="../core/core-list/core-list.html">
 
 <polymer-element name="wall-page">
@@ -6,7 +7,7 @@
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu imenu="Wall" color="#78909C" logged="{{login.logged}}" progress="{{$.progress}}">
-      <div class="title">Wall</div>
+      <div class="title" cross-fade>Wall</div>
       <paper-progress id="progress"></paper-progress>
       <core-list></core-list>
     </main-menu>

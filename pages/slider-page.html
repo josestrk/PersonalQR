@@ -9,7 +9,6 @@
 <link rel="import" href="../bower_components/core-icons/image-icons.html">
 
 <polymer-element name="slider-page">
-
   <template>
     <style>
       #content{
@@ -21,12 +20,7 @@
         color: #808080;
       }
       #card {
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
-        box-shadow: rgba(255, 255, 255, 50.9980392) 0px 5px 18px, rgba(255, 255, 255, 0.9980392) 0px 0px 3px;
-        background-size: 100% 100%;
+      
       }
       #paper_radio_button {
         left: 1540px;
@@ -49,16 +43,18 @@
         box-shadow: rgba(0, 0, 0, 30.0980392) 0px 12px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 6px;
         background-color: whitesmoke;
         opacity: 0.70;
-        padding: 10px;
         font-weight: 600;
         text-align: center;
         color: dimgrey;
       }
+      #core_logo{
+        padding: 15px;
+      }
       core-animated-pages {
-          margin: 20px;
-          width: 350px;
-          height: 500px;
-          background-size: 100% 100%;
+        margin: 20px;
+        width: 350px;
+        height: 500px;
+        background-size: 100% 100%;
       }
 
       @media all and (max-width: 420px) {
@@ -98,15 +94,16 @@
       }
 
       #paper_tabs_up {
-          height: 35px;
-          width: 100%;
-          box-shadow: rgba(200, 200, 200, 0.25) 0px 3px 2px;
-          background-color: rgba(7, 18, 14,0.5);
+        height: 35px;
+        width: 100%;
+        color: white;
+        box-shadow: rgba(200, 200, 200, 0.25) 0px 3px 2px;
+        background-color: rgba(7, 18, 14,0.5);
       }
 
       paper-tabs paper-tab > a {
-          text-decoration: none;
-          color: rgba(250, 250, 250, 1.098039);
+        text-decoration: none;
+        color: rgba(250, 250, 250, 1.098039);
       }
 
       paper-tabs paper-tab::shadow #ink {
@@ -114,10 +111,10 @@
       }
     </style>
 
-    <paper-tabs selectedindex="0"  id="paper_tabs_up" vertical layout center-center link>
+    <paper-tabs selectedindex="0"  id="paper_tabs_up" horizontal layout center-center link>
       <template repeat="{{info in infos}}">
         <paper-tab id="{{info.link}}" on-click="{{infoLoader}}">
-            <core-icon icon="{{info.icon}}"></core-icon>{{info.name}}
+          <core-icon icon="{{info.icon}}"></core-icon>{{info.name}}
         </paper-tab>
       </template>
     </paper-tabs>
@@ -125,8 +122,11 @@
     <core-card vertical layout  center-justified>
       <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
         <template repeat="{{page in pages}}" >
-          <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center end-justified>
-              <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
+          <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center center-justified>
+            <core-card id="core_logo" vertical layout wrap center-justified center>
+              <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
+            </core-card>
+            <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
           </section>
         </template>
       </core-animated-pages>
@@ -140,16 +140,16 @@
 
   </template>
 
-    <script>
-     (function () {
+  <script>
+    (function () {
 
       function loadPages() {
         var DEFAULT_ROUTE = '1';
 
         this.pages = [
-          {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community',image:'http://makeonweb.es/josestrk/img/small/bg-9.jpg', hash: '1'},
-          {content: 'Share whatever you want with anyone you want',image:'http://makeonweb.es/josestrk/img/small/bg-2.jpg', hash: '2'},
-          {content: 'All your sports, live events, and so on.',image:'http://makeonweb.es/josestrk/img/small/bg-8.jpg', hash: '3'}
+          {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community',image:'img/sliders/sl1.jpg', hash: '1'},
+          {content: 'Share whatever you want with anyone you want',image:'img/sliders/sl2.jpg', hash: '2'},
+          {content: 'All your sports, live events, and so on.',image:'img/sliders/sl3.jpg', hash: '3'}
         ];
         this.infos = [
           {name:'Info',id:'paper_tab',icon:'help',link:'/search/?topic=info'},
@@ -159,9 +159,9 @@
         var animatedPages = this.$.pages;
 
         this.route = this.$.route || DEFAULT_ROUTE; // Select initial route.
-     }
+      }
 
-     Polymer({
+      Polymer({
         domReady: function () {
           loadPages.bind(this)();
           //addKeysToNumbers.bind(this)();
@@ -174,7 +174,7 @@
           e.shiftKey ? sender.selectPrevious(true) : sender.selectNext(true);
         },
         clickedpaper: function(info){
-            window.location.hash=info;
+          window.location.hash=info;
         },
         infoLoader:function(e,detail,sender){
           localStorage.back='/';
@@ -183,6 +183,5 @@
       });
     }());
 
-    </script>
-
+  </script>
 </polymer-element>

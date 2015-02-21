@@ -1,90 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <style>
-      :host{
-          color: #555;
-          font-family: 'OpenSans-Regular','RobotoDraft', sans-serif;
-      }
-      template {display: none !important;} /* injected by platform.js */
-  </style>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>PersonalQr</title>
 
-    <script src="bower_components/webcomponentsjs/webcomponents.js" type="text/javascript"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="bower_components/socket.io-client/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.5.4/CustomElements.min.js"></script>
-    <script src="../../bower_components/time-elements/time-elements.js"></script>
-	<script>
-		var socket = io.connect(':9005/', {
-			timeout: Infinity
-		});
-		socket.on('connect', function() {
-      console.log('Cliente conectado!');
-		});
-		socket.on('disconnect', function() {
-		});
-	</script>
+        <script src="bower_components/webcomponentsjs/webcomponents.js" type="text/javascript"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="bower_components/socket.io-client/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.5.4/CustomElements.min.js"></script>
+        <script src="../../bower_components/time-elements/time-elements.js"></script>
+        <script>
+            var socket = io.connect(':9005/', {
+                timeout: Infinity
+            });
+            socket.on('connect', function() {
+                console.log('Cliente conectado!');
+            });
+            socket.on('disconnect', function() {
+            });
+        </script>
 
-  <link href='style/OpenSans-Regular.ttf' rel='import' type='application/x-font-ttf'>
-  <link rel="import" href="bower_components/font-roboto/roboto.html" >
+        <link href='style/OpenSans-Regular.ttf' rel='import' type='application/x-font-ttf'>
+        <link rel="import" href="bower_components/font-roboto/roboto.html" >
 
-  <link rel="import" href="bower_components/polymer/polymer.html">
-  <link rel="import" href="bower_components/app-router/app-router.html">
-  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
-  <link rel="import" href="bower_components/core-signals/core-signals.html">
-  <link rel="import" href="bower_components/core-transition/core-transition.html">
-  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+        <link rel="import" href="bower_components/polymer/polymer.html">
+        <link rel="import" href="bower_components/app-router/app-router.html">
+        <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+        <link rel="import" href="bower_components/core-signals/core-signals.html">
+        <link rel="import" href="bower_components/core-transition/core-transition.html">
+        <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
 
-  <link rel="import" href="core/core-user/core-user.html">
-  <link rel="import" href="core/core-index.html">
-  <link rel="import" href="core/main-menu/main-menu.html">
-  <link rel="import" href="core/app-login/app-login.html">
-  <link rel="import" href="core/core-qr/core-scanqr.html">
-  <link rel="import" href="pages/wall-page.html">
-  <link rel="import" href="pages/myp-page.html">
-  <link rel="import" href="pages/search-page.html">
-  <link rel="import" href="pages/edit-page.html">
-  <link rel="import" href="pages/config-page.html">
-  <link rel="import" href="pages/contacts-page.html">
-  <link rel="import" href="pages/person-card.html">
+        <link rel="import" href="core/core-user/core-user.html">
+        <link rel="import" href="core/main-menu/main-menu.html">
+        <link rel="import" href="core/app-login/app-login.html">
+        <link rel="import" href="core/core-qr/core-scanqr.html">
+        <link rel="import" href="pages/wall-page.html">
+        <link rel="import" href="pages/myp-page.html">
+        <link rel="import" href="pages/search-page.html">
+        <link rel="import" href="pages/edit-page.html">
+        <link rel="import" href="pages/config-page.html">
+        <link rel="import" href="pages/contacts-page.html">
+        <link rel="import" href="pages/person-card.html">
 
-  <title>PersonalQr</title>
-</head>
+        <style>
+            :host{
+                color: #555;
+                font-family: 'OpenSans-Regular','RobotoDraft', sans-serif;
+            }
+            template {display: none !important;} /* injected by platform.js */
+        </style>
+    </head>
 
-<body unresolved fullbleed>
-    <core-user id="user"></core-user>
-    <paper-toast id="errorToast" class="capsule" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
+    <body unresolved fullbleed>
+        <core-user id="user"></core-user>
+        <paper-toast id="errorToast" class="capsule" role="alert" text="Connection timed out. Showing limited messages."></paper-toast>
 
-    <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
+        <div style="width: 100%; height: 100%;" data-vide-options="position: 0% 0%" layout vertical end-justified center ></div>
 
-<!--    <app-router core-animated-pages mode="hash" transitions="slide-from-bottom">-->
-    <app-router core-animated-pages transitions="hero-transition cross-fade" mode="hash">
-        <app-route path="/" element="core-index"></app-route>
-        <app-route path="/wall" element="wall-page"></app-route>
-        <app-route path="/profile" element="myp-page"></app-route>
-        <app-route path="/search/" element="search-page"></app-route>
-        <app-route path="/pqr/" element="person-card"></app-route>
-        <app-route path="/scan" element="core-scanqr"></app-route>
-        <app-route path="/editor" element="editor-page"></app-route>
-        <app-route path="/settings" element="config-page"></app-route>
-        <app-route path="/contacts" element="contacts-page"></app-route>
-        <app-route path="/loader" import="pages/user-loader.html"></app-route>
-        <app-route path="*" import="pages/not-found.html"></app-route>
-    </app-router>
-    <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');</script>
-    <script>
-        if( localStorage.token == undefined ){
-          $(document).ready(function () {
-            $(document.body).vide("video/ocean").resize();
-          });
-        }else{
-          if(window.location.hash === ''){
-            document.querySelector('app-router').go('/wall');
-          }
-        }
-    </script>
-</body>
+        <app-router core-animated-pages transitions="hero-transition cross-fade" mode="hash">
+            <app-route path="/" import="core/core-index.html"></app-route>
+            <app-route path="/wall" element="wall-page"></app-route>
+            <app-route path="/profile" element="myp-page"></app-route>
+            <app-route path="/search/" element="search-page"></app-route>
+            <app-route path="/pqr/" element="person-card"></app-route>
+            <app-route path="/scan" element="core-scanqr"></app-route>
+            <app-route path="/editor" element="editor-page"></app-route>
+            <app-route path="/settings" element="config-page"></app-route>
+            <app-route path="/contacts" element="contacts-page"></app-route>
+            <app-route path="/loader" import="pages/user-loader.html"></app-route>
+            <app-route path="*" import="pages/not-found.html"></app-route>
+        </app-router>
+        <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>');</script>
+        <script>
+            if( localStorage.token == undefined ){
+                $(document).ready(function () {
+                    $(document.body).vide("video/ocean").resize();
+                });
+            }else{
+                if(window.location.hash === ''){
+                    document.querySelector('app-router').go('/wall');
+                }
+            }
+        </script>
+    </body>
 </html>

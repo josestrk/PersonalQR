@@ -1,62 +1,37 @@
 <link rel="import" href="../search-banner/search-banner.html">
 <link rel="import" href="../id-card/id-card.html">
+<link rel="import" href="menu-lt.html">
 
-<polymer-element name="core-slider-bar" attributes="imenu color">
+<polymer-element name="core-slider-bar" attributes="imenu color logged">
 
-<template>
-  <style>
-    nav{
+  <template>
+    <style>
+      nav{
         color: white;
         margin: 0px 0px auto 0px;
         font-size: 20px;
-    }
-    core-menu > core-item {
-        padding: 13px 0px;
-    }
-    @media(max-height:720px){
-      #idcard{
-        display:none;
       }
-      core-menu > core-item {
-        font-size:15px;
-        padding: 5px 0px;
+      .right{
+        position: absolute;
+        left:95%;
       }
-      .search{
-        height:50px;
-      }
-    }
-    .dropdown {
+      .dropdown {
         padding: 12px 0px;
-    }
-    .core-selected {
-        background: {{color}};
-        padding: 13px 0px;
-        margin-left: -40px;
-        width:121%;
-        border-top-left-radius: 40px;
-        border-bottom-left-radius: 40px;
-    }
-    #pages{
-        display: block;
-        width: 100%;
-        position: relative;
-        height: 100%;
-    }
-    #paper_icon_button{
-        top: 40px;
-        color:#FFF;
-        padding: 10px
-    }
-    .core-selected > core-icon {
-      margin: 0 15px 0 3px;
-    }
-    .right{
-      position: absolute;
-      left:95%;
-    }
-  </style>
+      }
+      @media(max-height:720px){
+        #idcard{
+          display:none;
+        }
+        .search{
+          height:50px;
+        }
+      }
+    </style>
 
-    <nav><search-banner class="search" horizontal layout center-justified center></search-banner>
+    <app-login id="login"></app-login>
+    
+    <nav>
+      <search-banner class="search" horizontal layout center-justified center></search-banner>
     </nav>
     <nav>
       <id-card id="idcard" vertical layout center center-justified>
@@ -67,29 +42,14 @@
       </id-card>
     </nav>
     <nav flex>
-      <template if="{{logged}}">
-      <core-menu valueattr="label" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" flex>
-          <template repeat="{{page in pages}}">
-            <template if="{{imenu === page.name}}">
-              <core-item icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active hero-id="hero" hero ></core-item>
-            </template>
-            <template if="{{imenu != page.name}}">
-              <core-item icon="{{page.logo}}" label="{{page.name}}" id="{{page.hash}}" on-click="{{changeMenu}}"></core-item>
-            </template>
-          </template>
-      </core-menu>
+      <menu-lt imenu="{{imenu}}" color="{{color}}" vertical layout></menu-lt>
     </nav>
     <nav>
-      <core-menu>
-        <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
-        <core-icon icon="my-icons:logo"></core-icon>
-      </core-menu>
-      </template>
+      <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
+      <core-icon icon="my-icons:logo"></core-icon>
     </nav>
-    <app-login id="login"></app-login>
-    </template>
-
-    <script>
+  </template>
+  <script>
     (function () {
       function doAjax(options, success, error) {
         options.dataType = 'json';
@@ -101,58 +61,42 @@
         };
         $.ajax(options);
       }
-      function loadMenu() {
-        var _id=this.iduser;
-        this.pages = [
-          {name: 'Wall', logo: 'info', hash: '/wall'},
-          {name: 'My profile', logo: 'social:person', hash: '/profile'},
-          {name: 'Edition Mode', logo: 'bookmark', hash: '/editor'},
-          {name: 'Settings', logo: 'lock', hash: '/settings'},
-          {name: 'Contacts', logo: 'social:people', hash: '/contacts'}
-        ];
-      }
-        Polymer({
-          domReady: function () {
-            this.logged = Boolean(localStorage.token);
-            this.logedtoken();
-            loadMenu.bind(this)();
-            if (localStorage.token !== undefined) {
-              this.rellenarProfile();
-            }
-          },
-          changeMenu: function(event,detail,sender){
-            document.querySelector('app-router').go(sender.id);
-          },
-          handleLogout: function(event, detail) {
-            this.$.login.logout();
-            document.querySelector('app-router').go('/');
-            document.location.reload();
-          },
-          logedtoken: function(){
-            if ( !localStorage.token ) {
-              this.$.idcard.style.display = "none";
-            }
-          },
-          idOfLoggedUser : true,
-          rellenarProfile : function (){
-            doAjax({
-              type: 'GET',
-              url: 'routes_user/profile',
-            },function( result ) {
-              this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-              this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
-              this.$.email.innerHTML = result.email ? result.email : "" ;
-              this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
-              this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-              this.idOfLoggedUser = result._id;
-            }.bind(this),
-            function(xhr, err, desc){
-              var errorToast = document.querySelector('#errorToast');
-              errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Error trying to retrieve the user's profile";
-              errorToast.show();
-            });
+      Polymer({
+        domReady: function () {
+          if (localStorage.token !== undefined) {
+            this.rellenarProfile();
           }
-        });
-      }());
-    </script>
+        },
+        handleLogout: function(event, detail) {
+          this.$.login.logout();
+          document.querySelector('app-router').go('/');
+          document.location.reload();
+        },
+        logedtoken: function(){
+          if ( this.logged ) {
+            this.$.idcard.style.display = "none";
+          }
+        },
+        idOfLoggedUser : true,
+        rellenarProfile : function (){
+          doAjax({
+            type: 'GET',
+            url: 'routes_user/profile',
+          },function( result ) {
+            this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
+            this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
+            this.$.email.innerHTML = result.email ? result.email : "" ;
+            this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
+            this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+            this.idOfLoggedUser = result._id;
+          }.bind(this),
+                 function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Error trying to retrieve the user's profile";
+            errorToast.show();
+          });
+        }
+      });
+    }());
+  </script>
 </polymer-element>

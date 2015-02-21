@@ -9,7 +9,7 @@
       <div class="return">
         <core-icon-button icon="arrow-back" title="back" on-click="{{back}}"></core-icon-button>
       </div>
-      <div class="title">Search: #{{topic}}</div>
+      <div class="title" cross-fade>Search: #{{topic}}</div>
       <paper-progress id="progress"></paper-progress>
       <core-list id="list"></core-list>
       <template if="{{check}}">
