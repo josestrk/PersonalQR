@@ -13,6 +13,10 @@ function changedsocialmedia(id, campo, valor, callback){
 		daoUser.changedsocialmedia(id, campo, valor, callback);
 }
 
+function getAllContacts(values, callback){
+		daoUser.getAllContacts(values, callback);
+}
+
 function addfollower(extUser, ourUser, callback){
 		daoUser.addfollower(extUser, ourUser, callback);
 }
@@ -130,5 +134,6 @@ module.exports = {
 	unfollowUser : unfollowUser,
 	addfollower : addfollower,
 	deletefollower : deletefollower,
-	changedsocialmedia : changedsocialmedia
+	changedsocialmedia : changedsocialmedia,
+	getAllContacts : getAllContacts
 };

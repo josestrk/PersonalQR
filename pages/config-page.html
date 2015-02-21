@@ -80,13 +80,10 @@
             ];
 
             var that = this;
-            addEventListener('getUsuario', function(res){
+            this.addEventListener('getUsuario', function(res){
               this.pages.forEach(function(item){
                 item.value = res.detail[item.setting.toLowerCase()];
               });
-            }.bind(that));
-
-            addEventListener('getUsuario', function(res){
               this.userdata.forEach(function(item){
                 if(item.setting.toLowerCase() !== 'password'){
                   item.value = res.detail[item.setting.toLowerCase()];

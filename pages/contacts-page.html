@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/left-swipe-action/left-swipe-action.html">
+<link rel="import" href="../bower_components/left-swipe-action/left-swipe-action.html">
+<link rel="import" href="../core/core-ajax-handler.html">
 
 <polymer-element name="contacts-page">
   <template>
@@ -22,6 +24,7 @@
         border-radius:50%;
       }
     </style>
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu iMenu="Contacts" color='#37474F' progress="{{$.progress}}">
       <div class="title" cross-fade>Contacts</div>
       <paper-progress id="progress"></paper-progress>
@@ -33,9 +36,8 @@
                 <div class="list-name">{{user.name}}</div>
               </div>
             </div>
-            <hidden id={{user.id}}></hidden>
-            <left-swipe-action-button onclick="alert('delete')"><paper-fab icon="delete"></paper-fab></left-swipe-action-button>
-            <left-swipe-action-button onclick="alert('social:person')"><paper-fab icon="social:person"></paper-fab></left-swipe-action-button>
+            <!-- <left-swipe-action-button ><paper-fab icon="delete"></paper-fab></left-swipe-action-button> -->
+            <left-swipe-action-button ><paper-fab on-click="{{goprofile}}" id={{user.idofuser}} icon="social:person"></paper-fab></left-swipe-action-button>
           </left-swipe-action>
         </template>
     </main-menu>
@@ -43,16 +45,49 @@
 
   <script>
     (function () {
+      function arrayObjectIndexOf(myArray, searchTerm, property) {
+          for(var i = 0, len = myArray.length; i < len; i++) {
+              if (myArray[i][property] === searchTerm) return i;
+          }
+          return -1;
+      }
         Polymer({
-            contacts:[{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'},{ìd:'12345678',name:'NameUser',picture:'../img/avatar.svg'}],
-            domReady: function () {
-              this.contacts.push({ìd:'12345678',name:'User',picture:'../img/avatar.svg'});
-              this.contacts.push({ìd:'12345679',name:'User',picture:'../img/avatar.svg'});
-              this.pullContacts();
+            contacts:[],
+            created : function () {
+              var that = this;
+              socket.on('followingonemore', function(result) {
+                if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') === -1){
+                  this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture});
+                }
+              }.bind(that));
+              socket.on('followingoneless', function(result) {
+                if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') !== -1){
+                  this.contacts.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
+                }
+              }.bind(that));
             },
-            pullContacts: function(){
-              this.contacts.push({ìd:'12345680',name:'User',picture:'../img/avatar.svg'});
+            domReady: function () {
+              this.contacts = [];
+              var that = this;
+              // this.pullContacts();
+              this.addEventListener('getUsuario', function(res){
+                if(location.hash === "#/contacts"){
+                  this.$.ajaxhandler.getAllContacts(res.detail.following, function(res){
+                    res.forEach(function(item){
+                      if(arrayObjectIndexOf(this.contacts, item._id ,'idofuser') === -1){
+                        this.contacts.push({idofuser : item._id, name : item.name, picture : item.picture});
+                      }
+                    }.bind(this));
+                  }.bind(this));
+                }
+              }.bind(that));
+            },
+            goprofile : function (event, detail, sender) {
+              document.querySelector('app-router').go('/pqr/?id=' + sender.id);
             }
+            // pullContacts: function(){
+            //   this.contacts.push({ìd:'12345680',name:'User',picture:'../img/avatar.svg'});
+            // }
         });
     })();
   </script>

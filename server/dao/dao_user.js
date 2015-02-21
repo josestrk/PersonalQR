@@ -10,6 +10,27 @@ function getUser(userId, callback) {
 	this.findById(userId, callback);
 }
 
+function getAllContacts(values, callback) {
+
+	var where = {
+		'_id':{
+			$in :[]
+		}
+	}
+
+	for (var i in values){
+		where['_id'].$in.push(toObjectID(values[i]));
+	}
+
+	this.find(where, function(err, cursor) {
+		if (err) {
+			return callback(err);
+		}
+		cursor.toArray(callback);
+	});
+}
+
+
 function changedsocialmedia(id, campo, valor, callback) {
 	var query = {
 		_id: toObjectID(id)
@@ -52,7 +73,7 @@ function changedsocialmedia(id, campo, valor, callback) {
 			var flag =true;
 		break;
 	}
-	
+
 	if(flag){
 			update.$set[campo.toLowerCase()] = valor;
 
@@ -234,7 +255,8 @@ col.bind({
 	unfollowUser : unfollowUser,
 	addfollower : addfollower,
 	deletefollower : deletefollower,
-	changedsocialmedia : changedsocialmedia
+	changedsocialmedia : changedsocialmedia,
+	getAllContacts : getAllContacts
 });
 
 module.exports = col;

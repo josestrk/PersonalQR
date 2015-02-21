@@ -95,23 +95,9 @@
           //   showMsg('A new user has been registered!');
           // });
 
-          // socket.on('scoreDestroyed', function(scoreId) {
-          // 	for (var i = 0; i < static.scores.length; i++) {
-          // 		if (scoreId === static.scores[i]._id) {
-          // 			static.scores.splice(i, 1);
-          // 			showMsg('Score [' + scoreId + '] destroyed');
-          // 		}
-          // 	}
-          // });
-          //
-          // socket.on('scoreSetted', function(score) {
-          // 	for (var i = 0; i < static.scores.length; i++) {
-          // 		if (score._id === static.scores[i]._id) {
-          // 			static.scores[i].home = score.home;
-          // 			static.scores[i].guest = score.guest;
-          // 		}
-          // 	}
-          // });
+          // socket.on('followingonemore', function(result) {
+          //   debugger
+          //  });
       }
 
       var static = {
@@ -217,6 +203,23 @@
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = 'There was an error retrieving your data.';
+            errorToast.show();
+          });
+        },
+        getAllContacts : function(data, callback){
+          var datos = {
+            values: data
+          }
+          doAjax({
+            type: 'POST',
+            url: 'routes_user/getAllContacts',
+            data: JSON.stringify(datos)
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'You are not following people';
             errorToast.show();
           });
         },

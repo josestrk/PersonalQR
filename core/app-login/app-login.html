@@ -31,7 +31,9 @@
 
       function checkResponse() {
         var hash = window.location.hash;
-        document.getElementsByTagName("video")[0].remove();
+        if(document.getElementsByTagName("video")[0] !== undefined){
+          document.getElementsByTagName("video")[0].remove();
+        }
         window.location.hash = '/wall';//redirect to wall
 
         var token = /[#?;,]token=([^;,]+)/.exec(hash);
@@ -70,7 +72,9 @@
     }
 
     function globalCheck(token) {
-      document.getElementsByTagName("video")[0].remove();
+      if(document.getElementsByTagName("video")[0] !== undefined){
+        document.getElementsByTagName("video")[0].remove();
+      }
       window.location.hash = '/wall';//redirect to wall
 
       localStorage.setItem('token', token);

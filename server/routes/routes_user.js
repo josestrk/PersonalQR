@@ -16,6 +16,7 @@ function worker(io) {
   //users
   router.post('/user',  createUser);
   router.post('/changedsocialmedia', ensureAuth, changedsocialmedia);
+  router.post('/getAllContacts', getAllContacts);
   router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
@@ -29,6 +30,20 @@ function worker(io) {
 
   router.post('/follow',  ensureAuth, followUser);
   router.post('/unfollow',  ensureAuth, unfollowUser);
+
+
+  function getAllContacts(req, res) {
+    var values = req.body.values;
+
+    if(values !== undefined){
+      userManager.getAllContacts(values,function(err, result){
+        res.json(result);
+      });
+    }else{
+      res.status(404).send('Following are undefined');
+    }
+
+  }
 
   function changedsocialmedia(req, res) {
     var id = req.globalIdOfUser;
@@ -49,8 +64,7 @@ function worker(io) {
 
     userManager.followUser(ourUser, extUser,function(err, result){
       userManager.addfollower(extUser, ourUser,function(err, result){
-      //emision en vivo de que le hemos seguido
-      //io.alexEmit('articleCreated', result);
+        io.alexEmit('followingonemore', result);
       });
       res.json(result);
     });
@@ -62,8 +76,7 @@ function worker(io) {
 
     userManager.unfollowUser(ourUser, extUser,function(err, result){
       userManager.deletefollower(extUser, ourUser,function(err, result){
-      //emision en vivo de que le hemos dejado de seguir
-      //io.alexEmit('articleCreated', result);
+        io.alexEmit('followingoneless', result);
       });
       res.json(result);
     });
