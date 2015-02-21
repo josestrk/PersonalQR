@@ -29,7 +29,7 @@
     </style>
 
     <app-login id="login"></app-login>
-    
+
     <nav>
       <search-banner class="search" horizontal layout center-justified center></search-banner>
     </nav>
@@ -89,6 +89,7 @@
             this.$.followers.innerHTML = (result.followers) ? result.followers.length : "0" ;
             this.$.following.innerHTML = result.following ? result.following.length : "0" ;
             this.idOfLoggedUser = result._id;
+            this.fire('getUsuario', result);
           }.bind(this),
                  function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');

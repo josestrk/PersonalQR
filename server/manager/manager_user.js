@@ -9,6 +9,10 @@ function unfollowUser(ourUser, extUser, callback){
 		daoUser.unfollowUser(ourUser, extUser, callback);
 }
 
+function changedsocialmedia(id, campo, valor, callback){
+		daoUser.changedsocialmedia(id, campo, valor, callback);
+}
+
 function addfollower(extUser, ourUser, callback){
 		daoUser.addfollower(extUser, ourUser, callback);
 }
@@ -20,9 +24,9 @@ function deletefollower(extUser, ourUser, callback){
 function createUser(data, callback) {
 	data.auth = true;
 	data.firstView=0;
-	data["socialMedia"]={};
 	data["followers"]=[];
 	data["following"]=[];
+
 	daoUser.createUser(data, callback);
 }
 
@@ -125,5 +129,6 @@ module.exports = {
 	followUser : followUser,
 	unfollowUser : unfollowUser,
 	addfollower : addfollower,
-	deletefollower : deletefollower
+	deletefollower : deletefollower,
+	changedsocialmedia : changedsocialmedia
 };

@@ -10,6 +10,60 @@ function getUser(userId, callback) {
 	this.findById(userId, callback);
 }
 
+function changedsocialmedia(id, campo, valor, callback) {
+	var query = {
+		_id: toObjectID(id)
+	};
+
+	var update={
+		$set:{
+		}
+	};
+
+	switch(campo){
+		case "Facebook":
+			var flag =true;
+		break;
+		case "Twitter":
+			var flag =true;
+		break;
+		case "GitHub":
+			var flag =true;
+		break;
+		case "Instagram":
+			var flag =true;
+		break;
+		case "Google+":
+			var flag =true;
+		break;
+		case "YouTube":
+			var flag =true;
+		break;
+		case "Username":
+			var flag =true;
+		break;
+		case "Name":
+			var flag =true;
+		break;
+		case "Password":
+			var flag =true;
+		break;
+		case "Bdate":
+			var flag =true;
+		break;
+	}
+	
+	if(flag){
+			update.$set[campo.toLowerCase()] = valor;
+
+			var sort = [
+				['_id', 1]
+			];
+
+			col.findAndModify(query, sort, update, {new: true}, callback);
+	}
+}
+
 function getUsersAll(callback) {
 	this.find({}, function(err, cursor) {
 		if (err) {
@@ -179,7 +233,8 @@ col.bind({
 	followUser : followUser,
 	unfollowUser : unfollowUser,
 	addfollower : addfollower,
-	deletefollower : deletefollower
+	deletefollower : deletefollower,
+	changedsocialmedia : changedsocialmedia
 });
 
 module.exports = col;

@@ -46,6 +46,7 @@
       }
     </style>
 
+    <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <div class="item-thumb">
         <paper-icon-button icon="{{icon}}"></paper-icon-button>
     </div>
@@ -65,8 +66,9 @@
   <script>
     Polymer({
       domReady:function(){
-        if( this.value == undefined )
+        if( this.value == undefined ){
           this.$.clear.style.display="block";
+        }
       },
       clear:function(){
         this.$.clear.style.display='none';
@@ -92,7 +94,19 @@
             this.$.stat.icon='done-all';
             this.$.stat.style.color= 'green';
             this.$.stat.style.opacity= '0.09';
-            console.log(this.$.input.value);
+
+            var val = {
+              campo : this.setting,
+              valor : this.$.input.value
+            }
+            var that = this.$.input.value;
+            var campo = this.setting;
+
+            this.$.ajaxhandler.changedsocialmedia(JSON.stringify(val),function (result){
+              if(result){
+                that = result.campo;
+              }
+            });
         }else{
             this.$.stat.style.opacity= '0.00';
         }

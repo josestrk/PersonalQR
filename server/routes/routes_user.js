@@ -15,6 +15,7 @@ function worker(io) {
 
   //users
   router.post('/user',  createUser);
+  router.post('/changedsocialmedia', ensureAuth, changedsocialmedia);
   router.get('/profile', ensureAuth, getProfile);
   router.get('/user/:userId', getUser);
   router.get('/user', getUsersAll);
@@ -28,6 +29,17 @@ function worker(io) {
 
   router.post('/follow',  ensureAuth, followUser);
   router.post('/unfollow',  ensureAuth, unfollowUser);
+
+  function changedsocialmedia(req, res) {
+    var id = req.globalIdOfUser;
+
+    var campo = req.body.campo;
+    var valor = req.body.valor;
+
+    userManager.changedsocialmedia(id, campo, valor,function(err, result){
+      res.json(result);
+    });
+  }
 
 
   function followUser(req, res){

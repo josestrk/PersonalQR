@@ -206,6 +206,20 @@
             errorToast.show();
           });
         },
+        changedsocialmedia : function(datos, callback){
+          doAjax({
+            type: 'POST',
+            url: 'routes_user/changedsocialmedia',
+            data: datos
+          },function(result) {
+            callback(result);
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'There was an error retrieving your data.';
+            errorToast.show();
+          });
+        },
         getmyArticles : function(skip, callback){
           doAjax({
             type: 'GET',

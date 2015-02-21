@@ -31,7 +31,7 @@
       }
     </style>
     <main-menu iMenu="Settings" color='#455A64'>
-      <div class="title" cross-fade>Settings</div>
+      <div class="title">Settings</div>
       <div class="separator"></div>
       <div class="list">
         <div class="block">
@@ -49,7 +49,10 @@
         </div>
         <div class="block">
           <div class="separator"></div>
-          <core-own-signin></core-own-signin>
+          <template repeat="{{i in userdata}}">
+            <input-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" value="{{i.value}}" horizontal layout>
+            </input-config>
+          </template>
         </div>
       </div>
     </main-menu>
@@ -61,12 +64,35 @@
         domReady: function() {
             this.pages = [
               {class:'icard', setting:"Facebook", info:"Your personal Facebook profile", icon:"social:post-facebook", value:""},
-              {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:"Twitter"},
+              {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:""},
               {class:'icard', setting:"GitHub", info:"Your GitHub profile", icon:"social:post-github", value:""},
               {class:'pcard', setting:"Instagram", info:"Your Instagram profile", icon:"social:post-instagram", value:""},
               {class:'icard', setting:"Google+", info:"Your Google+ profile", icon:"social:post-gplus", value:""},
               {class:'pcard', setting:"YouTube", info:"Your Youtube profile", icon:"social:post-youtube", value:""}
             ];
+
+            this.userdata = [
+              {class:'icard', setting:"Username", info:"Introduce a username to login with it", icon:"account-circle", value:""},
+              {class:'pcard', setting:"Email", info:"Your email, it can't be changed", icon:"mail", value:""},
+              {class:'icard', setting:"Name", info:"This is your public name", icon:"account-circle", value:""},
+              {class:'pcard', setting:"Password", info:"Used it to log later", icon:"lock", value:""},
+              {class:'icard', setting:"Bdate", info:"Your Birth date", icon:"redeem", value:""}
+            ];
+
+            var that = this;
+            addEventListener('getUsuario', function(res){
+              this.pages.forEach(function(item){
+                item.value = res.detail[item.setting.toLowerCase()];
+              });
+            }.bind(that));
+
+            addEventListener('getUsuario', function(res){
+              this.userdata.forEach(function(item){
+                if(item.setting.toLowerCase() !== 'password'){
+                  item.value = res.detail[item.setting.toLowerCase()];
+                }
+              });
+            }.bind(that));
         }
       });
     }());
