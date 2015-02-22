@@ -32,7 +32,7 @@
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-signals on-core-signal-sender-list="{{createList}}"></core-signals>
     <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="50" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
-    <paper-spinner id="spinner" active vertical layout center center-justified></paper-spinner>
+    <paper-spinner id="spinner" active vertical layout center center-justified cross-fade></paper-spinner>
     <div id="scroller" fit>
       <div id="list" hidden cross-fade></div>
     </div>

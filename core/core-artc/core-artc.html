@@ -81,7 +81,7 @@
         <paper-tabs selected="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
           <paper-tab id="paper_tab1" inline flex center-center horizontal layout>
             <core-icon icon="thumb-up" id="core_icon_button2"></core-icon>
-            <span id="num">{{num.pos}}</span>
+            <span id="txt">0{{num.pos}}</span>
           </paper-tab>
           <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
@@ -89,7 +89,7 @@
           </paper-tab>
           <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
              <core-icon icon="thumb-down" id="core_icon_button2"></core-icon>
-             <span id="num">{{num.neg}}</span>
+             <span id="txt">0{{num.neg}}</span>
           </paper-tab>
         </paper-tabs>
     </core-card>
@@ -157,6 +157,7 @@
             var post = this.$.core-artc;
         }
         Polymer({
+          num:[{pos:"0"},{neg:"0"}],
           domReady: function () {
             this.coments = JSON.parse(this.coments);
             loadPost.bind(this);

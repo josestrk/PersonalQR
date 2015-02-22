@@ -1,9 +1,10 @@
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link href="../../bower_components/paper-button/paper-button.html" rel="import">
+<link rel="import" href="../../img/social-icons.html">
 
-<polymer-element name="core-rrss" >
+<polymer-element name="core-rrss" attributes="facebook twitter github instagram google youtube">
 
   <template>
-
     <style>
       .chip-container {
         position: absolute;
@@ -34,7 +35,7 @@
         line-height: 1.5;
       }
 
-      .chip-album-title {
+      .chip-rrssname-title {
         font-weight: bold;
       }
 
@@ -56,7 +57,7 @@
       }
 
       .card-right {
-        padding: 24px;
+        padding: 11px;
       }
 
       .card-icon {
@@ -66,8 +67,27 @@
         margin-right: 16px;
       }
 
-      .card-album-title {
+      .card-rrssname-title {
         font-size: 2em;
+      }
+      .selectico{
+        width:400px;
+        height:400px;
+      }
+      paper-button.colored {
+        color: #4285f4;
+      }
+      paper-button[raised].colored {
+        background: #4285f4;
+        color: #fff;
+      }
+      @media(max-width:620px){
+        .card-left{
+          width:200px;
+        }
+        .selectico{
+          display:none;
+        }
       }
     </style>
 
@@ -78,15 +98,17 @@
         <div class="chip-container" hero-p on-tap="{{transition}}">
 
           <template repeat="{{items as item}}">
-
-            <div class="chip" hero-id="{{item.artist}}-{{item.album}}" hero?="{{selectedAlbum === item }}">
-              <div class="chip-top" style="background:{{item.color}};" hero-id="{{item.artist}}-{{item.album}}-art" hero?="{{selectedAlbum === item}}"></div>
-              <div class="chip-bottom">
-                <div class="chip-album-title">{{item.album}}</div>
-                <div class="chip-artist">{{item.artist}}</div>
+            <template if="{{item.rrsslink}}">
+              <div class="chip" hero-id="{{item.rrsslink}}-{{item.rrssname}}" hero?="{{selectedrrss === item }}">
+                <div class="chip-top" hero-id="{{item.rrsslink}}-{{item.rrssname}}-art" hero?="{{selectedrrss === item}}">
+                  <core-icon icon="{{item.icon}}" style="color:{{item.color}};width:200px;height:200px;"></core-icon>
+                </div>
+                <div class="chip-bottom">
+                  <div class="chip-rrssname-title">{{item.rrssname}}</div>
+                  <div class="chip-rrsslink">{{item.rrsslink}}</div>
+                </div>
               </div>
-            </div>
-
+            </template>
           </template>
 
         </div>
@@ -94,16 +116,19 @@
 
       <section id="details">
 
-        <div class="card" layout horizontal hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}" hero on-tap="{{transition}}">
-          <div class="card-left" style="background:{{selectedAlbum.color}};" hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}-art" hero></div>
+        <div class="card" layout horizontal hero-id="{{selectedrrss.rrsslink}}-{{selectedrrss.rrssname}}" hero on-tap="{{transition}}">
+          <div class="card-left" hero-id="{{selectedrrss.rrsslink}}-{{selectedrrss.rrssname}}-art" hero>
+            <core-icon icon="{{selectedrrss.icon}}" class="selectico" style="color:{{selectedrrss.color}};" hero-id="{{selectedrrss.rrsslink}}-{{selectedrrss.rrssname}}-art" hero></core-icon>
+          </div>
           <div class="card-right" flex>
-            <div layout horizontal center>
-              <div>
-                <div class="card-icon" style="background:{{selectedAlbum.color}};"></div>
-              </div>
+            <div layout vertical center-center>
               <div flex>
-                <div class="card-album-title">{{selectedAlbum.album}}</div>
-                <div class="card-album-artist">{{selectedAlbum.artist}}</div>
+                <div layout horizontal>
+                <core-icon class="card-icon" icon="{{selectedrrss.icon}}" style="color:{{selectedrrss.color}};"></core-icon>
+                <div class="card-rrssname-title">{{selectedrrss.rrssname}}</div>
+                <div class="card-rrssname-rrsslink">{{selectedrrss.rrsslink}}</div>
+                </div>
+                <paper-button raised class="colored" flex>See profile</paper-button>
               </div>
             </div>
           </div>
@@ -119,15 +144,17 @@
     Polymer({
       page: 0,
       items: [
-        { artist: 'Tycho', album: 'Fragments', color: '#f4db33' },
-        { artist: 'Tycho', album: 'Past Prologue', color: '#972ff8' },
-        { artist: 'Tycho', album: 'Spectre', color: '#7dd6fe' },
-        { artist: 'Tycho', album: 'Awake', color: '#dc3c84' }
+        { rrsslink: this.facebook, rrssname: 'Facebook', color: '#4a6bb6', icon:"social:post-facebook"},
+        { rrsslink: this.twitter, rrssname: 'Twitter', color: '#1ab2e8', icon:"social:post-twitter" },
+        { rrsslink: this.github, rrssname: 'Github', color: '#000', icon:"social:post-github" },
+        { rrsslink: this.instagram, rrssname: 'Instagram', color: '#6f5752',  icon:"social:post-instagram" },
+        { rrsslink: this.google, rrssname: 'Google', color: '#da4936', icon:"social:post-gplus" },
+        { rrsslink: this.youtube, rrssname: 'Youtube', color: '#e0192b', icon:"social:post-youtube"}
       ],
-      selectedAlbum: null,
+      selectedrrss: null,
       transition: function(e) {
         if (this.page === 0 && e.target.templateInstance.model.item) {
-          this.selectedAlbum = e.target.templateInstance.model.item;
+          this.selectedrrss = e.target.templateInstance.model.item;
           this.page = 1;
         } else {
           this.page = 0;

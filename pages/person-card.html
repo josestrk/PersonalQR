@@ -45,7 +45,7 @@
         }
         #panel{
             width:100%;
-            height:60%;
+            height:40%;
             margin:auto;
         }
         paper-tabs.transparent-teal {
@@ -98,7 +98,7 @@
                   <core-list layout vertical center-center></core-list>
                 </section>
                 <section>
-                  <core-rrss></core-rrss>
+                  <core-rrss facebook="{{}}" twitter="{{}}" github="{{}}" instagram="{{}}" google="{{}}" youtube="{{}}"></core-rrss>
                 </section>
               </core-animated-pages>
           </core-card>
@@ -160,7 +160,7 @@
               }.bind(this));
             },
             rrss: function(){
-              //////////////////////////////////
+              ////////////////////////////////// obtener resultados de result para rrss
             },
             setfollow : function (res) {
               res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
