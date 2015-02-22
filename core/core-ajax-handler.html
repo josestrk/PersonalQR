@@ -212,6 +212,25 @@
             errorToast.show();
           });
         },
+        getUserArticles: function(skip, id, callback){
+          var datos = { id : id}
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/article/'+skip,
+            data: JSON.stringify(datos)
+          },function(result) {
+            if(result[0] == null){
+              callback(result, 'fin');
+            }else{
+              callback(result);
+            }
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Could not connect to server';
+            errorToast.show();
+          });
+        },
         getmyArticles : function(skip, callback){
           doAjax({
             type: 'GET',

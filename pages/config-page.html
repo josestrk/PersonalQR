@@ -53,7 +53,7 @@
         <div class="block">
           <div class="separator"></div>
           <template repeat="{{i in userdata}}">
-            <input-config class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" value="{{i.value}}" horizontal layout>
+            <input-config disabled="{{i.disabled}}" class="{{i.class}}" setting="{{i.setting}}" info="{{i.info}}" icon="{{i.icon}}" value="{{i.value}}" horizontal layout>
             </input-config>
           </template>
         </div>
@@ -81,23 +81,23 @@
             }.bind(that));
         },
         pages : [
-          {class:'icard', setting:"Facebook", info:"Your personal Facebook profile", icon:"social:post-facebook", value:""},
-          {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile", icon:"social:post-twitter", value:""},
-          {class:'icard', setting:"GitHub", info:"Your GitHub profile", icon:"social:post-github", value:""},
-          {class:'pcard', setting:"Instagram", info:"Your Instagram profile", icon:"social:post-instagram", value:""},
-          {class:'icard', setting:"Google+", info:"Your Google+ profile", icon:"social:post-gplus", value:""},
-          {class:'pcard', setting:"YouTube", info:"Your Youtube profile", icon:"social:post-youtube", value:""}
+          {class:'icard', setting:"Facebook", info:"Your personal Facebook profile link", icon:"social:post-facebook", value:""},
+          {class:'pcard', setting:"Twitter", info:"Your personal Twitter profile link", icon:"social:post-twitter", value:""},
+          {class:'icard', setting:"GitHub", info:"Your GitHub profile link", icon:"social:post-github", value:""},
+          {class:'pcard', setting:"Instagram", info:"Your Instagram profile link", icon:"social:post-instagram", value:""},
+          {class:'icard', setting:"Google+", info:"Your Google+ profile link", icon:"social:post-gplus", value:""},
+          {class:'pcard', setting:"YouTube", info:"Your Youtube profile link", icon:"social:post-youtube", value:""}
         ],
         userdata : [
-          {class:'icard', setting:"Username", info:"Introduce a username to login with it", icon:"account-circle", value:""},
-          {class:'pcard', setting:"Email", info:"Your email, it can't be changed", icon:"mail", value:""},
-          {class:'icard', setting:"Name", info:"This is your public name", icon:"account-circle", value:""},
-          {class:'pcard', setting:"Password", info:"Used it to log later", icon:"lock", value:""},
-          {class:'icard', setting:"Bdate", info:"Your Birth date", icon:"redeem", value:""},
-          {class:'pcard', setting:"Picture", info:"Your picture URL", icon:"image:photo", value:""},
+          {class:'icard', setting:"Username", info:"Introduce a username to login with it", icon:"account-circle", value:"", disabled : false},
+          {class:'pcard', setting:"Email", info:"Your email, it can't be changed", icon:"mail", value:"", disabled : true},
+          {class:'icard', setting:"Name", info:"This is your public name", icon:"account-circle", value:"", disabled : false},
+          {class:'pcard', setting:"Password", info:"Used it to log later", icon:"lock", value:"", disabled : false},
+          {class:'icard', setting:"Bdate", info:"Your Birth date", icon:"redeem", value:"", disabled : false},
+          {class:'pcard', setting:"Picture", info:"Your picture URL", icon:"image:photo", value:"", disabled : false},
         ],
         configbuttons : [
-          {class:'icard', setting:"Posts/Followings", info:"Switch between showing your posts(if enabled), or your followings", value: 1},
+          {class:'icard', setting:"Posts/Social Networks", info:"Switch between showing your posts(if enabled), or your followings", value: 1},
           {class:'pcard', setting:"Public", info:"Switch if your profile is public, feature temporaly disabled", value: true, disabled: true}
         ],
         changepost : function(e, d, s){

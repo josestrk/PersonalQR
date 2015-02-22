@@ -95,10 +95,10 @@
               <core-animated-pages id="core_card" selected="{{selected}}"  transitions="slide-from-right"
                   layout horizontal center-justified center>
                 <section>
-                  <core-list layout vertical center-center></core-list>
+                  <core-list></core-list>
                 </section>
                 <section>
-                  <core-rrss facebook="{{}}" twitter="{{}}" github="{{}}" instagram="{{}}" google="{{}}" youtube="{{}}"></core-rrss>
+                  <core-rrss facebook="{{Facebook}}" twitter="{{Twitter}}" github="{{GitHub}}" instagram="{{Instagram}}" google="{{Google}}" youtube="{{YouTube}}"></core-rrss>
                 </section>
               </core-animated-pages>
           </core-card>
@@ -147,21 +147,27 @@
                     this.$.following.innerHTML = parseInt(this.$.following.innerHTML)-1;
                   }
                 }.bind(that));
+                this.list();
                 setTimeout(this.rellenarProfile.bind(that), 1200);
             },
             list: function(){
-              ////////////////////////////////
-              var ajaxhandler = this.$.ajaxhandler;
-              ajaxhandler.getmyArticles(0, function (result){
-                if(result){
-                  result.shooter= ajaxhandler.getmyArticles;
-                  this.asyncFire('core-signal', {name: "sender-list", data:result});
-                }
-              }.bind(this));
+              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+              if (id !== '500') {
+                var ajaxhandler = this.$.ajaxhandler;
+                ajaxhandler.getUserArticles(0, id, function (result){
+                  if(result){
+                    result.shooter= ajaxhandler.getUserArticles;
+                    this.asyncFire('core-signal', {name: "sender-list", data:result});
+                  }
+                }.bind(this));
+              }
             },
-            rrss: function(){
-              ////////////////////////////////// obtener resultados de result para rrss
-            },
+            Facebook : 'Alejandro',
+            Twitter : '',
+            GitHub : '',
+            Instagram : '',
+            Google : '',
+            YouTube : '',
             setfollow : function (res) {
               res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
             },
@@ -172,6 +178,13 @@
                     type: 'GET',
                     url: 'routes_user/user/'+id,
                 },function( result ) {
+                    this.Facebook = result.Facebook !== undefined ? result.facebook : 'No social Network added';
+                    this.Twitter = result.Twitter !== undefined ? result.twitter : 'No social Network added';
+                    this.GitHub = result.GitHub !== undefined ? result.gitHub : 'No social Network added';
+                    this.Instagram = result.Instagram !== undefined ? result.instagram : 'No social Network added';
+                    this.Google = result.Google !== undefined ? result.google : 'No social Network added';
+                    this.YouTube = result.YouTube !== undefined ? result.youTube : 'No social Network added';
+
                     this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
                     this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
                     this.$.email.innerHTML = result.email ? result.email : "" ;

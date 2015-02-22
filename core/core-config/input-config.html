@@ -1,4 +1,4 @@
-<polymer-element name="input-config" attributes="icon setting info value">
+<polymer-element name="input-config" attributes="icon setting info value disabled">
 
   <template>
     <style>
@@ -56,7 +56,7 @@
     </div>
     <div class="item-button" flex seven>
       <div class="input" horizontal layout>
-        <input id="input" placeholder="info" is="core-input" on-focus="{{edit}}" on-blur="{{endedit}}" value="{{value}}" flex>
+        <input id="input" disabled?="{{disabled}}" placeholder="info" is="core-input" on-focus="{{edit}}" on-blur="{{endedit}}" value="{{value}}" flex>
         <core-icon id="clear" icon="clear" style="width: 20px; height: 20px;" on-click="{{clear}}"></core-icon>
         <core-icon id="stat" icon="done" style="width: 20px; height: 20px;" on-click="{{clean}}"></core-icon>
       </div>
