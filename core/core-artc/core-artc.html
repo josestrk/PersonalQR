@@ -15,6 +15,7 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/core-tooltip/core-tooltip.html">
+
 <link rel="import" href="../core-ajax-handler.html">
 
 <polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart,coments">
@@ -23,30 +24,30 @@
 
     <link rel="stylesheet" href="core-artc.css">
 
-
     <core-card id="core-artc">
         <core-header-panel mode="waterfall-tall" id="core_header_panel">
           <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
             <core-drawer-panel id="core-drawer-panel" responsiveWidth='2100px'>
               <div drawer>
-                <paper-tabs id="paper_manager" class="transparent-teal" vertical center layout>
+                <paper-tabs id="paper_manager" class="transparent-teal" center horizontal layout>
                     <paper-tab on-click="{{dialog}}" id="paper_tab-dw" inline flex center-center horizontal layout>
                        <core-icon icon="delete" id="manage-ico"></core-icon>
                        <span id="txt">Delete</span>
                      </paper-tab>
-                     <paper-tab on-click="{{edit}}" id="paper_tab-dw" inline flex center-center horizontal layout>
+                     <!-- <paper-tab on-click="{{edit}}" id="paper_tab-dw" inline flex center-center horizontal layout>
                        <core-icon icon="create" id="manage"></core-icon>
                        <span id="txt">Edit</span>
-                     </paper-tab>
+                     </paper-tab> -->
                 </paper-tabs>
               </div>
               <div main>
                   <div id="div1">
-                  <template if="{{show}}">
-                    <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
-                  </template>
-                  <core-icon-button icon="class" id="core_icon_button4"></core-icon-button>
-                      {{htitle}}</div>
+                    <template if="{{show}}">
+                      <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
+                    </template>
+                    {{htitle}}
+                    <core-icon-button icon="social:person-outline" id="core_icon_follow" class="icon_follow" on-click={{personArticle}}></core-icon-button>
+                  </div>
                   <div id="time"><time is="relative-time" datetime="{{date}}"></time></div>
               </div>
             </core-drawer-panel>
@@ -58,7 +59,7 @@
 
         <!-- comentarios -->
 
-        <ul id="comentarios" class="comentarios">
+        <ul id="comentarios" class="comentarios" on-scroll="{{debug}}">
           <template repeat="{{comentario in coments}}">
             <li class="comentario"><a href="#/pqr/?id={{comentario._id}}">{{comentario.user}}</a> : {{comentario.com}}</li>
           </template>
@@ -77,20 +78,19 @@
         </ul>
 
         <!-- buttons -->
-
-        <paper-tabs selected="0" selectedindex="0" id="paper_tabs" class="transparent-teal" horizontal center layout>
-          <paper-tab id="paper_tab1" inline flex center-center horizontal layout active>
-            <core-icon icon="favorite-outline" id="core_icon_button2"></core-icon>
-            <span id="txt">Like</span>
+        <paper-tabs selected="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+          <paper-tab id="paper_tab1" inline flex center-center horizontal layout>
+            <core-icon icon="thumb-up" id="core_icon_button2"></core-icon>
+            <span id="num">{{num.pos}}</span>
           </paper-tab>
           <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
-          <core-icon-button id="paper_tab3" disabled inline flex center-center horizontal layout style="opacity:0.2">
-                     <core-icon icon="perm-data-setting" id="core_icon_button2"></core-icon>
-                     <span id="txt">Settings</span>
-          </core-icon-button>
+          <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
+             <core-icon icon="thumb-down" id="core_icon_button2"></core-icon>
+             <span id="num">{{num.neg}}</span>
+          </paper-tab>
         </paper-tabs>
     </core-card>
 
@@ -176,6 +176,10 @@
             });
             this.showDelete() ? this.show='true' : this.show='';
           },
+          debug:function(event,detail,sender){
+            if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)
+              sender.scrollTop += 10; // move down
+          },
           visiblecomments: function (){
             if(this.flag){
               this.$.comentarios.style.visibility = "visible";
@@ -196,9 +200,6 @@
           },
           comment: function(){
             this.$.comment.toggle();
-          },
-          edit: function(){
-            this.$.edit.toggle();
           },
           submit: function(){
             var datos={
@@ -221,6 +222,7 @@
           createComment: function(){
             this.$.comentsadd.style.display='none';
             this.$.inputcomment.style.display='flex';
+            this.$.inputadd.focus();
           },
           sendComent: function(){
             console.log(this.$.inputadd.value);
