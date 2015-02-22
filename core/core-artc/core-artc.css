@@ -30,7 +30,7 @@
   padding-left: 15px;
   padding-right: 15px;
   word-wrap: break-word;
-  min-height: 400px;
+  min-height: 350px;
   background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
 }
 paper-tabs.transparent-teal {
@@ -41,8 +41,16 @@ paper-tabs.transparent-teal {
 paper-tabs.transparent-teal::shadow #selectionBar {
   background-color: #03a9f4;
 }
-paper-tabs.transparent-teal paper-tab::shadow #ink {
+paper-tabs.transparent-teal #paper_tab1::shadow #ink {
+  color: #11DD11;
+}
+
+paper-tabs.transparent-teal #paper_tab2::shadow #ink {
   color: #03a9f4;
+}
+
+paper-tabs.transparent-teal #paper_tab3::shadow #ink {
+  color: #FF3300;
 }
 
 #manage-ico{
@@ -56,7 +64,7 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
 }
 #inputcomment{
   height: 47x;
-  display: none; 
+  display: none;
   border-bottom: 2px solid #03a9f4;
 }
 .inputadd{
@@ -114,4 +122,8 @@ paper-tabs.transparent-teal paper-tab::shadow #ink {
   font-weight: bold;
   text-align: right;
   padding: 0px 15px;
+}
+.icon_follow{
+  float: right;
+  margin-top: 3px;
 }
