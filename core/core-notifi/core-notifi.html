@@ -38,11 +38,11 @@
 
     <section>
       <paper-menu-button label="Constrained height">
-        <paper-icon-button icon="social:notifications-none" alt="News"></paper-icon-button>
+        <paper-icon-button id="bell" icon="social:notifications-none" alt="News"></paper-icon-button>
         <paper-dropdown class="dropdown constrained-height open-below">
           <core-menu>
             <template repeat="{{pastries}}">
-              <item-notifi>{{}}</item-notifi>
+              <item-notifi on-click="{{clear}}">{{}}</item-notifi>
             </template>
             <center><core-icon icon="refresh"></core-icon></center>
           </core-menu>
@@ -53,7 +53,44 @@
 
   <script>
   Polymer({
-    pastries: [1,2,3,4,5,6,7,8,9,10]
+    pastries: [],
+    created: function(){
+      var that = this;
+      socket.on('followingonemore', function(result) {
+        if (document.getElementById('user').datos._id === result._id && that.pastries.indexOf('You have a new follower.') === -1){
+          that.pastries.push('You have a new follower.');
+        }
+      }.bind(that));
+      socket.on('followingoneless', function(result) {
+        if (document.getElementById('user').datos._id === result._id && that.pastries.indexOf('Someone is not following anymore.') === -1){
+          that.pastries.push('Someone is not following anymore.');
+        }
+      }.bind(that));
+      socket.on('commentadded', function(result) {
+        if (document.getElementById('user').datos._id === result.owner && that.pastries.indexOf('You have a new comment in one of your articles.') === -1){
+          that.pastries.push('You have a new comment in one of your articles.');
+        }
+      }.bind(that));
+      socket.on('onelikemore', function(result) {
+        if (document.getElementById('user').datos._id === result.iduser && that.pastries.indexOf('Someone likes one of your posts.') === -1){
+          that.pastries.push('Someone likes one of your posts.');
+        }
+      }.bind(that));
+      socket.on('oneunlikemore', function(result) {
+        if (document.getElementById('user').datos._id === result.iduser && that.pastries.indexOf("Someone doesn't like one of your posts.") === -1){
+          that.pastries.push("Someone doesn't like one of your posts.");
+        }
+      }.bind(that));
+    },
+    pastriesChanged : function(){
+      this.$.bell.icon = "social:notifications";
+    },
+    clear : function(e, d, s){
+      s.remove();
+      if(this.pastries.length-1 === 0){
+        this.$.bell.icon = "social:notifications-none";
+      }
+    }
   });
   </script>
 </polymer-element>

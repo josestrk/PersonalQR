@@ -176,7 +176,28 @@
                 this.firstElementChild.className="animate";
               }
             });
+            this.addListenersSocket();
             this.showDelete() ? this.show='true' : this.show='';
+          },
+          addListenersSocket : function(){
+            var that = this;
+            socket.on('commentadded', function(result) {
+              if (this.idart === result.articleId && result.iduser !== document.getElementById('user').datos._id){
+                this.coments.push({com : result.comment, user : result.name , _id : result.iduser});
+              }
+            }.bind(that));
+            socket.on('onelikemore', function(result) {
+              if (this.idart === result._id){
+                this.likes = result.likes.length;
+                this.unlikes = result.unlikes.length;
+              }
+            }.bind(that));
+            socket.on('oneunlikemore', function(result) {
+              if (this.idart === result._id){
+                this.likes = result.likes.length;
+                this.unlikes = result.unlikes.length;
+              }
+            }.bind(that));
           },
           debug:function(event,detail,sender){
             if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)

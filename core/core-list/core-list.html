@@ -58,6 +58,21 @@
       }
       Polymer({
         shooter : true,
+        domReady : function(){
+          var that = this;
+          socket.on('articleCreated', function(result) {
+            if (document.location.hash.substr(2) == "wall"){
+              var createdarticle = createPage(result[0]);
+              this.$.list.insertBefore(createdarticle,this.$.list.firstChild);
+            }
+            if (document.location.hash.substr(2).split('/')[0] == "pqr"){
+              if(result[0].iduser === document.URL.split('/').reverse()[0].split('=').reverse()[0]){
+                var createdarticle = createPage(result[0]);
+                this.$.list.insertBefore(createdarticle,this.$.list.firstChild);
+              }
+            }
+          }.bind(that));
+        },
         createList: function(rescue){
           this.shooter = rescue.detail.shooter;
           var that=this;

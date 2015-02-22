@@ -80,18 +80,19 @@ function worker(io) {
     articleManager.comment(articleId, comment, name, iduser, function(err, result){
       if(result){
         debug('Time of response ->');
+        var aux = {
+          articleId : articleId,
+          comment : comment,
+          name : name,
+          iduser : iduser,
+          owner : result.iduser
+        }
+        io.alexEmit('commentadded', aux);
         res.json(result);
       }else{
         res.status(404).send('Not a valid article, or database error');
       }
     });
-    var aux = {
-      articleId : articleId,
-      comment : comment,
-      name : name,
-      iduser : iduser
-    }
-    io.alexEmit('commentadded', aux);
   }
 
   // function like(req, res) {

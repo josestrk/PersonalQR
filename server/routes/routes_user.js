@@ -156,7 +156,6 @@ function worker(io) {
     if (req.query.username !== undefined && req.query.password !== undefined) {
       userManager.validateUserByName(req.query.username, req.query.password, function(err, result){
         if (result[0] !== undefined) {
-          io.alexEmit('userconnected', result);
           var token = jwt.sign(result, jwtSecret);
           res.json(token);
         } else {
@@ -176,7 +175,6 @@ function worker(io) {
     if (req.query.email !== undefined && req.query.password !== undefined) {
       userManager.validateUserByEmail(req.query.email, req.query.password, function(err, result){
         if (result[0] !== undefined) {
-          io.alexEmit('userconnected', result);
           var token = jwt.sign(result, jwtSecret);
           res.json(token);
         } else {

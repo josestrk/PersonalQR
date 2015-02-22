@@ -45,11 +45,11 @@ function ensureAuthenticated(req, res, next) {
 
 
 function ensureOwner(req, res, next) {
-	var articleId = req.body._id;
+	var articleId = req.params.articleId;
 	var userId = req.globalIdOfUser;
 
 	daoArticle.getArticle(articleId, function(err, result){
-		if(err || result[0].iduser !== userId){
+		if(err || result.iduser !== userId){
 			res.status(500).send('Error, invalid id, or the article is not accesible');
 		}else{
 			next(null);
