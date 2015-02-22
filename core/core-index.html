@@ -43,7 +43,7 @@
     </style>
       <app-login id="login"></app-login>
 
-      <core-animated-pages id="core_card" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
+      <core-animated-pages id="core_card" selected="{{selected}}" on-login="{{handleLogin}}"  layout vertical end-justified center transitions="slide-from-right">
         <section layout vertical center-center>
           <slider-page></slider-page>
         </section>
@@ -54,11 +54,11 @@
           <login-page></login-page>
         </section>
       </core-animated-pages>
-      <paper-tabs selectedindex="1" id="paper_tabs" horizontal layout>
+      <paper-tabs selected="{{selected}}" id="paper_tabs" horizontal layout>
         <template repeat="{{page in pages}}">
-          <paper-tab id="{{page.id}}" hash="{{page.hash}}" select="{{page.select}}" on-click="{{clickedpaper}}" flex {{page.flex}}>
+          <paper-tab select="{{page.select}}" flex>
             {{page.name}}
-            </paper-tab>
+          </paper-tab>
         </template>
       </paper-tabs>
   </template>
@@ -66,18 +66,13 @@
     <script src="../lib/vide/jquery.vide.min.js"></script>
     <script>
       Polymer({
+        pages : [
+          {name:'Home',id:'paper_tab', select:'home'},
+          {name:'Get started',id:'paper_tab1', select:'signin'},
+          {name:'Log in',id:'paper_tab2', select:'login'}
+        ],
         ready: function() {
-          this.pages = [
-            {name:'Home',id:'paper_tab', select:'HOME'},
-            {name:'Get started',id:'paper_tab1', select:'signin'},
-            {name:'Log in',id:'paper_tab2'}
-          ];
           this.login = this.$.login;
-        },
-        clickedpaper: function(event, detail, sender){
-          sender.id=="paper_tab" ? this.$.core_card.selected = 0 : console.log() ;
-          sender.id=="paper_tab1" ? this.$.core_card.selected = 1 : console.log() ;
-          sender.id=="paper_tab2" ? this.$.core_card.selected = 2 : console.log();
         },
         handleLogin: function(event, detail) {
           switch(detail){

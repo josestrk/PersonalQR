@@ -1,11 +1,19 @@
 <link rel="import" href="../core/id-card/id-card.html">
 <link rel="import" href="../core/core-ajax-handler.html">
 
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+
+<link rel="import" href="../core/core-list/core-list.html">
+<link rel="import" href="../core/core-rrss/core-rrss.html">
+
 <!--
 <link rel="import" href="../lib/webcomponent/github-card.html">
 <link rel="import" href="../bower_components/instagram-card/dist/instagram-card.html">
--->
 <link rel="import" href="../bower_components/fancy-box/fancy-box.html">
+-->
 
 <polymer-element name="person-card">
   <template>
@@ -13,6 +21,7 @@
         .card{
             background: #666;
             color: white;
+            min-height: 310px;
             margin: auto;
             padding: 10px;
             box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
@@ -36,49 +45,68 @@
         }
         #panel{
             width:100%;
-            height:50%;
+            height:60%;
             margin:auto;
+        }
+        paper-tabs.transparent-teal {
+          background-color: transparent;
+          color: #03a9f4;
+          box-shadow: none;
+          box-shadow: rgba(0, 0, 0, 0.398039) 0px 2px 10px, rgba(0, 0, 0, 0.198039) 0px 0px 3px;
+        }
+
+        paper-tabs.transparent-teal::shadow #selectionBar {
+          background-color: #03a9f4;
+        }
+
+        paper-tabs.transparent-teal paper-tab::shadow #ink {
+          color: #03a9f4;
         }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
-    <main-menu imenu="" iduser="{{userid}}" cross-fade>
-        <div class="title" id="name"></div>
+    <main-menu>
+        <div class="title" id="name" cross-fade></div>
         <div class="container">
-          <div class="chargin">
-            <core-card  class="card" layout vertical center center-justified>
+
+          <core-card  class="card" id="card" vertical layout center center-justified>
+            <paper-spinner id="spinner" active></paper-spinner>
+            <div id="chargin" hidden>
                 <id-card layout vertical center center-justified>
                     <img class="img" id='photo' src="{{ this.photoUrl }}"/>
                     <user-name id="name"></user-name>
                     <user-account id="email"></user-account>
                     <span id="followers"> </span><span id="following"> </span>
                 </id-card>
-                  <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
-                  <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
-            </core-card>
-          </div>
-            <core-card class="panel" vertical layout center-center>
-                <section>
-                    <div id="rrss"  horizontal layout center-justified center>
-                        <fancy-box logo="fa-ra" label="Example" opt_icon_1="fa-paw" opt_icon_2="fa-tree" opt_icon_3="fa-codepen"></fancy-box>
+                <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
+                <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
+            </div>
+          </core-card>
 
-                        <!--
-                        <github-card user="Josestrk" class="card"></github-card>
-                        <main-index></main-index>
-                        <instagram-card clientId='josestrk'></instagram-card> -->
-                    </div>
+          <core-card class="panel" vertical layout start-center>
+              <paper-tabs selected="{{selected}}" class="transparent-teal" id="paper_tabs" horizontal layout>
+                <template repeat="{{btn in secmenu}}">
+                  <paper-tab select="{{btn.select}}" on-click="{{btn.send}}">
+                    {{btn.name}}
+                  </paper-tab>
+                </template>
+              </paper-tabs>
+
+              <core-animated-pages id="core_card" selected="{{selected}}" layout horizontal center-justified center transitions="slide-from-rigth">
+                <section>
+                  <core-list layout vertical center-center></core-list>
                 </section>
                 <section>
-                    <core-list></core-list>
+                  <core-rrss></core-rrss>
                 </section>
-            </core-card>
+              </core-animated-pages>
+          </core-card>
         </div>
 
     </main-menu>
   </template>
   <script>
     (function () {
-
         function doAjax(options, success, error) {
           options.dataType = options.dataType || 'json';
           options.contentType = options.contentType || 'application/json; charset=UTF-8';
@@ -92,6 +120,8 @@
         }
 
         Polymer({
+            selected:0,
+            secmenu:[{name:"My Articles",select:"1",send:"list"},{name:"Social Networks",select:"2",send:"rrss"}],
             domReady: function(){
                 var that = this;
                 //esto notifica que tengo un follower mas
@@ -118,6 +148,19 @@
                 }.bind(that));
                 setTimeout(this.rellenarProfile.bind(that), 1200);
             },
+            list: function(){
+              ////////////////////////////////
+              var ajaxhandler = this.$.ajaxhandler;
+              ajaxhandler.getmyArticles(0, function (result){
+                if(result){
+                  result.shooter= ajaxhandler.getmyArticles;
+                  this.asyncFire('core-signal', {name: "sender-list", data:result});
+                }
+              }.bind(this));
+            },
+            rrss: function(){
+              //////////////////////////////////
+            },
             setfollow : function (res) {
               res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
             },
@@ -139,6 +182,9 @@
                       this.$.unfollow.style.display = 'none';
                       this.$.follow.style.display = 'none';
                     }
+                    this.$.spinner.remove();
+                    this.$.chargin.removeAttribute('hidden');
+
                 }.bind(this),
                 function(xhr, err, desc){
                     var errorToast = document.querySelector('#errorToast');

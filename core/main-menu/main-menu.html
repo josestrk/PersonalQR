@@ -51,14 +51,14 @@
 
     <core-scaffold id="scaffold" on-logout="{{handleLogout}}" rightDrawer mode="waterfall"  drawerWidth='270px' responsiveWidth='1024px' on-scroll="{{scrollHandler}}" on-loader="{{reloadbar}}">
 
-      <core-slider-bar navigation imenu="{{imenu}}" color="{{color}}" flex vertical layout style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);"></core-slider-bar>
+      <core-slider-bar navigation imenu="{{imenu}}" color="{{color}}" logged="{{logged}}" flex vertical layout style="height:100%; background-color: #666;box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1);"></core-slider-bar>
 
       <core-toolbar tool flex cross-fade>
         <content select=".return"></content>
         <content select=".title"></content>
         <template if="{{logged}}">
-          <div class="notifi"><core-notifi id="notifi"><paper-ripple></paper-ripple></core-notifi></div>
-          <core-qr id="{{id}}"><paper-ripple></paper-ripple></core-qr>
+          <div class="notifi"><core-notifi id="notifi"><paper-ripple id="ink" initialopacity="0.95" opacitydecayvelocity="0.98"></paper-ripple></core-notifi></div>
+          <core-qr id="{{id}}"><paper-ripple id="ink" initialopacity="0.95" opacitydecayvelocity="0.98"></paper-ripple></core-qr>
           <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"><paper-ripple></paper-ripple></core-icon-button>
           <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"><paper-ripple class="recenteringTouch"></paper-ripple></core-icon-button>
         </template>
@@ -68,7 +68,7 @@
       <content select=".separator"></content>
       <content select=".container" cross-fade></content>
       <content cross-fade></content>
-      <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
+      <!-- <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold> -->
       <content select="#list" cross-fade></content>
 
     </core-scaffold>

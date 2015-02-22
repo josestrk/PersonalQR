@@ -42,7 +42,7 @@
     <core-menu valueattr="id" selected="{{imenu}}" on-core-select="{{menuItemSelected}}" vertical layout>
       <template repeat="{{page in pages}}">
         <template if="{{imenu === page.name}}">
-          <core-item class="selected" icon="{{ page.logo+'-outline'}}" label="{{page.name}}" active cross-fade></core-item>
+          <core-item class="selected" icon="{{ page.logo+'-outline'}}" label="{{page.name}}" id="{{page.hash}}" active cross-fade></core-item>
         </template>
         <template if="{{imenu != page.name}}">
           <core-item icon="{{page.logo}}" label="{{page.name}}" id="{{page.hash}}" cross-fade></core-item>
@@ -63,7 +63,8 @@
         {name: 'Contacts', logo: 'social:people', hash: '/contacts'}
       ],
       menuItemSelected: function(event,detail,sender){
-        document.querySelector('app-router').go(sender.selected);
+        // if( sender.selected !=  window.location.hash.substr(1) )
+          document.querySelector('app-router').go(sender.selected);
       }
     });
 

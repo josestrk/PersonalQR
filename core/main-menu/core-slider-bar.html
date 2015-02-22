@@ -42,7 +42,9 @@
       </id-card>
     </nav>
     <nav flex>
-      <menu-lt imenu="{{imenu}}" color="{{color}}" vertical layout></menu-lt>
+      <template if="{{logged}}">
+        <menu-lt imenu="{{imenu}}" color="{{color}}" vertical layout></menu-lt>
+      </template>
     </nav>
     <nav>
       <core-icon-button icon="settings-power" id="paper_icon_button" on-click="{{handleLogout}}"></core-icon-button>
@@ -61,10 +63,14 @@
         };
         $.ajax(options);
       }
+
       Polymer({
+        idOfLoggedUser : true,
         domReady: function () {
           if (localStorage.token !== undefined) {
             this.rellenarProfile();
+          }else{
+            this.$.idcard.style.display = "none";
           }
           var that = this;
           //esto notifica que tengo un follower mas
@@ -95,12 +101,6 @@
           document.querySelector('app-router').go('/');
           document.location.reload();
         },
-        logedtoken: function(){
-          if ( this.logged ) {
-            this.$.idcard.style.display = "none";
-          }
-        },
-        idOfLoggedUser : true,
         rellenarProfile : function (){
           doAjax({
             type: 'GET',

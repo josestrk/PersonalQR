@@ -34,6 +34,9 @@
   },
   "resolutions": {
     "jquery": "2.1.1",
-    "core-component-page": "^0.5"
+    "core-component-page": "^0.5",
+    "core-icons": "^0.5",
+    "core-iconset-svg": "^0.5",
+    "core-meta": "^0.5"
   }
 }

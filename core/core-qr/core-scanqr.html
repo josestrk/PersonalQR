@@ -3,9 +3,9 @@
 <polymer-element name="core-scanqr">
 
     <template>
-        <main-menu iMenu="scan" progress="{{$.progress}}">
-            <div class="title">SCAN</div>
-            <div flex class="middle">
+        <main-menu>
+            <div class="title">Scan</div>
+            <div vertical layout wrap center center-justified>
             <qr-reader onRead="App.ctrl.onRead"></qr-reader>
             </div>
         </main-menu>

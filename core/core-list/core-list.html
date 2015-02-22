@@ -2,7 +2,7 @@
 <link rel="import" href="../core-artc/core-artc.html">
 <link rel="import" href="../../bower_components/core-scroll-threshold/core-scroll-threshold.html">
 <link rel="import" href="../../bower_components/core-signals/core-signals.html">
-
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 
 <polymer-element name="core-list">
 
@@ -17,6 +17,9 @@
         overflow: auto;
         margin-top: 4px;
       }
+      #spinner{
+        margin:40% auto;
+      }
       @media(max-width:721px){
           #list{
             width: 95%;
@@ -25,15 +28,13 @@
               display: none;
           }
       }
-      .spinner {
-        background: url('../../lib/webcomponent/spinner.gif') no-repeat center center;
-      }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <core-signals on-core-signal-sender-list="{{createList}}"></core-signals>
     <core-scroll-threshold id="threshold" scrollTarget="{{$.scroller}}" lowerThreshold="50" on-lower-trigger="{{loadMore}}" fit></core-scroll-threshold>
+    <paper-spinner id="spinner" active vertical layout center center-justified></paper-spinner>
     <div id="scroller" fit>
-      <div id="list" cross-fade></div>
+      <div id="list" hidden cross-fade></div>
     </div>
   </template>
 
@@ -60,9 +61,13 @@
           var that=this;
           var sk= this.skip;
           var list=rescue.detail;
-          list.forEach(function (item) {
-            that.$.list.appendChild(createPage(item));
-          }.bind(that));
+          setTimeout(function(){
+            list.forEach(function (item) {
+              that.$.list.appendChild(createPage(item));
+            }.bind(that));
+            this.$.spinner.remove();
+            this.$.list.removeAttribute('hidden');
+          }.bind(that),1200);
           this.skip++;
         },
         loadMore: function(){
