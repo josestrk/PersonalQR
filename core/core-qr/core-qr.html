@@ -1,0 +1,24 @@
+<link rel="import" href="qr-code.html">
+
+<polymer-element name="core-qr">
+<template>
+  <link rel="stylesheet" href="qr-code.css">
+  <div flex class="middle">
+      <core-icon-button class="core-dropdown-trigger" icon="my-icons:qr" on-click="{{toggleDialog}}">
+      </core-icon-button>
+
+      <paper-dialog id="dia" backdrop transition="core-transition-top">
+        <qr-code id="qrq"></qr-code>
+      </paper-dialog>
+  </div>
+</template>
+<script src="qr.js"></script>
+<script>
+    Polymer({
+     toggleDialog: function() {
+       this.$.qrq.data="localhost:9005/#/pqr/?id="+document.getElementById("user").datos._id;
+       this.$.dia.toggle();
+     }
+    });
+</script>
+</polymer-element>
