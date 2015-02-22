@@ -57,7 +57,7 @@
         <content select=".return"></content>
         <content select=".title"></content>
         <template if="{{logged}}">
-          <div class="notifi"><core-notifi id="notifi"><paper-ripple id="ink" initialopacity="0.95" opacitydecayvelocity="0.98"></paper-ripple></core-notifi></div>
+          <core-notifi id="notifi"></core-notifi>
           <core-qr id="{{id}}"><paper-ripple id="ink" initialopacity="0.95" opacitydecayvelocity="0.98"></paper-ripple></core-qr>
           <core-icon-button icon="my-icons:scan" id="paper_icon_button" on-click="{{scanQR}}"><paper-ripple></paper-ripple></core-icon-button>
           <core-icon-button icon="social:person" id="paper_icon_button" active="{{page.name === 'pqr'}}" on-click="{{personalCall}}"><paper-ripple class="recenteringTouch"></paper-ripple></core-icon-button>
@@ -67,9 +67,9 @@
       <content select="#progress"></content>
       <content select=".separator"></content>
       <content select=".container" cross-fade></content>
-      <content cross-fade></content>
       <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
-      <content select="#list" cross-fade></content>
+      <content select="#scroller" cross-fade></content>
+      <content cross-fade></content>
 
     </core-scaffold>
   </template>

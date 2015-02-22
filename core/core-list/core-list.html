@@ -4,7 +4,7 @@
 <link rel="import" href="../../bower_components/core-signals/core-signals.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 
-<polymer-element name="core-list">
+<polymer-element name="core-list" attributes="scroll">
 
   <template>
     <style>
@@ -14,7 +14,7 @@
             height: 500px;
       }
       #scroller {
-        overflow: auto;
+        {{scroll}}
         margin-top: 4px;
       }
       #spinner{
@@ -52,6 +52,8 @@
         section.setAttribute('owner', item.iduser);
         section.setAttribute('idart', item._id);
         section.setAttribute('coments', JSON.stringify(item.coments));
+        section.setAttribute('likes', JSON.stringify(item.likes));
+        section.setAttribute('unlikes', JSON.stringify(item.unlikes));
         return section;
       }
       Polymer({
@@ -67,7 +69,7 @@
             }.bind(that));
             this.$.spinner.remove();
             this.$.list.removeAttribute('hidden');
-          }.bind(that),1200);
+          }.bind(that),900);
           this.skip++;
         },
         loadMore: function(){

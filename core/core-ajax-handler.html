@@ -295,6 +295,40 @@
             callback(false);
           });
         },
+        like: function(id){
+          var datos={articleId: id}
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/like',
+            data : JSON.stringify(datos)
+          },function(result) {
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Your vote has been posted';
+            errorToast.show();
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'There was an error posting your vote.';
+            errorToast.show();
+          });
+        },
+        unlike: function(id){
+          var datos={articleId: id}
+          doAjax({
+            type: 'POST',
+            url: 'routes_article/unlike',
+            data : JSON.stringify(datos)
+          },function(result) {
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Your vote has been posted';
+            errorToast.show();
+          }.bind(this),
+          function(xhr, err, desc){
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'There was an error posting your vote.';
+            errorToast.show();
+          });
+        },
         deleteArticles: function(id,callback){
           doAjax({
             type: 'DELETE',

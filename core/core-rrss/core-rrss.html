@@ -98,7 +98,7 @@
         <div class="chip-container" hero-p on-tap="{{transition}}">
 
           <template repeat="{{items as item}}">
-            <template if="{{item.rrsslink}}">
+            <!-- <template if="{{item.rrsslink}}"> -->
               <div class="chip" hero-id="{{item.rrsslink}}-{{item.rrssname}}" hero?="{{selectedrrss === item }}">
                 <div class="chip-top" hero-id="{{item.rrsslink}}-{{item.rrssname}}-art" hero?="{{selectedrrss === item}}">
                   <core-icon icon="{{item.icon}}" style="color:{{item.color}};width:200px;height:200px;"></core-icon>
@@ -108,7 +108,7 @@
                   <div class="chip-rrsslink">{{item.rrsslink}}</div>
                 </div>
               </div>
-            </template>
+            <!-- </template> -->
           </template>
 
         </div>
@@ -144,12 +144,12 @@
     Polymer({
       page: 0,
       items: [
-        { rrsslink: this.facebook, rrssname: 'Facebook', color: '#4a6bb6', icon:"social:post-facebook"},
-        { rrsslink: this.twitter, rrssname: 'Twitter', color: '#1ab2e8', icon:"social:post-twitter" },
-        { rrsslink: this.github, rrssname: 'Github', color: '#000', icon:"social:post-github" },
-        { rrsslink: this.instagram, rrssname: 'Instagram', color: '#6f5752',  icon:"social:post-instagram" },
-        { rrsslink: this.google, rrssname: 'Google', color: '#da4936', icon:"social:post-gplus" },
-        { rrsslink: this.youtube, rrssname: 'Youtube', color: '#e0192b', icon:"social:post-youtube"}
+        { rrsslink: ""+this.facebook, rrssname: 'Facebook', color: '#4a6bb6', icon:"social:post-facebook"},
+        { rrsslink: ""+this.twitter, rrssname: 'Twitter', color: '#1ab2e8', icon:"social:post-twitter" },
+        { rrsslink: ""+this.github, rrssname: 'Github', color: '#000', icon:"social:post-github" },
+        { rrsslink: ""+this.instagram, rrssname: 'Instagram', color: '#6f5752',  icon:"social:post-instagram" },
+        { rrsslink: ""+this.google, rrssname: 'Google', color: '#da4936', icon:"social:post-gplus" },
+        { rrsslink: ""+this.youtube, rrssname: 'Youtube', color: '#e0192b', icon:"social:post-youtube"}
       ],
       selectedrrss: null,
       transition: function(e) {

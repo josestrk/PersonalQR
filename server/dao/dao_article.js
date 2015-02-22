@@ -150,13 +150,13 @@ function like(articleId, iduser, callback) {
 	};
 
 	var update={
-		$push:{
+		$addToSet:{
 		},
 		$pull:{
 		}
 	};
 
-	update.$push["likes"] = iduser;
+	update.$addToSet["likes"] = iduser;
 	update.$pull["unlikes"] = iduser;
 
 	var sort = [
@@ -172,13 +172,13 @@ function unlike(articleId, iduser, callback) {
 	};
 
 	var update={
-		$push:{
+		$addToSet:{
 		},
 		$pull:{
 		}
 	};
 
-	update.$push["unlikes"] = iduser;
+	update.$addToSet["unlikes"] = iduser;
 	update.$pull["likes"] = iduser;
 
 	var sort = [

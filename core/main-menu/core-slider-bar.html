@@ -18,6 +18,10 @@
       .dropdown {
         padding: 12px 0px;
       }
+      #idcard{
+        opacity:0.09;
+        transition: opacity 0.3s ease-in;
+      }
       @media(max-height:720px){
         #idcard{
           display:none;
@@ -113,8 +117,9 @@
             this.$.following.innerHTML = result.following ? result.following.length : "0" ;
             this.idOfLoggedUser = result._id;
             this.fire('getUsuario', result);
+            this.$.idcard.style.opacity="1";
           }.bind(this),
-                 function(xhr, err, desc){
+          function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
             errorToast.text = "<core-icon icon='cancel' style='width: 20px; height: 20px; color:red'></core-icon>Error trying to retrieve the user's profile";
             errorToast.show();

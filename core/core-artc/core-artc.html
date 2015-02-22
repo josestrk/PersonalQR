@@ -18,7 +18,7 @@
 
 <link rel="import" href="../core-ajax-handler.html">
 
-<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart,coments">
+<polymer-element name="core-artc" attributes="htitle,date,bgimg,content,owner,idart,coments,likes,unlikes">
 
   <template>
 
@@ -71,7 +71,7 @@
               </paper-tab>
             </paper-tabs>
             <div id="inputcomment" horizontal layout>
-              <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" flex>
+              <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" on-keypress="{{enter}}" flex>
               <paper-fab icon="send" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
             </div>
           </li>
@@ -79,17 +79,17 @@
 
         <!-- buttons -->
         <paper-tabs selected="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
-          <paper-tab id="paper_tab1" inline flex center-center horizontal layout>
-            <core-icon icon="thumb-up" id="core_icon_button2"></core-icon>
-            <span id="txt">0{{num.pos}}</span>
+          <paper-tab on-click="{{votelike}}" id="paper_tab1" inline flex center-center horizontal layout>
+            <core-icon icon="thumb-up" id="like"></core-icon>
+            <span id="txt">{{likes}}</span>
           </paper-tab>
           <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
             <core-icon icon="announcement" id="core_icon_button2"></core-icon>
             <span id="txt">Comment</span>
           </paper-tab>
-          <paper-tab id="paper_tab3" inline flex center-center horizontal layout>
-             <core-icon icon="thumb-down" id="core_icon_button2"></core-icon>
-             <span id="txt">0{{num.neg}}</span>
+          <paper-tab on-click="{{voteunlike}}" id="paper_tab3" inline flex center-center horizontal layout>
+             <core-icon icon="thumb-down" id="unlike"></core-icon>
+             <span id="txt">{{unlikes}}</span>
           </paper-tab>
         </paper-tabs>
     </core-card>
@@ -157,9 +157,10 @@
             var post = this.$.core-artc;
         }
         Polymer({
-          num:[{pos:"0"},{neg:"0"}],
           domReady: function () {
             this.coments = JSON.parse(this.coments);
+            this.likes = JSON.parse(this.likes).length;
+            this.unlikes = JSON.parse(this.unlikes).length;
             loadPost.bind(this);
 
             this.$.content.innerHTML = this.content;
@@ -180,6 +181,20 @@
           debug:function(event,detail,sender){
             if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)
               sender.scrollTop += 10; // move down
+          },
+          votelike: function (){
+            var ajaxhandler = this.$.ajaxhandler;
+            ajaxhandler.like(this.idart);
+            this.likes++;
+            this.$.like.style.color="green";
+            this.$.paper_tab1.removeAttribute('on-click');
+          },
+          voteunlike: function(){
+            var ajaxhandler = this.$.ajaxhandler;
+            ajaxhandler.unlike(this.idart);
+            this.unlikes++;
+            this.$.unlike.style.color="red";
+            this.$.paper_tab3.removeAttribute('on-click');
           },
           visiblecomments: function (){
             if(this.flag){
@@ -226,7 +241,6 @@
             this.$.inputadd.focus();
           },
           sendComent: function(){
-            console.log(this.$.inputadd.value);
             var ajaxhandler = this.$.ajaxhandler;
 
             var articleId =  this.idart;
@@ -238,6 +252,14 @@
 
             this.$.inputcomment.style.display='none';
             this.$.comentsadd.style.display='flex';
+          },
+          personArticle : function(){
+            document.querySelector('app-router').go('/pqr/?id='+this.owner);
+          },
+          enter : function(e, d, s){
+            if(e.keyCode === 13){
+              this.sendComent();
+            }
           }
         });
     })();

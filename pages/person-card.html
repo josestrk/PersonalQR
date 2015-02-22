@@ -9,12 +9,6 @@
 <link rel="import" href="../core/core-list/core-list.html">
 <link rel="import" href="../core/core-rrss/core-rrss.html">
 
-<!--
-<link rel="import" href="../lib/webcomponent/github-card.html">
-<link rel="import" href="../bower_components/instagram-card/dist/instagram-card.html">
-<link rel="import" href="../bower_components/fancy-box/fancy-box.html">
--->
-
 <polymer-element name="person-card">
   <template>
     <style>
@@ -68,7 +62,6 @@
     <main-menu>
         <div class="title" id="name" cross-fade></div>
         <div class="container">
-
           <core-card  class="card" id="card" vertical layout center center-justified>
             <paper-spinner id="spinner" active></paper-spinner>
             <div id="chargin" hidden>
@@ -91,18 +84,18 @@
                   </paper-tab>
                 </template>
               </paper-tabs>
-
-              <core-animated-pages id="core_card" selected="{{selected}}"  transitions="slide-from-right"
-                  layout horizontal center-justified center>
-                <section>
-                  <core-list></core-list>
-                </section>
-                <section>
-                  <core-rrss facebook="{{Facebook}}" twitter="{{Twitter}}" github="{{GitHub}}" instagram="{{Instagram}}" google="{{Google}}" youtube="{{YouTube}}"></core-rrss>
-                </section>
-              </core-animated-pages>
           </core-card>
         </div>
+
+         <core-animated-pages id="core_card" selected="{{selected}}"  transitions="slide-from-right"
+            layout horizontal center-justified center>
+          <section>
+            <core-list></core-list>
+          </section>
+          <section>
+            <core-rrss facebook="{{Facebook}}" twitter="{{Twitter}}" github="{{GitHub}}" instagram="{{Instagram}}" google="{{Google}}" youtube="{{YouTube}}"></core-rrss>
+          </section>
+        </core-animated-pages>
 
     </main-menu>
   </template>

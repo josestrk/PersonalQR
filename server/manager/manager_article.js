@@ -5,6 +5,7 @@ var daoTopic = require('../dao/dao_topic');
 
 function createArticle(article, callback) {
   article["likes"]= [];
+  article["unlikes"]= [];
   article["coments"]=[];
   daoArticle.createArticle(article, callback);
   createtopic(article.topic);

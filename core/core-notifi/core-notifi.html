@@ -1,88 +1,59 @@
-<link href="../../bower_components/core-collapse/core-collapse.html" rel="import">
 <link href="../../bower_components/core-icons/core-icons.html" rel="import">
 <link href="../../bower_components/core-icon/core-icon.html" rel="import">
-<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
-<link href="../../bower_components/paper-item/paper-item.html" rel="import">
-<link href="../../bower_components/paper-dropdown/paper-dropdown.html" rel="import">
-<link href="../../bower_components/core-icons/social-icons.html" rel="import">
+<link href="../../img/social-icons.html" rel="import">
 
-<polymer-element name="x-trigger" extends="paper-icon-button" relative on-tap="{{toggle}}" noink>
-  <template>
-    <shadow></shadow>
-    <content></content>
-  </template>
-  <script>
-    Polymer({
-      toggle: function() {
-        if (!this.dropdown) {
-          this.dropdown = this.querySelector('paper-dropdown');
-        }
-        this.dropdown && this.dropdown.toggle();
-        this.$.icon.icon = "social:notifications";
-        this.$.icon.style.color = 'white';
-      }
-    });
-  </script>
-</polymer-element>
+<link href="../../bower_components/core-collapse/core-collapse.html" rel="import">
+<link href="../../bower_components/core-menu/core-menu.html" rel="import">
+<link href="../../bower_components/core-icons/core-icons.html" rel="import">
+<link href="../../bower_components/paper-dropdown/paper-dropdown.html" rel="import">
+<link href="../../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../../bower_components/paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../../bower_components/paper-menu-button/paper-menu-button.html" rel="import">
+<link href="item-notifi.html" rel="import">
 
 <polymer-element name="core-notifi">
  <template>
-    <style shim-shadowdom>
+    <style>
+      paper-item {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      paper-dropdown {
+        top: 38px;
+      }
 
       .open-below {
-        top: 38px;
-        color:rgb(121,121,121);
-      }
-
-      .open-below > div {
         padding: 1px 4px;
         font-size: 16px;
-        background: whitesmoke;
         border-radius: 3px;
+        color:#999;
       }
 
-      .open-below > div > paper-item {
-        margin: 5px 3px;
-        padding: 5px 65px;
-        font-size: 16px;
-        background: #fff;
-        border-radius: 5px;
-      }
-
-      x-trigger {
-        z-index: auto;
-      }
-
-      html /deep/ paper-dropdown:not(.no-padding)::shadow #scroller {
-        box-sizing: border-box;
-        padding: 8px;
-      }
-
-      .with-margin {
-        margin: 12px;
+      .constrained-height {
+        max-height: 390px;
       }
     </style>
 
     <section>
-
-      <x-trigger id="notifi"  icon="social:notifications">
-        <paper-dropdown class="open-below" style="border-radius: 3px;">
-          <div>
-            <paper-item>Item 1</paper-item>
-            <paper-item>Item 2</paper-item>
-            <paper-item>Item 3</paper-item>
-            <paper-item>Item 4</paper-item>
-            <paper-item>Item 5</paper-item>
-            <paper-item>Item 6</paper-item>
+      <paper-menu-button label="Constrained height">
+        <paper-icon-button icon="social:notifications" alt="News"></paper-icon-button>
+        <paper-dropdown class="dropdown constrained-height open-below">
+          <core-menu>
+            <template repeat="{{pastries}}">
+              <item-notifi>{{}}</item-notifi>
+            </template>
             <center><core-icon icon="refresh"></core-icon></center>
-          </div>
+          </core-menu>
         </paper-dropdown>
-      </x-trigger>
-
+      </paper-menu-button>
     </section>
   </template>
 
   <script>
-    Polymer({});
+  Polymer({
+    pastries: [1,2,3,4,5,6,7,8,9,10]
+  });
   </script>
 </polymer-element>
