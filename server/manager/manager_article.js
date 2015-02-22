@@ -34,6 +34,14 @@ function comment(articleId, comment, name, iduser, callback){
   daoArticle.comment(articleId, comment, name, iduser, callback);
 }
 
+function like(articleId, iduser, callback){
+  daoArticle.like(articleId, iduser, callback);
+}
+
+function unlike(articleId, iduser, callback){
+  daoArticle.unlike(articleId, iduser, callback);
+}
+
 function delArticlesAll(callback){
   daoArticle.delArticlesAll(callback);
 }
@@ -114,5 +122,7 @@ module.exports = {
   searchbytopic : searchbytopic,
   comment : comment,
   delArticlesAll : delArticlesAll,
-  getmyarticles : getmyarticles
+  getmyarticles : getmyarticles,
+  like : like,
+  unlike : unlike
 };

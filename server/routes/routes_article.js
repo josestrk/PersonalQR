@@ -26,6 +26,37 @@ function worker(io) {
   router.post('/searchbytopic', searchbytopic);
   router.post('/addcomment', ensureAuth, comment);
 
+  router.post('/like', ensureAuth, like);
+  router.post('/unlike', ensureAuth, unlike);
+
+  function like(req, res) {
+    var articleId =  req.body.articleId;
+    var userId =  req.globalIdOfUser;
+
+    articleManager.like(articleId, userId, function(err, result){
+      if(result){
+        io.alexEmit('onelikemore', result);
+        res.json(result);
+      }else{
+        res.status(404).send('Not a valid article, or database error');
+      }
+    });
+  }
+
+  function unlike(req, res) {
+    var articleId =  req.body.articleId;
+    var userId =  req.globalIdOfUser;
+
+    articleManager.unlike(articleId, userId, function(err, result){
+      if(result){
+        io.alexEmit('oneunlikemore', result);
+        res.json(result);
+      }else{
+        res.status(404).send('Not a valid article, or database error');
+      }
+    });
+  }
+
 
 
   function delArticlesAll(req, res) {
@@ -45,10 +76,6 @@ function worker(io) {
     var comment =  sanitizeHtml(req.body.comment);
     var name = req.user.name;
     var iduser = req.globalIdOfUser;
-    debug('Id -> ' + articleId);
-    debug('posting this coment -> ' + comment);
-    debug('from this user -> ' + name);
-    debug('from this id -> ' + iduser);
 
     articleManager.comment(articleId, comment, name, iduser, function(err, result){
       if(result){
@@ -58,6 +85,13 @@ function worker(io) {
         res.status(404).send('Not a valid article, or database error');
       }
     });
+    var aux = {
+      articleId : articleId,
+      comment : comment,
+      name : name,
+      iduser : iduser
+    }
+    io.alexEmit('commentadded', aux);
   }
 
   // function like(req, res) {

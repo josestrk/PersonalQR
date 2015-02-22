@@ -144,6 +144,52 @@ function comment(articleId, comment, name, iduser, callback) {
 	col.findAndModify(query, sort, update, {new: true}, callback);
 }
 
+function like(articleId, iduser, callback) {
+	var query = {
+		_id: toObjectID(articleId)
+	};
+
+	var update={
+		$push:{
+		},
+		$pull:{
+		}
+	};
+
+	update.$push["likes"] = iduser;
+	update.$pull["unlikes"] = iduser;
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
+function unlike(articleId, iduser, callback) {
+	var query = {
+		_id: toObjectID(articleId)
+	};
+
+	var update={
+		$push:{
+		},
+		$pull:{
+		}
+	};
+
+	update.$push["unlikes"] = iduser;
+	update.$pull["likes"] = iduser;
+
+	var sort = [
+		['_id', 1]
+	];
+
+	col.findAndModify(query, sort, update, {new: true}, callback);
+}
+
+
+
 col.bind({
 	createArticle: createArticle,
 	getArticle: getArticle,
@@ -156,7 +202,9 @@ col.bind({
 	searchbytopic : searchbytopic,
 	comment : comment,
 	delArticlesAll : delArticlesAll,
-	getmyarticles : getmyarticles
+	getmyarticles : getmyarticles,
+	like : like,
+	unlike : unlike
 });
 
 module.exports = col;
