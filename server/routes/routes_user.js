@@ -40,7 +40,7 @@ function worker(io) {
         res.json(result);
       });
     }else{
-      res.status(404).send('Following are undefined');
+      res.status(404).send('The values are undefined');
     }
 
   }
