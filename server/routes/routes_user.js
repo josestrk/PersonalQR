@@ -64,8 +64,10 @@ function worker(io) {
 
     userManager.followUser(ourUser, extUser,function(err, result){
       userManager.addfollower(extUser, ourUser,function(err, result){
+        result.who = ourUser;
         io.alexEmit('followingonemore', result);
       });
+      result.who = extUser;
       io.alexEmit('Ifollowing', result);
       res.json(result);
     });
@@ -77,8 +79,10 @@ function worker(io) {
 
     userManager.unfollowUser(ourUser, extUser,function(err, result){
       userManager.deletefollower(extUser, ourUser,function(err, result){
+        result.who = ourUser;
         io.alexEmit('followingoneless', result);
       });
+      result.who = extUser;
       io.alexEmit('Iunfollowing', result);
       res.json(result);
     });

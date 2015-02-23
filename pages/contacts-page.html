@@ -143,25 +143,40 @@
             secmenu:[{name:"Following",select:"0",send:"list"},{name:"Followers",select:"1",send:"rrss"}],
             created : function () {
               var that = this;
+
+              //mete o saca al usuario al que seguimos en nuestra pagina de following
               socket.on('followingonemore', function(result) {
-                if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') === -1){
-                  this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
-                }
-              }.bind(that));
-              socket.on('followingoneless', function(result) {
-                if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') !== -1){
-                  this.contacts.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
+                if (document.getElementById('user').datos._id === result.who){
+                  if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') === -1){
+                    this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
+                  }
                 }
               }.bind(that));
 
-              socket.on('Ifollowing', function(result) {
-                if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') === -1){
-                  this.followers.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
+
+              socket.on('followingoneless', function(result) {
+                if (document.getElementById('user').datos._id === result.who){
+                  if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') !== -1){
+                    this.contacts.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
+                  }
                 }
               }.bind(that));
+
+              //te mete en los followers de otra persona funciona correctamente
+              socket.on('Ifollowing', function(result) {
+                if (document.getElementById('user').datos._id === result.who){
+                  if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') === -1){
+                    this.followers.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
+                  }
+                }
+              }.bind(that));
+
+
               socket.on('Iunfollowing', function(result) {
-                if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') !== -1){
-                  this.followers.splice(arrayObjectIndexOf(this.followers, result._id, 'idofuser'), 1);
+                if (document.getElementById('user').datos._id === result.who){
+                  if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') !== -1){
+                    this.followers.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
+                  }
                 }
               }.bind(that));
             },
