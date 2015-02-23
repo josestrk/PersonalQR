@@ -118,28 +118,28 @@
             secmenu:[{name:"My Articles",select:"1",send:"list"},{name:"Social Networks",select:"2",send:"rrss"}],
             domReady: function(){
                 var that = this;
-                //esto notifica que tengo un follower mas
-                socket.on('followingonemore', function(result) {
-                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                    this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
-                  }
-                }.bind(that));
-                socket.on('followingoneless', function(result) {
-                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                    this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
-                  }
-                }.bind(that));
-                //asi se que sigo a alguien mas
-                socket.on('Ifollowing', function(result) {
-                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                    this.$.following.innerHTML = parseInt(this.$.following.innerHTML)+1;
-                  }
-                }.bind(that));
-                socket.on('Iunfollowing', function(result) {
-                  if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                    this.$.following.innerHTML = parseInt(this.$.following.innerHTML)-1;
-                  }
-                }.bind(that));
+                // //esto notifica que tengo un follower mas
+                // socket.on('followingonemore', function(result) {
+                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                //     this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML.length);
+                //   }
+                // }.bind(that));
+                // socket.on('followingoneless', function(result) {
+                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                //     this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML.length);
+                //   }
+                // }.bind(that));
+                // //asi se que sigo a alguien mas
+                // socket.on('Ifollowing', function(result) {
+                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                //     this.$.following.innerHTML = parseInt(this.$.following.innerHTML.length);
+                //   }
+                // }.bind(that));
+                // socket.on('Iunfollowing', function(result) {
+                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
+                //     this.$.following.innerHTML = parseInt(this.$.following.innerHTML.length);
+                //   }
+                // }.bind(that));
                 this.list();
                 setTimeout(this.rellenarProfile.bind(that), 1200);
             },
