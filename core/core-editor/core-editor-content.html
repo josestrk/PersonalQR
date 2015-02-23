@@ -7,7 +7,6 @@
 <template>
   <style>
     :host {
-      position: absolute;
       width: 100%;
       height: auto;
       background-color: transparent;
@@ -28,10 +27,10 @@
     }
     #toolbar {
       width: 60%;
-      height: auto;
+      height: 50px;
       margin: auto;
       vertical-align: bottom;
-      background-color: whitesmoke;
+      background-color: transparent;
     }
   </style>
 
@@ -42,6 +41,7 @@
       <core-button name="i"></core-button>
       <core-button name="u"></core-button>
       <core-button name="s"></core-button>
+      <core-button name="p"></core-button>
       <core-button name="h2"></core-button>
       <core-button name="h3"></core-button>
     </core-toolbar>
@@ -52,24 +52,46 @@
 
 <script>
 (function () {
+  var selRange;
+  var articleContent;
   Polymer({
+    ready: function() {
+      var range = this.selection.bind(this);
+      this.$.content.onmouseup = range;
+    },
     domReady: function() {
-      var that = this;
-      var content = this.$.content;
+      articleContent = this.$.content;
       var buttons = this.$.toolbar.getElementsByTagName('core-button');
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', this.buttonClick);
       };
+      articleContent.addEventListener('mouseup', this.select);
     },
     buttonClick: function() {
       // Here 'this' is a core-button element
-      var content = this.parentNode.parentNode.parentNode.getElementById('content');
+      var newNode = document.createElement(this.name);
+      if(!!selRange) {
+        selRange.surroundContents(newNode);
+      }
+      articleContent.focus();
+    },
+    selection: function() {
+      var shadowRootSelection = this.shadowRoot.getSelection();
+      selRange = document.createRange();
+      // If the selection is done backwards, focusOffset will be earlier than anchorOffset
+      if (shadowRootSelection.anchorOffset < shadowRootSelection.focusOffset) {
+        selRange.setStart(shadowRootSelection.anchorNode, shadowRootSelection.anchorOffset);
+        selRange.setEnd(shadowRootSelection.focusNode, shadowRootSelection.focusOffset);
+      } else {
+        selRange.setStart(shadowRootSelection.focusNode, shadowRootSelection.focusOffset);
+        selRange.setEnd(shadowRootSelection.anchorNode, shadowRootSelection.anchorOffset);
+      }
+      //console.log(shadowRootSelection);
+      //console.log(selRange);
 
-      // TODO: be able to get the *selected* text, not just the innerHTML
-      // TODO: keep the focus on the content
-      content.innerHTML = this.getOpenTag() + content.innerHTML + this.getCloseTag();
-      console.log(content.innerHTML);
-      console.log(content.innerText);
+      /*var container = selRange.commonAncestorContainer.parentNode.cloneNode(false);
+      container.appendChild(selRange.cloneContents());
+      console.log(container.innerHTML);*/
     }
   });
 })();
