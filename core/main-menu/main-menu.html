@@ -39,6 +39,9 @@
     ::content .separator{
       height: 33px;
     }
+    #notifi{
+        padding:  8px 8px 0px;
+    }
     #scaffold{
         overflow: hidden;
     }
@@ -67,6 +70,7 @@
       <content select="#progress"></content>
       <content select=".separator"></content>
       <content select=".container" cross-fade></content>
+        
       <core-scroll-threshold id="threshold" scrollTarget="{{$.contener}}" lowerThreshold="100" on-lower-trigger="{{loadMore}}" style="width:0px;"></core-scroll-threshold>
       <content select="#scroller" cross-fade></content>
       <content cross-fade></content>
