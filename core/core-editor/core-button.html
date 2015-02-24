@@ -1,11 +1,11 @@
-<polymer-element name="core-button" attributes="name">
+<polymer-element name="core-button" attributes="title, tags, icon, label">
 
 <template>
   <style>
     :host {
-      border: 2px solid rgb(128, 128, 128);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 4px;
-      margin: 1px !important;
+      margin: 8px 2px auto !important;
       cursor: default;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -17,34 +17,27 @@
     #button {
       width: auto;
       height: auto;
-      background-color: rgb(192, 224, 255);
+      background-color: transparent;
       border-radius: 4px;
-      margin: 1px !important;
     }
-    #inner {
-      color: black;
+    #inner-text {
       margin: 4px;
     }
     #button:active {
-      background-color: yellow !important;
-    }
-    .b {
-      font-weight: bold;
-    }
-    .i {
-      font-style: italic;
-    }
-    .u {
-      text-decoration: underline;
-    }
-    .s {
-      text-decoration: line-through;
+      background-color: rgba(255, 255, 255, 0.5) !important;
     }
   </style>
 
-  <core-card id="button">
-    <core-card id="inner" class="{{name}}">{{name}}</core-card>
-  </core-card>
+  <abbr title="{{title || ''}}">
+    <core-card id="button">
+      <template if="{{icon}}">
+        <core-icon icon="{{icon}}"></core-icon>
+      </template>
+      <template if="{{!icon}}">
+        <core-card id="inner-text" class="{{tags}}">{{label || tags}}</core-card>
+      </template>
+    </core-card>
+  </abbr>
 
 </template>
 
@@ -52,13 +45,13 @@
 (function () {
   Polymer({
     getOpenTag: function() {
-      return '<' + this.name + '>';
+      return '<' + this.tags + '>';
     },
     getCloseTag: function() {
-      return '</' + this.name + '>';
+      return '</' + this.tags + '>';
     },
     getAutoclosingTag: function() {
-      return '<' + this.name + '/>';
+      return '<' + this.tags + '/>';
     }
   });
 })();

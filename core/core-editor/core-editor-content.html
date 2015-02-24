@@ -1,5 +1,8 @@
 <link rel="import" href="../core-ajax-handler.html">
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../../bower_components/core-icons/editor-icons.html">
 <link rel="import" href="core-button.html">
 
 <polymer-element name="core-editor-content" attributes="userid">
@@ -9,7 +12,7 @@
     :host {
       width: 100%;
       height: auto;
-      background-color: transparent;
+      margin-top: 20px;
     }
     #content {
       padding: 30px;
@@ -27,23 +30,27 @@
     }
     #toolbar {
       width: 60%;
-      height: 50px;
+      height: 40px;
       margin: auto;
-      vertical-align: bottom;
-      background-color: transparent;
+      background-color: #546E7A;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
     }
   </style>
 
   <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
   <core-card id="container" layout vertical>
     <core-toolbar id="toolbar">
-      <core-button name="b"></core-button>
-      <core-button name="i"></core-button>
-      <core-button name="u"></core-button>
-      <core-button name="s"></core-button>
-      <core-button name="p"></core-button>
-      <core-button name="h2"></core-button>
-      <core-button name="h3"></core-button>
+      <core-button title="Header 2" tags="h2"></core-button>
+      <core-button title="Header 3" tags="h3"></core-button>
+      <core-button title="Bold" tags="b" icon="editor:format-bold"></core-button>
+      <core-button title="Italic" tags="i" icon="editor:format-italic"></core-button>
+      <core-button title="Underline" tags="u" icon="editor:format-underline"></core-button>
+      <core-button title="Strike" tags="s" icon="editor:format-strikethrough"></core-button>
+      <core-button title="Paragraph" tags="p"></core-button>
+      <core-button title="Bulleted list" tags="li,ul" icon="editor:format-list-bulleted"></core-button>
+      <core-button title="Ordered list" tags="li,ol" icon="editor:format-list-numbered"></core-button>
+      <core-button title="Code" tags="code" icon="polymer"></core-button>
     </core-toolbar>
     <div id="content" contenteditable="true" aria-invalid="false"></div>
   </core-card>
@@ -68,10 +75,22 @@
       articleContent.addEventListener('mouseup', this.select);
     },
     buttonClick: function() {
+      var tags = this.tags.split(',');
+
       // Here 'this' is a core-button element
-      var newNode = document.createElement(this.name);
-      if(!!selRange) {
-        selRange.surroundContents(newNode);
+      for (var i = 0; i < tags.length; i++) {
+        var newNode = document.createElement(tags[i]);
+        if(!!selRange) {
+          selRange.surroundContents(newNode);
+
+          /*var position = selRange.endOffset;
+          selRange.surroundContents(newNode);
+
+          var container = selRange.commonAncestorContainer.parentNode.cloneNode(false);
+          container.appendChild(selRange.cloneContents());
+          console.log(container.innerHTML);*/
+        }
+        console.log(tags[i]);
       }
       articleContent.focus();
     },
@@ -86,8 +105,8 @@
         selRange.setStart(shadowRootSelection.focusNode, shadowRootSelection.focusOffset);
         selRange.setEnd(shadowRootSelection.anchorNode, shadowRootSelection.anchorOffset);
       }
-      //console.log(shadowRootSelection);
-      //console.log(selRange);
+      console.log(shadowRootSelection);
+      console.log(selRange);
 
       /*var container = selRange.commonAncestorContainer.parentNode.cloneNode(false);
       container.appendChild(selRange.cloneContents());
