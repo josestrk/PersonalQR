@@ -148,7 +148,7 @@
               socket.on('followingonemore', function(result) {
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') === -1){
-                    this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
+                    this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg' , followers : result.followers.length, following: result.following.length});
                   }
                 }
               }.bind(that));
@@ -166,7 +166,7 @@
               socket.on('Ifollowing', function(result) {
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') === -1){
-                    this.followers.push({idofuser : result._id, name : result.name, picture : result.picture, followers : result.followers.length, following: result.following.length});
+                    this.followers.push({idofuser : result._id, name : result.name, picture : result.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg' , followers : result.followers.length, following: result.following.length});
                   }
                 }
               }.bind(that));
@@ -190,14 +190,14 @@
                     res.forEach(function(item){
                       if(arrayObjectIndexOf(this.contacts, item._id ,'idofuser') === -1){
                         debugger
-                        this.contacts.push({idofuser : item._id, name : item.name, picture : item.picture, followers : item.followers.length, following: item.following.length});
+                        this.contacts.push({idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
                       }
                     }.bind(this));
                   }.bind(this));
                   this.$.ajaxhandler.getAllContacts(res.detail.followers, function(res){
                     res.forEach(function(item){
                       if(arrayObjectIndexOf(this.followers, item._id ,'idofuser') === -1){
-                        this.followers.push({idofuser : item._id, name : item.name, picture : item.picture, followers : item.followers.length, following: item.following.length});
+                        this.followers.push({idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
                       }
                     }.bind(this));
                   }.bind(this));
