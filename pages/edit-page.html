@@ -26,8 +26,13 @@
     }
     #title {
       border: 2px solid rgb(224, 224, 224);
-      margin: 30px auto 30px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
       outline: none;
+      padding: 15px 10px;
+      border-radius: 5px;
     }
     #title:focus {
       border: 2px solid #546E7A;
@@ -35,18 +40,20 @@
 
     @media(max-width: 540px) {
       #title {
-        margin-left: 0px;
-        margin-right: 0px;
-        width: auto;
-        padding: 15px 10px;
-        border-radius: 5px;
+        width: 100%;
       }
     }
 
-    @media(min-width: 541px) {
+    @media (min-width: 541px) and (max-width: 900px) {
+      #title {
+        width: 500px;
+      }
+    }
+
+    @media(min-width: 901px) {
       #title {
         width: 60%;
-        padding: 30px;
+        padding: 20px;
         border-radius: 10px;
       }
     }

@@ -10,42 +10,57 @@
 <template>
   <style>
     :host {
-      width: 100%;
       height: auto;
       margin-top: 20px;
     }
-    #content {
-      padding: 30px;
-      border: 2px solid rgb(224, 224, 224);
-      margin: 0px auto 30px;
-      outline: none;
-    }
     #toolbar {
       height: 40px;
-      margin: auto;
       background-color: #546E7A;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #content {
+      border: 2px solid rgb(224, 224, 224);
+      margin-top: 0px;
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      outline: none;
     }
 
-    @media(max-width: 540px) {
-      #content {
-        margin-left: 0px;
-        margin-right: 0px;
+    @media (max-width: 540px) {
+      #toolbar {
         width: auto;
+      }
+      #content {
+        width: auto;
+      }
+    }
+
+    @media (min-width: 541px) and (max-width: 900px) {
+      #toolbar {
+        width: 520px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+      #content {
+        width: 496px;
         padding: 10px;
         border: 2px solid #546E7A;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
       }
-      #toolbar {
-        width: 100%;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-      }
     }
 
-    @media(min-width: 541px) {
+    @media (min-width: 901px) {
+      #toolbar {
+        width: 60%;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
       #content {
         width: 60%;
+        padding: 30px;
         border-radius: 8px;
       }
       #content:focus {
@@ -53,11 +68,6 @@
       }
       #content:not(:focus) {
         color: rgba(153, 153, 153, 0.5);
-      }
-      #toolbar {
-        width: 60%;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
       }
     }
   </style>
