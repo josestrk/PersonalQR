@@ -143,7 +143,11 @@ function worker(io) {
     } else {
       Article["content"] = "";
     }
-    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {allowedTags: [], allowedAttributes: {}}).toLowerCase());
+    Article["topic"] = getTopics(sanitizeHtml(req.body.content, {
+        allowedTags: ['h2', 'h3', 'b', 'i', 'u', 's', 'p', 'code', 'ul', 'ol', 'li'],
+        allowedAttributes: {},
+        selfClosing: ['br']
+      }).toLowerCase());
     Article["date"] = getDateTime();
     Article["bgimg"] = "http://makeonweb.es/josestrk/img/small/bg-"+req.body.bgimg+".jpg";
 
