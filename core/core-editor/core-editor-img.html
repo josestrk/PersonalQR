@@ -20,6 +20,9 @@
       width: 100%;
       height: 100%;
     }
+    #paper_radio_group {
+      outline: none;
+    }
     #paper_radio_button {
       left: 1540px;
       top: 580px;
@@ -67,7 +70,7 @@
       </section>
     </template>
   </core-animated-pages>
-  <paper-radio-group valueattr="hash" selected="{{route}}" value='{{selectval}}'  selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center tabindex="0">
+  <paper-radio-group valueattr="hash" selected="{{route}}" value="{{selectval}}" selectedindex="0" id="paper_radio_group" horizontal layout center-justified wrap center tabindex="0">
     <template repeat="{{page in pages}}">
       <paper-radio-button hash="{{page.hash}}" value={{page.value}} tabindex="-1"></paper-radio-button>
     </template>

@@ -16,25 +16,49 @@
     }
     #content {
       padding: 30px;
-      border-radius: 10px;
-      border: 2px solid rgb(240, 240, 240);
+      border: 2px solid rgb(224, 224, 224);
       margin: 0px auto 30px;
-      width: 60%;
       outline: none;
     }
-    #content:focus {
-      border: 2px solid rgb(3, 169, 244);
-    }
-    #content:not(:focus) {
-      color: rgb(153, 153, 153);
-    }
     #toolbar {
-      width: 60%;
       height: 40px;
       margin: auto;
       background-color: #546E7A;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+    }
+
+    @media(max-width: 540px) {
+      #content {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: auto;
+        padding: 10px;
+        border: 2px solid #546E7A;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      #toolbar {
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
+
+    @media(min-width: 541px) {
+      #content {
+        width: 60%;
+        border-radius: 8px;
+      }
+      #content:focus {
+        border: 2px solid #546E7A;
+      }
+      #content:not(:focus) {
+        color: rgba(153, 153, 153, 0.5);
+      }
+      #toolbar {
+        width: 60%;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
     }
   </style>
 

@@ -25,15 +25,30 @@
       background-color: rgb(255, 255, 255);
     }
     #title {
-      padding: 30px;
-      border-radius: 10px;
-      border: 2px solid rgb(240, 240, 240);
+      border: 2px solid rgb(224, 224, 224);
       margin: 30px auto 30px;
-      width: 60%;
       outline: none;
     }
     #title:focus {
-      border: 2px solid rgb(3, 169, 244);
+      border: 2px solid #546E7A;
+    }
+
+    @media(max-width: 540px) {
+      #title {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: auto;
+        padding: 15px 10px;
+        border-radius: 5px;
+      }
+    }
+
+    @media(min-width: 541px) {
+      #title {
+        width: 60%;
+        padding: 30px;
+        border-radius: 10px;
+      }
     }
   </style>
 
