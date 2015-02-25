@@ -1,0 +1,54 @@
+<polymer-element name="core-slider-page" attributes="ext type" noscript>
+
+    <template>
+        <style>
+            #core_card{
+                font-family: sans-serif;
+                width: 300px;
+                height: 350px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 6px;
+                border-bottom-left-radius: 6px;
+                box-shadow: rgba(0, 0, 0, 30.0980392) 0px 12px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 6px;
+                background-color: rgba(231, 231, 227, 0.7);
+                font-weight: 600;
+                text-align: center;
+                color: dimgrey;
+            }
+            #img{
+                width:190px;
+            }
+            #core_logo{
+                padding: 15px;
+            }
+            @media (max-width: 420px) {
+                #core_card2 {
+                    width: 85%;
+                }
+            }
+            @media all (max-height:420px) {
+                #core_card2 {
+                    width: 45%;
+                }
+            }
+        </style>
+
+        <core-card id="core_logo" vertical layout wrap center-justified center>
+            <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
+        </core-card>
+        <core-card id="core_card" layout vertical center-justified center>
+            <content selected="#content"></content>
+            <template if="{{ext}}">
+                <template if="{{type == 'video'}}">
+                    <video autoplay>
+                        <source src="{{ext}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </template>
+                <template if="{{type == 'img'}}"><img src="{{ext}}" id="img"></template>
+            </template>
+        </core-card>
+
+    </template>
+</polymer-element>

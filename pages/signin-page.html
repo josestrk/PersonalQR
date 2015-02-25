@@ -82,20 +82,8 @@
           height: 150px;
         }
 
-        #core_logo {
-          position: absolute;
-          top: 20px;
-          height: 70px;
-          left: 15px;
-          width: 70px;
-        }
         #signin_form {
-          position: absolute;
-          left: 0px;
-          top: 182px;
-          height: auto;
-          box-shadow: none;
-          width: 90%;
+          display: none;
         }
         #core_card1 {
           background-color: rgb(255, 255, 255);
@@ -104,14 +92,16 @@
       }
 
       @media(max-width: 750px) {
+        #core_logo{
+          display: block;
+          margin:auto;
+        }
         #delegated_form {
           display: block;
-          margin-left: auto;
-          margin-right: auto;
+          margin:auto;
         }
         #signin_form {
-          display: block;
-          padding: 0% 15%;
+          display: none;
         }
       }
 
@@ -123,7 +113,7 @@
           margin-top: 150px;
         }
         #signin_form {
-          margin: 10px auto;
+          display: none;
         }
       }
     </style>

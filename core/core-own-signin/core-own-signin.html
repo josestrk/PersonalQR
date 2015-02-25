@@ -14,7 +14,6 @@
       margin-right: auto;
       display: block;
       background-color: rgb(137, 191, 79);
-      visibility: hidden;
     }
   </style>
 
@@ -69,7 +68,7 @@
       regexp="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-](19|20)?\d{2}$"
     ></form-field>
   </div>
-  <paper-fab on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
+  <paper-fab disabled on-click="{{startProgress}}" id="send" icon="arrow-forward" title="submit"></paper-fab>
 
 </template>
 
@@ -110,9 +109,9 @@
       }
 
       if (isValid) {
-        that.$.send.style.visibility = "visible";
+        that.$.send.removeAttribute("disabled");
       } else {
-        that.$.send.style.visibility = "hidden";
+        that.$.send.setAttribute( "disabled", '');
       }
     },
     keydown: function(event, detail, sender) {
@@ -132,8 +131,6 @@
       console.log('own signin');
       console.log(datos);
       this.fire('login', JSON.stringify(datos));
-      // var ajaxhandler = this.$.ajaxhandler;
-      // ajaxhandler.create(JSON.stringify(datos));
     }
   });
 

@@ -1,55 +1,22 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
-<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
-<link rel="import" href="../bower_components/core-pages/core-pages.html">
-<link rel="import" href="../bower_components/core-icon/core-icon.html">
-<link rel="import" href="../bower_components/core-icons/core-icons.html">
-<link rel="import" href="../bower_components/core-icons/image-icons.html">
+<link rel="import" href="../core/core-slider-page.html">
 
 <polymer-element name="slider-page">
   <template>
     <style>
-      #content{
+     :host{
         text-align: center;
-        margin: auto;
-        font-family: "League-Gothic", Courier;
         font-size: 20px;
         text-transform: uppercase;
-        color: #808080;
-      }
-      #card {
-
+        color: rgb(128, 128, 128);
       }
       #paper_radio_button {
         left: 1540px;
         top: 580px;
       }
-      #core_card1 {
-        margin: 8%;
-        width: 400px;
-        height: 650px;
-      }
 
-      #core_card2 {
-        font-family: sans-serif;
-        width: 300px;
-        height: 300px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
-        box-shadow: rgba(0, 0, 0, 30.0980392) 0px 12px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 6px;
-        background-color: whitesmoke;
-        opacity: 0.70;
-        font-weight: 600;
-        text-align: center;
-        color: dimgrey;
-      }
-      #core_logo{
-        padding: 15px;
-      }
       core-animated-pages {
         margin: 20px;
         width: 350px;
@@ -61,7 +28,7 @@
         #core_card1 {
           width: 100%;
         }
-        #core_card2 {
+        #core_card2 /deep/ {
           width: 85%;
         }
         #card{
@@ -70,26 +37,9 @@
         }
       }
 
-      @media all and (min-width: 421px) {
-        #core_card1 {
-          width: 420px;
-        }
-      }
-
       @media all and (max-height: 610px) {
-        #card {
-          height: 80%;
-        }
-        #paper_radio_group{
-          position: absolute;
-          top: 92%;
-          left: 40%;
-        }
-      }
-
-      @media all and (min-height: 611px) {
-        #core_card1 {
-          height: 520px;
+        #card{
+          display:none;
         }
       }
 
@@ -123,10 +73,9 @@
       <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" vertical layout wrap center start-justified  on-tap="{{cyclePages}}">
         <template repeat="{{page in pages}}" >
           <section hash="{{page.hash}}" id="card" style="background-image: url('{{page.image}}')" vertical layout wrap center center-justified>
-            <core-card id="core_logo" vertical layout wrap center-justified center>
-              <img src="http://makeonweb.es/josestrk/img/logo.png" alt="logo" style="width:70px; height:70px;">
-            </core-card>
-            <core-card id="core_card2" layout vertical center-justified center><p id="content">{{page.content}}</p></core-card>
+            <core-slider-page ext="{{page.add}}" type="{{page.type}}">
+              <p id="content">{{page.content}}</p>
+            </core-slider-page>
           </section>
         </template>
       </core-animated-pages>
@@ -148,8 +97,8 @@
 
         this.pages = [
           {content: 'The easiest and safest way to share your data. Just show your QR code and connect with the community', hash: '1'},
-          {content: 'Share whatever you want with anyone you want', hash: '2'},
-          {content: 'All your sports, live events, and so on.', hash: '3'}
+          {content: 'Tecnology implement',add:'../img/tecnology.png', type:'img', hash: '2'},
+          {content: 'How it works',add:'../img/fin.gif',type:'img', hash: '3'}
         ];
         this.infos = [
           {name:'Info',id:'paper_tab',icon:'help',link:'/search/?topic=info'},
