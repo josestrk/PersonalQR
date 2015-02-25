@@ -25,80 +25,80 @@
     <link rel="stylesheet" href="core-artc.css">
 
     <core-card id="core-artc">
-        <core-header-panel mode="waterfall-tall" id="core_header_panel">
-          <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
-            <core-drawer-panel id="core-drawer-panel" responsiveWidth='2100px'>
-              <div drawer>
-                <paper-tabs id="paper_manager" class="transparent-teal" center horizontal layout>
-                    <paper-tab on-click="{{dialog}}" id="paper_tab-dw" inline flex center-center horizontal layout>
-                       <core-icon icon="delete" id="manage-ico"></core-icon>
-                       <span id="txt">Delete</span>
-                     </paper-tab>
-                     <!-- <paper-tab on-click="{{edit}}" id="paper_tab-dw" inline flex center-center horizontal layout>
-                       <core-icon icon="create" id="manage"></core-icon>
-                       <span id="txt">Edit</span>
-                     </paper-tab> -->
-                </paper-tabs>
+      <core-header-panel mode="waterfall-tall" id="core_header_panel">
+        <core-toolbar id="core_toolbar" tallClass="medium-tall" class="animate tall" style=" background: url('{{bgimg}}');  background-size:100% 192px;">
+          <core-drawer-panel id="core-drawer-panel" responsiveWidth='2100px'>
+            <div drawer>
+              <paper-tabs id="paper_manager" class="transparent-teal" center horizontal layout>
+                <paper-tab on-click="{{dialog}}" id="paper_tab-dw" inline flex center-center horizontal layout>
+                  <core-icon icon="delete" id="manage-ico"></core-icon>
+                  <span id="txt">Delete</span>
+                </paper-tab>
+                <!-- <paper-tab on-click="{{edit}}" id="paper_tab-dw" inline flex center-center horizontal layout>
+<core-icon icon="create" id="manage"></core-icon>
+<span id="txt">Edit</span>
+</paper-tab> -->
+              </paper-tabs>
+            </div>
+            <div main>
+              <div id="div1">
+                <template if="{{show}}">
+                  <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
+                </template>
+                {{htitle}}
+                <core-icon-button icon="social:person-outline" id="core_icon_follow" class="icon_follow" on-click={{personArticle}}></core-icon-button>
               </div>
-              <div main>
-                  <div id="div1">
-                    <template if="{{show}}">
-                      <core-icon-button id="menuButton" icon="more-vert" core-drawer-toggle></core-icon-button>
-                    </template>
-                    {{htitle}}
-                    <core-icon-button icon="social:person-outline" id="core_icon_follow" class="icon_follow" on-click={{personArticle}}></core-icon-button>
-                  </div>
-                  <div id="time"><time is="relative-time" datetime="{{date}}"></time></div>
-              </div>
-            </core-drawer-panel>
-          </core-toolbar>
+              <div id="time"><time is="relative-time" datetime="{{date}}"></time></div>
+            </div>
+          </core-drawer-panel>
+        </core-toolbar>
         <div id="section" class="noheight">
           <div id="content" class="cont"></div>
         </div>
-        </core-header-panel>
+      </core-header-panel>
 
-        <!-- comentarios -->
+      <!-- comentarios -->
 
-        <ul id="comentarios" class="comentarios" on-scroll="{{debug}}">
-          <template repeat="{{comentario in coments}}">
-            <li class="comentario"><a href="#/pqr/?id={{comentario._id}}">{{comentario.user}}</a> : {{comentario.com}}</li>
-          </template>
-          <li>
-            <paper-tabs selected="0" class="transparent-teal" selectedindex="0" id="comentsadd" class="comentsadd" horizontal center layout>
-              <paper-tab id="com-add" on-click="{{createComment}}" inline flex center-center horizontal layout active>
-                <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
-                <span id="txt">Add</span>
-              </paper-tab>
-            </paper-tabs>
-            <div id="inputcomment" horizontal layout>
-              <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" on-keypress="{{enter}}" flex>
-              <paper-fab icon="send" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
-            </div>
-          </li>
-        </ul>
+      <ul id="comentarios" class="comentarios" on-scroll="{{debug}}">
+        <template repeat="{{comentario in coments}}">
+          <li class="comentario"><a href="#/pqr/?id={{comentario._id}}">{{comentario.user}}</a> : {{comentario.com}}</li>
+        </template>
+        <li>
+          <paper-tabs selected="0" class="transparent-teal" selectedindex="0" id="comentsadd" class="comentsadd" horizontal center layout>
+            <paper-tab id="com-add" on-click="{{createComment}}" inline flex center-center horizontal layout active>
+              <core-icon icon="add-circle-outline" id="core_icon_button2"></core-icon>
+              <span id="txt">Add</span>
+            </paper-tab>
+          </paper-tabs>
+          <div id="inputcomment" horizontal layout>
+            <input id="inputadd" class="inputadd" placeholder="Add new comment" is="core-input" on-keypress="{{enter}}" flex>
+            <paper-fab icon="send" class="btn" mini='true' on-click="{{sendComent}}" role="button" tabindex="0" aria-label="create" style="overflow: visible;"></paper-fab>
+          </div>
+        </li>
+      </ul>
 
-        <!-- buttons -->
-        <paper-tabs selected="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
-          <paper-tab on-click="{{votelike}}" id="paper_tab1" inline flex center-center horizontal layout>
-            <core-icon icon="thumb-up" id="like"></core-icon>
-            <span id="txt">{{likes}}</span>
-          </paper-tab>
-          <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
-            <core-icon icon="announcement" id="core_icon_button2"></core-icon>
-            <span id="txt">Comment</span>
-          </paper-tab>
-          <paper-tab on-click="{{voteunlike}}" id="paper_tab3" inline flex center-center horizontal layout>
-             <core-icon icon="thumb-down" id="unlike"></core-icon>
-             <span id="txt">{{unlikes}}</span>
-          </paper-tab>
-        </paper-tabs>
+      <!-- buttons -->
+      <paper-tabs selected="1" id="paper_tabs" class="transparent-teal" horizontal center layout>
+        <paper-tab on-click="{{votelike}}" id="paper_tab1" inline flex center-center horizontal layout>
+          <core-icon icon="thumb-up" id="like"></core-icon>
+          <span id="txt">{{likes}}</span>
+        </paper-tab>
+        <paper-tab on-click="{{visiblecomments}}" id="paper_tab2" inline flex center-center horizontal layout>
+          <core-icon icon="announcement" id="core_icon_button2"></core-icon>
+          <span id="txt">Comment</span>
+        </paper-tab>
+        <paper-tab on-click="{{voteunlike}}" id="paper_tab3" inline flex center-center horizontal layout>
+          <core-icon icon="thumb-down" id="unlike"></core-icon>
+          <span id="txt">{{unlikes}}</span>
+        </paper-tab>
+      </paper-tabs>
     </core-card>
 
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
     <!--dialog-float
-    necesito un campo para p otro para tex are y otro para evento
-    -->
+necesito un campo para p otro para tex are y otro para evento
+-->
     <paper-dialog id="dia" backdrop transition="core-transition-center">
       <p>
         -Are you sure?
@@ -153,149 +153,152 @@
 
   <script>
     (function () {
-        function loadPost() {
-            var post = this.$.core-artc;
-        }
-        Polymer({
-          domReady: function () {
-            this.coments = JSON.parse(this.coments);
-            this.likes = JSON.parse(this.likes).length;
-            this.unlikes = JSON.parse(this.unlikes).length;
-            loadPost.bind(this);
+      function loadPost() {
+        var post = this.$.core-artc;
+      }
+      Polymer({
+        domReady: function () {
+          this.coments = JSON.parse(this.coments);
+          this.likes = JSON.parse(this.likes).length;
+          this.unlikes = JSON.parse(this.unlikes).length;
+          loadPost.bind(this);
 
-            this.$.content.innerHTML = this.content;
+          this.$.content.innerHTML = this.content;
 
-            //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
-            //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
-            this.$.core_header_panel.addEventListener('scroll', function(e) {
-              var scroller = e.detail.target;
-              if(scroller.scrollTop === 0){
-                this.lastElementChild.className="noheight";
-              }else{
-                this.lastElementChild.className="moreheight";
-                this.firstElementChild.className="animate";
-              }
-            });
-            this.addListenersSocket();
-            this.showDelete() ? this.show='true' : this.show='';
-          },
-          addListenersSocket : function(){
-            var that = this;
-            socket.on('commentadded', function(result) {
-              if (this.idart === result.articleId && result.iduser !== document.getElementById('user').datos._id){
-                this.coments.push({com : result.comment, user : result.name , _id : result.iduser});
-              }
-            }.bind(that));
-            socket.on('onelikemore', function(result) {
-              if (this.idart === result._id){
-                this.likes = result.likes.length;
-                this.unlikes = result.unlikes.length;
-              }
-            }.bind(that));
-            socket.on('oneunlikemore', function(result) {
-              if (this.idart === result._id){
-                this.likes = result.likes.length;
-                this.unlikes = result.unlikes.length;
-              }
-            }.bind(that));
-            socket.on('userconnected', function(result) {
-              this.verifyloggeds();
-            }.bind(that));
-            socket.on('userdisconnected', function(result) {
-              this.verifyloggeds();
-            }.bind(that));
-          },
-          verifyloggeds : function(){
-            if(document.getElementById('user').userConnected.indexOf(this.owner) !== -1){
-              //el usuario no esta logueado
+          //como el que he echo en scaffold, este lo que hace es mirar si hay cambios de scroll y tal...
+          //te lo explico cuando sea... que mas o menos lo he entendido, este se ve mejor que el de main-menu
+          this.$.core_header_panel.addEventListener('scroll', function(e) {
+            var scroller = e.detail.target;
+            if(scroller.scrollTop === 0){
+              this.lastElementChild.className="noheight";
             }else{
-              //usuario logueado
+              this.lastElementChild.className="moreheight";
+              this.firstElementChild.className="animate";
             }
-          },
-          debug:function(event,detail,sender){
-            if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)
-              sender.scrollTop += 10; // move down
-          },
-          votelike: function (){
-            var ajaxhandler = this.$.ajaxhandler;
-            ajaxhandler.like(this.idart);
-            this.likes++;
-            this.$.like.style.color="green";
-            this.$.paper_tab1.removeAttribute('on-click');
-          },
-          voteunlike: function(){
-            var ajaxhandler = this.$.ajaxhandler;
-            ajaxhandler.unlike(this.idart);
-            this.unlikes++;
-            this.$.unlike.style.color="#FF3300";
-            this.$.paper_tab3.removeAttribute('on-click');
-          },
-          visiblecomments: function (){
-            if(this.flag){
-              this.$.comentarios.style.visibility = "visible";
-              this.$.comentarios.style.height = "160px";
-              this.flag=!this.flag;
-            }else{
-              this.$.comentarios.style.visibility = "hidden";
-              this.$.comentarios.style.height = "0px";
-              this.flag=!this.flag;
+          });
+          this.addListenersSocket();
+          this.showDelete() ? this.show='true' : this.show='';
+        },
+        addListenersSocket : function(){
+          var that = this;
+          socket.on('commentadded', function(result) {
+            if (this.idart === result.articleId && result.iduser !== document.getElementById('user').datos._id){
+              this.coments.push({com : result.comment, user : result.name , _id : result.iduser});
             }
-          },
-          flag: true,
-          showDelete: function(){
-            return document.getElementById('user').datos._id == this.owner;
-          },
-          dialog: function(){
-            this.$.dia.toggle();
-          },
-          comment: function(){
-            this.$.comment.toggle();
-          },
-          submit: function(){
-            var datos={
-              title: this.$.input.value,
-              content:this.$.input2.value,
-              bgimg: this.bgimg,
-              _id: this.idart
+          }.bind(that));
+          socket.on('onelikemore', function(result) {
+            if (this.idart === result._id){
+              this.likes = result.likes.length;
+              this.unlikes = result.unlikes.length;
             }
-            var ajaxhandler = this.$.ajaxhandler;
-            ajaxhandler.editArticle(this,JSON.stringify(datos));
-            this.$.edit.toggle();
-          },
-          deletePost: function(e,d,s){
-            this.$.ajaxhandler.deleteArticles(this.idart,function(result){
-              return result;
-            });
-            this.remove();
-            this.dialog();
-          },
-          createComment: function(){
-            this.$.comentsadd.style.display='none';
-            this.$.inputcomment.style.display='flex';
-            this.$.inputadd.focus();
-          },
-          sendComent: function(){
-            var ajaxhandler = this.$.ajaxhandler;
-
-            var articleId =  this.idart;
-            var comment =  this.$.inputadd.value;
-
-            ajaxhandler.comment(articleId, comment);
-
-            this.coments.push({com : comment, user : document.getElementById('user').datos.name , _id : document.getElementById('user').datos._id });
-
-            this.$.inputcomment.style.display='none';
-            this.$.comentsadd.style.display='flex';
-          },
-          personArticle : function(){
-            document.querySelector('app-router').go('/pqr/?id='+this.owner);
-          },
-          enter : function(e, d, s){
-            if(e.keyCode === 13){
-              this.sendComent();
+          }.bind(that));
+          socket.on('oneunlikemore', function(result) {
+            if (this.idart === result._id){
+              this.likes = result.likes.length;
+              this.unlikes = result.unlikes.length;
             }
+          }.bind(that));
+          this.verifyloggeds();
+          socket.on('userconnected', function(result) {
+            this.verifyloggeds();
+          }.bind(that));
+          socket.on('userdisconnected', function(result) {
+            this.verifyloggeds();
+          }.bind(that));
+        },
+        verifyloggeds : function(){
+          if(document.getElementById('user').userConnected.indexOf(this.owner) !== -1){
+            this.$.core_icon_follow.icon="social:person";
+            this.$.core_icon_follow.style.color="lightgreen";
+          }else{
+            this.$.core_icon_follow.icon="social:person-outline";
+            this.$.core_icon_follow.style.color="white";
           }
-        });
+        },
+        debug:function(event,detail,sender){
+          if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)
+            sender.scrollTop += 10; // move down
+        },
+        votelike: function (){
+          var ajaxhandler = this.$.ajaxhandler;
+          ajaxhandler.like(this.idart);
+          this.likes++;
+          this.$.like.style.color="green";
+          this.$.paper_tab1.removeAttribute('on-click');
+        },
+        voteunlike: function(){
+          var ajaxhandler = this.$.ajaxhandler;
+          ajaxhandler.unlike(this.idart);
+          this.unlikes++;
+          this.$.unlike.style.color="#FF3300";
+          this.$.paper_tab3.removeAttribute('on-click');
+        },
+        visiblecomments: function (){
+          if(this.flag){
+            this.$.comentarios.style.visibility = "visible";
+            this.$.comentarios.style.height = "160px";
+            this.flag=!this.flag;
+          }else{
+            this.$.comentarios.style.visibility = "hidden";
+            this.$.comentarios.style.height = "0px";
+            this.flag=!this.flag;
+          }
+        },
+        flag: true,
+        showDelete: function(){
+          return document.getElementById('user').datos._id == this.owner;
+        },
+        dialog: function(){
+          this.$.dia.toggle();
+        },
+        comment: function(){
+          this.$.comment.toggle();
+        },
+        submit: function(){
+          var datos={
+            title: this.$.input.value,
+            content:this.$.input2.value,
+            bgimg: this.bgimg,
+            _id: this.idart
+          }
+          var ajaxhandler = this.$.ajaxhandler;
+          ajaxhandler.editArticle(this,JSON.stringify(datos));
+          this.$.edit.toggle();
+        },
+        deletePost: function(e,d,s){
+          this.$.ajaxhandler.deleteArticles(this.idart,function(result){
+            return result;
+          });
+          this.remove();
+          this.dialog();
+        },
+        createComment: function(){
+          this.$.comentsadd.style.display='none';
+          this.$.inputcomment.style.display='flex';
+          this.$.inputadd.focus();
+        },
+        sendComent: function(){
+          var ajaxhandler = this.$.ajaxhandler;
+
+          var articleId =  this.idart;
+          var comment =  this.$.inputadd.value;
+
+          ajaxhandler.comment(articleId, comment);
+
+          this.coments.push({com : comment, user : document.getElementById('user').datos.name , _id : document.getElementById('user').datos._id });
+
+          this.$.inputcomment.style.display='none';
+          this.$.comentsadd.style.display='flex';
+        },
+        personArticle : function(){
+          document.querySelector('app-router').go('/pqr/?id='+this.owner);
+        },
+        enter : function(e, d, s){
+          if(e.keyCode === 13){
+            this.sendComent();
+          }
+        }
+      });
     })();
   </script>
 

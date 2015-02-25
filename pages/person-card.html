@@ -12,276 +12,264 @@
 <polymer-element name="person-card">
   <template>
     <style>
-        .card{
-            background: #666;
-            color: white;
-            min-height: 310px;
-            margin: auto;
-            padding: 10px;
-            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-        }
-        id-card{
-            width: 100%;
-        }
-        #follow{
-          -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          padding: 11px;
-          background: #4592BD;
-        }
-        #unfollow{
-          -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
-          padding: 11px;
-          background: #4532BD;
-        }
-        #panel{
-            width:100%;
-            height:40%;
-            margin:auto;
-        }
-        paper-tabs.transparent-teal {
-          background-color: transparent;
-          color: #03a9f4;
-          box-shadow: none;
-          box-shadow: rgba(0, 0, 0, 0.398039) 0px 2px 10px, rgba(0, 0, 0, 0.198039) 0px 0px 3px;
-        }
+      .card{
+        background: #666;
+        color: white;
+        min-height: 310px;
+        margin: auto;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+      id-card{
+        width: 100%;
+      }
+      #follow{
+        -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        padding: 11px;
+        background: #4592BD;
+      }
+      #unfollow{
+        -webkit-box-shadow: 8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        -moz-box-shadow:    8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        box-shadow:         8px 7px 18px 0px rgba(50, 54, 50, 0.6);
+        padding: 11px;
+        background: #4532BD;
+      }
+      #panel{
+        width:100%;
+        height:40%;
+        margin:auto;
+      }
+      paper-tabs.transparent-teal {
+        background-color: transparent;
+        color: #03a9f4;
+        box-shadow: none;
+        box-shadow: rgba(0, 0, 0, 0.398039) 0px 2px 10px, rgba(0, 0, 0, 0.198039) 0px 0px 3px;
+      }
 
-        paper-tabs.transparent-teal::shadow #selectionBar {
-          background-color: #03a9f4;
-        }
+      paper-tabs.transparent-teal::shadow #selectionBar {
+        background-color: #03a9f4;
+      }
 
-        paper-tabs.transparent-teal paper-tab::shadow #ink {
-          color: #03a9f4;
-        }
+      paper-tabs.transparent-teal paper-tab::shadow #ink {
+        color: #03a9f4;
+      }
+      
+      #logged{
+        color: lightgreen;
+        display: none;
+      }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
 
     <main-menu>
-        <div class="title" id="name" cross-fade></div>
-        <div class="container">
-          <core-card  class="card" id="card" vertical layout center center-justified>
-            <paper-spinner id="spinner" active></paper-spinner>
-            <div id="chargin" hidden>
-                <id-card layout vertical center center-justified>
-                    <img class="img" id='photo' src="{{ this.photoUrl }}"/>
-                    <user-name id="name"></user-name>
-                    <user-account id="email"></user-account>
-                    <span id="followers"> </span><span id="following"> </span>
-                </id-card>
-                <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
-                <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
+      <div class="title" id="name" cross-fade></div>
+      <div class="container">
+        <core-card  class="card" id="card" vertical layout center center-justified>
+          <paper-spinner id="spinner" active></paper-spinner>
+          <div id="chargin" hidden>
+            <id-card layout vertical center center-justified>
+              <img class="img" id='photo' src="{{ this.photoUrl }}"/>
+              <user-name id="name"></user-name>
+              <user-account id="email"></user-account>
+              <span id="followers"> </span><span id="following"> </span>
+            </id-card>
+            <div horizontal layout center center-justified>
+              <core-icon-button id="follow" icon="social:person-add" on-click="{{follow}}"></core-icon-button>
+              <core-icon-button id="unfollow" icon="delete" on-click="{{unfollow}}"></core-icon-button>
+              <core-icon-button id="logged" icon="account-circle"></core-icon-button>
             </div>
-          </core-card>
+          </div>
+        </core-card>
 
-          <core-card class="panel" vertical layout start-center>
-              <paper-tabs selected="{{selected}}" class="transparent-teal" id="paper_tabs" horizontal layout>
-                <template repeat="{{btn in secmenu}}">
-                  <paper-tab select="{{btn.select}}" on-click="{{btn.send}}">
-                    {{btn.name}}
-                  </paper-tab>
-                </template>
-              </paper-tabs>
-          </core-card>
-        </div>
+        <core-card class="panel" vertical layout start-center>
+          <paper-tabs selected="{{selected}}" class="transparent-teal" id="paper_tabs" horizontal layout>
+            <template repeat="{{btn in secmenu}}">
+              <paper-tab select="{{btn.select}}" on-click="{{btn.send}}">
+                {{btn.name}}
+              </paper-tab>
+            </template>
+          </paper-tabs>
+        </core-card>
+      </div>
 
-         <core-animated-pages id="core_card" selected="{{selected}}"  transitions="slide-from-right"
-            layout horizontal center-justified center>
-          <section>
-            <core-list></core-list>
-          </section>
-          <section>
-            <core-rrss facebook="{{Facebook}}" twitter="{{Twitter}}" github="{{GitHub}}" instagram="{{Instagram}}" google="{{Google}}" youtube="{{YouTube}}"></core-rrss>
-          </section>
-        </core-animated-pages>
+      <core-animated-pages id="core_card" selected="{{selected}}"  transitions="slide-from-right"
+                           layout horizontal center-justified center>
+        <section>
+          <core-list></core-list>
+        </section>
+        <section>
+          <core-rrss facebook="{{Facebook}}" twitter="{{Twitter}}" github="{{GitHub}}" instagram="{{Instagram}}" google="{{Google}}" youtube="{{YouTube}}"></core-rrss>
+        </section>
+      </core-animated-pages>
 
     </main-menu>
   </template>
   <script>
     (function () {
-        function doAjax(options, success, error) {
-          options.dataType = options.dataType || 'json';
-          options.contentType = options.contentType || 'application/json; charset=UTF-8';
-          options.success = success;
+      function doAjax(options, success, error) {
+        options.dataType = options.dataType || 'json';
+        options.contentType = options.contentType || 'application/json; charset=UTF-8';
+        options.success = success;
 
-          options.beforeSend = function(xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
-          };
+        options.beforeSend = function(xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+        };
 
-          $.ajax(options);
-        }
+        $.ajax(options);
+      }
 
-        Polymer({
-            selected:0,
-            secmenu:[{name:"My Articles",select:"1",send:"list"},{name:"Social Networks",select:"2",send:"rrss"}],
-            domReady: function(){
-                var that = this;
-                // //esto notifica que tengo un follower mas
-                // socket.on('followingonemore', function(result) {
-                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                //     this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML.length);
-                //   }
-                // }.bind(that));
-                // socket.on('followingoneless', function(result) {
-                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                //     this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML.length);
-                //   }
-                // }.bind(that));
-                // //asi se que sigo a alguien mas
-                // socket.on('Ifollowing', function(result) {
-                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                //     this.$.following.innerHTML = parseInt(this.$.following.innerHTML.length);
-                //   }
-                // }.bind(that));
-                // socket.on('Iunfollowing', function(result) {
-                //   if (document.URL.split('/').reverse()[0].split('=').reverse()[0] === result._id){
-                //     this.$.following.innerHTML = parseInt(this.$.following.innerHTML.length);
-                //   }
-                // }.bind(that));
-                this.list();
-                setTimeout(this.rellenarProfile.bind(that), 1200);
-                socket.on('userconnected', function(result) {
-                  this.verifyloggeds();
-                }.bind(that));
-                socket.on('userdisconnected', function(result) {
-                  this.verifyloggeds();
-                }.bind(that));
-            },
-            verifyloggeds : function(){
-                if(document.getElementById('user').userConnected.indexOf(document.URL.split('/').reverse()[0].split('=').reverse()[0]) !== -1){
-                  //el usuario no esta logueado
-                }else{
-                  //usuario logueado
-                }
-            },
-            list: function(){
-              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
-              if (id !== '500') {
-                var ajaxhandler = this.$.ajaxhandler;
-                ajaxhandler.getUserArticles(0, id, function (result){
-                  if(result){
-                    result.shooter= ajaxhandler.getUserArticles;
-                    this.asyncFire('core-signal', {name: "sender-list", data:result});
-                  }
-                }.bind(this));
+      Polymer({
+        selected:0,
+        onuser:false,
+        secmenu:[{name:"My Articles",select:"1",send:"list"},{name:"Social Networks",select:"2",send:"rrss"}],
+        domReady: function(){
+          var that = this;
+          this.list();
+          setTimeout(this.rellenarProfile.bind(that), 1200);
+          this.verifyloggeds();
+          socket.on('userconnected', function(result) {
+            this.verifyloggeds();
+          }.bind(that));
+          socket.on('userdisconnected', function(result) {
+            this.verifyloggeds();
+          }.bind(that));
+        },
+        verifyloggeds : function(){
+                  if(document.getElementById('user').userConnected.indexOf(document.URL.split('/').reverse()[0].split('=').reverse()[0]) !== -1){
+            this.$.logged.style.display="flex";
+          }else{
+            this.$.logged.style.display="none";
+          }
+        },
+        list: function(){
+          var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+          if (id !== '500') {
+            var ajaxhandler = this.$.ajaxhandler;
+            ajaxhandler.getUserArticles(0, id, function (result){
+              if(result){
+                result.shooter= ajaxhandler.getUserArticles;
+                this.asyncFire('core-signal', {name: "sender-list", data:result});
               }
-            },
-            Facebook : 'Alejandro',
-            Twitter : '',
-            GitHub : '',
-            Instagram : '',
-            Google : '',
-            YouTube : '',
-            setfollow : function (res) {
-              res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
-            },
-            rellenarProfile : function (){
-              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
-              if (id !== '500') {
-              doAjax({
-                    type: 'GET',
-                    url: 'routes_user/user/'+id,
-                },function( result ) {
-                    this.Facebook = result.Facebook !== undefined ? result.facebook : 'No social Network added';
-                    this.Twitter = result.Twitter !== undefined ? result.twitter : 'No social Network added';
-                    this.GitHub = result.GitHub !== undefined ? result.gitHub : 'No social Network added';
-                    this.Instagram = result.Instagram !== undefined ? result.instagram : 'No social Network added';
-                    this.Google = result.Google !== undefined ? result.google : 'No social Network added';
-                    this.YouTube = result.YouTube !== undefined ? result.youTube : 'No social Network added';
+            }.bind(this));
+          }
+        },
+        Facebook : 'Alejandro',
+        Twitter : '',
+        GitHub : '',
+        Instagram : '',
+        Google : '',
+        YouTube : '',
+        setfollow : function (res) {
+          res.followers.indexOf(document.getElementById('user').datos._id) !== -1 ? this.$.follow.style.display = 'none' : this.$.unfollow.style.display = 'none';
+        },
+        rellenarProfile : function (){
+          var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+          if (id !== '500') {
+            doAjax({
+              type: 'GET',
+              url: 'routes_user/user/'+id,
+            },function( result ) {
+              this.Facebook = result.Facebook !== undefined ? result.facebook : 'No social Network added';
+              this.Twitter = result.Twitter !== undefined ? result.twitter : 'No social Network added';
+              this.GitHub = result.GitHub !== undefined ? result.gitHub : 'No social Network added';
+              this.Instagram = result.Instagram !== undefined ? result.instagram : 'No social Network added';
+              this.Google = result.Google !== undefined ? result.google : 'No social Network added';
+              this.YouTube = result.YouTube !== undefined ? result.youTube : 'No social Network added';
 
-                    this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
-                    this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
-                    this.$.email.innerHTML = result.email ? result.email : "" ;
-                    this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
-                    this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-                    if (document.getElementById('user').datos._id !== result._id){
-                      this.setfollow(result);
-                    }else{
-                      this.$.unfollow.style.display = 'none';
-                      this.$.follow.style.display = 'none';
-                    }
-                    this.$.spinner.remove();
-                    this.$.chargin.removeAttribute('hidden');
-
-                }.bind(this),
-                function(xhr, err, desc){
-                    var errorToast = document.querySelector('#errorToast');
-                    errorToast.text = 'The user ' + id + ' does not exist';
-                    errorToast.show();
-                });
+              this.$.photo.src = result.picture ? result.picture : "../img/avatar.svg" ;
+              this.$.name.innerHTML = result.name ? result.name : "Annonymous" ;
+              this.$.email.innerHTML = result.email ? result.email : "" ;
+              this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
+              this.$.following.innerHTML = result.following ? result.following.length : "0" ;
+              if (document.getElementById('user').datos._id !== result._id){
+                this.setfollow(result);
               }else{
-                var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error retrieving data, please verify your code';
-                errorToast.show();
+                this.$.unfollow.style.display = 'none';
+                this.$.follow.style.display = 'none';
               }
-            },
-            articlesProfile:function(){
-                document.querySelector('app-router').go('/wall/'+id);
-            },
-            socialProfile: function(){
+              this.$.spinner.remove();
+              this.$.chargin.removeAttribute('hidden');
 
-            },
+            }.bind(this),
+                   function(xhr, err, desc){
+              var errorToast = document.querySelector('#errorToast');
+              errorToast.text = 'The user ' + id + ' does not exist';
+              errorToast.show();
+            });
+          }else{
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error retrieving data, please verify your code';
+            errorToast.show();
+          }
+        },
+        articlesProfile:function(){
+          document.querySelector('app-router').go('/wall/'+id);
+        },
+        socialProfile: function(){
 
-            changebutton: function () {
-              if(this.$.follow.style.display == 'none'){
-                 this.$.follow.style.display = 'inherit';
-                 this.$.unfollow.style.display = 'none';
-               }else{
-                if(this.$.unfollow.style.display == 'none'){
-                  this.$.unfollow.style.display = 'inherit';
-                  this.$.follow.style.display = 'none' ;
-                }
-               }
-            },
-            follow : function () {
-              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
-              var dato = JSON.stringify({toFollow: id});
-              if (id !== '500') {
-              doAjax({
-                    type: 'POST',
-                    url: 'routes_user/follow/',
-                    data: dato
-                },function( result ) {
-                  this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
-                  this.changebutton();
-                }.bind(this),
-                function(xhr, err, desc){
-                    var errorToast = document.querySelector('#errorToast');
-                    errorToast.text = 'You are not logged.';
-                    errorToast.show();
-                });
-              } else {
-                var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error, this is not a valid ID.';
-                errorToast.show();
-              }
-            },
-            unfollow : function () {
-              var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
-              var dato = JSON.stringify({toUnFollow: id});
-              if (id !== '500') {
-              doAjax({
-                    type: 'POST',
-                    url: 'routes_user/unfollow/',
-                    data: dato
-                },function( result ) {
-                  this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
-                  this.changebutton();
-                }.bind(this),
-                function(xhr, err, desc){
-                    var errorToast = document.querySelector('#errorToast');
-                    errorToast.text = 'You are not logged.';
-                    errorToast.show();
-                });
-              } else {
-                var errorToast = document.querySelector('#errorToast');
-                errorToast.text = 'Error, this is not a valid ID.';
-                errorToast.show();
-              }
+        },
+
+        changebutton: function () {
+          if(this.$.follow.style.display == 'none'){
+            this.$.follow.style.display = 'inherit';
+            this.$.unfollow.style.display = 'none';
+          }else{
+            if(this.$.unfollow.style.display == 'none'){
+              this.$.unfollow.style.display = 'inherit';
+              this.$.follow.style.display = 'none' ;
             }
-        });
+          }
+        },
+        follow : function () {
+          var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+          var dato = JSON.stringify({toFollow: id});
+          if (id !== '500') {
+            doAjax({
+              type: 'POST',
+              url: 'routes_user/follow/',
+              data: dato
+            },function( result ) {
+              this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)+1;
+              this.changebutton();
+            }.bind(this),
+                   function(xhr, err, desc){
+              var errorToast = document.querySelector('#errorToast');
+              errorToast.text = 'You are not logged.';
+              errorToast.show();
+            });
+          } else {
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error, this is not a valid ID.';
+            errorToast.show();
+          }
+        },
+        unfollow : function () {
+          var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
+          var dato = JSON.stringify({toUnFollow: id});
+          if (id !== '500') {
+            doAjax({
+              type: 'POST',
+              url: 'routes_user/unfollow/',
+              data: dato
+            },function( result ) {
+              this.$.followers.innerHTML = parseInt(this.$.followers.innerHTML)-1;
+              this.changebutton();
+            }.bind(this),
+                   function(xhr, err, desc){
+              var errorToast = document.querySelector('#errorToast');
+              errorToast.text = 'You are not logged.';
+              errorToast.show();
+            });
+          } else {
+            var errorToast = document.querySelector('#errorToast');
+            errorToast.text = 'Error, this is not a valid ID.';
+            errorToast.show();
+          }
+        }
+      });
     })();
   </script>
 </polymer-element>
