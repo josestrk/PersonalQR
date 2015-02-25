@@ -85,6 +85,35 @@
                     document.querySelector('app-router').go('/wall');
                 }
             }
+
+            window.onbeforeunload = function() {
+              function doAjax(options, success, error) {
+                options.dataType = 'json';
+                options.contentType = 'application/json; charset=UTF-8';
+                options.success = success;
+                options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+                options.beforeSend = function(xhr) {
+                  xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+                };
+
+                $.ajax(options);
+              }
+
+              if(localStorage.token !== undefined){
+                  doAjax({
+                    type: 'POST',
+                    url: 'routes_connected/disconnected',
+                  },function( result ) {
+                    console.log(result);
+                  }.bind(this),
+                  function(xhr, err, desc){
+                    var errorToast = document.querySelector('#errorToast');
+                    errorToast.text = 'Error retrieving connected users'/*Fallo al obtener el perfil de usuario"*/;
+                    errorToast.show();
+                  });
+              }
+            };
         </script>
     </body>
 </html>

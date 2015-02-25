@@ -9,6 +9,20 @@
 <script>
   (function() {
       var datos={};
+      var userConnected = {};
+
+      function doAjax(options, success, error) {
+        options.dataType = 'json';
+        options.contentType = 'application/json; charset=UTF-8';
+        options.success = success;
+        options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
+
+        options.beforeSend = function(xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+        };
+
+        $.ajax(options);
+      }
 
     Polymer({
       created: function(){
@@ -17,11 +31,23 @@
         var checkToken = setInterval(function() {
           if (localStorage.token !== undefined) {
             that.getUser();
+            that.getconnectedusers();
             socket.connect(localStorage.token);
             clearInterval(checkToken);
           }
         }, 100);
 
+
+      },
+      domReady : function(){
+        var that = this;
+        //esto notifica que tengo un follower mas
+        socket.on('userconnected', function(result) {
+          this.userConnected = result[0].ids;
+        }.bind(that));
+        socket.on('userdisconnected', function(result) {
+          this.userConnected = result[0].ids;
+        }.bind(that));
       },
       data:function(objeto){
         this.datos=objeto[0];
@@ -30,18 +56,6 @@
         this.getUser();
       },
       getUser: function(){
-        function doAjax(options, success, error) {
-          options.dataType = 'json';
-          options.contentType = 'application/json; charset=UTF-8';
-          options.success = success;
-          options.error = (typeof error === 'function') ? error : defaultAjaxErrorHandler;
-
-          options.beforeSend = function(xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
-          };
-
-          $.ajax(options);
-        }
         doAjax({
           type: 'GET',
           url: 'routes_user/profile',
@@ -51,6 +65,20 @@
         function(xhr, err, desc){
           var errorToast = document.querySelector('#errorToast');
           errorToast.text = 'Error trying to retrieve the user\'s profile'/*Fallo al obtener el perfil de usuario"*/;
+          errorToast.show();
+        });
+      },
+      getconnectedusers: function(){
+        doAjax({
+          type: 'POST',
+          url: 'routes_connected/connected',
+        },function( result ) {
+          console.log(result);
+          this.userConnected = result[0].ids;
+        }.bind(this),
+        function(xhr, err, desc){
+          var errorToast = document.querySelector('#errorToast');
+          errorToast.text = 'Error retrieving connected users'/*Fallo al obtener el perfil de usuario"*/;
           errorToast.show();
         });
       }

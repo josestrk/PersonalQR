@@ -31,7 +31,6 @@ function worker(io) {
   router.post('/follow',  ensureAuth, followUser);
   router.post('/unfollow',  ensureAuth, unfollowUser);
 
-
   function getAllContacts(req, res) {
     var values = req.body.values;
 

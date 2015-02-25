@@ -198,6 +198,19 @@
                 this.unlikes = result.unlikes.length;
               }
             }.bind(that));
+            socket.on('userconnected', function(result) {
+              this.verifyloggeds();
+            }.bind(that));
+            socket.on('userdisconnected', function(result) {
+              this.verifyloggeds();
+            }.bind(that));
+          },
+          verifyloggeds : function(){
+            if(document.getElementById('user').userConnected.indexOf(this.owner) !== -1){
+              //el usuario no esta logueado
+            }else{
+              //usuario logueado
+            }
           },
           debug:function(event,detail,sender){
             if (sender.scrollTop < sender.scrollHeight - sender.clientHeight)

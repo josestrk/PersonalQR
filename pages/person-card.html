@@ -142,6 +142,19 @@
                 // }.bind(that));
                 this.list();
                 setTimeout(this.rellenarProfile.bind(that), 1200);
+                socket.on('userconnected', function(result) {
+                  this.verifyloggeds();
+                }.bind(that));
+                socket.on('userdisconnected', function(result) {
+                  this.verifyloggeds();
+                }.bind(that));
+            },
+            verifyloggeds : function(){
+                if(document.getElementById('user').userConnected.indexOf(document.URL.split('/').reverse()[0].split('=').reverse()[0]) !== -1){
+                  //el usuario no esta logueado
+                }else{
+                  //usuario logueado
+                }
             },
             list: function(){
               var id = document.URL.split('/').reverse()[0].split('=').reverse()[0] || "500" ;
