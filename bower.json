@@ -28,9 +28,9 @@
     "time-elements": "~0.4.0"
   },
   "devDependencies": {
-    "polymer": "Polymer/polymer",
-    "core-elements": "Polymer/core-elements",
-    "paper-elements": "Polymer/paper-elements"
+    "polymer": "Polymer/polymer#0.5.2",
+    "core-elements": "Polymer/core-elements#0.5.2",
+    "paper-elements": "Polymer/paper-elements#0.5.2"
   },
   "resolutions": {
     "jquery": "2.1.1",
