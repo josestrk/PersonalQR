@@ -5,11 +5,11 @@ This web application is intended to show users’ profiles through QR codes. Pro
 
 It will be a secure way to share your personal information, accessible and user friendly.
 
-####User demo:
-```
-User: personalqr
-Pass: Manager01
-```
+>**User demo:**
+>User: personalqr
+>Pass: Manager01
+
+---
 
 USE
 --------------
@@ -22,12 +22,16 @@ To fully use PersonalQR you must be registered, but unregistered users can also 
 > 5. There are three levels of access to a user's information: all, registered users only, none (only that user).
 > 6. You don't need to save your changes. They will automatically come into effect.
 
+----
+
 Contributors
 -------------
 
 * [josestrk](https://github.com/josestrk)
 * [alevale](https://github.com/alevale)
 * [dgstranz](https://github.com/dgstranz)
+
+---
 
 Version
 -------
@@ -37,22 +41,25 @@ Dependencies
 ----
 PersonalQR uses a number of open-source projects to work properly:
 
-* [node.js] - a runtime environment for server-side use
+* [Node.js] - a runtime environment for server-side use
 * [jQuery] - a JavaScript library designed to simplify the client-side scripting of HTML
 * [MongoDB] - NoSQL database
 * [Bower] - a client dependencies to develop and produce
-* [NPM] - dependencies to develop
+* [Soket.io] - event´s sooter
 
 Install
 -------
 ```
-Install node (last version)
+//Install node (last version)
 npm install
 bower install
 start mongodb service
 grunt
 [if you start in windows open new cmd and start: grunt mongo]
 ```
+
+---
+
 License
 -------
 MIT - (LICENSE.md)
@@ -64,5 +71,7 @@ Repositories
 * vide
 * github-card
 * qr-code
+* shoket.io
+* jQuery
 
-**Free Software**
+> **Note:** This program is beta, actually we don´t have a reallise aplication <i class="icon-cog"></i> **aplication under development**.
