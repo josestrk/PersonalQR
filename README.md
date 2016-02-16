@@ -1,7 +1,7 @@
 PersonalQR
 ==========
 
-This web application is intended to show users’ profiles through QR codes. Profiles are customized by the own users, who decide which data they want to disclose and to whom.
+This web application is intended to show user's profiles using QR codes. The appearing profiles are customized by the own users, who decide which data they want to disclose and to whom.
 
 It will be a secure way to share your personal information, accessible and user friendly.
 
@@ -35,22 +35,23 @@ Contributors
 
 Version
 -------
-*0.1.0*
+*-.-.-* (Not releasable yet)
 
 Dependencies
 ----
-PersonalQR uses a number of open-source projects to work properly:
+PersonalQR uses some external projects to work properly:
 
 * [Node.js] - a runtime environment for server-side use
 * [jQuery] - a JavaScript library designed to simplify the client-side scripting of HTML
 * [MongoDB] - NoSQL database
-* [Bower] - a client dependencies to develop and produce
-* [Soket.io] - event´s sooter
+* [npm] - a server side dependency package manager
+* [Bower] - a client side dependency package manager
+* [Socket.io] - a JavaScript library for realtime web applications (just a websocket wrapper)
 
 Install
 -------
 ```
-//Install node (last version)
+Install node (latest version)
 npm install
 bower install
 start mongodb service
@@ -62,9 +63,9 @@ grunt
 
 License
 -------
-MIT - (LICENSE.md)
+MIT - [LICENSE.md](LICENSE.md)
 
-Repositories
+External used libraries
 ------------
 * qr-reader
 * polymer
