@@ -227,7 +227,7 @@
           }.bind(this),
           function(xhr, err, desc){
             var errorToast = document.querySelector('#errorToast');
-            errorToast.text = 'Could not connect to server';
+            errorToast.text = 'This user has no articles';
             errorToast.show();
           });
         },

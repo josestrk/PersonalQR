@@ -53,50 +53,60 @@
   </template>
 
   <script>
-    Polymer({
-      pastries: [],
-      created: function(){
-        var that = this;
-        socket.on('followingonemore', function(result) {
-          if (document.getElementById('user').datos._id === result._id && that.pastries.indexOf({info:'You have a new follower.',color:"#03a9f4"}) === -1){
-            that.pastries.push({info:'You have a new follower.',color:"#03a9f4"});
-          }
-        }.bind(that));
-        socket.on('followingoneless', function(result) {
-          if (document.getElementById('user').datos._id === result._id && that.pastries.indexOf({info:'Someone is not following anymore.',color:"#dd3300"}) === -1){
-            that.pastries.push({info:'Someone is not following anymore.',color:"#dd3300"});
-          }
-        }.bind(that));
-        socket.on('commentadded', function(result) {
-          if (document.getElementById('user').datos._id === result.owner && that.pastries.indexOf({info:'You have a new comment in one of your articles.',color:"#d033d0"}) === -1){
-            that.pastries.push({info:'You have a new comment in one of your articles.',color:"#d033d0"});
-          }
-        }.bind(that));
-        socket.on('onelikemore', function(result) {
-          if (document.getElementById('user').datos._id === result.iduser && that.pastries.indexOf({info:'Someone likes one of your posts.',color:"#33dd00"}) === -1){
-            that.pastries.push({info:'Someone likes one of your posts.',color:"#33dd00"});
-          }
-        }.bind(that));
-        socket.on('oneunlikemore', function(result) {
-          if (document.getElementById('user').datos._id === result.iduser && that.pastries.indexOf({info:"Someone doesn't like one of your posts.",color:"#0d303d"}) === -1){
-            that.pastries.push({info:"Someone doesn't like one of your posts.",color:"#0d303d"});
-          }
-        }.bind(that));
-      },
-      pastriesChanged : function(){
-        setTimeout(function(){
-          this.$.bell.icon = "social:notifications";
-        }.bind(this),900);
-        this.$.dropdown.style.height="308px";
-        this.$.bell.icon = "social:notifications-on";
-      },
-      clear : function(e, d, s){
-        s.remove();
-        this.$.dropdown.style.height="auto";
-        if(this.pastries.length-1 === 0){
-          this.$.bell.icon = "social:notifications-none";
+
+  (function () {
+    function arrayObjectIndexOf(myArray, searchTerm, property) {
+        for(var i = 0, len = myArray.length; i < len; i++) {
+            if (myArray[i][property] === searchTerm) return i;
         }
-      }
-    });
+        return -1;
+    }
+      Polymer({
+        pastries: [],
+        created: function(){
+          var that = this;
+          socket.on('followingonemore', function(result) {
+            if (document.getElementById('user').datos._id === result._id && arrayObjectIndexOf(that.pastries, 'You have a new follower.', 'info') === -1){
+              that.pastries.push({info:'You have a new follower.',color:"#03a9f4"});
+            }
+          }.bind(that));
+          socket.on('followingoneless', function(result) {
+            if (document.getElementById('user').datos._id === result._id && arrayObjectIndexOf(that.pastries, 'Someone is not following anymore.', 'info') === -1){
+              that.pastries.push({info:'Someone is not following anymore.',color:"#dd3300"});
+            }
+          }.bind(that));
+          socket.on('commentadded', function(result) {
+            if (document.getElementById('user').datos._id === result.owner && arrayObjectIndexOf(that.pastries, 'You have a new comment in one of your articles.', 'info') === -1){
+              that.pastries.push({info:'You have a new comment in one of your articles.',color:"#d033d0"});
+            }
+          }.bind(that));
+          socket.on('onelikemore', function(result) {
+            if (document.getElementById('user').datos._id === result.iduser && arrayObjectIndexOf(that.pastries, 'Someone likes one of your posts.', 'info') === -1){
+              that.pastries.push({info:'Someone likes one of your posts.',color:"#33dd00"});
+            }
+          }.bind(that));
+          socket.on('oneunlikemore', function(result) {
+            if (document.getElementById('user').datos._id === result.iduser && arrayObjectIndexOf(that.pastries, "Someone doesn't like one of your posts.", 'info') === -1){
+              that.pastries.push({info:"Someone doesn't like one of your posts.",color:"#0d303d"});
+            }
+          }.bind(that));
+        },
+        pastriesChanged : function(){
+          setTimeout(function(){
+            this.$.bell.icon = "social:notifications";
+          }.bind(this),900);
+          this.$.dropdown.style.height="308px";
+          this.$.bell.icon = "social:notifications-on";
+        },
+        clear : function(e, d, s){
+          s.remove();
+          this.pastries.splice(arrayObjectIndexOf(this.pastries, s.innerHTML, 'info'),1);
+          this.$.dropdown.style.height="auto";
+          if(this.pastries.length-1 === 0){
+            this.$.bell.icon = "social:notifications-none";
+          }
+        }
+      });
+    })();
   </script>
 </polymer-element>
