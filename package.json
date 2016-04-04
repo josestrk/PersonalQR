@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "jsonwebtoken": "^3.2.2",
+    "mongodb": "^1.4.40",
     "mongoskin": "~1.4.4",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
