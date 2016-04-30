@@ -15,7 +15,7 @@
     "bower_components": "bower_components"
   },
   "dependencies": {
-    "jsonwebtoken": "^3.2.2",
+    "jsonwebtoken": "^5.0.0",
     "mongoskin": "~1.4.4",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
