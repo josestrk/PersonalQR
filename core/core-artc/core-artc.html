@@ -207,12 +207,14 @@ necesito un campo para p otro para tex are y otro para evento
           }.bind(that));
         },
         verifyloggeds : function(){
-          if(document.getElementById('user').userConnected.indexOf(this.owner) !== -1){
-            this.$.core_icon_follow.icon="social:person";
-            this.$.core_icon_follow.style.color="lightgreen";
-          }else{
-            this.$.core_icon_follow.icon="social:person-outline";
-            this.$.core_icon_follow.style.color="white";
+          if(document.getElementById('user').userConnected !== undefined){
+            if(document.getElementById('user').userConnected.indexOf(this.owner) !== -1){
+              this.$.core_icon_follow.icon="social:person";
+              this.$.core_icon_follow.style.color="lightgreen";
+            }else{
+              this.$.core_icon_follow.icon="social:person-outline";
+              this.$.core_icon_follow.style.color="white";
+            }
           }
         },
         debug:function(event,detail,sender){
@@ -246,7 +248,7 @@ necesito un campo para p otro para tex are y otro para evento
         },
         flag: true,
         showDelete: function(){
-          return document.getElementById('user').datos._id == this.owner;
+          return document.getElementById('user').datos !== undefined && document.getElementById('user').datos._id == this.owner;
         },
         dialog: function(){
           this.$.dia.toggle();

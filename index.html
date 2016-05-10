@@ -13,7 +13,7 @@
         <script src="bower_components/time-elements/time-elements.js"></script>
         <script src="bower_components/socket.io-client/socket.io.js"></script>
         <script>
-            var socket = io.connect(':9005/', {
+            var socket = io.connect('http://personalqr-c9-alevale.c9.io/', {
                 timeout: 20000,
                 reconnectionDelay: 100,
                 reconnectionDelayMax: 2000
@@ -22,6 +22,7 @@
                 console.log('Cliente conectado!');
             });
             socket.on('disconnect', function() {
+                console.log('Conexion no establecida');
             });
         </script>
 

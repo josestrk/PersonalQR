@@ -138,10 +138,12 @@
           }.bind(that));
         },
         verifyloggeds : function(){
-                  if(document.getElementById('user').userConnected.indexOf(document.URL.split('/').reverse()[0].split('=').reverse()[0]) !== -1){
-            this.$.logged.style.display="flex";
-          }else{
-            this.$.logged.style.display="none";
+          if(document.getElementById('user').userConnected !== undefined){
+            if(document.getElementById('user').userConnected.indexOf(document.URL.split('/').reverse()[0].split('=').reverse()[0]) !== -1){
+              this.$.logged.style.display="flex";
+            }else{
+              this.$.logged.style.display="none";
+            }
           }
         },
         list: function(){
@@ -184,7 +186,8 @@
               this.$.email.innerHTML = result.email ? result.email : "" ;
               this.$.followers.innerHTML = result.followers ? result.followers.length : "0" ;
               this.$.following.innerHTML = result.following ? result.following.length : "0" ;
-              if (document.getElementById('user').datos._id !== result._id){
+              
+              if (document.getElementById('user').datos !== undefined && document.getElementById('user').datos._id !== result._id){
                 this.setfollow(result);
               }else{
                 this.$.unfollow.style.display = 'none';

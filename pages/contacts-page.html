@@ -74,6 +74,15 @@
         line-height: 1.7em;
         font-variant: small-caps;
       }
+      .connected{
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        background-color: lightgreen;
+        position: absolute;
+        margin-left: 50px;
+        margin-top: 6px;
+      }
     </style>
     <core-ajax-handler id="ajaxhandler"></core-ajax-handler>
     <main-menu iMenu="Contacts" color='#37474F' progress="{{$.progress}}">
@@ -92,6 +101,7 @@
               <section>
                 <template repeat="{{user in contacts}}">
                   <left-swipe-action shadow offset="100">
+                    <div class="connected" hidden?="{{user.connected}}"></div>
                     <div class="list-container" horizontal layout>
                       <div class="list-thumb"><img class="img" src="{{user.picture}}"/></div>
                       <div class="list-content">
@@ -109,6 +119,7 @@
               <section>
                 <template repeat="{{user in followers}}">
                   <left-swipe-action shadow offset="100">
+                    <div class="connected" hidden?="{{user.connected}}"></div>
                     <div class="list-container" horizontal layout>
                       <div class="list-thumb"><img class="img" src="{{user.picture}}"/></div>
                       <div class="list-content">
@@ -146,6 +157,7 @@
 
               //mete o saca al usuario al que seguimos en nuestra pagina de following
               socket.on('followingonemore', function(result) {
+                this.verifyloggeds();
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') === -1){
                     this.contacts.push({idofuser : result._id, name : result.name, picture : result.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg' , followers : result.followers.length, following: result.following.length});
@@ -155,6 +167,7 @@
 
 
               socket.on('followingoneless', function(result) {
+                this.verifyloggeds();
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.contacts, result._id, 'idofuser') !== -1){
                     this.contacts.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
@@ -164,6 +177,7 @@
 
               //te mete en los followers de otra persona funciona correctamente
               socket.on('Ifollowing', function(result) {
+                this.verifyloggeds();
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') === -1){
                     this.followers.push({idofuser : result._id, name : result.name, picture : result.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg' , followers : result.followers.length, following: result.following.length});
@@ -173,6 +187,7 @@
 
 
               socket.on('Iunfollowing', function(result) {
+                this.verifyloggeds();
                 if (document.getElementById('user').datos._id === result.who){
                   if (arrayObjectIndexOf(this.followers, result._id, 'idofuser') !== -1){
                     this.followers.splice(arrayObjectIndexOf(this.contacts, result._id, 'idofuser'), 1);
@@ -185,27 +200,54 @@
               var that = this;
               // this.pullContacts();
               this.addEventListener('getUsuario', function(res){
-                if(location.hash === "#/contacts"){
-                  this.$.ajaxhandler.getAllContacts(res.detail.following, function(res){
-                    res.forEach(function(item){
-                      if(arrayObjectIndexOf(this.contacts, item._id ,'idofuser') === -1){
-                        debugger
-                        this.contacts.push({idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
-                      }
+                var that = this;
+                setTimeout(function(){
+                  if(location.hash === "#/contacts"){
+                    this.$.ajaxhandler.getAllContacts(res.detail.following, function(res){
+                      res.forEach(function(item){
+                        if(arrayObjectIndexOf(this.contacts, item._id ,'idofuser') === -1){
+                          var flag = document.getElementById('user').userConnected.indexOf(item._id) === -1 ? true : false ;
+                          this.contacts.push({connected : flag, idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
+                        }
+                      }.bind(this));
                     }.bind(this));
-                  }.bind(this));
-                  this.$.ajaxhandler.getAllContacts(res.detail.followers, function(res){
-                    res.forEach(function(item){
-                      if(arrayObjectIndexOf(this.followers, item._id ,'idofuser') === -1){
-                        this.followers.push({idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
-                      }
+                    this.$.ajaxhandler.getAllContacts(res.detail.followers, function(res){
+                      res.forEach(function(item){
+                        if(arrayObjectIndexOf(this.followers, item._id ,'idofuser') === -1){
+                          var flag = document.getElementById('user').userConnected.indexOf(item._id) === -1 ? true : false ;
+                          this.followers.push({connected : flag, idofuser : item._id, name : item.name, picture : item.picture || 'http://personalqr-c9-alevale.c9.io/img/avatar.svg', followers : item.followers.length, following: item.following.length});
+                        }
+                      }.bind(this));
                     }.bind(this));
-                  }.bind(this));
-                }
+                  }
+                }.bind(that), 100);
+              }.bind(that));
+
+              socket.on('userconnected', function(result) {
+                this.verifyloggeds();
+              }.bind(that));
+              socket.on('userdisconnected', function(result) {
+                this.verifyloggeds();
               }.bind(that));
             },
             goprofile : function (event, detail, sender) {
               document.querySelector('app-router').go('/pqr/?id=' + sender.id);
+            },
+            verifyloggeds : function(){
+             this.contacts.forEach( function(item){
+               if( document.getElementById('user').userConnected.indexOf(item.idofuser) !== -1){
+                 item.connected = false;
+               }else{
+                 item.connected = true;
+               }
+             });
+             this.followers.forEach( function(item){
+               if( document.getElementById('user').userConnected.indexOf(item.idofuser) !== -1){
+                 item.connected = false;
+               }else{
+                 item.connected = true;
+               }
+             });
             }
         });
     })();
