@@ -66,3 +66,22 @@ Repositories
 * qr-code
 
 **Free Software**
+
+
+# Cloud 9 Notes
+
+## Renew access Oauth
+
+Create a new ID access for Oauth 2.0 in `https://console.developers.google.com/apis/credentials?project=personalqr1`
+Add the client secret and ID  on `util/config.js`
+Remember to add the correct origin and redirect URL's, in our case it's `$IP/auth/oauth2callback` but take into account that you could need to add some others
+
+## Cloud9 Mongo Starting and repairing
+
+Open a terminal and run the following command to repair mongodb `mongod --bind_ip=$IP --dbpath=data --nojournal --repair`
+
+Open a terminal and run the following command to run mongodb `mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"`
+
+## Run the server
+
+Run `node server/server.js` in a new terminal
